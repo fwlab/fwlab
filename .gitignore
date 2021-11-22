@@ -8,3 +8,9 @@ cmake_install.cmake
 install_manifest.txt
 compile_commands.json
 CTestTestfile.cmake
+/third_party
+/.vs
+/x64
+/fwlab/Debug
+/fwlab/x64
+/fwlab/fwlab.vcxproj.user
