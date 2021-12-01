@@ -21,7 +21,7 @@
 #include <filamentapp/Config.h>
 #include <filamentapp/FilamentApp.h>
 
-#include "../../third_party/filament/generated/samples/resources/resources.h"
+#include "generated/resources/resources.h"
 
 using namespace filament;
 using utils::Entity;

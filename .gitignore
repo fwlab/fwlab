@@ -13,3 +13,4 @@ CTestTestfile.cmake
 /fwlab/Debug
 /fwlab/x64
 /fwlab/fwlab.vcxproj.user
+/out
