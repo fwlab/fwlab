@@ -2,3 +2,7 @@
 	path = third_party/filament
 	url = https://gitee.com/mirrors/Filament0.git
 	branch = main
+[submodule "third_party/bullet3"]
+	path = third_party/bullet3
+	url = https://gitee.com/tengge1/bullet3.git
+	branch = master
