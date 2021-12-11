@@ -14,3 +14,4 @@ CTestTestfile.cmake
 /fwlab/x64
 /fwlab/fwlab.vcxproj.user
 /out
+/third_party/tools

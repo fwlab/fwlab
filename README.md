@@ -17,5 +17,7 @@ git submodule update --init
 3. 使用`Visual Studio 2019`，分别打开文件夹`third_party/bullet3`和`third_party/filament`，
 在`CMakeLists.txt`文件上右键，点击`生成`，生成依赖的第三方项目。
 
-4. 使用`Visual Studio 2019`打开`fwlab`文件夹，在`CMakeLists.txt`文件上右键，点击`生成`，
+4. 双击`third_party/install_tools.bat`，将工具拷贝到tools文件夹。请将tools文件夹添加到环境变量。
+
+5. 使用`Visual Studio 2019`打开`fwlab`文件夹，在`CMakeLists.txt`文件上右键，点击`生成`，
 生成的`fwlab.exe`在`out/build/x64-Debug/src`目录下。
