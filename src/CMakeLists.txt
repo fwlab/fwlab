@@ -4,7 +4,7 @@ add_subdirectory(utils)
 add_subdirectory(scene)
 
 add_executable(${MODULE_NAME} WIN32
-    main.cpp
+    main.cpp application.cpp
 )
 
 target_link_libraries(${MODULE_NAME}

@@ -11,6 +11,7 @@ class Scene {
 public:
 	static void setup(filament::Engine* engine, filament::View* view, filament::Scene* scene);
 	static void cleanup(filament::Engine* engine, filament::View* view, filament::Scene* scene);
+	static void animate(filament::Engine* engine, filament::View* view, double now);
 
 private:
 	Scene() {}

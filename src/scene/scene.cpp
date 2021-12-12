@@ -1,81 +1,56 @@
+#include <filament/TransformManager.h>
+#include <filament/Viewport.h>
 #include <filament/Skybox.h>
-#include <filament/VertexBuffer.h>
-#include <filament/IndexBuffer.h>
 #include <filament/Material.h>
-#include <filament/RenderableManager.h>
+#include <filamentapp/Cube.h>
+#include <camutils/Manipulator.h>
+#include <viewer/SimpleViewer.h>
 #include <utils/EntityManager.h>
-#include "generated/resources/resources.h"
+#include "resources/resources.h"
 #include "scene.h"
 
-struct Vertex {
-	filament::math::float2 position;
-	uint32_t color;
-};
-
-static const Vertex TRIANGLE_VERTICES[3] = {
-	{{1, 0}, 0xffff0000u},
-	{{cos(M_PI * 2 / 3), sin(M_PI * 2 / 3)}, 0xff00ff00u},
-	{{cos(M_PI * 4 / 3), sin(M_PI * 4 / 3)}, 0xff0000ffu},
-};
-
-static constexpr uint16_t TRIANGLE_INDICES[3] = { 0, 1, 2 };
-
 filament::Skybox* skybox;
-filament::VertexBuffer* vb;
-filament::IndexBuffer* ib;
 filament::Material* mat;
-utils::Entity renderable;
+utils::Entity cube;
 utils::Entity camera;
 
 void Scene::setup(filament::Engine* engine, filament::View* view, filament::Scene* scene)
 {
-	// Ìì¿ÕºÐ
 	skybox = filament::Skybox::Builder()
-		.color({ 0.0, 0.0, 1.0, 1.0 })
+		.color({ 0.0, 0.0, 0.0, 1.0 })
 		.build(*engine);
 	scene->setSkybox(skybox);
 
-	vb = filament::VertexBuffer::Builder()
-		.vertexCount(3)
-		.bufferCount(1)
-		.attribute(filament::VertexAttribute::POSITION, 0, filament::VertexBuffer::AttributeType::FLOAT2, 0, 12)
-		.attribute(filament::VertexAttribute::COLOR, 0, filament::VertexBuffer::AttributeType::UBYTE4, 8, 12)
-		.normalized(filament::VertexAttribute::COLOR)
-		.build(*engine);
-	vb->setBufferAt(*engine, 0,
-		filament::VertexBuffer::BufferDescriptor(TRIANGLE_VERTICES, 36, nullptr));
-	ib = filament::IndexBuffer::Builder()
-		.indexCount(3)
-		.bufferType(filament::IndexBuffer::IndexType::USHORT)
-		.build(*engine);
-	ib->setBuffer(*engine,
-		filament::IndexBuffer::BufferDescriptor(TRIANGLE_INDICES, 6, nullptr));
+	filament::viewer::SimpleViewer* viewer = new filament::viewer::SimpleViewer(engine, scene, view);
+
+	filament::TransformManager& tm = engine->getTransformManager();
+	filament::Viewport viewport = view->getViewport();
+
 	mat = filament::Material::Builder()
-		.package(RESOURCES_BAKEDCOLOR_DATA, RESOURCES_BAKEDCOLOR_SIZE)
+		.package(RESOURCES_DEFAULTMATERIAL_DATA, RESOURCES_DEFAULTMATERIAL_SIZE)
 		.build(*engine);
-	renderable = utils::EntityManager::get().create();
-	filament::RenderableManager::Builder(1)
-		.boundingBox({ { -1, -1, -1 }, { 1, 1, 1 } })
-		.material(0, mat->getDefaultInstance())
-		.geometry(0, filament::RenderableManager::PrimitiveType::TRIANGLES, vb, ib, 0, 3)
-		.culling(false)
-		.receiveShadows(false)
-		.castShadows(false)
-		.build(*engine, renderable);
-	scene->addEntity(renderable);
+
+	cube = (new Cube(*engine, mat, { 1, 0, 0 }, false))->getSolidRenderable();
+	scene->addEntity(cube);
+
 	camera = utils::EntityManager::get().create();
 	filament::Camera* cam = engine->createCamera(camera);
+	cam->setProjection(45, viewport.width / viewport.height, 0.1, 1000);
+	cam->lookAt({ 10, 10, 10 }, { 0, 0, 0 });
 	view->setCamera(cam);
 }
 
 void Scene::cleanup(filament::Engine* engine, filament::View* view, filament::Scene* scene)
 {
 	engine->destroy(skybox);
-	engine->destroy(vb);
-	engine->destroy(ib);
-	engine->destroy(mat);
-	engine->destroy(renderable);
+	engine->destroy(cube);
 	engine->destroy(camera);
 	engine->destroyCameraComponent(camera);
 	utils::EntityManager::get().destroy(camera);
+}
+
+void Scene::animate(filament::Engine* engine, filament::View* view, double now)
+{
+	auto& tcm = engine->getTransformManager();
+	tcm.setTransform(tcm.getInstance(cube), filament::math::mat4f::rotation(now, filament::math::float3{ 0, 0, 1 }));
 }

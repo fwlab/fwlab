@@ -1,0 +1,15 @@
+material {
+    name : "Filament Default Material",
+    parameters: [{
+        type : float3,
+        name : color
+    }],
+    shadingModel : unlit
+}
+
+fragment {
+    void material(inout MaterialInputs material) {
+        prepareMaterial(material);
+        material.baseColor.rgb = materialParams.color;
+    }
+}
