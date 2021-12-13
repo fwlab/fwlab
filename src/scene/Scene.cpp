@@ -1,4 +1,7 @@
+#include <filament/Camera.h>
 #include <filament/Material.h>
+#include <filament/Viewport.h>
+#include <filament/TransformManager.h>
 
 #include "../camera/PerspectiveCamera.h"
 #include "../object/Skybox.h"
@@ -41,6 +44,14 @@ void Scene::cleanup(filament::Engine* engine, filament::View* view, filament::Sc
 
 void Scene::animate(filament::Engine* engine, filament::View* view, double now)
 {
-	//auto& tcm = engine->getTransformManager();
-	//tcm.setTransform(tcm.getInstance(cube), filament::math::mat4f::rotation(now, filament::math::float3{ 0, 0, 1 }));
+	constexpr float ZOOM = 1.5f;
+	const uint32_t w = view->getViewport().width;
+	const uint32_t h = view->getViewport().height;
+	const float aspect = (float)w / h;
+	camera->camera->setProjection(filament::Camera::Projection::ORTHO,
+		-aspect * ZOOM, aspect * ZOOM,
+		-ZOOM, ZOOM, 0, 1);
+	filament::TransformManager& tcm = engine->getTransformManager();
+	tcm.setTransform(tcm.getInstance(triangle->entity),
+		filament::math::mat4f::rotation(now, filament::math::float3({ 0, 0, 1 })));
 }
