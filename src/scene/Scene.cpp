@@ -14,6 +14,8 @@ Triangle* triangle;
 
 void Scene::setup(filament::Engine* engine, filament::View* view, filament::Scene* scene)
 {
+	view->setPostProcessingEnabled(false);
+
 	// Па»ъ
 	camera = new PerspectiveCamera(engine, view);
 
