@@ -13,6 +13,8 @@ add_custom_command(
 	DEPENDS ${GENERATED_DIR}/material/defaultMaterial.filamat
 )
 
+add_subdirectory(object)
+
 include_directories(
 	${GENERATED_DIR}
 )
@@ -23,4 +25,5 @@ add_library(${MODULE_NAME} STATIC
 
 target_link_libraries(${MODULE_NAME}
 	filament filamentapp sample-resources gltfio_core viewer
+	fwlab_scene_object
 )
