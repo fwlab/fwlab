@@ -18,7 +18,7 @@ include_directories(
 )
 
 add_library(${MODULE_NAME} STATIC
-	scene.cpp ${GENERATED_DIR}/resources/resources.c
+	"Scene.cpp" "${GENERATED_DIR}/resources/resources.c"
 )
 
 target_link_libraries(${MODULE_NAME}

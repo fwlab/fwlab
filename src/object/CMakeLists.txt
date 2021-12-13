@@ -1,8 +1,8 @@
 set(MODULE_NAME fwlab_object)
 
 add_library(${MODULE_NAME} STATIC
-	skybox.cpp
-	triangle.cpp
+	"Skybox.cpp"
+	"Triangle.cpp"
 )
 
 target_link_libraries(${MODULE_NAME}

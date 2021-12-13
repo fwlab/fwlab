@@ -1,5 +1,5 @@
 #include <Windows.h>
-#include "application.h"
+#include "Application.h"
 
 int WINAPI WinMain(
 	_In_  HINSTANCE hInstance,

@@ -1,5 +1,5 @@
-#ifndef FWLAB_ENCODING_H
-#define FWLAB_ENCODING_H
+#ifndef FWLAB_ENCODING_UTILS_H
+#define FWLAB_ENCODING_UTILS_H
 #include <string>
 
 /// <summary>

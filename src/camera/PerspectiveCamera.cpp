@@ -1,6 +1,6 @@
 #include <filament/Viewport.h>
 #include <utils/EntityManager.h>
-#include "perspective_camera.h"
+#include "PerspectiveCamera.h"
 
 PerspectiveCamera::PerspectiveCamera(filament::Engine* engine, filament::View* view)
 {
