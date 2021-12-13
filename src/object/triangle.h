@@ -1,5 +1,5 @@
-#ifndef fWLAB_SCENE_OBJECT_H
-#define fWLAB_SCENE_OBJECT_H
+#ifndef fWLAB_OBJECT_TRIANGLE_H
+#define fWLAB_OBJECT_TRIANGLE_H
 #include <filament/Engine.h>
 #include <filament/VertexBuffer.h>
 #include <filament/IndexBuffer.h>

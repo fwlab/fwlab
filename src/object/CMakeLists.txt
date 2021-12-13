@@ -1,8 +1,9 @@
-set(MODULE_NAME fwlab_scene_object)
+set(MODULE_NAME fwlab_object)
 
 add_library(${MODULE_NAME} STATIC
+	skybox.cpp
 	triangle.cpp
- "skybox.h" "skybox.cpp")
+)
 
 target_link_libraries(${MODULE_NAME}
 	filament filamentapp
