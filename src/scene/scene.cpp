@@ -6,21 +6,22 @@
 #include <camutils/Manipulator.h>
 #include <viewer/SimpleViewer.h>
 #include <utils/EntityManager.h>
+
+#include "object/skybox.h"
 #include "object/triangle.h"
+
 #include "resources/resources.h"
 #include "scene.h"
 
-filament::Skybox* skybox;
+Skybox* skybox;
 filament::Material* mat;
 Triangle* triangle;
 utils::Entity camera;
 
 void Scene::setup(filament::Engine* engine, filament::View* view, filament::Scene* scene)
 {
-	skybox = filament::Skybox::Builder()
-		.color({ 0.1, 0.125, 0.25, 1.0 })
-		.build(*engine);
-	scene->setSkybox(skybox);
+	skybox = new Skybox(engine);
+	scene->setSkybox(skybox->skybox);
 	view->setPostProcessingEnabled(false);
 
 	filament::viewer::SimpleViewer* viewer = new filament::viewer::SimpleViewer(engine, scene, view);
@@ -44,7 +45,7 @@ void Scene::setup(filament::Engine* engine, filament::View* view, filament::Scen
 
 void Scene::cleanup(filament::Engine* engine, filament::View* view, filament::Scene* scene)
 {
-	engine->destroy(skybox);
+	delete skybox;
 	engine->destroy(camera);
 	engine->destroyCameraComponent(camera);
 	utils::EntityManager::get().destroy(camera);
