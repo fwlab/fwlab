@@ -1,9 +1,14 @@
 set(MODULE_NAME fwlab)
 
+add_subdirectory(assets)
 add_subdirectory(utils)
 add_subdirectory(camera)
 add_subdirectory(object)
 add_subdirectory(scene)
+
+link_libraries(
+	fwlab_assets
+)
 
 add_executable(${MODULE_NAME} WIN32
     "main.cpp"
@@ -12,5 +17,5 @@ add_executable(${MODULE_NAME} WIN32
 
 target_link_libraries(${MODULE_NAME}
 	filament filamentapp
-	fwlab_scene fwlab_utils
+	fwlab_assets fwlab_scene fwlab_utils
 )

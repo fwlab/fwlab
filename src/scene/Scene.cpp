@@ -7,7 +7,7 @@
 #include "../object/Skybox.h"
 #include "../object/Triangle.h"
 
-#include "generated/resources/resources.h"
+#include "resources/resources.h"
 #include "scene.h"
 
 PerspectiveCamera* camera;

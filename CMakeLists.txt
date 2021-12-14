@@ -229,7 +229,7 @@ link_libraries(
 	utils.lib
 	viewer.lib
 	# filament samples
-	sample-resources.lib
+	# sample-resources.lib
 )
 
 # sub_directories
