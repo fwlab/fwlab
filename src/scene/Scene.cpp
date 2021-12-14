@@ -7,7 +7,7 @@
 #include "../object/Skybox.h"
 #include "../object/Triangle.h"
 
-#include "resources/resources.h"
+#include "generated/resources/resources.h"
 #include "scene.h"
 
 PerspectiveCamera* camera;
@@ -23,7 +23,7 @@ void Scene::setup(filament::Engine* engine, filament::View* view, filament::Scen
 	camera = new PerspectiveCamera(engine, view);
 
 	// ЬьПеКа
-	skybox = new Skybox(engine);
+	skybox = new Skybox(engine, { 1.0, 0.0, 0.0, 0.5 });
 	scene->setSkybox(skybox->skybox);
 
 	// ЮяЬх
