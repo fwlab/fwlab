@@ -1,4 +1,5 @@
 set(MODULE_NAME fwlab)
+set(APP_ICON_RESOURCE_WINDOWS assets/app.rc)
 
 add_subdirectory(assets)
 add_subdirectory(utils)
@@ -13,10 +14,11 @@ link_libraries(
 add_executable(${MODULE_NAME} WIN32
     "main.cpp"
 	"Application.cpp"
+	${APP_ICON_RESOURCE_WINDOWS}
 )
 
 set_target_properties(${MODULE_NAME} PROPERTIES
-	OUTPUT_PATH ${CMAKE_BINARY_DIR}
+	RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}
 )
 
 target_link_libraries(${MODULE_NAME}
