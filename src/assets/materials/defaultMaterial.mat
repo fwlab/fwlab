@@ -1,15 +1,11 @@
 material {
     name : defaultMaterial,
-    requires : [
-        color
-    ],
     shadingModel : unlit,
-    culling : none
 }
 
 fragment {
     void material(inout MaterialInputs material) {
         prepareMaterial(material);
-        material.baseColor = getColor();
+        material.baseColor = vec4(1.0, 0.0, 0.0, 1.0);
     }
 }
