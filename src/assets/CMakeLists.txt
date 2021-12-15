@@ -24,6 +24,8 @@ foreach (mat_src ${MATERIAL_SRCS})
 endforeach()
 
 # ¥¶¿ÌÃ˘Õº
+list(APPEND RESOURCE_BINS "${CMAKE_CURRENT_SOURCE_DIR}/textures/ibl_river_roughness_m0.png")
+
 foreach(tex_src ${TEXTURE_SRCS})
 	get_filename_component(localname "${tex_src}" NAME_WE)
 	set(input_path "${CMAKE_CURRENT_SOURCE_DIR}/${tex_src}")

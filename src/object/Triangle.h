@@ -1,17 +1,17 @@
 #ifndef fWLAB_OBJECT_TRIANGLE_H
 #define fWLAB_OBJECT_TRIANGLE_H
-#include <filament/Engine.h>
 #include <filament/VertexBuffer.h>
 #include <filament/IndexBuffer.h>
 #include <filament/Material.h>
 #include <utils/Entity.h>
+#include "../Context.h"
 
 /// <summary>
 /// Èý½ÇÐÎ
 /// </summary>
 class Triangle {
 public:
-	explicit Triangle(filament::Engine* engine, filament::Material* material);
+	explicit Triangle(Context* context, filament::Material* material);
 	virtual ~Triangle();
 	filament::VertexBuffer* vertexBuffer;
 	filament::IndexBuffer* indexBuffer;
@@ -19,7 +19,7 @@ public:
 	utils::Entity entity;
 
 private:
-	filament::Engine* engine;
+	Context* context;
 };
 
 #endif

@@ -1,22 +1,20 @@
 #include <filament/Viewport.h>
 #include <utils/EntityManager.h>
-#include "PerspectiveCamera.h"
+#include "OrthographicCamera.h"
 
-PerspectiveCamera::PerspectiveCamera(Context* context, double fov, double aspect, double near, double far, filament::Camera::Fov direction)
+OrthographicCamera::OrthographicCamera(Context* context, double left, double right, double top, double bottom, double near, double far)
 {
 	this->context = context;
-
-	filament::Viewport viewport = context->view->getViewport();
 
 	entity = utils::EntityManager::get().create();
 
 	camera = context->engine->createCamera(entity);
-	camera->setProjection(fov, aspect, near, far, direction);
+	camera->setProjection(filament::Camera::Projection::ORTHO, left, right, bottom, top, near, far);
 
 	context->view->setCamera(camera);
 }
 
-PerspectiveCamera::~PerspectiveCamera()
+OrthographicCamera::~OrthographicCamera()
 {
 	context->engine->destroy(entity);
 	context->engine->destroyCameraComponent(entity);

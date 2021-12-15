@@ -1,27 +1,27 @@
 #include "Skybox.h"
 
-Skybox::Skybox(filament::Engine* engine, filament::math::float4 color, bool showSun)
+Skybox::Skybox(Context* context, filament::math::float4 color, bool showSun)
 {
-	this->engine = engine;
+	this->context = context;
 
 	skybox = filament::Skybox::Builder()
 		.color(color)
 		.showSun(showSun)
-		.build(*engine);
+		.build(*context->engine);
 }
 
-Skybox::Skybox(filament::Engine* engine, filament::Texture* cubemap, float envIntensity, bool showSun)
+Skybox::Skybox(Context* context, filament::Texture* cubemap, float envIntensity, bool showSun)
 {
-	this->engine = engine;
+	this->context = context;
 
 	skybox = filament::Skybox::Builder()
 		.environment(cubemap)
 		.intensity(envIntensity)
 		.showSun(showSun)
-		.build(*engine);
+		.build(*context->engine);
 }
 
 Skybox::~Skybox()
 {
-	engine->destroy(skybox);
+	context->engine->destroy(skybox);
 }
