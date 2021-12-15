@@ -48,7 +48,7 @@ void Scene::cleanup(filament::Engine* engine, filament::View* view, filament::Sc
 
 void Scene::animate(filament::Engine* engine, filament::View* view, double now)
 {
-	filament::TransformManager& tcm = engine->getTransformManager();
-	tcm.setTransform(tcm.getInstance(triangle->entity),
-		filament::math::mat4f::rotation(now, filament::math::float3({ 0, 0, 1 })));
+	//filament::TransformManager& tcm = engine->getTransformManager();
+	//tcm.setTransform(tcm.getInstance(triangle->entity),
+	//	filament::math::mat4f::rotation(now, filament::math::float3({ 0, 0, 1 })));
 }
