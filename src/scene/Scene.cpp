@@ -23,7 +23,7 @@ void Scene::setup(filament::Engine* engine, filament::View* view, filament::Scen
 	camera = new PerspectiveCamera(engine, view);
 
 	// ЬьПеКа
-	skybox = new Skybox(engine, { 1.0, 0.0, 0.0, 0.5 });
+	skybox = new Skybox(engine);
 	scene->setSkybox(skybox->skybox);
 
 	// ЮяЬх

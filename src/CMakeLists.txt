@@ -15,6 +15,10 @@ add_executable(${MODULE_NAME} WIN32
 	"Application.cpp"
 )
 
+set_target_properties(${MODULE_NAME} PROPERTIES
+	OUTPUT_PATH ${CMAKE_BINARY_DIR}
+)
+
 target_link_libraries(${MODULE_NAME}
 	filament filamentapp
 	fwlab_assets fwlab_scene fwlab_utils
