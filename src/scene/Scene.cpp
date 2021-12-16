@@ -7,7 +7,8 @@
 #include "../Context.h"
 #include "../camera/OrthographicCamera.h"
 #include "../object/Skybox.h"
-#include "../object/Line.h"
+#include "../geometry/PointsGeometry.h"
+#include "../object/Mesh.h"
 
 #include "resources/resources.h"
 #include "scene.h"
@@ -15,8 +16,10 @@
 Context context;
 OrthographicCamera* camera;
 Skybox* skybox;
-filament::Material* mat;
-Line* object;
+
+filament::Material* material;
+PointsGeoemtry* geometry;
+Mesh* object;
 
 void Scene::setup(filament::Engine* engine, filament::View* view, filament::Scene* scene)
 {
@@ -31,11 +34,18 @@ void Scene::setup(filament::Engine* engine, filament::View* view, filament::Scen
 	scene->setSkybox(skybox->skybox);
 
 	// ÎïÌå
-	mat = filament::Material::Builder()
+	static float vertices[] = { 0, 0, 0 };
+
+	geometry = new PointsGeoemtry(&context);
+	geometry->create(vertices, sizeof(vertices) / sizeof(float));
+
+	material = filament::Material::Builder()
 		.package(RESOURCES_DEFAULTMATERIAL_DATA, RESOURCES_DEFAULTMATERIAL_SIZE)
 		.build(*engine);
 
-	object = new Line(&context, mat);
+	object = new Mesh(&context);
+	object->setPrimitiveType(filament::RenderableManager::PrimitiveType::POINTS);
+	object->create(geometry, material);
 	scene->addEntity(object->entity);
 }
 
@@ -44,6 +54,8 @@ void Scene::cleanup(filament::Engine* engine, filament::View* view, filament::Sc
 	delete camera;
 	delete skybox;
 	delete object;
+	delete object;
+	delete geometry;
 }
 
 void Scene::animate(filament::Engine* engine, filament::View* view, double now)
