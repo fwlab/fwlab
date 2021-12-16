@@ -9,13 +9,13 @@ Rectangle::Rectangle(Context* context, filament::Material* material)
 	this->context = context;
 	this->material = material;
 
-	float vertices[] = {
+	static float vertices[] = {
 		-0.5, -0.5,
 		0.5, -0.5,
 		0.5, 0.5,
 		-0.5, 0.5,
 	};
-	unsigned short indices[] = {
+	static unsigned short indices[] = {
 		0, 1, 2,
 		0, 2, 3,
 		0, 2, 1,

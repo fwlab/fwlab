@@ -6,7 +6,7 @@
 
 class OrthographicCamera {
 public:
-	explicit OrthographicCamera(Context* context, double left = -1, double right = 1, double top = 1, double bottom = -1, double near = 0, double far = 1);
+	explicit OrthographicCamera(Context* context, double left = -1, double right = 1, double top = 1, double bottom = -1, double near = -1, double far = 1);
 	virtual ~OrthographicCamera();
 	utils::Entity entity;
 	filament::Camera* camera;
