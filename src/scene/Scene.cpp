@@ -7,7 +7,7 @@
 #include "../Context.h"
 #include "../camera/OrthographicCamera.h"
 #include "../object/Skybox.h"
-#include "../object/Rectangle.h"
+#include "../object/Point.h"
 
 #include "resources/resources.h"
 #include "scene.h"
@@ -16,7 +16,7 @@ Context context;
 OrthographicCamera* camera;
 Skybox* skybox;
 filament::Material* mat;
-Rectangle* object;
+Point* object;
 
 void Scene::setup(filament::Engine* engine, filament::View* view, filament::Scene* scene)
 {
@@ -35,7 +35,7 @@ void Scene::setup(filament::Engine* engine, filament::View* view, filament::Scen
 		.package(RESOURCES_DEFAULTMATERIAL_DATA, RESOURCES_DEFAULTMATERIAL_SIZE)
 		.build(*engine);
 
-	object = new Rectangle(&context, mat);
+	object = new Point(&context, mat);
 	scene->addEntity(object->entity);
 }
 
