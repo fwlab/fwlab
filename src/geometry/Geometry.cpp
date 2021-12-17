@@ -23,8 +23,8 @@ Geometry::~Geometry()
 	{
 		auto min = boundingBox->getMin();
 		auto max = boundingBox->getMax();
-		delete& min;
-		delete& max;
+		// delete& min;
+		// delete& max;
 		delete boundingBox;
 	}
 }

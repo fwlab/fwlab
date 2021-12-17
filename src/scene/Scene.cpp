@@ -54,7 +54,7 @@ void Scene::cleanup(filament::Engine* engine, filament::View* view, filament::Sc
 	delete camera;
 	delete skybox;
 	delete object;
-	delete object;
+	engine->destroy(material);
 	delete geometry;
 }
 

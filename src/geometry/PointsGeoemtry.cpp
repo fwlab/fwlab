@@ -36,7 +36,7 @@ void PointsGeoemtry::create(float vertices[], uint32_t verticesSize)
 		.build(*context->engine);
 	vertexBuffer->setBufferAt(
 		*context->engine, 0,
-		VertexBuffer::BufferDescriptor(vertices, sizeof(vertices)));
+		VertexBuffer::BufferDescriptor(vertices, verticesSize * sizeof(float)));
 
 	indexBuffer = IndexBuffer::Builder()
 		.indexCount(1)
@@ -44,6 +44,6 @@ void PointsGeoemtry::create(float vertices[], uint32_t verticesSize)
 		.build(*context->engine);
 	indexBuffer->setBuffer(
 		*context->engine,
-		IndexBuffer::BufferDescriptor(indices, sizeof(indices))
+		IndexBuffer::BufferDescriptor(indices, vertexCount * sizeof(uint16_t))
 	);
 }
