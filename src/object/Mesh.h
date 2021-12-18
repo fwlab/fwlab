@@ -1,9 +1,8 @@
 #ifndef FLLAB_OBJECT_MESH_H
 #define FLLAB_OBJECT_MESH_H
-#include <filament/Material.h>
-#include <filament/RenderableManager.h>
 #include <utils/Entity.h>
 #include "../geometry/Geometry.h"
+#include "../material/Material.h"
 #include "Object3D.h"
 #include "../Context.h"
 
@@ -15,14 +14,12 @@ class Mesh : public Object3D
 public:
 	Mesh(Context* context);
 	virtual ~Mesh();
-	void create(Geometry* geometry, filament::Material* material);
-	void setPrimitiveType(filament::RenderableManager::PrimitiveType primitiveType);
-	filament::RenderableManager::PrimitiveType primitiveType = filament::RenderableManager::PrimitiveType::TRIANGLES;
+	void create(Geometry* geometry, Material* material);
 	bool culling = true;
 	bool castShadows = false;
 	bool receiveShadows = false;
 	Geometry* geometry = nullptr;
-	filament::Material* material = nullptr;
+	Material* material = nullptr;
 	utils::Entity entity;
 };
 

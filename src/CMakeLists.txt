@@ -4,6 +4,7 @@ add_subdirectory(assets)
 add_subdirectory(utils)
 add_subdirectory(camera)
 add_subdirectory(geometry)
+add_subdirectory(material)
 add_subdirectory(object)
 add_subdirectory(scene)
 

@@ -1,4 +1,4 @@
-set(MODULE_NAME fwlab_scene)
+set(MODULE_NAME fwlab_material)
 
 # 使用BEFORE避免引入其他目录下的resources/resources.h
 include_directories(
@@ -6,10 +6,13 @@ include_directories(
 )
 
 add_library(${MODULE_NAME} STATIC
-	"Scene.cpp"
- )
+	"Material.cpp"
+	"MeshBasicMaterial.cpp"
+	"PointsMaterial.cpp"
+	"LineBasicMaterial.cpp"
+)
 
 target_link_libraries(${MODULE_NAME}
 	filament filamentapp
-	fwlab_camera fwlab_object fwlab_material
+	fwlab_assets
 )

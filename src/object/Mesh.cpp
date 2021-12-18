@@ -14,12 +14,7 @@ Mesh::~Mesh()
 	}
 }
 
-void Mesh::setPrimitiveType(filament::RenderableManager::PrimitiveType primitiveType)
-{
-	this->primitiveType = primitiveType;
-}
-
-void Mesh::create(Geometry* geometry, filament::Material* material)
+void Mesh::create(Geometry* geometry, Material* material)
 {
 	this->geometry = geometry;
 	this->material = material;
@@ -27,8 +22,8 @@ void Mesh::create(Geometry* geometry, filament::Material* material)
 	entity = utils::EntityManager::get().create();
 	filament::RenderableManager::Builder(1)
 		.boundingBox(*geometry->boundingBox)
-		.geometry(0, primitiveType, geometry->vertexBuffer, geometry->indexBuffer)
-		.material(0, material->getDefaultInstance())
+		.geometry(0, material->primitiveType, geometry->vertexBuffer, geometry->indexBuffer)
+		.material(0, material->material->getDefaultInstance())
 		.culling(culling)
 		.castShadows(castShadows)
 		.receiveShadows(receiveShadows)
