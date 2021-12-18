@@ -7,7 +7,7 @@
 #include "../Context.h"
 
 /// <summary>
-/// 几何体基类
+/// 几何体
 /// </summary>
 class Geometry {
 public:
@@ -25,5 +25,7 @@ protected:
 
 private:
 	uint16_t* indices = nullptr;
+	filament::math::float3* min = nullptr;
+	filament::math::float3* max = nullptr;
 };
 #endif

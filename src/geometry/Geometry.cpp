@@ -25,10 +25,8 @@ Geometry::~Geometry()
 	}
 	if (boundingBox)
 	{
-		auto min = boundingBox->getMin();
-		auto max = boundingBox->getMax();
-		// delete& min;
-		// delete& max;
+		delete min;
+		delete max;
 		delete boundingBox;
 	}
 	if (indices)
@@ -75,8 +73,8 @@ void Geometry::create(float vertices[], uint32_t verticesSize)
 
 void Geometry::computeBoundingBox(float vertices[], uint32_t verticesSize)
 {
-	auto* min = new filament::math::float3(FLT_MAX, FLT_MAX, FLT_MAX);
-	auto* max = new filament::math::float3(-FLT_MAX, -FLT_MAX, -FLT_MAX);
+	min = new filament::math::float3(FLT_MAX, FLT_MAX, FLT_MAX);
+	max = new filament::math::float3(-FLT_MAX, -FLT_MAX, -FLT_MAX);
 
 	for (uint32_t i = 0, len = verticesSize / 3; i < len; i++)
 	{
