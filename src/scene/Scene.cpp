@@ -34,7 +34,7 @@ void Scene::setup(filament::Engine* engine, filament::View* view, filament::Scen
 	scene->setSkybox(skybox->skybox);
 
 	// ÎïÌå
-	static float vertices[] = { 0, 0, 0 };
+	static float vertices[] = { -0.5, 0, 0, 0.5, 0, 0 };
 
 	geometry = new PointsGeoemtry(&context);
 	geometry->create(vertices, sizeof(vertices) / sizeof(float));
@@ -44,7 +44,7 @@ void Scene::setup(filament::Engine* engine, filament::View* view, filament::Scen
 		.build(*engine);
 
 	object = new Mesh(&context);
-	object->setPrimitiveType(filament::RenderableManager::PrimitiveType::POINTS);
+	object->setPrimitiveType(filament::RenderableManager::PrimitiveType::LINES);
 	object->create(geometry, material);
 	scene->addEntity(object->entity);
 }

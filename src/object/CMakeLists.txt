@@ -6,7 +6,6 @@ add_library(${MODULE_NAME} STATIC
 	"Skybox.cpp"
 	"Triangle.cpp"
 	"Rectangle.cpp"
-	"Point.cpp" 
 	"Line.cpp"
  )
 
