@@ -8,13 +8,10 @@ Mesh::Mesh(Context* context) : Object3D(context)
 
 Mesh::~Mesh()
 {
-	if (context && context->engine && entity)
-	{
-		context->engine->destroy(entity);
-	}
+
 }
 
-void Mesh::create(Geometry* geometry, Material* material)
+Mesh* Mesh::create(Geometry* geometry, Material* material)
 {
 	this->geometry = geometry;
 	this->material = material;
@@ -28,4 +25,5 @@ void Mesh::create(Geometry* geometry, Material* material)
 		.castShadows(castShadows)
 		.receiveShadows(receiveShadows)
 		.build(*context->engine, entity);
+	return this;
 }

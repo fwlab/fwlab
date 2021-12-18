@@ -14,13 +14,12 @@ class Mesh : public Object3D
 public:
 	Mesh(Context* context);
 	virtual ~Mesh();
-	void create(Geometry* geometry, Material* material);
+	Mesh* create(Geometry* geometry, Material* material);
 	bool culling = true;
 	bool castShadows = false;
 	bool receiveShadows = false;
 	Geometry* geometry = nullptr;
 	Material* material = nullptr;
-	utils::Entity entity;
 };
 
 #endif
