@@ -4,9 +4,6 @@ add_library(${MODULE_NAME} STATIC
     "Object3D.cpp"
 	"Mesh.cpp"
 	"Skybox.cpp"
-	"Triangle.cpp"
-	"Rectangle.cpp"
-	"Line.cpp"
  )
 
 target_link_libraries(${MODULE_NAME}

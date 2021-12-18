@@ -35,12 +35,12 @@ Geometry::~Geometry()
 	}
 }
 
-void Geometry::create()
+Geometry* Geometry::create()
 {
-
+	return this;
 }
 
-void Geometry::create(float vertices[], uint32_t verticesSize)
+Geometry* Geometry::create(float vertices[], uint32_t verticesSize)
 {
 	auto vertexCount = verticesSize / 3;
 	indices = new uint16_t[vertexCount];
@@ -69,6 +69,8 @@ void Geometry::create(float vertices[], uint32_t verticesSize)
 		*context->engine,
 		IndexBuffer::BufferDescriptor(indices, vertexCount * sizeof(uint16_t))
 	);
+
+	return this;
 }
 
 void Geometry::computeBoundingBox(float vertices[], uint32_t verticesSize)

@@ -13,8 +13,8 @@ class Geometry {
 public:
 	Geometry(Context* context);
 	virtual ~Geometry();
-	void create();
-	void create(float vertices[], uint32_t verticesSize);
+	Geometry* create();
+	Geometry* create(float vertices[], uint32_t verticesSize);
 	filament::VertexBuffer* vertexBuffer = nullptr;
 	filament::IndexBuffer* indexBuffer = nullptr;
 	filament::Box* boundingBox = nullptr;
