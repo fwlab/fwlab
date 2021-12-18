@@ -1,5 +1,9 @@
 #include <climits>
+#include <filament/VertexBuffer.h>
+#include <filament/IndexBuffer.h>
 #include "Geometry.h"
+
+using namespace filament;
 
 Geometry::Geometry(Context* context)
 {
@@ -27,11 +31,46 @@ Geometry::~Geometry()
 		// delete& max;
 		delete boundingBox;
 	}
+	if (indices)
+	{
+		delete[] indices;
+	}
 }
 
 void Geometry::create()
 {
 
+}
+
+void Geometry::create(float vertices[], uint32_t verticesSize)
+{
+	auto vertexCount = verticesSize / 3;
+	indices = new uint16_t[vertexCount];
+
+	for (uint32_t i = 0; i < vertexCount; i++)
+	{
+		indices[i] = i;
+	}
+
+	computeBoundingBox(vertices, verticesSize);
+
+	vertexBuffer = VertexBuffer::Builder()
+		.vertexCount(vertexCount)
+		.bufferCount(1)
+		.attribute(VertexAttribute::POSITION, 0, VertexBuffer::AttributeType::FLOAT3)
+		.build(*context->engine);
+	vertexBuffer->setBufferAt(
+		*context->engine, 0,
+		VertexBuffer::BufferDescriptor(vertices, verticesSize * sizeof(float)));
+
+	indexBuffer = IndexBuffer::Builder()
+		.indexCount(vertexCount)
+		.bufferType(IndexBuffer::IndexType::USHORT)
+		.build(*context->engine);
+	indexBuffer->setBuffer(
+		*context->engine,
+		IndexBuffer::BufferDescriptor(indices, vertexCount * sizeof(uint16_t))
+	);
 }
 
 void Geometry::computeBoundingBox(float vertices[], uint32_t verticesSize)
@@ -70,7 +109,7 @@ void Geometry::computeBoundingBox(float vertices[], uint32_t verticesSize)
 		}
 	}
 
-	// 顶点为空的情况
+	// no vertices
 	if (min->x > max->x)
 	{
 		min->x = max->x = 0;
@@ -84,7 +123,7 @@ void Geometry::computeBoundingBox(float vertices[], uint32_t verticesSize)
 		min->z = max->z = 0;
 	}
 
-	// 只有一个顶点的情况
+	// only one vertex
 	if (min->x == max->x)
 	{
 		min->x -= 1;

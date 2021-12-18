@@ -1,5 +1,6 @@
 #ifndef FWLAB_GEOMETRY_GEOMETRY_H
 #define FWLAB_GEOMETRY_GEOMETRY_H
+#include <stdint.h>
 #include <filament/VertexBuffer.h>
 #include <filament/IndexBuffer.h>
 #include <filament/Box.h>
@@ -13,6 +14,7 @@ public:
 	Geometry(Context* context);
 	virtual ~Geometry();
 	void create();
+	void create(float vertices[], uint32_t verticesSize);
 	filament::VertexBuffer* vertexBuffer = nullptr;
 	filament::IndexBuffer* indexBuffer = nullptr;
 	filament::Box* boundingBox = nullptr;
@@ -20,5 +22,8 @@ public:
 protected:
 	void computeBoundingBox(float vertices[], uint32_t verticesSize);
 	Context* context = nullptr;
+
+private:
+	uint16_t* indices = nullptr;
 };
 #endif

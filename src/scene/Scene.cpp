@@ -7,7 +7,7 @@
 #include "../Context.h"
 #include "../camera/OrthographicCamera.h"
 #include "../object/Skybox.h"
-#include "../geometry/PointsGeometry.h"
+#include "../geometry/Geometry.h"
 #include "../object/Mesh.h"
 
 #include "resources/resources.h"
@@ -18,7 +18,7 @@ OrthographicCamera* camera;
 Skybox* skybox;
 
 filament::Material* material;
-PointsGeoemtry* geometry;
+Geometry* geometry;
 Mesh* object;
 
 void Scene::setup(filament::Engine* engine, filament::View* view, filament::Scene* scene)
@@ -34,9 +34,9 @@ void Scene::setup(filament::Engine* engine, filament::View* view, filament::Scen
 	scene->setSkybox(skybox->skybox);
 
 	// ÎïÌå
-	static float vertices[] = { -0.5, 0, 0, 0.5, 0, 0 };
+	static float vertices[] = { -0.5, 0, 0, 0.5, 0, 0, 0, 0, 0, 0, 0.5, 0 };
 
-	geometry = new PointsGeoemtry(&context);
+	geometry = new Geometry(&context);
 	geometry->create(vertices, sizeof(vertices) / sizeof(float));
 
 	material = filament::Material::Builder()
@@ -44,7 +44,7 @@ void Scene::setup(filament::Engine* engine, filament::View* view, filament::Scen
 		.build(*engine);
 
 	object = new Mesh(&context);
-	object->setPrimitiveType(filament::RenderableManager::PrimitiveType::LINES);
+	object->setPrimitiveType(filament::RenderableManager::PrimitiveType::POINTS);
 	object->create(geometry, material);
 	scene->addEntity(object->entity);
 }
