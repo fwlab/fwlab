@@ -5,7 +5,7 @@
 #include "scene/Scene.h"
 #include "Application.h"
 
-static const char* IBL_FOLDER = "src/assets/ibl/lightroom_14b";
+static const char* IBL_FOLDER = "assets/ibl/lightroom_14b";
 
 Application::Application()
 {

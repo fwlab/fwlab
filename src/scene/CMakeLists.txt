@@ -2,7 +2,7 @@ set(MODULE_NAME fwlab_scene)
 
 # 使用BEFORE避免引入其他目录下的resources/resources.h
 include_directories(
-	BEFORE "${CMAKE_BINARY_DIR}/src/assets"
+	BEFORE "${CMAKE_BINARY_DIR}/assets"
 )
 
 add_library(${MODULE_NAME} STATIC

@@ -5,72 +5,21 @@ project(fwlab VERSION 0.0.1)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-if (WIN32)
-    # Link statically against c/c++ lib to avoid missing redistriburable such as
-    # "VCRUNTIME140.dll not found. Try reinstalling the app.", but give users
-    # a choice to opt for the shared runtime if they want.
-    option(USE_STATIC_CRT "Link against the static runtime libraries." ON)
+set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
+add_compile_options(
+	$<$<CONFIG:>:/MT>
+    $<$<CONFIG:Debug>:/MTd>
+	$<$<CONFIG:Release>:/MT>
+)
 
-    # On Windows we need to instruct cmake to generate the .def in order to get the .lib required
-    # when linking against dlls. CL.EXE will not generate .lib without .def file (or without pragma
-    # __declspec(dllexport) in front of each functions).
-    set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
+set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "${CMAKE_CXX_FLAGS_RELWITHDEBINFO} /Z7")
+set(CMAKE_C_FLAGS_RELWITHDEBINFO "${CMAKE_C_FLAGS_RELWITHDEBINFO} /Z7")
 
-    # The CMAKE_CXX_FLAGS vars can be overriden by some Visual Studio generators, so we use an alternative
-    # global method here:
-    if (${USE_STATIC_CRT})
-        add_compile_options(
-            $<$<CONFIG:>:/MT>
-            $<$<CONFIG:Debug>:/MTd>
-            $<$<CONFIG:Release>:/MT>
-        )
-    else()
-        add_compile_options(
-            $<$<CONFIG:>:/MD>
-            $<$<CONFIG:Debug>:/MDd>
-            $<$<CONFIG:Release>:/MD>
-        )
-    endif()
+set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /Z7")
+set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} /Z7")
 
-    # TODO: Figure out why pdb generation messes with incremental compilaton.
-    # IN RELEASE_WITH_DEBUG_INFO, generate debug info in .obj, no in pdb.
-    set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "${CMAKE_CXX_FLAGS_RELWITHDEBINFO} /Z7")
-    set(CMAKE_C_FLAGS_RELWITHDEBINFO "${CMAKE_C_FLAGS_RELWITHDEBINFO} /Z7")
-
-    # In RELEASE, also generate PDBs.
-    set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /Zi")
-    set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} /Zi")
-
-    # In DEBUG, avoid generating a PDB file which seems to mess with incremental compilation.
-    # Instead generate debug info directly inside obj files.
-    set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /Z7")
-    set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} /Z7")
-
-    # Special settings when building on CI.
-    if (${FILAMENT_WINDOWS_CI_BUILD})
-        set(LinkerFlags
-            CMAKE_SHARED_LINKER_FLAGS_DEBUG
-            CMAKE_EXE_LINKER_FLAGS_DEBUG
-            CMAKE_MODULE_LINKER_FLAGS_DEBUG
-            )
-        foreach(LinkerFlag ${LinkerFlags})
-            # The /debug flag outputs .pdb files, which we don't need on CI.
-            string(REPLACE "/debug" "" ${LinkerFlag} ${${LinkerFlag}})
-
-            # The /INCREMENTAL flag outputs .ilk files for incremental linking. These are huge, and
-            # we don't need them on CI.
-            string(REPLACE "/INCREMENTAL" "/INCREMENTAL:NO" ${LinkerFlag} ${${LinkerFlag}})
-        endforeach()
-    endif()
-endif()
-
-if (WIN32)
-    set(CXX_STANDARD "/std:c++17")
-endif()
-
-if (WIN32)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D_USE_MATH_DEFINES=1")
-endif()
+set(CXX_STANDARD "/std:c++17")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D_USE_MATH_DEFINES=1")
 
 # third_party
 set(FILAMENT_DIR ${CMAKE_SOURCE_DIR}/third_party/filament)
@@ -233,4 +182,8 @@ link_libraries(
 )
 
 # sub_directories
+add_subdirectory(assets)
+link_libraries(
+	fwlab_assets
+)
 add_subdirectory(src)
