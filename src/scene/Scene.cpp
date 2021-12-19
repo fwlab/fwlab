@@ -8,19 +8,15 @@
 #include <filament/LightManager.h>
 
 #include "../Context.h"
-#include "../camera/OrthographicCamera.h"
-#include "../geometry/Geometry.h"
-#include "../material/MeshBasicMaterial.h"
-#include "../material/PointsMaterial.h"
-#include "../material/LineBasicMaterial.h"
-#include "../object/Mesh.h"
+#include "../loader/FilameshLoader.h"
 #include "resources/resources.h"
 #include "Scene.h"
 
 Context context;
 
+FilameshLoader* loader;
 Material* material;
-filamesh::MeshReader::Mesh mesh;
+Mesh* mesh;
 utils::Entity light;
 filament::MaterialInstance* mi;
 filament::math::mat4f transform;
@@ -33,7 +29,7 @@ void Scene::setup(filament::Engine* engine, filament::View* view, filament::Scen
 	auto& rcm = engine->getRenderableManager();
 	auto& em = utils::EntityManager::get();
 
-	material = new MeshBasicMaterial(&context);
+	material = new Material(&context);
 	material->create(RESOURCES_AIDEFAULTMAT_DATA, RESOURCES_AIDEFAULTMAT_SIZE);
 	mi = material->createInstance();
 	mi->setParameter("baseColor", filament::RgbType::LINEAR, filament::math::float3{ 0.8 });
@@ -41,13 +37,15 @@ void Scene::setup(filament::Engine* engine, filament::View* view, filament::Scen
 	mi->setParameter("roughness", 0.4f);
 	mi->setParameter("reflectance", 0.5f);
 
-	mesh = filamesh::MeshReader::loadMeshFromBuffer(engine, RESOURCES_MONKEY_DATA, nullptr, nullptr, mi);
-	auto ti = tcm.getInstance(mesh.renderable);
+	loader = new FilameshLoader(&context);
+	mesh = loader->load(RESOURCES_MONKEY_DATA, mi);
+
+	auto ti = tcm.getInstance(mesh->entity);
 	transform = filament::math::mat4f{
 		filament::math::mat3f(1),
 		filament::math::float3(0, 0, -4) } *tcm.getWorldTransform(ti);
 	//rcm.setCastShadows(rcm.getInstance(app.mesh.renderable), false);
-	scene->addEntity(mesh.renderable);
+	scene->addEntity(mesh->entity);
 
 	// Add light sources into the scene.
 	light = em.create();
@@ -66,12 +64,13 @@ void Scene::cleanup(filament::Engine* engine, filament::View* view, filament::Sc
 	engine->destroy(mi);
 	delete material;
 	engine->destroy(light);
-	engine->destroy(mesh.renderable);
+	delete mesh;
+	delete loader;
 }
 
 void Scene::animate(filament::Engine* engine, filament::View* view, double now)
 {
 	auto& tcm = engine->getTransformManager();
-	auto ti = tcm.getInstance(mesh.renderable);
+	auto ti = tcm.getInstance(mesh->entity);
 	tcm.setTransform(ti, transform * filament::math::mat4f::rotation(now, filament::math::float3{ 0, 1, 0 }));
 }

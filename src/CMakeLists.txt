@@ -5,6 +5,7 @@ add_subdirectory(camera)
 add_subdirectory(geometry)
 add_subdirectory(material)
 add_subdirectory(object)
+add_subdirectory(loader)
 add_subdirectory(scene)
 
 # 生成图标文件

@@ -15,12 +15,12 @@ public:
 	virtual ~Geometry();
 	Geometry* create();
 	Geometry* create(float vertices[], uint32_t verticesSize);
+	void computeBoundingBox(float vertices[], uint32_t verticesSize);
 	filament::VertexBuffer* vertexBuffer = nullptr;
 	filament::IndexBuffer* indexBuffer = nullptr;
 	filament::Box* boundingBox = nullptr;
 
 protected:
-	void computeBoundingBox(float vertices[], uint32_t verticesSize);
 	Context* context = nullptr;
 
 private:
