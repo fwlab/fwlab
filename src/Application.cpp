@@ -5,9 +5,12 @@
 #include "scene/Scene.h"
 #include "Application.h"
 
+static const char* IBL_FOLDER = "src/assets/ibl/lightroom_14b";
+
 Application::Application()
 {
 	config.title = EncodingUtils::GBKToUTF8("人工智能实验室");
+	config.iblDirectory = FilamentApp::getRootAssetsPath() + IBL_FOLDER;
 }
 
 Application::~Application()

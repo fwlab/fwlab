@@ -16,10 +16,20 @@ Material::~Material()
 
 Material* Material::create()
 {
+	return create(RESOURCES_DEFAULTMATERIAL_DATA, RESOURCES_DEFAULTMATERIAL_SIZE);
+}
+
+Material* Material::create(const void* payload, size_t size)
+{
 	material = filament::Material::Builder()
-		.package(RESOURCES_DEFAULTMATERIAL_DATA, RESOURCES_DEFAULTMATERIAL_SIZE)
+		.package(payload, size)
 		.build(*context->engine);
 	return this;
+}
+
+filament::MaterialInstance* Material::createInstance()
+{
+	return material->createInstance();
 }
 
 void Material::setPrimitiveType(filament::RenderableManager::PrimitiveType primitiveType)
