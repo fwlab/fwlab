@@ -90,6 +90,10 @@ add_custom_command(
 )
 list(APPEND RESOURCE_BINS ${target_path})
 
+# 复制字体文件
+file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/fonts/Roboto-License.txt" DESTINATION "${ASSETS_DIR}/fonts")
+file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/fonts/Roboto-Medium.ttf" DESTINATION "${ASSETS_DIR}/fonts")
+
 # 打包资源
 add_custom_command(
 	OUTPUT ${ASSETS_DIR}/resources/resources.c
@@ -99,4 +103,5 @@ add_custom_command(
 
 add_library(${MODULE_NAME} STATIC
 	"${ASSETS_DIR}/resources/resources.c"
+	"${font_target_path}"
 )

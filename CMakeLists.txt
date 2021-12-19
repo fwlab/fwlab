@@ -167,6 +167,8 @@ link_libraries(
 	filameshio.lib
 	geometry.lib
 	gltfio.lib
+	gltfio_core.lib
+	gltfio_resources.lib
 	ibl.lib
 	filament-iblprefilter.lib
 	image.lib

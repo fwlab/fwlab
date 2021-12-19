@@ -20,7 +20,7 @@ Application::~Application()
 void Application::start()
 {
 	FilamentApp::get().animate(Scene::animate);
-	FilamentApp::get().run(config, Scene::setup, Scene::cleanup);
+	FilamentApp::get().run(config, Scene::setup, Scene::cleanup, Scene::imgui);
 }
 
 void Application::stop()

@@ -10,6 +10,6 @@ add_library(${MODULE_NAME} STATIC
  )
 
 target_link_libraries(${MODULE_NAME}
-	filament filamentapp
+	filament filamentapp viewer gltfio gltfio_core
 	fwlab_camera fwlab_object fwlab_material fwlab_light fwlab_loader
 )
