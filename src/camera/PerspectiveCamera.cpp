@@ -1,4 +1,3 @@
-#include <filament/Viewport.h>
 #include <utils/EntityManager.h>
 #include "PerspectiveCamera.h"
 
@@ -6,14 +5,10 @@ PerspectiveCamera::PerspectiveCamera(Context* context, double fov, double aspect
 {
 	this->context = context;
 
-	filament::Viewport viewport = context->view->getViewport();
-
 	entity = utils::EntityManager::get().create();
 
 	camera = context->engine->createCamera(entity);
 	camera->setProjection(fov, aspect, near, far, direction);
-
-	context->view->setCamera(camera);
 }
 
 PerspectiveCamera::~PerspectiveCamera()
