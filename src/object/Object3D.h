@@ -21,7 +21,12 @@ public:
 	void setScaling(filament::math::double3 scaling);
 
 protected:
-	Context* context;
+	Context* context = nullptr;
+	filament::math::mat4* translateMatrix = nullptr;
+	filament::math::mat4* rotateMatrix = nullptr;
+	filament::math::mat4* scaleMatrix = nullptr;
+	filament::math::mat4* matrix = nullptr;
+	void updateMatrix();
 };
 
 #endif

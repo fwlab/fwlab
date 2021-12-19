@@ -5,6 +5,12 @@ Object3D::Object3D(Context* context)
 {
 	this->context = context;
 
+	translateMatrix = new filament::math::mat4();
+	rotateMatrix = new filament::math::mat4();
+	scaleMatrix = new filament::math::mat4();
+	matrix = new filament::math::mat4();
+	this->updateMatrix();
+
 	filament::TransformManager& manager = context->engine->getTransformManager();
 	manager.setAccurateTranslationsEnabled(true);
 }
@@ -15,6 +21,10 @@ Object3D::~Object3D()
 	{
 		context->engine->destroy(entity);
 	}
+	delete translateMatrix;
+	delete rotateMatrix;
+	delete scaleMatrix;
+	delete matrix;
 }
 
 Object3D* Object3D::create()
@@ -43,17 +53,29 @@ void Object3D::setTransform(filament::math::mat4 transform)
 void Object3D::setTranslation(filament::math::double3 translation)
 {
 	filament::TransformManager& manager = context->engine->getTransformManager();
-	return manager.setTransform(manager.getInstance(entity), filament::math::mat4::translation(translation));
+	*translateMatrix = filament::math::mat4::translation(translation);
+	updateMatrix();
+	return manager.setTransform(manager.getInstance(entity), *matrix);
 }
 
 void Object3D::setRotation(double radian, filament::math::double3 axis)
 {
 	filament::TransformManager& manager = context->engine->getTransformManager();
-	return manager.setTransform(manager.getInstance(entity), filament::math::mat4::rotation(radian, axis));
+	*rotateMatrix = filament::math::mat4::rotation(radian, axis);
+	updateMatrix();
+	return manager.setTransform(manager.getInstance(entity), *matrix);
 }
 
 void Object3D::setScaling(filament::math::double3 scaling)
 {
 	filament::TransformManager& manager = context->engine->getTransformManager();
-	return manager.setTransform(manager.getInstance(entity), filament::math::mat4::scaling(scaling));
+	*scaleMatrix = filament::math::mat4::scaling(scaling);
+	updateMatrix();
+	return manager.setTransform(manager.getInstance(entity), *matrix);
+}
+
+void Object3D::updateMatrix()
+{
+	auto worldMatrix = getWorldTransform();
+	*matrix = (*translateMatrix) * (*rotateMatrix) * (*scaleMatrix);
 }
