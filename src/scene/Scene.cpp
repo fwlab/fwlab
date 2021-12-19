@@ -8,6 +8,7 @@
 #include <filament/LightManager.h>
 
 #include "../Context.h"
+#include "../light/Light.h"
 #include "../loader/FilameshLoader.h"
 #include "resources/resources.h"
 #include "Scene.h"
@@ -17,13 +18,17 @@ Context context;
 FilameshLoader* loader;
 Material* material;
 Mesh* mesh;
-utils::Entity light;
+Light* light;
 filament::MaterialInstance* mi;
 filament::math::mat4f transform;
 
 void Scene::setup(filament::Engine* engine, filament::View* view, filament::Scene* scene)
 {
 	context = { engine, view, scene };
+
+	light = new Light(&context);
+	light->create();
+	scene->addEntity(light->entity);
 
 	auto& tcm = engine->getTransformManager();
 	auto& rcm = engine->getRenderableManager();
@@ -41,35 +46,31 @@ void Scene::setup(filament::Engine* engine, filament::View* view, filament::Scen
 	mesh = loader->load(RESOURCES_MONKEY_DATA, mi);
 
 	auto ti = tcm.getInstance(mesh->entity);
-	transform = filament::math::mat4f{
+	filament::math::mat4f mat4 = filament::math::mat4f{
 		filament::math::mat3f(1),
-		filament::math::float3(0, 0, -4) } *tcm.getWorldTransform(ti);
+		filament::math::float3(0, 0, -4) };
+	transform = mat4 * tcm.getWorldTransform(ti);
 	//rcm.setCastShadows(rcm.getInstance(app.mesh.renderable), false);
 	scene->addEntity(mesh->entity);
-
-	// Add light sources into the scene.
-	light = em.create();
-	filament::LightManager::Builder(filament::LightManager::Type::SUN)
-		.color(filament::Color::toLinear<filament::ColorConversion::ACCURATE>(filament::sRGBColor(0.98f, 0.92f, 0.89f)))
-		.intensity(110000)
-		.direction({ 0.7, -1, -0.8 })
-		.sunAngularRadius(1.9f)
-		.castShadows(false)
-		.build(*engine, light);
-	scene->addEntity(light);
 }
 
 void Scene::cleanup(filament::Engine* engine, filament::View* view, filament::Scene* scene)
 {
 	engine->destroy(mi);
 	delete material;
-	engine->destroy(light);
 	delete mesh;
 	delete loader;
+	delete light;
 }
 
 void Scene::animate(filament::Engine* engine, filament::View* view, double now)
 {
+	//if (!mesh)
+	//{
+	//	return;
+	//}
+	//mesh->setRotation(now, filament::math::double3{ 0, 1, 0 });
+
 	auto& tcm = engine->getTransformManager();
 	auto ti = tcm.getInstance(mesh->entity);
 	tcm.setTransform(ti, transform * filament::math::mat4f::rotation(now, filament::math::float3{ 0, 1, 0 }));
