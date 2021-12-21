@@ -15,6 +15,7 @@ public:
 	virtual ~Geometry();
 	Geometry* create();
 	Geometry* create(float vertices[], uint32_t verticesSize);
+	Geometry* create(float vertices[], uint32_t verticesSize, uint16_t indices[], uint32_t indicesSize);
 	void computeBoundingBox(float vertices[], uint32_t verticesSize);
 	filament::VertexBuffer* vertexBuffer = nullptr;
 	filament::IndexBuffer* indexBuffer = nullptr;

@@ -52,8 +52,15 @@ Geometry* Geometry::create(float vertices[], uint32_t verticesSize)
 
 	computeBoundingBox(vertices, verticesSize);
 
+	return create(vertices, verticesSize, indices, vertexCount);
+}
+
+Geometry* Geometry::create(float vertices[], uint32_t verticesSize, uint16_t indices[], uint32_t indicesSize)
+{
+	computeBoundingBox(vertices, verticesSize);
+
 	vertexBuffer = VertexBuffer::Builder()
-		.vertexCount(vertexCount)
+		.vertexCount(verticesSize / 3)
 		.bufferCount(1)
 		.attribute(VertexAttribute::POSITION, 0, VertexBuffer::AttributeType::FLOAT3)
 		.build(*context->engine);
@@ -62,12 +69,12 @@ Geometry* Geometry::create(float vertices[], uint32_t verticesSize)
 		VertexBuffer::BufferDescriptor(vertices, verticesSize * sizeof(float)));
 
 	indexBuffer = IndexBuffer::Builder()
-		.indexCount(vertexCount)
+		.indexCount(indicesSize)
 		.bufferType(IndexBuffer::IndexType::USHORT)
 		.build(*context->engine);
 	indexBuffer->setBuffer(
 		*context->engine,
-		IndexBuffer::BufferDescriptor(indices, vertexCount * sizeof(uint16_t))
+		IndexBuffer::BufferDescriptor(indices, indicesSize * sizeof(uint16_t))
 	);
 
 	return this;

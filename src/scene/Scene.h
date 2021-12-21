@@ -13,7 +13,6 @@ public:
 	static void cleanup(filament::Engine* engine, filament::View* view, filament::Scene* scene);
 	static void animate(filament::Engine* engine, filament::View* view, double now);
 	static void imgui(filament::Engine* engine, filament::View* view);
-	static void uiCallback();
 
 private:
 	Scene() {}
