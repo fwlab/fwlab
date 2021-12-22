@@ -1,21 +1,16 @@
 #include <cmath>
-#include <vector>
 #include "BoxGeometry.h"
 
-template <typename T>
-BoxGeometry<T>::BoxGeometry(T width, T height, T depth, int widthSegments, int heightSegments, int depthSegments)
+BoxGeometry::BoxGeometry(Context* context) : Geometry(context)
 {
-	this->type = "BoxGeometry";
+}
 
-	this->parameters = new BoxGeometryParameters<T>{
-		.width = width,
-		.height = height,
-		.depth = depth,
-		.widthSegments = widthSegments,
-		.heightSegments = heightSegments,
-		.depthSegments = depthSegments
-	};
+BoxGeometry::~BoxGeometry()
+{
+}
 
+BoxGeometry* create(float width, float height, float depth, uint16_t widthSegments, uint16_t heightSegments, uint16_t depthSegments)
+{
 	// segments
 	widthSegments = std::floor(widthSegments);
 	heightSegments = std::floor(heightSegments);
@@ -38,23 +33,6 @@ BoxGeometry<T>::BoxGeometry(T width, T height, T depth, int widthSegments, int h
 	this->setAttribute("position", new Float32BufferAttribute(this->vertices, 3));
 	this->setAttribute("normal", new Float32BufferAttribute(this->normals, 3));
 	this->setAttribute("uv", new Float32BufferAttribute(this->uvs, 2));
-}
-
-template <typename T>
-BoxGeometry<T>::~BoxGeometry()
-{
-}
-
-template <typename T>
-BoxGeometry<T>* BoxGeometry<T>::fromJSON(BoxBufferGeometryJSON<T>* data)
-{
-	return new BoxGeometry(
-		data->width,
-		data->height,
-		data->depth,
-		data->widthSegments,
-		data->heightSegments,
-		data->depthSegments);
 }
 
 template <typename T>

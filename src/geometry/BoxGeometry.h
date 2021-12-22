@@ -1,25 +1,17 @@
 #ifndef BOX_GEOMETRY_H
 #define BOX_GEOMETRY_H
-#include <vector>
-#include "../core/buffer_geometry.h"
-#include "../core/buffer_attribute.h"
-#include "../math/vector3.h"
+#include "../Context.h"
+#include "Geometry.h"
 
-template <typename T>
-class BoxGeometry : public BufferGeometry<T>
+/// <summary>
+/// Α’·½Με
+/// </summary>
+class BoxGeometry : public Geometry
 {
 public:
-	explicit BoxGeometry(
-		T width = 1,
-		T height = 1,
-		T depth = 1,
-		int widthSegments = 1,
-		int heightSegments = 1,
-		int depthSegments = 1);
+	BoxGeometry(Context* context);
 	virtual ~BoxGeometry();
-	static BoxGeometry<T>* fromJSON(BoxBufferGeometryJSON<T>* data);
-	std::string type;
-	BoxGeometryParameters<T>* parameters;
+	BoxGeometry* create(float width = 1, float height = 1, float depth = 1, uint16_t widthSegments = 1, uint16_t heightSegments = 1, uint16_t depthSegments = 1);
 
 private:
 	std::vector<float> vertices;
