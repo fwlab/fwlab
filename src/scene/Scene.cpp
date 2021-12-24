@@ -1,10 +1,8 @@
-#include <filament/Viewport.h>
-#include <viewer/SimpleViewer.h>
-#include <filamentapp/FilamentApp.h>
 #include <imgui.h>
 #include <filagui/ImGuiExtensions.h>
 #include "../Context.h"
 #include "../geometry/PlaneGeometry.h"
+#include "../material/StandardMaterial.h"
 #include "../object/Mesh.h"
 #include "../light/Light.h"
 #include "../loader/FilameshLoader.h"
@@ -13,10 +11,9 @@
 
 Context context;
 Light* light;
-Material* material;
 PlaneGeometry* geometry;
+Material* material;
 Mesh* plane;
-filament::MaterialInstance* materialIndex;
 FilameshLoader* loader;
 Mesh* mesh;
 
@@ -30,18 +27,15 @@ void Scene::setup(filament::Engine* engine, filament::View* view, filament::Scen
 	light->create();
 	scene->addEntity(light->entity);
 
-	// 材质
-	material = new Material(&context);
-	material->create(RESOURCES_AIDEFAULTMAT_DATA, RESOURCES_AIDEFAULTMAT_SIZE);
-	materialIndex = material->createInstance();
-	materialIndex->setParameter("baseColor", filament::RgbType::LINEAR, filament::math::float3{ 0.8 });
-	materialIndex->setParameter("metallic", 1.0f);
-	materialIndex->setParameter("roughness", 0.4f);
-	materialIndex->setParameter("reflectance", 0.5f);
-
-	// 平面
+	// 几何
 	geometry = new PlaneGeometry(&context);
 	geometry->create(10, 10, 10);
+
+	// 材质
+	material = new StandardMaterial(&context);
+	material->create();
+
+	// 平面
 	plane = new Mesh(&context);
 	plane->create(geometry, material);
 	plane->setTranslation({ 0, -10, 0 });
@@ -50,7 +44,7 @@ void Scene::setup(filament::Engine* engine, filament::View* view, filament::Scen
 
 	// 模型
 	loader = new FilameshLoader(&context);
-	mesh = loader->load(RESOURCES_MONKEY_DATA, materialIndex);
+	mesh = loader->load(RESOURCES_MONKEY_DATA, material->instance);
 	mesh->setScaling({ 2, 2, 2 });
 	scene->addEntity(mesh->entity);
 }
@@ -59,7 +53,7 @@ void Scene::cleanup(filament::Engine* engine, filament::View* view, filament::Sc
 {
 	delete mesh;
 	delete loader;
-	engine->destroy(materialIndex);
+	delete plane;
 	delete material;
 	delete geometry;
 	delete light;

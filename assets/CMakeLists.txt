@@ -7,6 +7,7 @@ set(RESOURCE_BINS)
 set(MATERIAL_SRCS
 	"materials/defaultMaterial.mat"
 	"materials/aiDefaultMat.mat"
+	"materials/standard_material.mat"
 )
 set(MAP_SRCS
 	"environments/lightroom_14b.hdr"

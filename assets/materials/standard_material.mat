@@ -1,0 +1,123 @@
+material {
+    name : standard_material,
+    shadingModel : lit,
+    parameters : [
+        {
+            name : baseColor,
+            type : float4
+            
+        },
+        {
+            name : metallic,
+            type : float
+            
+        },
+        {
+            name : roughness,
+            type : float
+            
+        },
+        {
+            name : reflectance,
+            type : float
+        },
+        {
+            name: sheenColor,
+            type: float3
+        },
+        {
+            name: sheenRoughness,
+            type: float
+        },
+        {
+            name: clearCoat,
+            type: float
+        },
+        {
+            name: clearCoatRoughness,
+            type: float
+        },
+        {
+            name: anisotropy,
+            type: float
+        },
+        {
+            name: anisotropyDirection,
+            type: float3
+        },
+        {
+            name: ambientOcclusion,
+            type: float
+        },
+        {
+            name: normal,
+            type: float3
+        },
+        {
+            name: bentNormal,
+            type: float3
+        },
+        {
+            name: clearCoatNormal,
+            type: float3
+        },
+        {
+            name: emissive,
+            type: float4
+        },
+        {
+            name: postLightingColor,
+            type: float4
+        },
+        {
+            name: ior,
+            type: float
+        },
+        {
+            name: transmission,
+            type: float
+        },
+        {
+            name: absorption,
+            type: float3
+        },
+        {
+            name: microThickness,
+            type: float
+        },
+        {
+            name: thickness,
+            type: float
+        }
+    ],
+}
+
+fragment {
+    void material(inout MaterialInputs material) {
+        prepareMaterial(material);
+        material.baseColor = materialParams.baseColor;
+        material.metallic = materialParams.metallic;
+        material.roughness = materialParams.roughness;
+        material.reflectance = materialParams.reflectance;
+
+        material.sheenColor = materialParams.sheenColor;
+        material.sheenRoughness = materialParams.sheenRoughness;
+
+        material.clearCoat = materialParams.clearCoat;
+        material.clearCoatRoughness = materialParams.clearCoatRoughness;
+
+        material.anisotropy = materialParams.anisotropy;
+        material.anisotropyDirection = materialParams.anisotropyDirection;
+        material.ambientOcclusion = materialParams.ambientOcclusion;
+        // material.normal = materialParams.normal;
+        // material.bentNormal = materialParams.bentNormal;
+        // material.clearCoatNormal = materialParams.clearCoatNormal;
+        material.emissive = materialParams.emissive;
+        // material.postLightingColor = materialParams.postLightingColor;
+        material.ior = materialParams.ior;
+        // material.transmission = materialParams.transmission;
+        // material.absorption = materialParams.absorption;
+        // material.microThickness = materialParams.microThickness;
+        // material.thickness = materialParams.thickness;
+    }
+}

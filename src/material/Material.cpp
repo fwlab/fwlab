@@ -1,5 +1,9 @@
+#include <algorithm>
 #include "resources/resources.h"
 #include "Material.h"
+
+filament::Material* Material::material = nullptr;
+std::vector<filament::MaterialInstance*> Material::instances;
 
 Material::Material(Context* context)
 {
@@ -8,31 +12,30 @@ Material::Material(Context* context)
 
 Material::~Material()
 {
-	if (context && context->engine && material)
+	if (context && context->engine && instance)
+	{
+		instances.erase(std::remove(instances.begin(), instances.end(), instance));
+		context->engine->destroy(instance);
+	}
+	if (context && context->engine && material && instances.size() == 0)
 	{
 		context->engine->destroy(material);
 	}
 }
 
-Material* Material::create()
+void Material::create()
 {
-	return create(RESOURCES_DEFAULTMATERIAL_DATA, RESOURCES_DEFAULTMATERIAL_SIZE);
+	createMaterial(RESOURCES_DEFAULTMATERIAL_DATA, RESOURCES_DEFAULTMATERIAL_SIZE);
 }
 
-Material* Material::create(const void* payload, size_t size)
+void Material::createMaterial(const void* payload, size_t size)
 {
-	material = filament::Material::Builder()
-		.package(payload, size)
-		.build(*context->engine);
-	return this;
-}
-
-filament::MaterialInstance* Material::createInstance()
-{
-	return material->createInstance();
-}
-
-void Material::setPrimitiveType(filament::RenderableManager::PrimitiveType primitiveType)
-{
-	this->primitiveType = primitiveType;
+	if (!material)
+	{
+		material = filament::Material::Builder()
+			.package(payload, size)
+			.build(*context->engine);
+	}
+	instance = material->createInstance();
+	instances.push_back(instance);
 }

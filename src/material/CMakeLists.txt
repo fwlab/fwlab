@@ -7,9 +7,10 @@ include_directories(
 
 add_library(${MODULE_NAME} STATIC
 	"Material.cpp"
-	"MeshBasicMaterial.cpp"
-	"PointsMaterial.cpp"
-	"LineBasicMaterial.cpp"
+	# "MeshBasicMaterial.cpp"
+	# "PointsMaterial.cpp"
+	# "LineBasicMaterial.cpp"
+	"StandardMaterial.cpp"
 )
 
 target_link_libraries(${MODULE_NAME}
