@@ -1,4 +1,5 @@
 #include <imgui.h>
+#include <filament/Camera.h>
 #include <filagui/ImGuiExtensions.h>
 #include "../Context.h"
 #include "../geometry/PlaneGeometry.h"
@@ -12,7 +13,7 @@
 Context context;
 Light* light;
 PlaneGeometry* geometry;
-Material* material;
+StandardMaterial* material;
 Mesh* plane;
 FilameshLoader* loader;
 Mesh* mesh;
@@ -33,18 +34,20 @@ void Scene::setup(filament::Engine* engine, filament::View* view, filament::Scen
 
 	// 材质
 	material = new StandardMaterial(&context);
+	material->baseColor = {1, 0, 0, 1};
 	material->create();
 
 	// 平面
 	plane = new Mesh(&context);
 	plane->create(geometry, material);
-	plane->setTranslation({ 0, -10, 0 });
+	plane->setTranslation({ 0, -4, -10 });
 	plane->setRotation(-M_PI / 2, { 1, 0, 0 });
 	scene->addEntity(plane->entity);
 
 	// 模型
 	loader = new FilameshLoader(&context);
 	mesh = loader->load(RESOURCES_MONKEY_DATA, material->instance);
+	mesh->setTranslation({ 0, 0, -10 });
 	mesh->setScaling({ 2, 2, 2 });
 	scene->addEntity(mesh->entity);
 }

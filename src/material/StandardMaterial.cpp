@@ -25,5 +25,5 @@ void StandardMaterial::create()
 	instance->setParameter("anisotropyDirection", anisotropyDirection);
 	instance->setParameter("ambientOcclusion", ambientOcclusion);
 	instance->setParameter("emissive", filament::RgbaType::LINEAR, emissive);
-	instance->setParameter("ior", ior);
+	// instance->setParameter("ior", ior);
 }

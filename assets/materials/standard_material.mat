@@ -114,7 +114,7 @@ fragment {
         // material.clearCoatNormal = materialParams.clearCoatNormal;
         material.emissive = materialParams.emissive;
         // material.postLightingColor = materialParams.postLightingColor;
-        material.ior = materialParams.ior;
+        // material.ior = materialParams.ior;
         // material.transmission = materialParams.transmission;
         // material.absorption = materialParams.absorption;
         // material.microThickness = materialParams.microThickness;
