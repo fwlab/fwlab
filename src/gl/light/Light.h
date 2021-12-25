@@ -1,20 +1,20 @@
-#ifndef FWLAB_LIGHT_H
-#define FWLAB_LIGHT_H
+#ifndef GL_LIGHT_LIGHT_H
+#define GL_LIGHT_LIGHT_H
 #include <utils/Entity.h>
 #include "../Context.h"
 
-/// <summary>
-/// นโ
-/// </summary>
-class Light {
-public:
-	Light(Context* context);
-	virtual ~Light();
-	utils::Entity entity;
-	Light* create();
+namespace gl::light
+{
+	class Light {
+	public:
+		Light(Context* context);
+		virtual ~Light();
+		utils::Entity entity;
+		Light* create();
 
-private:
-	Context* context;
-};
+	private:
+		Context* context;
+	};
+}
 
 #endif

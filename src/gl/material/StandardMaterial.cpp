@@ -1,6 +1,8 @@
 #include "resources/resources.h"
 #include "StandardMaterial.h"
 
+using namespace gl::material;
+
 StandardMaterial::StandardMaterial(Context* context) : Material(context)
 {
 }

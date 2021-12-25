@@ -2,6 +2,8 @@
 #include <utils/EntityManager.h>
 #include "OrthographicCamera.h"
 
+using namespace gl::camera;
+
 OrthographicCamera::OrthographicCamera(Context* context, double left, double right, double top, double bottom, double near, double far)
 {
 	this->context = context;

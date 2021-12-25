@@ -1,25 +1,29 @@
-#ifndef FLLAB_OBJECT_MESH_H
-#define FLLAB_OBJECT_MESH_H
+#ifndef FLLAB_GL_OBJECT_MESH_H
+#define FLLAB_GL_OBJECT_MESH_H
 #include <utils/Entity.h>
 #include "../core/BufferGeometry.h"
 #include "../material/Material.h"
-#include "Object3D.h"
+#include "../core/Object3D.h"
 #include "../Context.h"
 
-/// <summary>
-/// Íø¸ñ
-/// </summary>
-class Mesh : public Object3D
+namespace gl::object
 {
-public:
-	Mesh(Context* context);
-	virtual ~Mesh();
-	void create(BufferGeometry* geometry, Material* material);
-	bool culling = true;
-	bool castShadows = false;
-	bool receiveShadows = false;
-	BufferGeometry* geometry = nullptr;
-	Material* material = nullptr;
-};
+	using gl::core::BufferGeometry;
+	using gl::core::Object3D;
+	using gl::material::Material;
+
+	class Mesh : public Object3D
+	{
+	public:
+		Mesh(Context* context);
+		virtual ~Mesh();
+		void create(BufferGeometry* geometry, Material* material);
+		bool culling = true;
+		bool castShadows = false;
+		bool receiveShadows = false;
+		BufferGeometry* geometry = nullptr;
+		Material* material = nullptr;
+	};
+}
 
 #endif

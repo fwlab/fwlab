@@ -1,6 +1,8 @@
 #include <cmath>
 #include "BoxGeometry.h"
 
+using namespace gl::geometry;
+
 BoxGeometry::BoxGeometry(Context* context) : Geometry(context)
 {
 }

@@ -2,6 +2,9 @@
 #include "../core/BufferAttribute.h"
 #include "PlaneGeometry.h"
 
+using namespace gl::core;
+using namespace gl::geometry;
+
 PlaneGeometry::PlaneGeometry(Context* context) : BufferGeometry(context)
 {
 

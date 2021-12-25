@@ -8,7 +8,7 @@ add_subdirectory(camera)
 add_subdirectory(light)
 add_subdirectory(loader)
 
-add_library(${MODULE_NAME} STATIC "gl.cpp" "gl.h")
+add_library(${MODULE_NAME} STATIC "gl.cpp")
 
 target_link_libraries(${MODULE_NAME}
 	filament filamentapp

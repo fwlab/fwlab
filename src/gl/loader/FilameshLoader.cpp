@@ -2,6 +2,10 @@
 #include "../core/BufferGeometry.h"
 #include "FilameshLoader.h"
 
+using namespace gl::core;
+using namespace gl::object;
+using namespace gl::loader;
+
 FilameshLoader::FilameshLoader(Context* context) : Loader(context)
 {
 

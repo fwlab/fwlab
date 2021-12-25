@@ -1,16 +1,16 @@
-#ifndef FWLAB_LINE_BASIC_MATERIAL_H
-#define FWLAB_LINE_BASIC_MATERIAL_H
+#ifndef GL_MATERIAL_LINE_BASIC_MATERIAL_H
+#define GL_MATERIAL_LINE_BASIC_MATERIAL_H
 #include "../Context.h"
 #include "Material.h"
 
-/// <summary>
-/// »ù±¾²ÄÖÊ
-/// </summary>
-class LineBasicMaterial : public Material
+namespace gl::material
 {
-public:
-	LineBasicMaterial(Context* context);
-	virtual ~LineBasicMaterial();
-};
+	class LineBasicMaterial : public Material
+	{
+	public:
+		LineBasicMaterial(Context* context);
+		virtual ~LineBasicMaterial();
+	};
+}
 
 #endif

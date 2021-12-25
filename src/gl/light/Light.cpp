@@ -2,6 +2,8 @@
 #include <utils/EntityManager.h>
 #include "Light.h"
 
+using namespace gl::light;
+
 Light::Light(Context* context)
 {
 	this->context = context;

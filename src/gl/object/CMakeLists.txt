@@ -1,7 +1,6 @@
 set(MODULE_NAME fwlab_gl_object)
 
 add_library(${MODULE_NAME} STATIC
-    "Object3D.cpp"
 	"Mesh.cpp"
 	"Skybox.cpp"
  )

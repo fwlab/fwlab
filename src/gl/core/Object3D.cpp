@@ -1,6 +1,8 @@
 #include <filament/TransformManager.h>
 #include "Object3D.h"
 
+using namespace gl::core;
+
 Object3D::Object3D(Context* context)
 {
 	this->context = context;

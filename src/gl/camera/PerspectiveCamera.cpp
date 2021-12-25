@@ -1,6 +1,8 @@
 #include <utils/EntityManager.h>
 #include "PerspectiveCamera.h"
 
+using namespace gl::camera;
+
 PerspectiveCamera::PerspectiveCamera(Context* context, double fov, double aspect, double near, double far, filament::Camera::Fov direction)
 {
 	this->context = context;

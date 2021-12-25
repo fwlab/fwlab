@@ -1,6 +1,8 @@
 #include <climits>
 #include "BufferGeometry.h"
 
+using namespace gl::core;
+
 BufferGeometry::BufferGeometry(Context* context)
 {
 	this->context = context;

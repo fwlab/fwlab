@@ -1,6 +1,8 @@
 #include <utils/EntityManager.h>
 #include "Mesh.h"
 
+using namespace gl::object;
+
 Mesh::Mesh(Context* context) : Object3D(context)
 {
 

@@ -1,14 +1,16 @@
 #include <imgui.h>
 #include <filament/Camera.h>
 #include <filagui/ImGuiExtensions.h>
-#include "../gl/Context.h"
-#include "../gl/geometry/PlaneGeometry.h"
-#include "../gl/material/StandardMaterial.h"
-#include "../gl/object/Mesh.h"
-#include "../gl/light/Light.h"
-#include "../gl/loader/FilameshLoader.h"
+#include "../gl/gl.h"
 #include "resources/resources.h"
 #include "Scene.h"
+
+using namespace gl::core;
+using namespace gl::geometry;
+using namespace gl::material;
+using namespace gl::object;
+using namespace gl::light;
+using namespace gl::loader;
 
 Context context;
 Light* light;

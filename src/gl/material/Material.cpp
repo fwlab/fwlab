@@ -2,6 +2,8 @@
 #include "resources/resources.h"
 #include "Material.h"
 
+using namespace gl::material;
+
 filament::Material* Material::material = nullptr;
 std::vector<filament::MaterialInstance*> Material::instances;
 

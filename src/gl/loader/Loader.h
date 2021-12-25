@@ -1,20 +1,20 @@
-#ifndef FWLAB_LOADER_LOADER_H
-#define FWLAB_LOADER_LOADER_H
+#ifndef GL_LOADER_LOADER_H
+#define GL_LOADER_LOADER_H
 #include "../object/Mesh.h"
 #include "../Context.h"
 
-/// <summary>
-/// ¼ÓÔØÆ÷
-/// </summary>
-class Loader
+namespace gl::loader
 {
-public:
-	Loader(Context* context);
-	virtual ~Loader();
-	Mesh* load();
+	class Loader
+	{
+	public:
+		Loader(Context* context);
+		virtual ~Loader();
+		gl::object::Mesh* load();
 
-protected:
-	Context* context;
-};
+	protected:
+		Context* context;
+	};
+}
 
 #endif

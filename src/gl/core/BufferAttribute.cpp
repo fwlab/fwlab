@@ -1,5 +1,7 @@
 #include "BufferAttribute.h"
 
+using namespace gl::core;
+
 template <typename T>
 BufferAttribute<T>::BufferAttribute(Context* context)
 {

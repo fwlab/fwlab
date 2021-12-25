@@ -1,5 +1,7 @@
 #include "Skybox.h"
 
+using namespace gl::object;
+
 Skybox::Skybox(Context* context, filament::math::float4 color, bool showSun)
 {
 	this->context = context;
