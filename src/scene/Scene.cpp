@@ -1,12 +1,12 @@
 #include <imgui.h>
 #include <filament/Camera.h>
 #include <filagui/ImGuiExtensions.h>
-#include "../Context.h"
-#include "../geometry/PlaneGeometry.h"
-#include "../material/StandardMaterial.h"
-#include "../object/Mesh.h"
-#include "../light/Light.h"
-#include "../loader/FilameshLoader.h"
+#include "../gl/Context.h"
+#include "../gl/geometry/PlaneGeometry.h"
+#include "../gl/material/StandardMaterial.h"
+#include "../gl/object/Mesh.h"
+#include "../gl/light/Light.h"
+#include "../gl/loader/FilameshLoader.h"
 #include "resources/resources.h"
 #include "Scene.h"
 

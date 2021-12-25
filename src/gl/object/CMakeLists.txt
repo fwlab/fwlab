@@ -1,4 +1,4 @@
-set(MODULE_NAME fwlab_object)
+set(MODULE_NAME fwlab_gl_object)
 
 add_library(${MODULE_NAME} STATIC
     "Object3D.cpp"
@@ -8,5 +8,5 @@ add_library(${MODULE_NAME} STATIC
 
 target_link_libraries(${MODULE_NAME}
 	filament filamentapp
-	fwlab_core fwlab_geometry
+	fwlab_gl_core fwlab_gl_geometry
 )

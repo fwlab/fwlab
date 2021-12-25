@@ -1,8 +1,8 @@
-set(MODULE_NAME fwlab_camera)
+set(MODULE_NAME fwlab_gl_core)
 
 add_library(${MODULE_NAME} STATIC
-	"PerspectiveCamera.cpp"
-	"OrthographicCamera.cpp"
+	"BufferAttribute.cpp"
+	"BufferGeometry.cpp"
 )
 
 target_link_libraries(${MODULE_NAME}

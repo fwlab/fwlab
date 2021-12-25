@@ -1,4 +1,4 @@
-set(MODULE_NAME fwlab_material)
+set(MODULE_NAME fwlab_gl_material)
 
 # 使用BEFORE避免引入其他目录下的resources/resources.h
 include_directories(

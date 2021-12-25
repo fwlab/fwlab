@@ -1,8 +1,7 @@
-set(MODULE_NAME fwlab_core)
+set(MODULE_NAME fwlab_gl_light)
 
 add_library(${MODULE_NAME} STATIC
-	"BufferAttribute.cpp"
-	"BufferGeometry.cpp"
+	"Light.cpp"
 )
 
 target_link_libraries(${MODULE_NAME}
