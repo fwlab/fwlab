@@ -21,6 +21,8 @@ protected:
 	Context* context = nullptr;
 	virtual void createVertexBuffer();
 	virtual void createIndexBuffer();
+	uint16_t getSize(filament::VertexBuffer::AttributeType type);
+	uint16_t getSize(filament::IndexBuffer::IndexType type);
 
 private:
 	uint16_t* indices = nullptr;

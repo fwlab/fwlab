@@ -7,4 +7,5 @@ add_library(${MODULE_NAME} STATIC
 
 target_link_libraries(${MODULE_NAME}
 	filament filamentapp
+	fwlab_core
 )

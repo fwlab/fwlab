@@ -20,16 +20,16 @@ protected:
 
 class VertexBufferAttribute : public BufferAttribute<float> {
 public:
+	VertexBufferAttribute(Context* context);
 	bool normalized = false;
 	filament::VertexAttribute attribute = filament::VertexAttribute::POSITION;
 	filament::VertexBuffer::AttributeType attributeType = filament::VertexBuffer::AttributeType::FLOAT3;
-	filament::VertexBuffer* buffer = nullptr;
 };
 
 class IndexBufferAttribute : public BufferAttribute<uint32_t> {
 public:
+	IndexBufferAttribute(Context* context);
 	filament::IndexBuffer::IndexType indexType = filament::IndexBuffer::IndexType::UINT;
-	filament::IndexBuffer* buffer = nullptr;
 };
 
 #endif

@@ -1,5 +1,5 @@
 #include <filameshio/MeshReader.h>
-#include "../geometry/Geometry.h"
+#include "../core/BufferGeometry.h"
 #include "FilameshLoader.h"
 
 FilameshLoader::FilameshLoader(Context* context) : Loader(context)
@@ -16,7 +16,7 @@ Mesh* FilameshLoader::load(void const* data, filament::MaterialInstance* default
 {
 	auto mesh = filamesh::MeshReader::loadMeshFromBuffer(context->engine, data, nullptr, nullptr, defaultMaterial);
 
-	auto geometry = new Geometry(context);
+	auto geometry = new BufferGeometry(context);
 	geometry->vertexBuffer = mesh.vertexBuffer;
 	geometry->indexBuffer = mesh.indexBuffer;
 	// geometry->boundingBox

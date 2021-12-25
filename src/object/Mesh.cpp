@@ -11,7 +11,7 @@ Mesh::~Mesh()
 
 }
 
-void Mesh::create(Geometry* geometry, Material* material)
+void Mesh::create(BufferGeometry* geometry, Material* material)
 {
 	this->geometry = geometry;
 	this->material = material;

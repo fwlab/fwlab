@@ -34,13 +34,13 @@ void Scene::setup(filament::Engine* engine, filament::View* view, filament::Scen
 
 	// ²ÄÖÊ
 	material = new StandardMaterial(&context);
-	material->baseColor = {1, 0, 0, 1};
 	material->create();
 
 	// Æ½Ãæ
 	plane = new Mesh(&context);
+	plane->receiveShadows = true;
 	plane->create(geometry, material);
-	plane->setTranslation({ 0, -4, -10 });
+	plane->setTranslation({ 0, -2, -10 });
 	plane->setRotation(-M_PI / 2, { 1, 0, 0 });
 	scene->addEntity(plane->entity);
 

@@ -18,3 +18,13 @@ template class BufferAttribute<float>;
 template class BufferAttribute<double>;
 template class BufferAttribute<uint16_t>;
 template class BufferAttribute<uint32_t>;
+
+VertexBufferAttribute::VertexBufferAttribute(Context* context) : BufferAttribute(context)
+{
+
+}
+
+IndexBufferAttribute::IndexBufferAttribute(Context* context) : BufferAttribute(context)
+{
+
+}
