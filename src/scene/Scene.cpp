@@ -47,6 +47,11 @@ void Scene::setup(filament::Engine* engine, filament::View* view, filament::Scen
 	// Ä£ÐÍ
 	loader = new FilameshLoader(&context);
 	mesh = loader->load(RESOURCES_MONKEY_DATA, material->instance);
+	auto& manager = engine->getRenderableManager();
+	auto instance = manager.getInstance(mesh->entity);
+	manager.setCastShadows(instance, true);
+	manager.setReceiveShadows(instance, true);
+
 	mesh->setTranslation({ 0, 0, -10 });
 	mesh->setScaling({ 2, 2, 2 });
 	scene->addEntity(mesh->entity);

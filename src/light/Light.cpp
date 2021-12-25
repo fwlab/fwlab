@@ -25,7 +25,7 @@ Light* Light::create()
 		.intensity(110000)
 		.direction({ 0.7, -1, -0.8 })
 		.sunAngularRadius(1.9f)
-		.castShadows(false)
+		.castShadows(true)
 		.build(*context->engine, entity);
 	return this;
 }
