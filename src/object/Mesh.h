@@ -14,7 +14,7 @@ class Mesh : public Object3D
 public:
 	Mesh(Context* context);
 	virtual ~Mesh();
-	Mesh* create(Geometry* geometry, Material* material);
+	void create(Geometry* geometry, Material* material);
 	bool culling = true;
 	bool castShadows = false;
 	bool receiveShadows = false;

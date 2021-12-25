@@ -11,7 +11,7 @@ class Object3D
 public:
 	Object3D(Context* context);
 	virtual ~Object3D();
-	Object3D* create();
+	virtual void create();
 	utils::Entity entity;
 	filament::math::mat4 getTransform();
 	filament::math::mat4 getWorldTransform();

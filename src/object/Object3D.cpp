@@ -27,9 +27,9 @@ Object3D::~Object3D()
 	delete matrix;
 }
 
-Object3D* Object3D::create()
+void Object3D::create()
 {
-	return this;
+
 }
 
 filament::math::mat4 Object3D::getTransform()

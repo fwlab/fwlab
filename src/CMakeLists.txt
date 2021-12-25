@@ -1,6 +1,7 @@
 set(MODULE_NAME fwlab)
 
 add_subdirectory(utils)
+add_subdirectory(core)
 add_subdirectory(camera)
 add_subdirectory(geometry)
 add_subdirectory(material)

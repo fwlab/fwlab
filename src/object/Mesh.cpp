@@ -11,7 +11,7 @@ Mesh::~Mesh()
 
 }
 
-Mesh* Mesh::create(Geometry* geometry, Material* material)
+void Mesh::create(Geometry* geometry, Material* material)
 {
 	this->geometry = geometry;
 	this->material = material;
@@ -25,5 +25,4 @@ Mesh* Mesh::create(Geometry* geometry, Material* material)
 		.castShadows(castShadows)
 		.receiveShadows(receiveShadows)
 		.build(*context->engine, entity);
-	return this;
 }
