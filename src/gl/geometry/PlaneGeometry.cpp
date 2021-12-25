@@ -88,7 +88,7 @@ void PlaneGeometry::create(float width, float height, uint16_t widthSegments, ui
 	normal->attribute = filament::VertexAttribute::TANGENTS;
 	normal->attributeType = filament::VertexBuffer::AttributeType::FLOAT3;
 	normal->itemSize = 3;
-	normal->count = verticesSize / position->itemSize;
+	normal->count = normalsSize / normal->itemSize;
 	attributes.insert({ filament::VertexAttribute::TANGENTS, normal });
 
 	// uv
@@ -97,15 +97,15 @@ void PlaneGeometry::create(float width, float height, uint16_t widthSegments, ui
 	uv->attribute = filament::VertexAttribute::UV0;
 	uv->attributeType = filament::VertexBuffer::AttributeType::FLOAT2;
 	uv->itemSize = 2;
-	uv->count = verticesSize / position->itemSize;
+	uv->count = uvsSize / uv->itemSize;
 	attributes.insert({ filament::VertexAttribute::UV0, uv });
 
 	// index
 	index = new IndexBufferAttribute(context);
 	index->array = indices;
-	index->count = indicesSize;
 	index->indexType = filament::IndexBuffer::IndexType::UINT;
 	index->itemSize = 1;
+	index->count = indicesSize / index->itemSize;
 
 	BufferGeometry::create();
 }

@@ -1,9 +1,15 @@
 #include <cmath>
+#include <iterator>
+#include <iostream>
+#include <unordered_map>
+#include "../utils/Logger.h"
 #include "BoxGeometry.h"
 
+using namespace gl::core;
 using namespace gl::geometry;
+using namespace gl::utils;
 
-BoxGeometry::BoxGeometry(Context* context) : Geometry(context)
+BoxGeometry::BoxGeometry(Context* context) : BufferGeometry(context)
 {
 }
 
@@ -11,13 +17,8 @@ BoxGeometry::~BoxGeometry()
 {
 }
 
-BoxGeometry* create(float width, float height, float depth, uint16_t widthSegments, uint16_t heightSegments, uint16_t depthSegments)
+void BoxGeometry::create(float width, float height, float depth, uint16_t widthSegments, uint16_t heightSegments, uint16_t depthSegments)
 {
-	// segments
-	widthSegments = std::floor(widthSegments);
-	heightSegments = std::floor(heightSegments);
-	depthSegments = std::floor(depthSegments);
-
 	// helper variables
 	numberOfVertices = 0;
 	groupStart = 0;
@@ -30,22 +31,78 @@ BoxGeometry* create(float width, float height, float depth, uint16_t widthSegmen
 	buildPlane("x", "y", "z", 1, -1, width, height, depth, widthSegments, heightSegments, 4);   // pz
 	buildPlane("x", "y", "z", -1, -1, width, height, -depth, widthSegments, heightSegments, 5); // nz
 
-	// build geometry
-	this->setIndex(indices);
-	this->setAttribute("position", new Float32BufferAttribute(this->vertices, 3));
-	this->setAttribute("normal", new Float32BufferAttribute(this->normals, 3));
-	this->setAttribute("uv", new Float32BufferAttribute(this->uvs, 2));
+	// debug
+	Logger logger;
+	logger << "vertices: " << vertices << "\n";
+	logger << "normals: " << normals << "\n";
+	logger << "uvs: " << uvs << "\n";
+	logger << "indices: " << indices << "\n";
+
+	uint32_t verticesSize = vertices.size();
+	float* _vertices = new float[verticesSize];
+	std::copy(vertices.begin(), vertices.end(), _vertices);
+	vertices.clear();
+
+	uint32_t normalsSize = normals.size();
+	float* _normals = new float[normalsSize];
+	std::copy(normals.begin(), normals.end(), _normals);
+	normals.clear();
+
+	uint32_t uvsSize = uvs.size();
+	float* _uvs = new float[uvsSize];
+	std::copy(uvs.begin(), uvs.end(), _uvs);
+	uvs.clear();
+
+	uint32_t indicesSize = indices.size();
+	uint32_t* _indices = new uint32_t[indicesSize];
+	std::copy(indices.begin(), indices.end(), _indices);
+	indices.clear();
+
+	// position
+	auto position = new VertexBufferAttribute(context);
+	position->array = _vertices;
+	position->attribute = filament::VertexAttribute::POSITION;
+	position->attributeType = filament::VertexBuffer::AttributeType::FLOAT3;
+	position->itemSize = 3;
+	position->count = verticesSize / position->itemSize;
+	attributes.insert({ filament::VertexAttribute::POSITION, position });
+
+	// normal
+	auto normal = new VertexBufferAttribute(context);
+	normal->array = _normals;
+	normal->attribute = filament::VertexAttribute::TANGENTS;
+	normal->attributeType = filament::VertexBuffer::AttributeType::FLOAT3;
+	normal->itemSize = 3;
+	normal->count = normalsSize / normal->itemSize;
+	attributes.insert({ filament::VertexAttribute::TANGENTS, normal });
+
+	// uv
+	auto uv = new VertexBufferAttribute(context);
+	uv->array = _uvs;
+	uv->attribute = filament::VertexAttribute::UV0;
+	uv->attributeType = filament::VertexBuffer::AttributeType::FLOAT2;
+	uv->itemSize = 2;
+	uv->count = uvsSize / uv->itemSize;
+	attributes.insert({ filament::VertexAttribute::UV0, uv });
+
+	// index
+	index = new IndexBufferAttribute(context);
+	index->array = _indices;
+	index->indexType = filament::IndexBuffer::IndexType::UINT;
+	index->itemSize = 1;
+	index->count = indicesSize / index->itemSize;
+
+	BufferGeometry::create();
 }
 
-template <typename T>
-void BoxGeometry<T>::buildPlane(std::string u, std::string v, std::string w, T udir, T vdir, T width, T height, T depth, int gridX, int gridY, int materialIndex)
+void BoxGeometry::buildPlane(std::string u, std::string v, std::string w, float udir, float vdir, float width, float height, float depth, int gridX, int gridY, int materialIndex)
 {
-	T segmentWidth = width / gridX;
-	T segmentHeight = height / gridY;
+	float segmentWidth = width / gridX;
+	float segmentHeight = height / gridY;
 
-	T widthHalf = width / 2;
-	T heightHalf = height / 2;
-	T depthHalf = depth / 2;
+	float widthHalf = width / 2;
+	float heightHalf = height / 2;
+	float depthHalf = depth / 2;
 
 	int gridX1 = gridX + 1;
 	int gridY1 = gridY + 1;
@@ -53,36 +110,38 @@ void BoxGeometry<T>::buildPlane(std::string u, std::string v, std::string w, T u
 	int vertexCounter = 0;
 	int groupCount = 0;
 
-	Vector3<T>* vector = new Vector3<T>();
+	std::unordered_map<std::string, float> vector;
 
 	// generate vertices, normals and uvs
-	for (int iy = 0; iy < gridY1; iy++)
+	for (float iy = 0; iy < gridY1; iy++)
 	{
-		T y = iy * segmentHeight - heightHalf;
+		float y = iy * segmentHeight - heightHalf;
 
-		for (int ix = 0; ix < gridX1; ix++)
+		for (float ix = 0; ix < gridX1; ix++)
 		{
-			int x = ix * segmentWidth - widthHalf;
+			float x = ix * segmentWidth - widthHalf;
 
 			// set values to correct vector component
-			(*vector)[u] = x * udir;
-			(*vector)[v] = y * vdir;
-			(*vector)[w] = depthHalf;
+			vector.clear();
+			vector.insert({ u, x * udir });
+			vector.insert({ v, y * vdir });
+			vector.insert({ w, depthHalf });
 
 			// now apply vector to vertex buffer
-			this->vertices.push_back(vector->x);
-			this->vertices.push_back(vector->y);
-			this->vertices.push_back(vector->z);
+			this->vertices.push_back(vector.at("x"));
+			this->vertices.push_back(vector.at("y"));
+			this->vertices.push_back(vector.at("z"));
 
 			// set values to correct vector component
-			(*vector)[u] = 0;
-			(*vector)[v] = 0;
-			(*vector)[w] = depth > 0 ? 1 : -1;
+			vector.clear();
+			vector.insert({ u, 0 });
+			vector.insert({ v, 0 });
+			vector.insert({ w, depth > 0 ? 1 : -1 });
 
 			// now apply vector to normal buffer
-			this->normals.push_back(vector->x);
-			this->normals.push_back(vector->y);
-			this->normals.push_back(vector->z);
+			this->normals.push_back(vector.at("x"));
+			this->normals.push_back(vector.at("y"));
+			this->normals.push_back(vector.at("z"));
 
 			// uvs
 			this->uvs.push_back(ix / gridX);

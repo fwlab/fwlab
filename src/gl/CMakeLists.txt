@@ -1,5 +1,6 @@
 set(MODULE_NAME fwlab_gl)
 
+add_subdirectory(utils)
 add_subdirectory(core)
 add_subdirectory(geometry)
 add_subdirectory(material)

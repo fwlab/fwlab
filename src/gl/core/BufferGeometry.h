@@ -1,23 +1,34 @@
 #ifndef GL_CORE_BUFFER_GEOMETRY_H
 #define GL_CORE_BUFFER_GEOMETRY_H
 #include <stdint.h>
+#include <vector>
 #include <filament/Box.h>
 #include "../Context.h"
 #include "BufferAttribute.h"
 
 namespace gl::core
 {
+	struct Group
+	{
+		int start;
+		int count;
+		int materialIndex;
+	};
+
 	class BufferGeometry {
 	public:
 		BufferGeometry(Context* context);
 		virtual ~BufferGeometry();
 		virtual void create();
 		void computeBoundingBox();
+		void addGroup(int start, int count, int materialIndex = 0);
+		void clearGroups();
 		std::unordered_map<filament::VertexAttribute, VertexBufferAttribute*> attributes;
 		IndexBufferAttribute* index = nullptr;
 		filament::VertexBuffer* vertexBuffer = nullptr;
 		filament::IndexBuffer* indexBuffer = nullptr;
 		filament::Box* boundingBox = nullptr;
+		std::vector<Group*>* groups = nullptr;
 
 	protected:
 		Context* context = nullptr;

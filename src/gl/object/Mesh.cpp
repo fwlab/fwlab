@@ -10,7 +10,14 @@ Mesh::Mesh(Context* context) : Object3D(context)
 
 Mesh::~Mesh()
 {
-
+	if (geometry)
+	{
+		delete geometry;
+	}
+	if (material)
+	{
+		delete material;
+	}
 }
 
 void Mesh::create(BufferGeometry* geometry, Material* material)

@@ -5,6 +5,7 @@
 
 // geometry
 #include "geometry/PlaneGeometry.h"
+#include "geometry/BoxGeometry.h"
 
 // material
 #include "material/Material.h"

@@ -6,6 +6,7 @@ using namespace gl::core;
 BufferGeometry::BufferGeometry(Context* context)
 {
 	this->context = context;
+	this->groups = new std::vector<Group*>();
 }
 
 BufferGeometry::~BufferGeometry()
@@ -27,6 +28,15 @@ BufferGeometry::~BufferGeometry()
 		delete min;
 		delete max;
 		delete boundingBox;
+	}
+	if (groups)
+	{
+		for (auto& group : *groups)
+		{
+			delete group;
+		}
+		groups->clear();
+		delete groups;
 	}
 	if (indices)
 	{
@@ -166,6 +176,25 @@ void BufferGeometry::computeBoundingBox()
 
 	boundingBox = new filament::Box();
 	boundingBox->set(*min, *max);
+}
+
+void BufferGeometry::addGroup(int start, int count, int materialIndex)
+{
+	Group* group = new Group{
+		.start = start,
+		.count = count,
+		.materialIndex = materialIndex };
+
+	groups->push_back(group);
+}
+
+void BufferGeometry::clearGroups()
+{
+	for (auto& group : *groups)
+	{
+		delete group;
+	}
+	groups->clear();
 }
 
 uint16_t BufferGeometry::getSize(filament::VertexBuffer::AttributeType type)
