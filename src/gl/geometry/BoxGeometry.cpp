@@ -112,6 +112,7 @@ void BoxGeometry::create(float width, float height, float depth, uint16_t widthS
 	tangents = new filament::math::short4[vertexCount];
 	quats->getQuats(tangents, vertexCount, sizeof(filament::math::short4));
 	delete quats;
+	quats = nullptr;
 
 	auto normal = new VertexBufferAttribute(context);
 	normal->array = reinterpret_cast<float*>(tangents);

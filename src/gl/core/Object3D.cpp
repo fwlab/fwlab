@@ -27,6 +27,10 @@ Object3D::~Object3D()
 	delete rotateMatrix;
 	delete scaleMatrix;
 	delete matrix;
+	translateMatrix = nullptr;
+	rotateMatrix = nullptr;
+	scaleMatrix = nullptr;
+	matrix = nullptr;
 }
 
 void Object3D::create()

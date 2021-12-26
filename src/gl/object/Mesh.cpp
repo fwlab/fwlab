@@ -13,10 +13,12 @@ Mesh::~Mesh()
 	if (geometry)
 	{
 		delete geometry;
+		geometry = nullptr;
 	}
 	if (material)
 	{
 		delete material;
+		material = nullptr;
 	}
 }
 

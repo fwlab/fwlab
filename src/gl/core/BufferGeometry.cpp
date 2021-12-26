@@ -16,11 +16,13 @@ BufferGeometry::~BufferGeometry()
 		for (auto& pair : attributes)
 		{
 			delete pair.second;
+			pair.second = nullptr;
 		}
 		attributes.clear();
 		if (index)
 		{
 			delete index;
+			index = nullptr;
 		}
 	}
 	if (boundingBox)
@@ -28,19 +30,25 @@ BufferGeometry::~BufferGeometry()
 		delete min;
 		delete max;
 		delete boundingBox;
+		min = nullptr;
+		max = nullptr;
+		boundingBox = nullptr;
 	}
 	if (groups)
 	{
 		for (auto& group : *groups)
 		{
 			delete group;
+			group = nullptr;
 		}
 		groups->clear();
 		delete groups;
+		groups = nullptr;
 	}
 	if (indices)
 	{
 		delete[] indices;
+		indices = nullptr;
 	}
 }
 
@@ -197,6 +205,7 @@ void BufferGeometry::clearGroups()
 	for (auto& group : *groups)
 	{
 		delete group;
+		group = nullptr;
 	}
 	groups->clear();
 }

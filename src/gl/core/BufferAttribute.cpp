@@ -13,6 +13,7 @@ BufferAttribute<T>::~BufferAttribute()
 {
 	if (array != nullptr) {
 		delete[] array;
+		array = nullptr;
 	}
 }
 
