@@ -22,6 +22,9 @@ void Scene::setup(filament::Engine* engine, filament::View* view, filament::Scen
 	FilamentApp& app = FilamentApp::get();
 	context = { &app, engine, view, scene };
 
+	// 相机
+	auto& camera = view->getCamera();
+
 	// 光源
 	light = new Light(&context);
 	light->create();
