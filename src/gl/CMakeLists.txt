@@ -7,7 +7,9 @@ add_subdirectory(material)
 add_subdirectory(object)
 add_subdirectory(camera)
 add_subdirectory(light)
+add_subdirectory(scene)
 add_subdirectory(loader)
+add_subdirectory(renderer)
 
 add_library(${MODULE_NAME} STATIC "gl.cpp")
 

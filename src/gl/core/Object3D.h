@@ -11,13 +11,19 @@ namespace gl::core
 		Object3D(Context* context);
 		virtual ~Object3D();
 		virtual void create();
-		utils::Entity entity;
+		void add(Object3D* object);
+		void remove(Object3D* object);
+		void removeFromParent();
+		void clear();
 		filament::math::mat4 getTransform();
 		filament::math::mat4 getWorldTransform();
 		void setTransform(filament::math::mat4 transform);
 		void setTranslation(filament::math::double3 translation);
 		void setRotation(double radian, filament::math::double3 axis);
 		void setScaling(filament::math::double3 scaling);
+		utils::Entity entity;
+		Object3D* parent;
+		std::vector<Object3D*> children;
 
 	protected:
 		Context* context = nullptr;

@@ -23,6 +23,7 @@ Object3D::~Object3D()
 	{
 		context->engine->destroy(entity);
 	}
+	this->clear();
 	delete translateMatrix;
 	delete rotateMatrix;
 	delete scaleMatrix;
@@ -36,6 +37,45 @@ Object3D::~Object3D()
 void Object3D::create()
 {
 
+}
+
+void Object3D::add(Object3D* object)
+{
+	assert(object != this);
+	if (object->parent != nullptr)
+	{
+		object->parent->remove(object);
+	}
+	object->parent = this;
+	this->children.push_back(object);
+}
+
+void Object3D::remove(Object3D* object)
+{
+	auto iterator = std::find(children.begin(), children.end(), object);
+	if (iterator != children.end())
+	{
+		children.erase(iterator);
+	}
+}
+
+void Object3D::removeFromParent()
+{
+	if (parent != nullptr)
+	{
+		parent->remove(this);
+	}
+}
+
+void Object3D::clear()
+{
+	for (auto& child : children)
+	{
+		child->parent = nullptr;
+		delete child;
+		child = nullptr;
+	}
+	children.clear();
 }
 
 filament::math::mat4 Object3D::getTransform()
