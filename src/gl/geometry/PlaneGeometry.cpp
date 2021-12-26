@@ -74,7 +74,7 @@ void PlaneGeometry::create(float width, float height, uint16_t widthSegments, ui
 	}
 
 	// position
-	auto position = new VertexBufferAttribute(context);
+	auto position = new VertexBufferAttribute();
 	position->array = vertices;
 	position->attribute = filament::VertexAttribute::POSITION;
 	position->attributeType = filament::VertexBuffer::AttributeType::FLOAT3;
@@ -83,7 +83,7 @@ void PlaneGeometry::create(float width, float height, uint16_t widthSegments, ui
 	attributes.insert({ filament::VertexAttribute::POSITION, position });
 
 	// normal
-	auto normal = new VertexBufferAttribute(context);
+	auto normal = new VertexBufferAttribute();
 	normal->array = normals;
 	normal->attribute = filament::VertexAttribute::TANGENTS;
 	normal->attributeType = filament::VertexBuffer::AttributeType::FLOAT3;
@@ -92,7 +92,7 @@ void PlaneGeometry::create(float width, float height, uint16_t widthSegments, ui
 	attributes.insert({ filament::VertexAttribute::TANGENTS, normal });
 
 	// uv
-	auto uv = new VertexBufferAttribute(context);
+	auto uv = new VertexBufferAttribute();
 	uv->array = uvs;
 	uv->attribute = filament::VertexAttribute::UV0;
 	uv->attributeType = filament::VertexBuffer::AttributeType::FLOAT2;
@@ -101,7 +101,7 @@ void PlaneGeometry::create(float width, float height, uint16_t widthSegments, ui
 	attributes.insert({ filament::VertexAttribute::UV0, uv });
 
 	// index
-	index = new IndexBufferAttribute(context);
+	index = new IndexBufferAttribute();
 	index->array = triangles;
 	index->indexType = filament::IndexBuffer::IndexType::UINT;
 	index->itemSize = 1;

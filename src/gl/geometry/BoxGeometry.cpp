@@ -47,7 +47,7 @@ void BoxGeometry::create(float width, float height, float depth, uint16_t widthS
 		_vertices[i * 3 + 2] = vertex.z;
 	}
 
-	auto position = new VertexBufferAttribute(context);
+	auto position = new VertexBufferAttribute();
 	position->array = _vertices;
 	position->attribute = filament::VertexAttribute::POSITION;
 	position->attributeType = filament::VertexBuffer::AttributeType::FLOAT3;
@@ -65,7 +65,7 @@ void BoxGeometry::create(float width, float height, float depth, uint16_t widthS
 		_uvs[i * 2 + 1] = uv.y;
 	}
 
-	auto uv = new VertexBufferAttribute(context);
+	auto uv = new VertexBufferAttribute();
 	uv->array = _uvs;
 	uv->attribute = filament::VertexAttribute::UV0;
 	uv->attributeType = filament::VertexBuffer::AttributeType::FLOAT2;
@@ -84,7 +84,7 @@ void BoxGeometry::create(float width, float height, float depth, uint16_t widthS
 		_indices[i * 3 + 2] = index.z;
 	}
 
-	index = new IndexBufferAttribute(context);
+	index = new IndexBufferAttribute();
 	index->array = _indices;
 	index->indexType = filament::IndexBuffer::IndexType::UINT;
 	index->itemSize = 1;
@@ -114,7 +114,7 @@ void BoxGeometry::create(float width, float height, float depth, uint16_t widthS
 	delete quats;
 	quats = nullptr;
 
-	auto normal = new VertexBufferAttribute(context);
+	auto normal = new VertexBufferAttribute();
 	normal->array = reinterpret_cast<float*>(tangents);
 	normal->attribute = filament::VertexAttribute::TANGENTS;
 	normal->attributeType = filament::VertexBuffer::AttributeType::SHORT4;
