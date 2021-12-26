@@ -26,6 +26,11 @@ VertexBufferAttribute::VertexBufferAttribute(Context* context) : BufferAttribute
 
 }
 
+TangentBufferAttribute::TangentBufferAttribute(Context* context) : BufferAttribute(context)
+{
+
+}
+
 IndexBufferAttribute::IndexBufferAttribute(Context* context) : BufferAttribute(context)
 {
 

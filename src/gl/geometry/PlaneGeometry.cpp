@@ -33,7 +33,7 @@ void PlaneGeometry::create(float width, float height, uint16_t widthSegments, ui
 	float* vertices = new float[verticesSize];
 	float* normals = new float[normalsSize];
 	float* uvs = new float[uvsSize];
-	uint32_t* indices = new uint32_t[indicesSize];
+	uint32_t* triangles = new uint32_t[indicesSize];
 
 	for (uint16_t iy = 0; iy < gridY1; iy++) {
 		double y = iy * segment_height - height_half;
@@ -64,12 +64,12 @@ void PlaneGeometry::create(float width, float height, uint16_t widthSegments, ui
 			float c = (ix + 1) + gridX1 * (iy + 1);
 			float d = (ix + 1) + gridX1 * iy;
 
-			indices[index * 6] = a;
-			indices[index * 6 + 1] = b;
-			indices[index * 6 + 2] = d;
-			indices[index * 6 + 3] = b;
-			indices[index * 6 + 4] = c;
-			indices[index * 6 + 5] = d;
+			triangles[index * 6] = a;
+			triangles[index * 6 + 1] = b;
+			triangles[index * 6 + 2] = d;
+			triangles[index * 6 + 3] = b;
+			triangles[index * 6 + 4] = c;
+			triangles[index * 6 + 5] = d;
 		}
 	}
 
@@ -102,7 +102,7 @@ void PlaneGeometry::create(float width, float height, uint16_t widthSegments, ui
 
 	// index
 	index = new IndexBufferAttribute(context);
-	index->array = indices;
+	index->array = triangles;
 	index->indexType = filament::IndexBuffer::IndexType::UINT;
 	index->itemSize = 1;
 	index->count = indicesSize / index->itemSize;

@@ -64,6 +64,10 @@ void BufferGeometry::createVertexBuffer()
 	for (auto pair : attributes)
 	{
 		builder.attribute(pair.second->attribute, i, pair.second->attributeType);
+		if (pair.second->normalized)
+		{
+			builder.normalized(pair.first, true);
+		}
 		i++;
 	}
 

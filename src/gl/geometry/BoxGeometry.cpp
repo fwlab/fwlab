@@ -2,6 +2,7 @@
 #include <iterator>
 #include <iostream>
 #include <unordered_map>
+#include <geometry/SurfaceOrientation.h>
 #include "../utils/Logger.h"
 #include "BoxGeometry.h"
 
@@ -15,6 +16,10 @@ BoxGeometry::BoxGeometry(Context* context) : BufferGeometry(context)
 
 BoxGeometry::~BoxGeometry()
 {
+	//if (tangents)
+	//{
+	//	delete tangents;
+	//}
 }
 
 void BoxGeometry::create(float width, float height, float depth, uint16_t widthSegments, uint16_t heightSegments, uint16_t depthSegments)
@@ -31,66 +36,91 @@ void BoxGeometry::create(float width, float height, float depth, uint16_t widthS
 	buildPlane("x", "y", "z", 1, -1, width, height, depth, widthSegments, heightSegments, 4);   // pz
 	buildPlane("x", "y", "z", -1, -1, width, height, -depth, widthSegments, heightSegments, 5); // nz
 
-	// debug
-	Logger logger;
-	logger << "vertices: " << vertices << "\n";
-	logger << "normals: " << normals << "\n";
-	logger << "uvs: " << uvs << "\n";
-	logger << "indices: " << indices << "\n";
-
-	uint32_t verticesSize = vertices.size();
-	float* _vertices = new float[verticesSize];
-	std::copy(vertices.begin(), vertices.end(), _vertices);
-	vertices.clear();
-
-	uint32_t normalsSize = normals.size();
-	float* _normals = new float[normalsSize];
-	std::copy(normals.begin(), normals.end(), _normals);
-	normals.clear();
-
-	uint32_t uvsSize = uvs.size();
-	float* _uvs = new float[uvsSize];
-	std::copy(uvs.begin(), uvs.end(), _uvs);
-	uvs.clear();
-
-	uint32_t indicesSize = indices.size();
-	uint32_t* _indices = new uint32_t[indicesSize];
-	std::copy(indices.begin(), indices.end(), _indices);
-	indices.clear();
-
 	// position
+	uint32_t vertexCount = vertices.size();
+	float* _vertices = new float[vertexCount * 3];
+	for (uint32_t i = 0; i < vertexCount; i++)
+	{
+		auto vertex = vertices[i];
+		_vertices[i * 3] = vertex.x;
+		_vertices[i * 3 + 1] = vertex.y;
+		_vertices[i * 3 + 2] = vertex.z;
+	}
+
 	auto position = new VertexBufferAttribute(context);
 	position->array = _vertices;
 	position->attribute = filament::VertexAttribute::POSITION;
 	position->attributeType = filament::VertexBuffer::AttributeType::FLOAT3;
 	position->itemSize = 3;
-	position->count = verticesSize / position->itemSize;
+	position->count = vertexCount;
 	attributes.insert({ filament::VertexAttribute::POSITION, position });
 
-	// normal
-	auto normal = new VertexBufferAttribute(context);
-	normal->array = _normals;
-	normal->attribute = filament::VertexAttribute::TANGENTS;
-	normal->attributeType = filament::VertexBuffer::AttributeType::FLOAT3;
-	normal->itemSize = 3;
-	normal->count = normalsSize / normal->itemSize;
-	attributes.insert({ filament::VertexAttribute::TANGENTS, normal });
-
 	// uv
+	uint32_t uvCount = uvs.size();
+	float* _uvs = new float[uvCount * 2];
+	for (uint32_t i = 0; i < uvCount; i++)
+	{
+		auto uv = uvs[i];
+		_uvs[i * 2] = uv.x;
+		_uvs[i * 2 + 1] = uv.y;
+	}
+
 	auto uv = new VertexBufferAttribute(context);
 	uv->array = _uvs;
 	uv->attribute = filament::VertexAttribute::UV0;
 	uv->attributeType = filament::VertexBuffer::AttributeType::FLOAT2;
 	uv->itemSize = 2;
-	uv->count = uvsSize / uv->itemSize;
+	uv->count = uvCount;
 	attributes.insert({ filament::VertexAttribute::UV0, uv });
 
 	// index
+	uint32_t triangleCount = triangles.size();
+	uint32_t* _indices = new uint32_t[triangleCount * 3];
+	for (uint32_t i = 0; i < triangleCount; i++)
+	{
+		auto index = triangles[i];
+		_indices[i * 3] = index.x;
+		_indices[i * 3 + 1] = index.y;
+		_indices[i * 3 + 2] = index.z;
+	}
+
 	index = new IndexBufferAttribute(context);
 	index->array = _indices;
 	index->indexType = filament::IndexBuffer::IndexType::UINT;
 	index->itemSize = 1;
-	index->count = indicesSize / index->itemSize;
+	index->count = triangleCount * 3;
+
+	// normal
+	uint32_t normalCount = normals.size();
+	float* _normals = new float[normalCount * 3];
+	for (uint32_t i = 0; i < normalCount; i++)
+	{
+		auto normal = normals[i];
+		_normals[i * 3] = normal.x;
+		_normals[i * 3 + 1] = normal.y;
+		_normals[i * 3 + 2] = normal.z;
+	}
+
+	auto* quats = filament::geometry::SurfaceOrientation::Builder()
+		.vertexCount(vertexCount)
+		.positions(vertices.data())
+		.normals(normals.data())
+		.uvs(uvs.data())
+		.triangleCount(triangleCount)
+		.triangles(triangles.data())
+		.build();
+	tangents = new filament::math::short4[vertexCount];
+	quats->getQuats(tangents, vertexCount, sizeof(filament::math::short4));
+	delete quats;
+
+	auto normal = new VertexBufferAttribute(context);
+	normal->array = reinterpret_cast<float*>(tangents);
+	normal->attribute = filament::VertexAttribute::TANGENTS;
+	normal->attributeType = filament::VertexBuffer::AttributeType::SHORT4;
+	normal->itemSize = 4;
+	normal->count = vertexCount;
+	normal->normalized = true;
+	attributes.insert({ filament::VertexAttribute::TANGENTS, normal });
 
 	BufferGeometry::create();
 }
@@ -128,9 +158,7 @@ void BoxGeometry::buildPlane(std::string u, std::string v, std::string w, float 
 			vector.insert({ w, depthHalf });
 
 			// now apply vector to vertex buffer
-			this->vertices.push_back(vector.at("x"));
-			this->vertices.push_back(vector.at("y"));
-			this->vertices.push_back(vector.at("z"));
+			this->vertices.push_back(filament::math::float3(vector.at("x"), vector.at("y"), vector.at("z")));
 
 			// set values to correct vector component
 			vector.clear();
@@ -139,13 +167,10 @@ void BoxGeometry::buildPlane(std::string u, std::string v, std::string w, float 
 			vector.insert({ w, depth > 0 ? 1 : -1 });
 
 			// now apply vector to normal buffer
-			this->normals.push_back(vector.at("x"));
-			this->normals.push_back(vector.at("y"));
-			this->normals.push_back(vector.at("z"));
+			this->normals.push_back(filament::math::float3(vector.at("x"), vector.at("y"), vector.at("z")));
 
 			// uvs
-			this->uvs.push_back(ix / gridX);
-			this->uvs.push_back(1 - (iy / gridY));
+			this->uvs.push_back(filament::math::float2(ix / gridX, 1 - (iy / gridY)));
 
 			// counters
 			vertexCounter += 1;
@@ -167,12 +192,8 @@ void BoxGeometry::buildPlane(std::string u, std::string v, std::string w, float 
 			int d = numberOfVertices + (ix + 1) + gridX1 * iy;
 
 			// faces
-			this->indices.push_back(a);
-			this->indices.push_back(b);
-			this->indices.push_back(d);
-			this->indices.push_back(b);
-			this->indices.push_back(c);
-			this->indices.push_back(d);
+			this->triangles.push_back(filament::math::uint3(a, b, d));
+			this->triangles.push_back(filament::math::uint3(b, c, d));
 
 			// increase counter
 			groupCount += 6;

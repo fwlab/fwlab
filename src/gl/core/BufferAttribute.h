@@ -28,6 +28,14 @@ namespace gl::core
 		filament::VertexBuffer::AttributeType attributeType = filament::VertexBuffer::AttributeType::FLOAT3;
 	};
 
+	class TangentBufferAttribute : public BufferAttribute<filament::math::short4> {
+	public:
+		TangentBufferAttribute(Context* context);
+		bool normalized = true;
+		filament::VertexAttribute attribute = filament::VertexAttribute::TANGENTS;
+		filament::VertexBuffer::AttributeType attributeType = filament::VertexBuffer::AttributeType::SHORT4;
+	};
+
 	class IndexBufferAttribute : public BufferAttribute<uint32_t> {
 	public:
 		IndexBufferAttribute(Context* context);
