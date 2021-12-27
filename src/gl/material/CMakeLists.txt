@@ -11,7 +11,7 @@ add_library(${MODULE_NAME} STATIC
 	# "PointsMaterial.cpp"
 	# "LineBasicMaterial.cpp"
 	"StandardMaterial.cpp"
-)
+ "SubsurfaceMaterial.h" "SubsurfaceMaterial.cpp" "ClothMaterial.h" "ClothMaterial.cpp" "UnlitMaterial.h" "UnlitMaterial.cpp" "Constant.h" "Constant.cpp")
 
 target_link_libraries(${MODULE_NAME}
 	filament filamentapp
