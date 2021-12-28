@@ -1,10 +1,8 @@
 #ifndef FWLAB_APPLICATION_H
 #define FWLAB_APPLICATION_H
 #include <filamentapp/Config.h>
+#include "scene/Scene.h"
 
-/// <summary>
-/// ”¶”√≥Ã–Ú
-/// </summary>
 class Application {
 public:
 	explicit Application();
@@ -13,6 +11,7 @@ public:
 	void stop();
 private:
 	Config config;
+	Scene* scene = nullptr;
 };
 
 #endif

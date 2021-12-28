@@ -4,17 +4,13 @@
 #include <filament/View.h>
 #include <filament/Scene.h>
 
-/// <summary>
-/// ³¡¾°
-/// </summary>
 class Scene {
 public:
-	static void setup(filament::Engine* engine, filament::View* view, filament::Scene* scene);
-	static void cleanup(filament::Engine* engine, filament::View* view, filament::Scene* scene);
-	static void animate(filament::Engine* engine, filament::View* view, double now);
-	static void imgui(filament::Engine* engine, filament::View* view);
-
-private:
-	Scene() {}
+	Scene();
+	virtual ~Scene();
+	virtual void setup(filament::Engine* engine, filament::View* view, filament::Scene* scene);
+	virtual void cleanup(filament::Engine* engine, filament::View* view, filament::Scene* scene);
+	virtual void animate(filament::Engine* engine, filament::View* view, double now);
+	virtual void imgui(filament::Engine* engine, filament::View* view);
 };
-#endif // !FWLAB_SCENE_H
+#endif

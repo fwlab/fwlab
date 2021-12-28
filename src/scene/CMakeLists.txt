@@ -7,6 +7,9 @@ include_directories(
 
 add_library(${MODULE_NAME} STATIC
 	"Scene.cpp"
+	"BoxScene.cpp"
+	"SuzanneScene.cpp"
+	"RobotDogScene.cpp"
  )
 
 target_link_libraries(${MODULE_NAME}
