@@ -95,6 +95,14 @@ list(APPEND RESOURCE_BINS ${target_path})
 file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/fonts/Roboto-License.txt" DESTINATION "${ASSETS_DIR}/fonts")
 file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/fonts/Roboto-Medium.ttf" DESTINATION "${ASSETS_DIR}/fonts")
 
+# 复制模型
+file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/models/RobotDog/scene.gltf" DESTINATION "${ASSETS_DIR}/models/RobotDog")
+file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/models/RobotDog/scene.bin" DESTINATION "${ASSETS_DIR}/models/RobotDog")
+file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/models/RobotDog/textures/spot_baseColor.png" DESTINATION "${ASSETS_DIR}/models/RobotDog/textures")
+file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/models/RobotDog/textures/spot_emissive.jpeg" DESTINATION "${ASSETS_DIR}/models/RobotDog/textures")
+file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/models/RobotDog/textures/spot_metallicRoughness.png" DESTINATION "${ASSETS_DIR}/models/RobotDog/textures")
+file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/models/RobotDog/textures/spot_normal.png" DESTINATION "${ASSETS_DIR}/models/RobotDog/textures")
+
 # 打包资源
 add_custom_command(
 	OUTPUT ${ASSETS_DIR}/resources/resources.c
