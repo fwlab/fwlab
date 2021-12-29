@@ -60,6 +60,7 @@ include_directories(
 	${FILAMENT_DIR}/third_party/libpng
 	${FILAMENT_DIR}/third_party/libsdl2/include
 	${FILAMENT_DIR}/third_party/libz
+	${FILAMENT_DIR}/third_party/robin-map
 	${FILAMENT_DIR}/third_party/spirv-cross/include
 	${FILAMENT_DIR}/third_party/spirv-tools/include
 	${FILAMENT_DIR}/third_party/vkmemalloc/include
@@ -89,6 +90,10 @@ link_directories(
 	${FILAMENT_OUT_DIR}/third_party/smol-v/tnt
 	${FILAMENT_OUT_DIR}/third_party/spirv-cross/tnt
 	${FILAMENT_OUT_DIR}/third_party/spirv-tools/source
+	${FILAMENT_OUT_DIR}/third_party/spirv-tools/source/link
+	${FILAMENT_OUT_DIR}/third_party/spirv-tools/source/lint
+	${FILAMENT_OUT_DIR}/third_party/spirv-tools/source/opt
+	${FILAMENT_OUT_DIR}/third_party/spirv-tools/source/reduce
 	${FILAMENT_OUT_DIR}/third_party/tinyexr/tnt
 	# filament
 	${FILAMENT_OUT_DIR}/filament
@@ -113,6 +118,8 @@ link_directories(
 	${FILAMENT_OUT_DIR}/libs/mathio
 	${FILAMENT_OUT_DIR}/libs/utils
 	${FILAMENT_OUT_DIR}/libs/viewer
+	# filament shaders
+	${FILAMENT_OUT_DIR}/shaders
 	# filament samples
 	${FILAMENT_DIR}/out/build/x64-Debug/samples
 )
@@ -150,6 +157,10 @@ link_libraries(
 	spirv-cross-glsl.lib
 	spirv-cross-msl.lib
 	SPIRV-Tools.lib
+	SPIRV-Tools-link.lib
+	SPIRV-Tools-lint.lib
+	SPIRV-Tools-opt.lib
+	SPIRV-Tools-reduce.lib
 	tinyexr.lib
 	# filament
 	filament.lib
@@ -177,6 +188,7 @@ link_libraries(
 	matdbg_resources.lib
 	math.lib
 	mathio.lib
+	shaders.lib
 	utils.lib
 	viewer.lib
 	# filament samples

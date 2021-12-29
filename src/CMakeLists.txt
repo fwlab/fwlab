@@ -24,6 +24,6 @@ set_target_properties(${MODULE_NAME} PROPERTIES
 )
 
 target_link_libraries(${MODULE_NAME}
-	filament filamentapp
+	filament filamentapp shaders SPIRV-Tools SPIRV-Tools-link SPIRV-Tools-lint SPIRV-Tools-opt SPIRV-Tools-reduce
 	fwlab_assets fwlab_scene fwlab_utils
 )
