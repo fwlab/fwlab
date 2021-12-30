@@ -74,7 +74,12 @@ void RobotDogScene::setup(filament::Engine* engine, filament::View* view, filame
 
 	// set viewer
 	viewer = new filament::viewer::SimpleViewer(engine, scene, view);
-	viewer->getSettings().viewer.autoScaleEnabled = false;
+	auto& setting = viewer->getSettings();
+	setting.viewer.autoScaleEnabled = false;
+
+
+
+	// add light
 	auto ibl = FilamentApp::get().getIBL();
 	if (ibl) {
 		viewer->setIndirectLight(ibl->getIndirectLight(), ibl->getSphericalHarmonics());
@@ -100,7 +105,13 @@ void RobotDogScene::animate(filament::Engine* engine, filament::View* view, doub
 	resourceLoader->asyncUpdateLoad();
 
 	// Optionally fit the model into a unit cube at the origin.
-	viewer->updateRootTransform();
+	// viewer->updateRootTransform();
+	// set transform
+	auto& manager = engine->getTransformManager();
+	auto root = manager.getInstance(asset->getRoot());
+	filament::math::float3 scale = { 0.001, 0.001, 0.001 };
+	auto transform = filament::math::mat4f::scaling(scale);
+	manager.setTransform(root, transform);
 
 	// Add renderables to the scene as they become ready.
 	viewer->populateScene(asset);
@@ -121,4 +132,17 @@ void RobotDogScene::preRender(filament::Engine* engine, filament::View* view, fi
 void RobotDogScene::postRender(filament::Engine* engine, filament::View* view, filament::Scene* scene, filament::Renderer* renderer)
 {
 
+}
+
+filament::math::mat4f RobotDogScene::fitIntoUnitCube(const filament::Aabb& bounds, float zoffset) {
+	using namespace filament::math;
+	auto minpt = bounds.min;
+	auto maxpt = bounds.max;
+	float maxExtent;
+	maxExtent = std::max(maxpt.x - minpt.x, maxpt.y - minpt.y);
+	maxExtent = std::max(maxExtent, maxpt.z - minpt.z);
+	float scaleFactor = 2.0f / maxExtent;
+	float3 center = (minpt + maxpt) / 2.0f;
+	center.z += zoffset / scaleFactor;
+	return mat4f::scaling(float3(scaleFactor)) * mat4f::translation(-center);
 }

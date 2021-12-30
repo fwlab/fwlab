@@ -1,5 +1,7 @@
 #ifndef FWLAB_ROBOT_DOG_SCENE_H
 #define FWLAB_ROBOT_DOG_SCENE_H
+#include <filament/Box.h>
+#include <math/mat4.h>
 #include <filament/Engine.h>
 #include <filament/View.h>
 #include <filament/Scene.h>
@@ -16,5 +18,6 @@ public:
 
 private:
 	void uiCallback();
+	filament::math::mat4f fitIntoUnitCube(const filament::Aabb& bounds, float zoffset);
 };
 #endif
