@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
+#include <imgui.h>
 #include <filament/Camera.h>
 #include <filament/TransformManager.h>
 #include <filament/Viewport.h>
@@ -17,11 +18,14 @@
 #include <viewer/SimpleViewer.h>
 #include "RobotDogScene.h"
 
-filament::viewer::SimpleViewer* viewer;
 utils::NameComponentManager* names;
 gltfio::AssetLoader* loader;
 gltfio::FilamentAsset* asset;
 gltfio::ResourceLoader* resourceLoader;
+
+filament::viewer::SimpleViewer* viewer;
+filament::viewer::AutomationSpec* automationSpec;
+filament::viewer::AutomationEngine* automationEngine;
 
 void RobotDogScene::setup(filament::Engine* engine, filament::View* view, filament::Scene* scene)
 {
@@ -77,9 +81,11 @@ void RobotDogScene::setup(filament::Engine* engine, filament::View* view, filame
 	auto& setting = viewer->getSettings();
 	setting.viewer.autoScaleEnabled = false;
 
+	// animation
+	automationSpec = filament::viewer::AutomationSpec::generateDefaultTestCases();
+	automationEngine = new filament::viewer::AutomationEngine(automationSpec, &viewer->getSettings());
 
-
-	// add light
+	// add light setting
 	auto ibl = FilamentApp::get().getIBL();
 	if (ibl) {
 		viewer->setIndirectLight(ibl->getIndirectLight(), ibl->getSphericalHarmonics());
@@ -94,10 +100,13 @@ void RobotDogScene::uiCallback()
 
 void RobotDogScene::cleanup(filament::Engine* engine, filament::View* view, filament::Scene* scene)
 {
-	delete viewer;
+	automationEngine->terminate();
 	resourceLoader->asyncCancelLoad();
 	loader->destroyAsset(asset);
 	gltfio::AssetLoader::destroy(&loader);
+
+	delete viewer;
+	delete names;
 }
 
 void RobotDogScene::animate(filament::Engine* engine, filament::View* view, double now)
@@ -131,7 +140,17 @@ void RobotDogScene::preRender(filament::Engine* engine, filament::View* view, fi
 
 void RobotDogScene::postRender(filament::Engine* engine, filament::View* view, filament::Scene* scene, filament::Renderer* renderer)
 {
-
+	if (automationEngine->shouldClose()) {
+		FilamentApp::get().close();
+		return;
+	}
+	filament::viewer::AutomationEngine::ViewerContent content = {
+		.view = view,
+		.renderer = renderer,
+		.materials = asset->getMaterialInstances(),
+		.materialCount = asset->getMaterialInstanceCount(),
+	};
+	automationEngine->tick(content, ImGui::GetIO().DeltaTime);
 }
 
 filament::math::mat4f RobotDogScene::fitIntoUnitCube(const filament::Aabb& bounds, float zoffset) {
