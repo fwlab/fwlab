@@ -28,7 +28,7 @@ void RobotDogScene::setup(filament::Engine* engine, filament::View* view, filame
 	//// camera
 	//cameraEntity = utils::EntityManager::get().create();
 	//filament::math::double3 axis = { 0, 1, 0 };
-	//filament::math::mat4 rotateMatrix = filament::math::mat4::rotation(M_PI, axis);
+	//filament::math::mat4 rotateMatrix = filament::math::mat4::translation(M_PI, axis);
 	//manager.setTransform(manager.getInstance(cameraEntity), rotateMatrix);
 	//scene->addEntity(cameraEntity);
 
@@ -85,16 +85,18 @@ void RobotDogScene::setup(filament::Engine* engine, filament::View* view, filame
 	auto count = asset->getEntityCount();
 	scene->addEntities(entities, count);
 
+	// set transform
+	filament::math::double3 translate = { 0, 0, -6 };
+	auto translateMatrix = filament::math::mat4::translation(translate);
+	filament::math::double3 axis = { 0, 1, 1 };
+	auto rotateMatrix = filament::math::mat4::rotation(M_PI / 2, axis);
+	filament::math::double3 scale = { 0.6, 0.6, 0.6 };
+	auto scaleMatrix = filament::math::mat4::scaling(scale);
+	auto transform = translateMatrix * scaleMatrix;
+
 	for (int i = 0; i < count; i++)
 	{
-		utils::Entity root = manager.getParent(manager.getInstance(entities[i]));
-		while (!root.isNull())
-		{
-			root = manager.getParent(manager.getInstance(root));
-		}
-		filament::math::double3 axis = { 0.2, 0.2, 0.2 };
-		filament::math::mat4 rotateMatrix = filament::math::mat4::scaling(axis);
-		manager.setTransform(manager.getInstance(root), rotateMatrix);
+		manager.setTransform(manager.getInstance(entities[i]), transform);
 	}
 }
 
