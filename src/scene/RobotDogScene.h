@@ -10,7 +10,11 @@ public:
 	void setup(filament::Engine* engine, filament::View* view, filament::Scene* scene) override;
 	void cleanup(filament::Engine* engine, filament::View* view, filament::Scene* scene) override;
 	void animate(filament::Engine* engine, filament::View* view, double now) override;
+	void imgui(filament::Engine* engine, filament::View* view) override;
 	void preRender(filament::Engine* engine, filament::View* view, filament::Scene* scene, filament::Renderer* renderer) override;
 	void postRender(filament::Engine* engine, filament::View* view, filament::Scene* scene, filament::Renderer* renderer) override;
+
+private:
+	void uiCallback();
 };
 #endif

@@ -4,6 +4,7 @@
 #include <filament/Camera.h>
 #include <filament/TransformManager.h>
 #include <filament/Viewport.h>
+#include <filamentapp/FilamentApp.h>
 #include <math/vec3.h>
 #include <math/mat4.h>
 #include <gltfio/AssetLoader.h>
@@ -11,10 +12,12 @@
 #include <utils/EntityManager.h>
 #include <utils/NameComponentManager.h>
 #include <utils/Path.h>
+#include <viewer/AutomationEngine.h>
+#include <viewer/AutomationSpec.h>
+#include <viewer/SimpleViewer.h>
 #include "RobotDogScene.h"
 
-utils::Entity cameraEntity;
-filament::Camera* camera;
+filament::viewer::SimpleViewer* viewer;
 utils::NameComponentManager* names;
 gltfio::AssetLoader* loader;
 gltfio::FilamentAsset* asset;
@@ -24,17 +27,6 @@ void RobotDogScene::setup(filament::Engine* engine, filament::View* view, filame
 {
 	auto& viewport = view->getViewport();
 	auto& manager = engine->getTransformManager();
-
-	//// camera
-	//cameraEntity = utils::EntityManager::get().create();
-	//filament::math::double3 axis = { 0, 1, 0 };
-	//filament::math::mat4 rotateMatrix = filament::math::mat4::translation(M_PI, axis);
-	//manager.setTransform(manager.getInstance(cameraEntity), rotateMatrix);
-	//scene->addEntity(cameraEntity);
-
-	//camera = engine->createCamera(cameraEntity);
-	//camera->setProjection(50, float(viewport.width) / viewport.height, 0.1, 1000);
-	//view->setCamera(camera);
 
 	// load asset
 	utils::Path filename = "assets/models/RobotDog/scene.gltf";
@@ -80,39 +72,45 @@ void RobotDogScene::setup(filament::Engine* engine, filament::View* view, filame
 	asset->getAnimator();
 	asset->releaseSourceData();
 
-	// add to scene
-	auto entities = asset->getEntities();
-	auto count = asset->getEntityCount();
-	scene->addEntities(entities, count);
-
-	// set transform
-	filament::math::double3 translate = { 0, 0, -6 };
-	auto translateMatrix = filament::math::mat4::translation(translate);
-	filament::math::double3 axis = { 0, 1, 1 };
-	auto rotateMatrix = filament::math::mat4::rotation(M_PI / 2, axis);
-	filament::math::double3 scale = { 0.6, 0.6, 0.6 };
-	auto scaleMatrix = filament::math::mat4::scaling(scale);
-	auto transform = translateMatrix * scaleMatrix;
-
-	for (int i = 0; i < count; i++)
-	{
-		manager.setTransform(manager.getInstance(entities[i]), transform);
+	// set viewer
+	viewer = new filament::viewer::SimpleViewer(engine, scene, view);
+	viewer->getSettings().viewer.autoScaleEnabled = false;
+	auto ibl = FilamentApp::get().getIBL();
+	if (ibl) {
+		viewer->setIndirectLight(ibl->getIndirectLight(), ibl->getSphericalHarmonics());
 	}
+	viewer->setUiCallback([&]() { this->uiCallback(); });
+}
+
+void RobotDogScene::uiCallback()
+{
+
 }
 
 void RobotDogScene::cleanup(filament::Engine* engine, filament::View* view, filament::Scene* scene)
 {
+	delete viewer;
 	resourceLoader->asyncCancelLoad();
 	loader->destroyAsset(asset);
 	gltfio::AssetLoader::destroy(&loader);
-	engine->destroy(cameraEntity);
-	engine->destroyCameraComponent(cameraEntity);
-	utils::EntityManager::get().destroy(cameraEntity);
 }
 
 void RobotDogScene::animate(filament::Engine* engine, filament::View* view, double now)
 {
 	resourceLoader->asyncUpdateLoad();
+
+	// Optionally fit the model into a unit cube at the origin.
+	viewer->updateRootTransform();
+
+	// Add renderables to the scene as they become ready.
+	viewer->populateScene(asset);
+
+	viewer->applyAnimation(now);
+}
+
+void RobotDogScene::imgui(filament::Engine* engine, filament::View* view)
+{
+	viewer->updateUserInterface();
 }
 
 void RobotDogScene::preRender(filament::Engine* engine, filament::View* view, filament::Scene* scene, filament::Renderer* renderer)
