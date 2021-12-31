@@ -10,6 +10,7 @@ add_subdirectory(light)
 add_subdirectory(scene)
 add_subdirectory(loader)
 add_subdirectory(renderer)
+add_subdirectory(helper)
 
 add_library(${MODULE_NAME} STATIC "gl.cpp")
 
