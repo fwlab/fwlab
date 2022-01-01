@@ -2,6 +2,8 @@
 
 fwlab是一个人工智能实验室。
 
+![image](image/screenshot.png)
+
 ## 编译说明
 
 1. 在`Windows`上安装`git`和`Visual Studio 2019`。
