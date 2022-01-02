@@ -1,3 +1,5 @@
+#include "imgui.h"
+#include <viewer/SimpleViewer.h>
 #include "../gl/gl.h"
 #include "resources/resources.h"
 #include "BoxScene.h"
@@ -7,6 +9,7 @@ using namespace gl::material;
 using namespace gl::object;
 using namespace gl::light;
 
+filament::viewer::SimpleViewer* viewer;
 Context context;
 Light* light;
 Mesh* plane;
@@ -21,6 +24,9 @@ void BoxScene::setup(filament::Engine* engine, filament::View* view, filament::S
 	light = new Light(&context);
 	light->create();
 	scene->addEntity(light->entity);
+
+	// viewer
+	viewer = new filament::viewer::SimpleViewer(engine, scene, view);
 
 	// plane
 	{
@@ -65,9 +71,15 @@ void BoxScene::cleanup(filament::Engine* engine, filament::View* view, filament:
 	delete plane;
 	delete box;
 	delete light;
+	delete viewer;
 }
 
 void BoxScene::animate(filament::Engine* engine, filament::View* view, double now)
 {
 	box->setRotation(now, filament::math::double3{ 0, 1, 0 });
+}
+
+void BoxScene::imgui(filament::Engine* engine, filament::View* view)
+{
+	viewer->updateUserInterface();
 }

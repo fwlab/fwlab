@@ -10,5 +10,6 @@ public:
 	void setup(filament::Engine* engine, filament::View* view, filament::Scene* scene) override;
 	void cleanup(filament::Engine* engine, filament::View* view, filament::Scene* scene) override;
 	void animate(filament::Engine* engine, filament::View* view, double now) override;
+	void imgui(filament::Engine* engine, filament::View* view) override;
 };
 #endif
