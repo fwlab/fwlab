@@ -15,5 +15,6 @@ public:
 	virtual void imgui(filament::Engine* engine, filament::View* view);
 	virtual void preRender(filament::Engine* engine, filament::View* view, filament::Scene* scene, filament::Renderer* renderer);
 	virtual void postRender(filament::Engine* engine, filament::View* view, filament::Scene* scene, filament::Renderer* renderer);
+	virtual void resize(filament::Engine* engine, filament::View* view);
 };
 #endif

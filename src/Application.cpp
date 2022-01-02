@@ -24,28 +24,34 @@ Application::~Application()
 
 void Application::start()
 {
-	auto _scene = this->scene;
-
 	auto setup = [&](filament::Engine* engine, filament::View* view, filament::Scene* scene) {
-		_scene->setup(engine, view, scene);
+		this->scene->setup(engine, view, scene);
 	};
 	auto cleanup = [&](filament::Engine* engine, filament::View* view, filament::Scene* scene) {
-		_scene->cleanup(engine, view, scene);
+		this->scene->cleanup(engine, view, scene);
 	};
 	auto animate = [&](filament::Engine* engine, filament::View* view, double now) {
-		_scene->animate(engine, view, now);
+		this->scene->animate(engine, view, now);
 	};
 	auto imgui = [&](filament::Engine* engine, filament::View* view) {
-		_scene->imgui(engine, view);
+		this->scene->imgui(engine, view);
 	};
 	auto preRender = [&](filament::Engine* engine, filament::View* view, filament::Scene* scene, filament::Renderer* renderer) {
+		this->scene->preRender(engine, view, scene, renderer);
 	};
 
 	auto postRender = [&](filament::Engine* engine, filament::View* view, filament::Scene* scene, filament::Renderer* renderer) {
+		this->scene->postRender(engine, view, scene, renderer);
 	};
 
-	FilamentApp::get().animate(animate);
-	FilamentApp::get().run(config, setup, cleanup, imgui, preRender, postRender);
+	auto resize = [&](filament::Engine* engine, filament::View* view) {
+		this->scene->resize(engine, view);
+	};
+
+	auto& app = FilamentApp::get();
+	app.animate(animate);
+	app.resize(resize);
+	app.run(config, setup, cleanup, imgui, preRender, postRender);
 }
 
 void Application::stop()

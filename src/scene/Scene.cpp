@@ -36,3 +36,8 @@ void Scene::preRender(filament::Engine* engine, filament::View* view, filament::
 void Scene::postRender(filament::Engine* engine, filament::View* view, filament::Scene* scene, filament::Renderer* renderer)
 {
 }
+
+void Scene::resize(filament::Engine* engine, filament::View* view)
+{
+
+}

@@ -135,7 +135,7 @@ void RobotDogScene::imgui(filament::Engine* engine, filament::View* view)
 
 void RobotDogScene::preRender(filament::Engine* engine, filament::View* view, filament::Scene* scene, filament::Renderer* renderer)
 {
-
+	
 }
 
 void RobotDogScene::postRender(filament::Engine* engine, filament::View* view, filament::Scene* scene, filament::Renderer* renderer)
