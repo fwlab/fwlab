@@ -6,24 +6,26 @@
 
 namespace gl::core
 {
-	template <typename T>
 	class BufferAttribute {
 	public:
+		BufferAttribute(void* array = nullptr, uint8_t itemSize = 0);
 		virtual ~BufferAttribute();
-		T* array = nullptr;
+		void* array = nullptr;
 		uint8_t itemSize = 0;
 		uint32_t count = 0;
 	};
 
-	class VertexBufferAttribute : public BufferAttribute<float> {
+	class VertexBufferAttribute : public BufferAttribute {
 	public:
+		VertexBufferAttribute(void* array = nullptr, uint8_t itemSize = 0, bool normalized = false);
 		bool normalized = false;
 		filament::VertexAttribute attribute = filament::VertexAttribute::POSITION;
 		filament::VertexBuffer::AttributeType attributeType = filament::VertexBuffer::AttributeType::FLOAT3;
 	};
 
-	class IndexBufferAttribute : public BufferAttribute<uint32_t> {
+	class IndexBufferAttribute : public BufferAttribute {
 	public:
+		IndexBufferAttribute(void* array = nullptr, uint8_t itemSize = 0);
 		filament::IndexBuffer::IndexType indexType = filament::IndexBuffer::IndexType::UINT;
 	};
 }

@@ -14,6 +14,7 @@ namespace gl::material
 		Material(Context* context);
 		virtual ~Material();
 		virtual void create();
+		virtual void create(const void* payload, size_t size);
 		filament::MaterialInstance* instance = nullptr;
 		filament::RenderableManager::PrimitiveType primitiveType = filament::RenderableManager::PrimitiveType::TRIANGLES;
 

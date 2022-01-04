@@ -10,7 +10,7 @@ add_library(${MODULE_NAME} STATIC
 	"BoxScene.cpp"
 	"SuzanneScene.cpp"
 	"RobotDogScene.cpp"
-  "ImGuiScene.h" "ImGuiScene.cpp")
+  "ImGuiScene.h" "ImGuiScene.cpp" "AnimationScene.cpp" "AnimationScene.h")
 
 target_link_libraries(${MODULE_NAME}
 	filament filamentapp viewer gltfio gltfio_core

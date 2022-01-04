@@ -5,7 +5,7 @@
 #include <filamentapp/Config.h>
 #include <filamentapp/FilamentApp.h>
 #include "utils/EncodingUtils.h"
-#include "scene/RobotDogScene.h"
+#include "scene/AnimationScene.h"
 #include "Application.h"
 
 static const char* IBL_FOLDER = "assets/ibl/lightroom_14b";
@@ -13,8 +13,8 @@ static const char* IBL_FOLDER = "assets/ibl/lightroom_14b";
 Application::Application()
 {
 	config.title = EncodingUtils::GBKToUTF8("人工智能实验室");
-	config.iblDirectory = FilamentApp::getRootAssetsPath() + IBL_FOLDER;
-	scene = new RobotDogScene();
+	// config.iblDirectory = FilamentApp::getRootAssetsPath() + IBL_FOLDER;
+	scene = new AnimationScene();
 }
 
 Application::~Application()

@@ -30,6 +30,11 @@ void Material::create()
 	createMaterial(RESOURCES_DEFAULTMATERIAL_DATA, RESOURCES_DEFAULTMATERIAL_SIZE);
 }
 
+void Material::create(const void* payload, size_t size)
+{
+	createMaterial(payload, size);
+}
+
 void Material::createMaterial(const void* payload, size_t size)
 {
 	if (!material)

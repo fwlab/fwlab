@@ -120,7 +120,7 @@ void BufferGeometry::computeBoundingBox()
 	auto attribute = attributes.at(filament::VertexAttribute::POSITION);
 	if (attribute)
 	{
-		vertices = attribute->array;
+		vertices = static_cast<float*>(attribute->array);
 		vertexCount = attribute->count;
 	}
 
@@ -177,13 +177,13 @@ void BufferGeometry::computeBoundingBox()
 	}
 	if (min->y == max->y)
 	{
-		min->x -= 1;
-		max->x += 1;
+		min->y -= 1;
+		max->y += 1;
 	}
 	if (min->z == max->z)
 	{
-		min->x -= 1;
-		max->x += 1;
+		min->z -= 1;
+		max->z += 1;
 	}
 
 	boundingBox = new filament::Box();

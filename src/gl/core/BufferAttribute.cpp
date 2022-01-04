@@ -2,8 +2,13 @@
 
 using namespace gl::core;
 
-template <typename T>
-BufferAttribute<T>::~BufferAttribute()
+BufferAttribute::BufferAttribute(void* array, uint8_t itemSize)
+{
+	this->array = array;
+	this->itemSize = itemSize;
+}
+
+BufferAttribute::~BufferAttribute()
 {
 	if (array != nullptr) {
 		delete[] array;
@@ -11,7 +16,12 @@ BufferAttribute<T>::~BufferAttribute()
 	}
 }
 
-template class BufferAttribute<float>;
-template class BufferAttribute<double>;
-template class BufferAttribute<uint16_t>;
-template class BufferAttribute<uint32_t>;
+VertexBufferAttribute::VertexBufferAttribute(void* array, uint8_t itemSize, bool normalized) : BufferAttribute(array, itemSize)
+{
+	this->normalized = normalized;
+}
+
+IndexBufferAttribute::IndexBufferAttribute(void* array, uint8_t itemSize) : BufferAttribute(array, itemSize)
+{
+
+}

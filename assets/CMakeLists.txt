@@ -9,6 +9,7 @@ set(MATERIAL_SRCS
 	"materials/aiDefaultMat.mat"
 	"materials/standard_material.mat"
 	"materials/textured.mat"
+	"materials/bakedColor.mat"
 )
 set(MAP_SRCS
 	"environments/lightroom_14b.hdr"
