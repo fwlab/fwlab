@@ -25,3 +25,14 @@
 // loader
 #include "loader/Loader.h"
 #include "loader/FilameshLoader.h"
+
+namespace gl
+{
+	using namespace gl::core;
+	using namespace gl::geometry;
+	using namespace gl::material;
+	using namespace gl::object;
+	using namespace gl::camera;
+	using namespace gl::light;
+	using namespace gl::loader;
+}

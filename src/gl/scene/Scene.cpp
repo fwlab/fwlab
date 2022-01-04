@@ -1,6 +1,8 @@
 #include "Scene.h"
 
-Scene::Scene()
+using namespace gl::scene;
+
+Scene::Scene(Context* context) : Object3D(context)
 {
 
 }
