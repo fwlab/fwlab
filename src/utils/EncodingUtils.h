@@ -2,9 +2,6 @@
 #define FWLAB_ENCODING_UTILS_H
 #include <string>
 
-/// <summary>
-/// ±‡¬Îπ§æﬂ¿‡
-/// </summary>
 class EncodingUtils
 {
 public:

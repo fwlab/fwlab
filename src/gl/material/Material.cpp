@@ -14,7 +14,7 @@ Material::Material(Context* context)
 
 Material::~Material()
 {
-	if (context && context->engine && instance)
+	if (context && context->engine && instances.size() > 0 && instance)
 	{
 		instances.erase(std::remove(instances.begin(), instances.end(), instance));
 		context->engine->destroy(instance);
