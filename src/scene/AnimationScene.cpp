@@ -26,6 +26,8 @@ void AnimationScene::setup(filament::Engine* engine, filament::View* view, filam
 	FilamentApp& app = FilamentApp::get();
 	context = { &app, engine, view, scene };
 
+	gl::init(&app, engine, view, scene);
+
 	camera = new gl::OrthographicCamera(&context);
 	view->setCamera(camera->camera);
 

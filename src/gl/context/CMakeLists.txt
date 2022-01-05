@@ -1,9 +1,7 @@
-set(MODULE_NAME fwlab_gl_camera)
+set(MODULE_NAME fwlab_gl_context)
 
 add_library(${MODULE_NAME} STATIC
-	"Camera.cpp"
-	"PerspectiveCamera.cpp"
-	"OrthographicCamera.cpp"
+	"context.cpp"
 )
 
 target_link_libraries(${MODULE_NAME}

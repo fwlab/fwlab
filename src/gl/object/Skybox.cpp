@@ -1,5 +1,7 @@
+#include "../context/context.h"
 #include "Skybox.h"
 
+using namespace gl::context;
 using namespace gl::object;
 
 Skybox::Skybox(Context* context, filament::math::float4 color, bool showSun)
@@ -9,7 +11,7 @@ Skybox::Skybox(Context* context, filament::math::float4 color, bool showSun)
 	skybox = filament::Skybox::Builder()
 		.color(color)
 		.showSun(showSun)
-		.build(*context->engine);
+		.build(*engine);
 }
 
 Skybox::Skybox(Context* context, filament::Texture* cubemap, float envIntensity, bool showSun)
@@ -20,7 +22,7 @@ Skybox::Skybox(Context* context, filament::Texture* cubemap, float envIntensity,
 		.environment(cubemap)
 		.intensity(envIntensity)
 		.showSun(showSun)
-		.build(*context->engine);
+		.build(*engine);
 }
 
 Skybox::~Skybox()
