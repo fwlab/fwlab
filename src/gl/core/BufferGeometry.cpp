@@ -1,29 +1,27 @@
 #include <climits>
 #include "BufferGeometry.h"
+#include "../context/context.h"
 
+using namespace gl::context;
 using namespace gl::core;
 
-BufferGeometry::BufferGeometry(Context* context)
+BufferGeometry::BufferGeometry()
 {
-	this->context = context;
 	this->groups = new std::vector<Group*>();
 }
 
 BufferGeometry::~BufferGeometry()
 {
-	if (context && context->engine)
+	for (auto& pair : attributes)
 	{
-		for (auto& pair : attributes)
-		{
-			delete pair.second;
-			pair.second = nullptr;
-		}
-		attributes.clear();
-		if (index)
-		{
-			delete index;
-			index = nullptr;
-		}
+		delete pair.second;
+		pair.second = nullptr;
+	}
+	attributes.clear();
+	if (index)
+	{
+		delete index;
+		index = nullptr;
 	}
 	if (boundingBox)
 	{
@@ -79,13 +77,13 @@ void BufferGeometry::createVertexBuffer()
 		i++;
 	}
 
-	vertexBuffer = builder.build(*context->engine);
+	vertexBuffer = builder.build(*engine);
 
 	i = 0;
 	for (auto pair : attributes)
 	{
 		vertexBuffer->setBufferAt(
-			*context->engine,
+			*engine,
 			i,
 			filament::VertexBuffer::BufferDescriptor(pair.second->array, pair.second->count * getSize(pair.second->attributeType))
 		);
@@ -102,10 +100,10 @@ void BufferGeometry::createIndexBuffer()
 	auto builder = filament::IndexBuffer::Builder();
 	builder.indexCount(index->count);
 	builder.bufferType(index->indexType);
-	indexBuffer = builder.build(*context->engine);
+	indexBuffer = builder.build(*engine);
 
 	indexBuffer->setBuffer(
-		*context->engine,
+		*engine,
 		filament::IndexBuffer::BufferDescriptor(index->array, index->count * getSize(index->indexType))
 	);
 }

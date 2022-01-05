@@ -10,7 +10,6 @@ using namespace gl::object;
 using namespace gl::light;
 
 filament::viewer::SimpleViewer* viewer;
-Context context;
 Light* light;
 Mesh* plane;
 Mesh* box;
@@ -18,10 +17,10 @@ Mesh* box;
 void BoxScene::setup(filament::Engine* engine, filament::View* view, filament::Scene* scene)
 {
 	FilamentApp& app = FilamentApp::get();
-	context = { &app, engine, view, scene };
+	gl::init(&app, engine, view, scene);
 
 	// light
-	light = new Light(&context);
+	light = new Light();
 	light->create();
 	scene->addEntity(light->entity);
 
@@ -30,15 +29,15 @@ void BoxScene::setup(filament::Engine* engine, filament::View* view, filament::S
 
 	// plane
 	{
-		PlaneGeometry* geometry = new PlaneGeometry(&context);
+		PlaneGeometry* geometry = new PlaneGeometry();
 		geometry->create(10, 10);
 
-		StandardMaterial* material = new StandardMaterial(&context);
+		StandardMaterial* material = new StandardMaterial();
 		material->metallic = 0;
 		material->roughness = 0;
 		material->create();
 
-		plane = new Mesh(&context);
+		plane = new Mesh();
 		plane->receiveShadows = true;
 		plane->create(geometry, material);
 		plane->setTranslation({ 0, -2, -10 });
@@ -48,16 +47,16 @@ void BoxScene::setup(filament::Engine* engine, filament::View* view, filament::S
 
 	// box
 	{
-		BoxGeometry* geometry = new BoxGeometry(&context);
+		BoxGeometry* geometry = new BoxGeometry();
 		geometry->create(1, 1, 1);
 
-		StandardMaterial* material = new StandardMaterial(&context);
+		StandardMaterial* material = new StandardMaterial();
 		material->baseColor = { 1, 0, 0, 1 };
 		material->metallic = 0;
 		material->roughness = 0;
 		material->create();
 
-		box = new Mesh(&context);
+		box = new Mesh();
 		box->castShadows = true;
 		box->receiveShadows = true;
 		box->create(geometry, material);

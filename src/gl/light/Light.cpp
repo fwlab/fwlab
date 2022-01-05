@@ -1,19 +1,20 @@
 #include <filament/LightManager.h>
 #include <utils/EntityManager.h>
 #include "Light.h"
+#include "../context/context.h"
 
+using namespace gl::context;
 using namespace gl::light;
 
-Light::Light(Context* context)
+Light::Light()
 {
-	this->context = context;
 }
 
 Light::~Light()
 {
-	if (context && context->engine && entity)
+	if (entity)
 	{
-		context->engine->destroy(entity);
+		engine->destroy(entity);
 	}
 }
 
@@ -28,6 +29,6 @@ Light* Light::create()
 		.direction({ 0.7, -1, -0.8 })
 		.sunAngularRadius(1.9f)
 		.castShadows(true)
-		.build(*context->engine, entity);
+		.build(*engine, entity);
 	return this;
 }

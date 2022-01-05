@@ -1,9 +1,11 @@
 #include <utils/EntityManager.h>
 #include "Mesh.h"
+#include "../context/context.h"
 
+using namespace gl::context;
 using namespace gl::object;
 
-Mesh::Mesh(Context* context) : Object3D(context)
+Mesh::Mesh()
 {
 
 }
@@ -35,5 +37,5 @@ void Mesh::create(BufferGeometry* geometry, Material* material)
 		.culling(culling)
 		.castShadows(castShadows)
 		.receiveShadows(receiveShadows)
-		.build(*context->engine, entity);
+		.build(*engine, entity);
 }

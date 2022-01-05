@@ -3,7 +3,7 @@
 
 using namespace gl::material;
 
-PointsMaterial::PointsMaterial(Context* context) : Material(context)
+PointsMaterial::PointsMaterial()
 {
 	this->primitiveType = filament::RenderableManager::PrimitiveType::POINTS;
 }

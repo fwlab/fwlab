@@ -10,7 +10,7 @@ using namespace gl::core;
 using namespace gl::geometry;
 using namespace gl::utils;
 
-BoxGeometry::BoxGeometry(Context* context) : BufferGeometry(context)
+BoxGeometry::BoxGeometry()
 {
 }
 

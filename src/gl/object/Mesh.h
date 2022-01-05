@@ -4,7 +4,6 @@
 #include "../core/BufferGeometry.h"
 #include "../material/Material.h"
 #include "../core/Object3D.h"
-#include "../Context.h"
 
 namespace gl::object
 {
@@ -15,7 +14,7 @@ namespace gl::object
 	class Mesh : public Object3D
 	{
 	public:
-		Mesh(Context* context);
+		Mesh();
 		virtual ~Mesh();
 		void create(BufferGeometry* geometry, Material* material);
 		bool culling = true;

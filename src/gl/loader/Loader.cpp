@@ -3,9 +3,9 @@
 using namespace gl::object;
 using namespace gl::loader;
 
-Loader::Loader(Context* context)
+Loader::Loader()
 {
-	this->context = context;
+
 }
 
 Loader::~Loader()

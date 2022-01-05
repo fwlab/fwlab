@@ -7,7 +7,6 @@ using namespace gl::object;
 using namespace gl::light;
 using namespace gl::loader;
 
-Context context;
 Light* light;
 StandardMaterial* material;
 FilameshLoader* loader;
@@ -16,22 +15,22 @@ Mesh* mesh;
 void SuzanneScene::setup(filament::Engine* engine, filament::View* view, filament::Scene* scene)
 {
 	FilamentApp& app = FilamentApp::get();
-	context = { &app, engine, view, scene };
+	gl::init(&app, engine, view, scene);
 
 	// light
-	light = new Light(&context);
+	light = new Light();
 	light->create();
 	scene->addEntity(light->entity);
 
 	// material
-	material = new StandardMaterial(&context);
+	material = new StandardMaterial();
 	material->metallic = 0;
 	material->roughness = 0;
 	material->reflectance = 1;
 	material->create();
 
 	// loader
-	loader = new FilameshLoader(&context);
+	loader = new FilameshLoader();
 	mesh = loader->load(RESOURCES_MONKEY_DATA, material->instance);
 	auto& manager = engine->getRenderableManager();
 	auto instance = manager.getInstance(mesh->entity);

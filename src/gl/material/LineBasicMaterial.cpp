@@ -3,7 +3,7 @@
 
 using namespace gl::material;
 
-LineBasicMaterial::LineBasicMaterial(Context* context) : Material(context)
+LineBasicMaterial::LineBasicMaterial()
 {
 	this->primitiveType = filament::RenderableManager::PrimitiveType::LINES;
 }

@@ -3,7 +3,7 @@
 
 using namespace gl::material;
 
-StandardMaterial::StandardMaterial(Context* context) : Material(context)
+StandardMaterial::StandardMaterial()
 {
 }
 

@@ -5,7 +5,6 @@
 #include <vector>
 #include <math/vec2.h>
 #include <math/vec3.h>
-#include "../Context.h"
 #include "../core/BufferGeometry.h"
 
 namespace gl::geometry
@@ -15,7 +14,7 @@ namespace gl::geometry
 	class BoxGeometry : public BufferGeometry
 	{
 	public:
-		BoxGeometry(Context* context);
+		BoxGeometry();
 		virtual ~BoxGeometry();
 		void create(float width = 1, float height = 1, float depth = 1, uint16_t widthSegments = 1, uint16_t heightSegments = 1, uint16_t depthSegments = 1);
 

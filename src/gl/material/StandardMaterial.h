@@ -2,14 +2,13 @@
 #define GL_MATERIAL_STANDARD_MATERIAL_H
 #include <math/vec3.h>
 #include <math/vec4.h>
-#include "../Context.h"
 #include "Material.h"
 
 namespace gl::material
 {
 	class StandardMaterial : public Material {
 	public:
-		StandardMaterial(Context* context);
+		StandardMaterial();
 		virtual ~StandardMaterial();
 		void create() override;
 		filament::math::float4 baseColor = { 1, 1, 1, 1 }; // Pre-multiplied linear RGB, Non-metals: [0.04..0.94], Metals: [0.66..1.0]

@@ -10,7 +10,7 @@ namespace gl::scene
 {
 	class Scene : gl::core::Object3D {
 	public:
-		Scene(Context* context);
+		Scene();
 		virtual ~Scene();
 	};
 }

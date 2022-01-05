@@ -3,7 +3,6 @@
 #include <stdint.h>
 #include <vector>
 #include <filament/Box.h>
-#include "../Context.h"
 #include "BufferAttribute.h"
 
 namespace gl::core
@@ -17,7 +16,7 @@ namespace gl::core
 
 	class BufferGeometry {
 	public:
-		BufferGeometry(Context* context);
+		BufferGeometry();
 		virtual ~BufferGeometry();
 		virtual void create();
 		void computeBoundingBox();
@@ -31,7 +30,6 @@ namespace gl::core
 		std::vector<Group*>* groups = nullptr;
 
 	protected:
-		Context* context = nullptr;
 		virtual void createVertexBuffer();
 		virtual void createIndexBuffer();
 		uint16_t getSize(filament::VertexBuffer::AttributeType type);

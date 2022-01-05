@@ -1,27 +1,28 @@
 #include <algorithm>
 #include "resources/resources.h"
 #include "Material.h"
+#include "../context/context.h"
 
+using namespace gl::context;
 using namespace gl::material;
 
 filament::Material* Material::material = nullptr;
 std::vector<filament::MaterialInstance*> Material::instances;
 
-Material::Material(Context* context)
+Material::Material()
 {
-	this->context = context;
 }
 
 Material::~Material()
 {
-	if (context && context->engine && instances.size() > 0 && instance)
+	if (instances.size() > 0 && instance)
 	{
 		instances.erase(std::remove(instances.begin(), instances.end(), instance));
-		context->engine->destroy(instance);
+		engine->destroy(instance);
 	}
-	if (context && context->engine && material && instances.size() == 0)
+	if (material && instances.size() == 0)
 	{
-		context->engine->destroy(material);
+		engine->destroy(material);
 	}
 }
 
@@ -41,7 +42,7 @@ void Material::createMaterial(const void* payload, size_t size)
 	{
 		material = filament::Material::Builder()
 			.package(payload, size)
-			.build(*context->engine);
+			.build(*engine);
 	}
 	instance = material->createInstance();
 	instances.push_back(instance);

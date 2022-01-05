@@ -1,14 +1,15 @@
 #ifndef GL_CORE_OBJECT3D_H
 #define GL_CORE_OBJECT3D_H
+#include <vector>
 #include <math/mat4.h>
-#include "../Context.h"
+#include <utils/Entity.h>
 
 namespace gl::core
 {
 	class Object3D
 	{
 	public:
-		Object3D(Context* context);
+		Object3D();
 		virtual ~Object3D();
 		virtual void create();
 		void add(Object3D* object);
@@ -26,7 +27,6 @@ namespace gl::core
 		std::vector<Object3D*> children;
 
 	protected:
-		Context* context = nullptr;
 		filament::math::mat4* translateMatrix = nullptr;
 		filament::math::mat4* rotateMatrix = nullptr;
 		filament::math::mat4* scaleMatrix = nullptr;

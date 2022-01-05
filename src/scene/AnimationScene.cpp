@@ -18,23 +18,20 @@ std::vector<uint32_t> _indices = { { 0, 1, 2 } };
 
 gl::OrthographicCamera* camera;
 gl::Skybox* skybox;
-Context context;
 gl::Mesh* mesh;
 
 void AnimationScene::setup(filament::Engine* engine, filament::View* view, filament::Scene* scene)
 {
 	FilamentApp& app = FilamentApp::get();
-	context = { &app, engine, view, scene };
-
 	gl::init(&app, engine, view, scene);
 
-	camera = new gl::OrthographicCamera(&context);
+	camera = new gl::OrthographicCamera();
 	view->setCamera(camera->camera);
 
-	skybox = new gl::Skybox(&context);
+	skybox = new gl::Skybox();
 	scene->setSkybox(skybox->skybox);
 
-	auto geometry = new gl::BufferGeometry(&context);
+	auto geometry = new gl::BufferGeometry();
 
 	float* vertices = new float[9];
 	std::copy(_vertices.begin(), _vertices.end(), vertices);
@@ -60,10 +57,10 @@ void AnimationScene::setup(filament::Engine* engine, filament::View* view, filam
 
 	geometry->create();
 
-	auto material = new gl::Material(&context);
+	auto material = new gl::Material();
 	material->create(RESOURCES_BAKEDCOLOR_DATA, RESOURCES_BAKEDCOLOR_SIZE);
 
-	mesh = new gl::Mesh(&context);
+	mesh = new gl::Mesh();
 	mesh->create(geometry, material);
 
 	scene->addEntity(mesh->entity);
