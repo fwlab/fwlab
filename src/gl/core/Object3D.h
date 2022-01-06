@@ -11,7 +11,6 @@ namespace gl::core
 	public:
 		Object3D();
 		virtual ~Object3D();
-		virtual void create();
 		void add(Object3D* object);
 		void remove(Object3D* object);
 		void removeFromParent();

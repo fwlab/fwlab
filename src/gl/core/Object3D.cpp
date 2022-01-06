@@ -32,11 +32,6 @@ Object3D::~Object3D()
 	matrix = nullptr;
 }
 
-void Object3D::create()
-{
-
-}
-
 void Object3D::add(Object3D* object)
 {
 	assert(object != this);

@@ -4,23 +4,25 @@
 #include "resources/resources.h"
 #include "BoxScene.h"
 
-using namespace gl::geometry;
-using namespace gl::material;
-using namespace gl::object;
-using namespace gl::light;
-
 filament::viewer::SimpleViewer* viewer;
-Light* light;
-Mesh* plane;
-Mesh* box;
+gl::PerspectiveCamera* camera;
+gl::Light* light;
+gl::Mesh* plane;
+gl::Mesh* box;
 
 void BoxScene::setup(filament::Engine* engine, filament::View* view, filament::Scene* scene)
 {
 	FilamentApp& app = FilamentApp::get();
 	gl::init(&app, engine, view, scene);
 
+	// camera
+	auto& viewport = view->getViewport();
+	camera = new gl::PerspectiveCamera(50, float(viewport.width) / viewport.height, 0.1, 2000);
+	camera->camera->lookAt({ 2, 2, 2 }, { 0, 0, 0 });
+	view->setCamera(camera->camera);
+
 	// light
-	light = new Light();
+	light = new gl::Light();
 	light->create();
 	scene->addEntity(light->entity);
 
@@ -29,38 +31,38 @@ void BoxScene::setup(filament::Engine* engine, filament::View* view, filament::S
 
 	// plane
 	{
-		PlaneGeometry* geometry = new PlaneGeometry();
+		gl::PlaneGeometry* geometry = new gl::PlaneGeometry();
 		geometry->create(10, 10);
 
-		StandardMaterial* material = new StandardMaterial();
+		gl::StandardMaterial* material = new gl::StandardMaterial();
 		material->metallic = 0;
 		material->roughness = 0;
 		material->create();
 
-		plane = new Mesh();
+		plane = new gl::Mesh();
 		plane->receiveShadows = true;
 		plane->create(geometry, material);
-		plane->setTranslation({ 0, -2, -10 });
+		plane->setTranslation({ 0, -2, 0 });
 		plane->setRotation(-M_PI / 2, { 1, 0, 0 });
 		scene->addEntity(plane->entity);
 	}
 
 	// box
 	{
-		BoxGeometry* geometry = new BoxGeometry();
+		gl::BoxGeometry* geometry = new gl::BoxGeometry();
 		geometry->create(1, 1, 1);
 
-		StandardMaterial* material = new StandardMaterial();
+		gl::StandardMaterial* material = new gl::StandardMaterial();
 		material->baseColor = { 1, 0, 0, 1 };
 		material->metallic = 0;
 		material->roughness = 0;
 		material->create();
 
-		box = new Mesh();
+		box = new gl::Mesh();
 		box->castShadows = true;
 		box->receiveShadows = true;
 		box->create(geometry, material);
-		box->setTranslation({ 0, 0, -10 });
+		box->setTranslation({ 0, 0, 0 });
 		scene->addEntity(box->entity);
 	}
 }
@@ -71,6 +73,7 @@ void BoxScene::cleanup(filament::Engine* engine, filament::View* view, filament:
 	delete box;
 	delete light;
 	delete viewer;
+	delete camera;
 }
 
 void BoxScene::animate(filament::Engine* engine, filament::View* view, double now)
