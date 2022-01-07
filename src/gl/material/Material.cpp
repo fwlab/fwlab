@@ -28,7 +28,7 @@ Material::~Material()
 
 void Material::create()
 {
-	createMaterial(RESOURCES_DEFAULTMATERIAL_DATA, RESOURCES_DEFAULTMATERIAL_SIZE);
+	createMaterial(RESOURCES_LIT_DATA, RESOURCES_LIT_SIZE);
 }
 
 void Material::create(const void* payload, size_t size)

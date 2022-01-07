@@ -29,7 +29,7 @@ void ImGuiScene::setup(filament::Engine* engine, filament::View* view, filament:
 		PlaneGeometry* geometry = new PlaneGeometry();
 		geometry->create(10, 10);
 
-		StandardMaterial* material = new StandardMaterial();
+		LitMaterial* material = new LitMaterial();
 		material->metallic = 0;
 		material->roughness = 0;
 		material->create();
@@ -47,7 +47,7 @@ void ImGuiScene::setup(filament::Engine* engine, filament::View* view, filament:
 		BoxGeometry* geometry = new BoxGeometry();
 		geometry->create(1, 1, 1);
 
-		StandardMaterial* material = new StandardMaterial();
+		LitMaterial* material = new LitMaterial();
 		material->baseColor = { 1, 0, 0, 1 };
 		material->metallic = 0;
 		material->roughness = 0;

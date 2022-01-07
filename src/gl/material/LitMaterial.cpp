@@ -1,20 +1,20 @@
 #include "resources/resources.h"
-#include "StandardMaterial.h"
+#include "LitMaterial.h"
 
 using namespace gl::material;
 
-StandardMaterial::StandardMaterial()
+LitMaterial::LitMaterial()
 {
 }
 
-StandardMaterial::~StandardMaterial()
+LitMaterial::~LitMaterial()
 {
 
 }
 
-void StandardMaterial::create()
+void LitMaterial::create()
 {
-	Material::createMaterial(RESOURCES_STANDARD_MATERIAL_DATA, RESOURCES_STANDARD_MATERIAL_SIZE);
+	Material::createMaterial(RESOURCES_LIT_DATA, RESOURCES_LIT_SIZE);
 	instance->setParameter("baseColor", filament::RgbaType::LINEAR, baseColor);
 	instance->setParameter("metallic", metallic);
 	instance->setParameter("roughness", roughness);

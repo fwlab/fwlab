@@ -8,7 +8,7 @@ using namespace gl::light;
 using namespace gl::loader;
 
 Light* light;
-StandardMaterial* material;
+LitMaterial* material;
 FilameshLoader* loader;
 Mesh* mesh;
 
@@ -23,7 +23,7 @@ void SuzanneScene::setup(filament::Engine* engine, filament::View* view, filamen
 	scene->addEntity(light->entity);
 
 	// material
-	material = new StandardMaterial();
+	material = new LitMaterial();
 	material->metallic = 0;
 	material->roughness = 0;
 	material->reflectance = 1;

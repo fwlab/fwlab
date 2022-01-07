@@ -34,7 +34,7 @@ void BoxScene::setup(filament::Engine* engine, filament::View* view, filament::S
 		gl::PlaneGeometry* geometry = new gl::PlaneGeometry();
 		geometry->create(10, 10);
 
-		gl::StandardMaterial* material = new gl::StandardMaterial();
+		gl::LitMaterial* material = new gl::LitMaterial();
 		material->metallic = 0;
 		material->roughness = 0;
 		material->create();
@@ -52,7 +52,7 @@ void BoxScene::setup(filament::Engine* engine, filament::View* view, filament::S
 		gl::BoxGeometry* geometry = new gl::BoxGeometry();
 		geometry->create(1, 1, 1);
 
-		gl::StandardMaterial* material = new gl::StandardMaterial();
+		gl::LitMaterial* material = new gl::LitMaterial();
 		material->baseColor = { 1, 0, 0, 1 };
 		material->metallic = 0;
 		material->roughness = 0;

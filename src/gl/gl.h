@@ -13,7 +13,7 @@
 #include "geometry/BoxGeometry.h"
 
 #include "material/Material.h"
-#include "material/StandardMaterial.h"
+#include "material/LitMaterial.h"
 
 #include "object/Mesh.h"
 #include "object/Skybox.h"

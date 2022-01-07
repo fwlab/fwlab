@@ -1,15 +1,15 @@
-#ifndef GL_MATERIAL_STANDARD_MATERIAL_H
-#define GL_MATERIAL_STANDARD_MATERIAL_H
+#ifndef GL_MATERIAL_LIT_MATERIAL_H
+#define GL_MATERIAL_LIT_MATERIAL_H
 #include <math/vec3.h>
 #include <math/vec4.h>
 #include "Material.h"
 
 namespace gl::material
 {
-	class StandardMaterial : public Material {
+	class LitMaterial : public Material {
 	public:
-		StandardMaterial();
-		virtual ~StandardMaterial();
+		LitMaterial();
+		virtual ~LitMaterial();
 		void create() override;
 		filament::math::float4 baseColor = { 1, 1, 1, 1 }; // Pre-multiplied linear RGB, Non-metals: [0.04..0.94], Metals: [0.66..1.0]
 		float metallic = 1; // Should be 0 or 1

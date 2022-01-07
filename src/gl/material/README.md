@@ -1,10 +1,6 @@
-#ifndef GL_MATERIAL_CONSTANT_H
-#define GL_MATERIAL_CONSTANT_H
-#include <math/vec3.h>
-#include <string>
+# Material
 
-namespace gl::material
-{
+```c++
 	class BaseColors {
 	public:
 		// Non-metals (dielectrics)	range: [0.04, 0.94]	[10, 240]
@@ -83,6 +79,4 @@ namespace gl::material
 		static const float teeth = 1.63; // 1.63
 		static const float defaultValue = 1.5; // 1.5
 	};
-}
-
-#endif
+```
