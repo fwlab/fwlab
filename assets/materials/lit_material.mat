@@ -1,93 +1,90 @@
 material {
-    name : standard_material,
+    name : lit_material,
     shadingModel : lit,
     parameters : [
         {
-            name : baseColor,
-            type : float4
-            
+            type : float4,
+            name : baseColor
         },
         {
-            name : metallic,
-            type : float
-            
+            type : float,
+            name : metallic
         },
         {
-            name : roughness,
-            type : float
-            
+            type : float,
+            name : roughness
         },
         {
-            name : reflectance,
-            type : float
+            type : float,
+            name : reflectance
         },
         {
-            name: sheenColor,
-            type: float3
+            type: float3,
+            name: sheenColor
         },
         {
-            name: sheenRoughness,
-            type: float
+            type: float,
+            name: sheenRoughness
         },
         {
-            name: clearCoat,
-            type: float
+            type: float,
+            name: clearCoat
         },
         {
-            name: clearCoatRoughness,
-            type: float
+            type: float,
+            name: clearCoatRoughness
         },
         {
             name: anisotropy,
             type: float
         },
         {
-            name: anisotropyDirection,
-            type: float3
+            type: float3,
+            name: anisotropyDirection
         },
         {
-            name: ambientOcclusion,
-            type: float
+            type: float,
+            name: ambientOcclusion
         },
         {
-            name: normal,
-            type: float3
+            type: float3,
+            name: normal
         },
         {
-            name: bentNormal,
-            type: float3
+            type: float3,
+            name: bentNormal
         },
         {
-            name: clearCoatNormal,
-            type: float3
+            type: float3,
+            name: clearCoatNormal
         },
         {
-            name: emissive,
-            type: float4
+            type: float4,
+            name: emissive
         },
         {
-            name: postLightingColor,
-            type: float4
+            type: float4,
+            name: postLightingColor
         },
         {
             name: ior,
             type: float
         },
         {
-            name: transmission,
-            type: float
+            type: float,
+            name: transmission
         },
         {
-            name: absorption,
-            type: float3
+            type: float3,
+            name: absorption
         },
         {
-            name: microThickness,
-            type: float
+            type: float,
+            name: microThickness
         },
         {
-            name: thickness,
-            type: float
+            type: float,
+            name: thickness
         }
     ],
 }
