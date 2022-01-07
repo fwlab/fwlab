@@ -11,6 +11,9 @@ set(MATERIAL_SRCS
 	"materials/textured.mat"
 	"materials/bakedColor.mat"
 	"materials/unlit_material.mat"
+	"materials/subsurface_material.mat"
+	"materials/specular_glossiness_material.mat"
+	"materials/cloth_material.mat"
 )
 set(MAP_SRCS
 	"environments/lightroom_14b.hdr"
