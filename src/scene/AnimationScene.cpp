@@ -57,8 +57,7 @@ void AnimationScene::setup(filament::Engine* engine, filament::View* view, filam
 
 	geometry->create();
 
-	auto material = new gl::Material();
-	material->create(RESOURCES_BAKEDCOLOR_DATA, RESOURCES_BAKEDCOLOR_SIZE);
+	auto material = new gl::Material(RESOURCES_BAKEDCOLOR_DATA, RESOURCES_BAKEDCOLOR_SIZE);
 
 	mesh = new gl::Mesh();
 	mesh->create(geometry, material);

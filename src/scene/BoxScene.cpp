@@ -37,7 +37,6 @@ void BoxScene::setup(filament::Engine* engine, filament::View* view, filament::S
 		gl::LitMaterial* material = new gl::LitMaterial();
 		material->metallic = 0;
 		material->roughness = 0;
-		material->create();
 
 		plane = new gl::Mesh();
 		plane->receiveShadows = true;
@@ -56,7 +55,6 @@ void BoxScene::setup(filament::Engine* engine, filament::View* view, filament::S
 		material->baseColor = { 1, 0, 0, 1 };
 		material->metallic = 0;
 		material->roughness = 0;
-		material->create();
 
 		box = new gl::Mesh();
 		box->castShadows = true;

@@ -10,7 +10,6 @@ namespace gl::material
 	public:
 		LitMaterial();
 		virtual ~LitMaterial();
-		void create() override;
 		filament::math::float4 baseColor = { 1, 1, 1, 1 }; // Pre-multiplied linear RGB, Non-metals: [0.04..0.94], Metals: [0.66..1.0]
 		float metallic = 1; // Should be 0 or 1
 		float roughness = 0.5;

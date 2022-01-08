@@ -27,11 +27,10 @@ void SuzanneScene::setup(filament::Engine* engine, filament::View* view, filamen
 	material->metallic = 0;
 	material->roughness = 0;
 	material->reflectance = 1;
-	material->create();
 
 	// loader
 	loader = new FilameshLoader();
-	mesh = loader->load(RESOURCES_MONKEY_DATA, material->instance);
+	mesh = loader->load(RESOURCES_MONKEY_DATA, material->getInstance());
 	auto& manager = engine->getRenderableManager();
 	auto instance = manager.getInstance(mesh->entity);
 	manager.setCastShadows(instance, true);

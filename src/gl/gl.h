@@ -14,6 +14,10 @@
 
 #include "material/Material.h"
 #include "material/LitMaterial.h"
+#include "material/SubsurfaceMaterial.h"
+#include "material/ClothMaterial.h"
+#include "material/UnlitMaterial.h"
+#include "material/SpecularGlossinessMaterial.h"
 
 #include "object/Mesh.h"
 #include "object/Skybox.h"

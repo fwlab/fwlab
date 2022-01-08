@@ -3,18 +3,8 @@
 
 using namespace gl::material;
 
-LitMaterial::LitMaterial()
+LitMaterial::LitMaterial() : Material(RESOURCES_LIT_DATA, RESOURCES_LIT_SIZE)
 {
-}
-
-LitMaterial::~LitMaterial()
-{
-
-}
-
-void LitMaterial::create()
-{
-	Material::createMaterial(RESOURCES_LIT_DATA, RESOURCES_LIT_SIZE);
 	instance->setParameter("baseColor", filament::RgbaType::LINEAR, baseColor);
 	instance->setParameter("metallic", metallic);
 	instance->setParameter("roughness", roughness);
@@ -28,4 +18,9 @@ void LitMaterial::create()
 	instance->setParameter("ambientOcclusion", ambientOcclusion);
 	instance->setParameter("emissive", filament::RgbaType::LINEAR, emissive);
 	// instance->setParameter("ior", ior);
+}
+
+LitMaterial::~LitMaterial()
+{
+
 }
