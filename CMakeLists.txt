@@ -63,6 +63,7 @@ include_directories(
 	${FILAMENT_DIR}/third_party/robin-map
 	${FILAMENT_DIR}/third_party/spirv-cross/include
 	${FILAMENT_DIR}/third_party/spirv-tools/include
+	${FILAMENT_DIR}/third_party/stb
 	${FILAMENT_DIR}/third_party/vkmemalloc/include
 	# filament samples
 	${FILAMENT_DIR}/out/build/x64-Debug/samples

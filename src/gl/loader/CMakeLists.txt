@@ -4,7 +4,9 @@ add_library(${MODULE_NAME} STATIC
 	"Loader.h"
 	"MeshLoader.cpp"
 	"FilameshLoader.cpp"
-  )
+	"ImageLoader.cpp"
+	"TextureLoader.cpp"
+ )
 
 target_link_libraries(${MODULE_NAME}
 	filament filamentapp

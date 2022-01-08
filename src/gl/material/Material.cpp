@@ -12,6 +12,7 @@ static std::vector<filament::MaterialInstance*> instances;
 
 Material::Material() : Material(GL_MATERIALS_UNLIT_DATA, GL_MATERIALS_UNLIT_SIZE)
 {
+	setParameter<float4>("baseColor", { 1, 1, 1, 1 });
 }
 
 Material::Material(const void* payload, size_t size)
@@ -299,6 +300,10 @@ void Material::setParameter(const char* name, T value) noexcept
 template void Material::setParameter<float>(const char* name, float value) noexcept;
 template void Material::setParameter<int32_t>(const char* name, int32_t value) noexcept;
 template void Material::setParameter<uint32_t>(const char* name, uint32_t value) noexcept;
+template void Material::setParameter<bool>(const char* name, bool value) noexcept;
+template void Material::setParameter<bool2>(const char* name, bool2 value) noexcept;
+template void Material::setParameter<bool3>(const char* name, bool3 value) noexcept;
+template void Material::setParameter<bool4>(const char* name, bool4 value) noexcept;
 template void Material::setParameter<int2>(const char* name, int2 value) noexcept;
 template void Material::setParameter<int3>(const char* name, int3 value) noexcept;
 template void Material::setParameter<int4>(const char* name, int4 value) noexcept;
@@ -311,26 +316,6 @@ template void Material::setParameter<float4>(const char* name, float4 value) noe
 template void Material::setParameter<mat3f>(const char* name, mat3f value) noexcept;
 template void Material::setParameter<mat4f>(const char* name, mat4f value) noexcept;
 
-void Material::setParameter(const char* name, bool value) noexcept
-{
-	return instance->setParameter(name, value);
-}
-
-void Material::setParameter(const char* name, bool2 value) noexcept
-{
-	return instance->setParameter(name, value);
-}
-
-void Material::setParameter(const char* name, bool3 value) noexcept
-{
-	return instance->setParameter(name, value);
-}
-
-void Material::setParameter(const char* name, bool4 value) noexcept
-{
-	return instance->setParameter(name, value);
-}
-
 template <typename T>
 void Material::setParameter(const char* name, T* value, size_t count) noexcept
 {
@@ -340,6 +325,10 @@ void Material::setParameter(const char* name, T* value, size_t count) noexcept
 template void Material::setParameter<float>(const char* name, float* value, size_t count) noexcept;
 template void Material::setParameter<int32_t>(const char* name, int32_t* value, size_t count) noexcept;
 template void Material::setParameter<uint32_t>(const char* name, uint32_t* value, size_t count) noexcept;
+template void Material::setParameter<bool>(const char* name, bool* value, size_t count) noexcept;
+template void Material::setParameter<bool2>(const char* name, bool2* value, size_t count) noexcept;
+template void Material::setParameter<bool3>(const char* name, bool3* value, size_t count) noexcept;
+template void Material::setParameter<bool4>(const char* name, bool4* value, size_t count) noexcept;
 template void Material::setParameter<int2>(const char* name, int2* value, size_t count) noexcept;
 template void Material::setParameter<int3>(const char* name, int3* value, size_t count) noexcept;
 template void Material::setParameter<int4>(const char* name, int4* value, size_t count) noexcept;
@@ -350,26 +339,6 @@ template void Material::setParameter<float2>(const char* name, float2* value, si
 template void Material::setParameter<float3>(const char* name, float3* value, size_t count) noexcept;
 template void Material::setParameter<float4>(const char* name, float4* value, size_t count) noexcept;
 template void Material::setParameter<mat4f>(const char* name, mat4f* value, size_t count) noexcept;
-
-void Material::setParameter(const char* name, bool* value, size_t count) noexcept
-{
-	return instance->setParameter(name, value, count);
-}
-
-void Material::setParameter(const char* name, bool2* value, size_t count) noexcept
-{
-	return instance->setParameter(name, value, count);
-}
-
-void Material::setParameter(const char* name, bool3* value, size_t count) noexcept
-{
-	return instance->setParameter(name, value, count);
-}
-
-void Material::setParameter(const char* name, bool4* value, size_t count) noexcept
-{
-	return instance->setParameter(name, value, count);
-}
 
 template <>
 void Material::setParameter<mat3f>(const char* name, mat3f* value, size_t count) noexcept

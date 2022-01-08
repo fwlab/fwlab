@@ -68,16 +68,8 @@ namespace gl::material
 		void setMaskThreshold(float threshold) noexcept;
 		template <typename T>
 		void setParameter(const char* name, T value) noexcept;
-		void setParameter(const char* name, bool value) noexcept;
-		void setParameter(const char* name, filament::math::bool2 value) noexcept;
-		void setParameter(const char* name, filament::math::bool3 value) noexcept;
-		void setParameter(const char* name, filament::math::bool4 value) noexcept;
 		template <typename T>
 		void setParameter(const char* name, T* value, size_t count) noexcept;
-		void setParameter(const char* name, bool* value, size_t count) noexcept;
-		void setParameter(const char* name, filament::math::bool2* value, size_t count) noexcept;
-		void setParameter(const char* name, filament::math::bool3* value, size_t count) noexcept;
-		void setParameter(const char* name, filament::math::bool4* value, size_t count) noexcept;
 		template <>
 		void setParameter<filament::math::mat3f>(const char* name, filament::math::mat3f* value, size_t count) noexcept;
 		void setParameter(const char* name, filament::Texture const* texture,

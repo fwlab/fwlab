@@ -12,6 +12,8 @@
 #include "geometry/PlaneGeometry.h"
 #include "geometry/BoxGeometry.h"
 
+#include "texture/Texture.h"
+
 #include "material/Material.h"
 #include "material/LitMaterial.h"
 #include "material/SubsurfaceMaterial.h"
@@ -27,14 +29,16 @@
 
 #include "light/Light.h"
 
-#include "loader/Loader.h"
 #include "loader/FilameshLoader.h"
+#include "loader/ImageLoader.h"
+#include "loader/TextureLoader.h"
 
 namespace gl
 {
 	using namespace gl::context;
 	using namespace gl::core;
 	using namespace gl::geometry;
+	using namespace gl::texture;
 	using namespace gl::material;
 	using namespace gl::object;
 	using namespace gl::camera;
