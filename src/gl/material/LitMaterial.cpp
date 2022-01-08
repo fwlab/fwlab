@@ -1,9 +1,9 @@
-#include "resources/resources.h"
+#include "resources/gl_materials.h"
 #include "LitMaterial.h"
 
 using namespace gl::material;
 
-LitMaterial::LitMaterial() : Material(RESOURCES_LIT_DATA, RESOURCES_LIT_SIZE)
+LitMaterial::LitMaterial() : Material(GL_MATERIALS_LIT_DATA, GL_MATERIALS_LIT_SIZE)
 {
 	instance->setParameter("baseColor", filament::RgbaType::LINEAR, baseColor);
 	instance->setParameter("metallic", metallic);

@@ -28,7 +28,7 @@ endforeach()
 # 打包资源
 add_custom_command(
 	OUTPUT ${ASSETS_DIR}/resources/resources.c
-	COMMAND resgen -c --deploy=${ASSETS_DIR}/resources ${RESOURCE_BINS}
+	COMMAND resgen -c --package=gl_materials --deploy=${ASSETS_DIR}/resources ${RESOURCE_BINS}
 	DEPENDS ${RESOURCE_BINS}
 	COMMENT "Aggregating resources"
 )
@@ -45,7 +45,7 @@ add_library(${MODULE_NAME} STATIC
 	"ClothMaterial.cpp"
 	"UnlitMaterial.cpp"
 	"SpecularGlossinessMaterial.cpp"
-	"${ASSETS_DIR}/resources/resources.c"
+	"${ASSETS_DIR}/resources/gl_materials.c"
 )
 
 target_link_libraries(${MODULE_NAME}

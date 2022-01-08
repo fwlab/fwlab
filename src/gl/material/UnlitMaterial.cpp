@@ -1,9 +1,9 @@
 #include "UnlitMaterial.h"
-#include <resources/resources.h>
+#include <resources/gl_materials.h>
 
 using namespace gl::material;
 
-UnlitMaterial::UnlitMaterial() : Material(RESOURCES_UNLIT_DATA, RESOURCES_UNLIT_SIZE)
+UnlitMaterial::UnlitMaterial() : Material(GL_MATERIALS_UNLIT_DATA, GL_MATERIALS_UNLIT_SIZE)
 {
 	instance->setParameter("baseColor", baseColor);
 	instance->setParameter("emissive", emissive);

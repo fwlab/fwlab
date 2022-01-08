@@ -2,13 +2,11 @@
 #include "resources/resources.h"
 #include "SuzanneScene.h"
 
-using namespace gl::material;
 using namespace gl::object;
 using namespace gl::light;
 using namespace gl::loader;
 
 Light* light;
-LitMaterial* material;
 FilameshLoader* loader;
 Mesh* mesh;
 
@@ -22,15 +20,9 @@ void SuzanneScene::setup(filament::Engine* engine, filament::View* view, filamen
 	light->create();
 	scene->addEntity(light->entity);
 
-	// material
-	material = new LitMaterial();
-	material->metallic = 0;
-	material->roughness = 0;
-	material->reflectance = 1;
-
 	// loader
 	loader = new FilameshLoader();
-	mesh = loader->load(RESOURCES_MONKEY_DATA, material->getInstance());
+	mesh = loader->load(RESOURCES_MONKEY_DATA);
 	auto& manager = engine->getRenderableManager();
 	auto instance = manager.getInstance(mesh->entity);
 	manager.setCastShadows(instance, true);
@@ -45,7 +37,6 @@ void SuzanneScene::cleanup(filament::Engine* engine, filament::View* view, filam
 {
 	delete mesh;
 	delete loader;
-	delete material;
 	delete light;
 }
 

@@ -7,9 +7,8 @@ namespace gl::loader
 	class Loader
 	{
 	public:
-		Loader();
-		virtual ~Loader();
-		gl::object::Mesh* load();
+		Loader() = default;
+		virtual ~Loader() = default;
 	};
 }
 

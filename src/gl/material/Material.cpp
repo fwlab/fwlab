@@ -1,5 +1,5 @@
 #include <algorithm>
-#include "resources/resources.h"
+#include "resources/gl_materials.h"
 #include "Material.h"
 #include "../context/context.h"
 
@@ -10,13 +10,20 @@ using namespace gl::material;
 static std::unordered_map<const void*, filament::Material*> materials;
 static std::vector<filament::MaterialInstance*> instances;
 
-Material::Material() : Material(RESOURCES_LIT_DATA, RESOURCES_LIT_SIZE)
+Material::Material() : Material(GL_MATERIALS_UNLIT_DATA, GL_MATERIALS_UNLIT_SIZE)
 {
 }
 
 Material::Material(const void* payload, size_t size)
 {
 	create(payload, size);
+}
+
+Material::Material(filament::MaterialInstance* instance)
+{
+	this->material = const_cast<filament::Material*>(instance->getMaterial());
+	this->instance = instance;
+	instances.push_back(instance);
 }
 
 Material::~Material()

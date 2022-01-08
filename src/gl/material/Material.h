@@ -18,6 +18,7 @@ namespace gl::material
 	public:
 		Material();
 		Material(const void* payload, size_t size);
+		Material(filament::MaterialInstance* instance);
 		virtual ~Material();
 		filament::MaterialInstance* getInstance() const;
 		void setInstance(filament::MaterialInstance* instance);
