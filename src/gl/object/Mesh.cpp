@@ -19,7 +19,7 @@ Mesh::~Mesh()
 	}
 	if (material)
 	{
-		delete material;
+		material->dispose();
 		material = nullptr;
 	}
 }

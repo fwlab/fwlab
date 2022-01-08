@@ -29,14 +29,13 @@ void BoxScene::setup(filament::Engine* engine, filament::View* view, filament::S
 	// viewer
 	viewer = new filament::viewer::SimpleViewer(engine, scene, view);
 
+	// material
+	gl::UnlitMaterial* material = new gl::UnlitMaterial();
+
 	// plane
 	{
 		gl::PlaneGeometry* geometry = new gl::PlaneGeometry();
 		geometry->create(10, 10);
-
-		gl::LitMaterial* material = new gl::LitMaterial();
-		material->metallic = 0;
-		material->roughness = 0;
 
 		plane = new gl::Mesh();
 		plane->receiveShadows = true;
@@ -50,11 +49,6 @@ void BoxScene::setup(filament::Engine* engine, filament::View* view, filament::S
 	{
 		gl::BoxGeometry* geometry = new gl::BoxGeometry();
 		geometry->create(1, 1, 1);
-
-		gl::LitMaterial* material = new gl::LitMaterial();
-		material->baseColor = { 1, 0, 0, 1 };
-		material->metallic = 0;
-		material->roughness = 0;
 
 		box = new gl::Mesh();
 		box->castShadows = true;

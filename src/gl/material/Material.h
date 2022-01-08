@@ -22,6 +22,7 @@ namespace gl::material
 		void setInstance(filament::MaterialInstance* instance);
 		filament::RenderableManager::PrimitiveType getPrimitiveType() const;
 		void setPrimitiveType(filament::RenderableManager::PrimitiveType primitiveType);
+		void dispose();
 
 		// material method
 		filament::Material::BlendingMode getBlendingMode() const noexcept;

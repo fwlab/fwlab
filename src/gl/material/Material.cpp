@@ -21,17 +21,7 @@ Material::Material(const void* payload, size_t size)
 
 Material::~Material()
 {
-	if (instances.size() > 0 && instance)
-	{
-		instances.erase(std::remove(instances.begin(), instances.end(), instance));
-		engine->destroy(instance);
-		instance = nullptr;
-	}
-	if (material && instances.size() == 0)
-	{
-		engine->destroy(material);
-		material = nullptr;
-	}
+	dispose();
 }
 
 filament::MaterialInstance* Material::getInstance() const
@@ -62,6 +52,21 @@ filament::RenderableManager::PrimitiveType Material::getPrimitiveType() const
 void Material::setPrimitiveType(filament::RenderableManager::PrimitiveType primitiveType)
 {
 	this->primitiveType = primitiveType;
+}
+
+void Material::dispose()
+{
+	if (instances.size() > 0 && instance)
+	{
+		instances.erase(std::remove(instances.begin(), instances.end(), instance));
+		engine->destroy(instance);
+		instance = nullptr;
+	}
+	if (material && instances.size() == 0)
+	{
+		engine->destroy(material);
+		material = nullptr;
+	}
 }
 
 void Material::create(const void* payload, size_t size)

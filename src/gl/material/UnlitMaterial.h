@@ -12,9 +12,9 @@ namespace gl::material
 		filament::math::float4 getBaseColor() const;
 		void setBaseColor(filament::math::float4 baseColor);
 		filament::math::float4 getEmissive() const;
-		void setEmissive(filament::math::float4 baseColor);
+		void setEmissive(filament::math::float4 emissive);
 		filament::math::float4 getPostLightingColor() const;
-		void setPostLightingColor(filament::math::float4 baseColor);
+		void setPostLightingColor(filament::math::float4 postLightingColor);
 
 	protected:
 		filament::math::float4 baseColor = { 1, 1, 1, 1 };

@@ -5,7 +5,9 @@ using namespace gl::material;
 
 UnlitMaterial::UnlitMaterial() : Material(RESOURCES_UNLIT_DATA, RESOURCES_UNLIT_SIZE)
 {
-
+	instance->setParameter("baseColor", baseColor);
+	instance->setParameter("emissive", emissive);
+	instance->setParameter("postLightingColor", postLightingColor);
 }
 
 UnlitMaterial::~UnlitMaterial()
@@ -20,7 +22,8 @@ filament::math::float4 UnlitMaterial::getBaseColor() const
 
 void UnlitMaterial::setBaseColor(filament::math::float4 baseColor)
 {
-	
+	this->baseColor = baseColor;
+	setParameter("baseColor", baseColor);
 }
 
 filament::math::float4 UnlitMaterial::getEmissive() const
@@ -28,9 +31,10 @@ filament::math::float4 UnlitMaterial::getEmissive() const
 	return emissive;
 }
 
-void UnlitMaterial::setEmissive(filament::math::float4 baseColor)
+void UnlitMaterial::setEmissive(filament::math::float4 emissive)
 {
-
+	this->emissive = emissive;
+	setParameter("emissive", emissive);
 }
 
 filament::math::float4 UnlitMaterial::getPostLightingColor() const
@@ -38,7 +42,8 @@ filament::math::float4 UnlitMaterial::getPostLightingColor() const
 	return postLightingColor;
 }
 
-void UnlitMaterial::setPostLightingColor(filament::math::float4 baseColor)
+void UnlitMaterial::setPostLightingColor(filament::math::float4 postLightingColor)
 {
-
+	this->postLightingColor = postLightingColor;
+	setParameter("postLightingColor", postLightingColor);
 }
