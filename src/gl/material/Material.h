@@ -9,10 +9,11 @@
 #include <filamat/MaterialBuilder.h>
 #include <math/vec3.h>
 #include <math/vec4.h>
+#include "../core/IDisposable.h"
 
 namespace gl::material
 {
-	class Material
+	class Material : public gl::core::IDisposable
 	{
 	public:
 		Material();
@@ -22,7 +23,7 @@ namespace gl::material
 		void setInstance(filament::MaterialInstance* instance);
 		filament::RenderableManager::PrimitiveType getPrimitiveType() const;
 		void setPrimitiveType(filament::RenderableManager::PrimitiveType primitiveType);
-		void dispose();
+		void dispose() override;
 
 		// material method
 		filament::Material::BlendingMode getBlendingMode() const noexcept;

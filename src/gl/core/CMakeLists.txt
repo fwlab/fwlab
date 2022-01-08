@@ -4,7 +4,7 @@ add_library(${MODULE_NAME} STATIC
 	"BufferAttribute.cpp"
 	"BufferGeometry.cpp"
 	"Object3D.cpp"
-)
+ "IDisposable.h")
 
 target_link_libraries(${MODULE_NAME}
 	filament filamentapp
