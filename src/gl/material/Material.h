@@ -7,6 +7,8 @@
 #include <filament/MaterialInstance.h>
 #include <filament/RenderableManager.h>
 #include <filamat/MaterialBuilder.h>
+#include <math/vec3.h>
+#include <math/vec4.h>
 
 namespace gl::material
 {
@@ -47,8 +49,44 @@ namespace gl::material
 		bool isDepthWriteEnabled() const noexcept;
 		bool isDoubleSided() const noexcept;
 		bool isSampler(const char* name) const noexcept;
+		template <typename T>
+		void setDefaultParameter(const char* name, T value) noexcept;
 		void setDefaultParameter(const char* name, filament::Texture const* texture,
 			filament::TextureSampler const& sampler) noexcept;
+		void setDefaultParameter(const char* name, filament::RgbType type, filament::math::float3 color) noexcept;
+		void setDefaultParameter(const char* name, filament::RgbaType type, filament::math::float4 color) noexcept;
+
+		// instance
+		void setColorWrite(bool enable) noexcept;
+		void setCullingMode(filament::MaterialInstance::CullingMode culling) noexcept;
+		void setDepthCulling(bool enable) noexcept;
+		void setDepthWrite(bool enable) noexcept;
+		void setDoubleSided(bool doubleSided) noexcept;
+		void setMaskThreshold(float threshold) noexcept;
+		template <typename T>
+		void setParameter(const char* name, T value) noexcept;
+		void setParameter(const char* name, bool value) noexcept;
+		void setParameter(const char* name, filament::math::bool2 value) noexcept;
+		void setParameter(const char* name, filament::math::bool3 value) noexcept;
+		void setParameter(const char* name, filament::math::bool4 value) noexcept;
+		template <typename T>
+		void setParameter(const char* name, T* value, size_t count) noexcept;
+		void setParameter(const char* name, bool* value, size_t count) noexcept;
+		void setParameter(const char* name, filament::math::bool2* value, size_t count) noexcept;
+		void setParameter(const char* name, filament::math::bool3* value, size_t count) noexcept;
+		void setParameter(const char* name, filament::math::bool4* value, size_t count) noexcept;
+		template <>
+		void setParameter<filament::math::mat3f>(const char* name, filament::math::mat3f* value, size_t count) noexcept;
+		void setParameter(const char* name, filament::Texture const* texture,
+			filament::TextureSampler const& sampler) noexcept;
+		void setParameter(const char* name, filament::RgbType type, filament::math::float3 color) noexcept;
+		void setParameter(const char* name, filament::RgbaType type, filament::math::float4 color) noexcept;
+		void setPolygonOffset(float scale, float constant) noexcept;
+		void setScissor(uint32_t left, uint32_t bottom, uint32_t width, uint32_t height) noexcept;
+		void setSpecularAntiAliasingThreshold(float threshold) noexcept;
+		void setSpecularAntiAliasingVariance(float variance) noexcept;
+		void setTransparencyMode(filament::MaterialInstance::TransparencyMode mode) noexcept;
+		void unsetScissor();
 
 	protected:
 		void create(const void* payload, size_t size);
