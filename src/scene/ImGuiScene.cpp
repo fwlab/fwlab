@@ -30,8 +30,8 @@ void ImGuiScene::setup(filament::Engine* engine, filament::View* view, filament:
 		geometry->create(10, 10);
 
 		LitMaterial* material = new LitMaterial();
-		material->metallic = 0;
-		material->roughness = 0;
+		material->setMetallic(0);
+		material->setRoughness(0);
 
 		plane = new Mesh();
 		plane->receiveShadows = true;
@@ -47,9 +47,9 @@ void ImGuiScene::setup(filament::Engine* engine, filament::View* view, filament:
 		geometry->create(1, 1, 1);
 
 		LitMaterial* material = new LitMaterial();
-		material->baseColor = { 1, 0, 0, 1 };
-		material->metallic = 0;
-		material->roughness = 0;
+		material->setBaseColor({ 1, 0, 0, 1 });
+		material->setMetallic(0);
+		material->setRoughness(0);
 
 		box = new Mesh();
 		box->castShadows = true;

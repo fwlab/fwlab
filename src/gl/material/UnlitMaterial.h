@@ -14,8 +14,8 @@ namespace gl::material
 		void setBaseColor(filament::math::float4 baseColor) noexcept;
 		filament::math::float4 getEmissive() const noexcept;
 		void setEmissive(filament::math::float4 emissive) noexcept;
-		filament::math::float4 getPostLightingColor() const noexcept;
-		void setPostLightingColor(filament::math::float4 postLightingColor) noexcept;
+		filament::math::float4 getPostLightingColor() const noexcept; // not implemented
+		void setPostLightingColor(filament::math::float4 postLightingColor) noexcept; // not implemented
 		gl::texture::Texture* getMap() const noexcept;
 		void setMap(gl::texture::Texture* texture) noexcept;
 

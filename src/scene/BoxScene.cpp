@@ -17,10 +17,10 @@ void BoxScene::setup(filament::Engine* engine, filament::View* view, filament::S
 	gl::init(&app, engine, view, scene);
 
 	// camera
-	auto& viewport = view->getViewport();
-	camera = new gl::PerspectiveCamera(50, float(viewport.width) / viewport.height, 0.1, 2000);
-	camera->camera->lookAt({ 2, 2, 2 }, { 0, 0, 0 });
-	view->setCamera(camera->camera);
+	//auto& viewport = view->getViewport();
+	//camera = new gl::PerspectiveCamera(50, float(viewport.width) / viewport.height, 0.1, 2000);
+	//camera->camera->lookAt({ 2, 2, 2 }, { 0, 0, 0 });
+	//view->setCamera(camera->camera);
 
 	// light
 	light = new gl::Light();
@@ -35,7 +35,9 @@ void BoxScene::setup(filament::Engine* engine, filament::View* view, filament::S
 	auto texture = loader->load("assets/images/girl.png", filament::Texture::Format::RGBA);
 
 	// material
-	gl::UnlitMaterial* material = new gl::UnlitMaterial();
+	gl::LitMaterial* material = new gl::LitMaterial();
+	material->setMetallic(0);
+	material->setRoughness(0);
 	material->setMap(texture);
 
 	// plane

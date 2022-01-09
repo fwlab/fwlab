@@ -15,7 +15,12 @@ UnlitMaterial::UnlitMaterial() : Material(GL_MATERIALS_UNLIT_DATA, GL_MATERIALS_
 
 UnlitMaterial::~UnlitMaterial()
 {
-
+	if (map)
+	{
+		delete map;
+		enableMap = false;
+		map = nullptr;
+	}
 }
 
 filament::math::float4 UnlitMaterial::getBaseColor() const noexcept

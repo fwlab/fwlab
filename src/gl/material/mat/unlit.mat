@@ -15,11 +15,13 @@ material {
 fragment {
     void material(inout MaterialInputs material) {
         prepareMaterial(material);
+        
         if (materialParams.enableMap) {
             material.baseColor = materialParams.baseColor * texture(materialParams_map, getUV0());
         } else {
             material.baseColor = materialParams.baseColor;
         }
+
         material.emissive = materialParams.emissive;
         // material.postLightingColor = materialParams.postLightingColor;
     }
