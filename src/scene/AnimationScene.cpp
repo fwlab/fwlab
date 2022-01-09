@@ -35,25 +35,15 @@ void AnimationScene::setup(filament::Engine* engine, filament::View* view, filam
 
 	float* vertices = new float[9];
 	std::copy(_vertices.begin(), _vertices.end(), vertices);
-	auto position = new gl::VertexBufferAttribute(vertices, 3, false);
-	position->attribute = filament::VertexAttribute::POSITION;
-	position->attributeType = filament::VertexBuffer::AttributeType::FLOAT3;
-	position->count = 3;
+	auto position = new gl::VertexBufferAttribute(vertices, 3, 9);
 	geometry->attributes.insert({ filament::VertexAttribute::POSITION, position });
 
 	uint32_t* colors = new uint32_t[3];
 	std::copy(_colors.begin(), _colors.end(), colors);
-	auto color = new gl::VertexBufferAttribute(colors, 1, true);
-	color->attribute = filament::VertexAttribute::COLOR;
-	color->attributeType = filament::VertexBuffer::AttributeType::UBYTE4;
-	color->count = 3;
+	auto color = new gl::VertexBufferAttribute(colors, 1, 3, filament::VertexBuffer::AttributeType::UBYTE4);
 	geometry->attributes.insert({ filament::VertexAttribute::COLOR, color });
 
-	uint32_t* indices = new uint32_t[9];
-	std::copy(_indices.begin(), _indices.end(), indices);
-	auto index = new gl::IndexBufferAttribute(indices, 1);
-	index->count = 3;
-	geometry->index = index;
+	geometry->index = new gl::IndexBufferAttribute(_indices);
 
 	geometry->create();
 

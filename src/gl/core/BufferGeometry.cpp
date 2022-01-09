@@ -63,14 +63,14 @@ void BufferGeometry::createVertexBuffer()
 	auto vertices = attributes.at(filament::VertexAttribute::POSITION);
 
 	auto builder = filament::VertexBuffer::Builder();
-	builder.vertexCount(vertices->count);
+	builder.vertexCount(vertices->getCount());
 	builder.bufferCount(attributes.size());
 
 	uint16_t i = 0;
 	for (auto pair : attributes)
 	{
-		builder.attribute(pair.second->attribute, i, pair.second->attributeType);
-		if (pair.second->normalized)
+		builder.attribute(pair.first, i, pair.second->getAttributeType());
+		if (pair.second->isNormalized())
 		{
 			builder.normalized(pair.first, true);
 		}
@@ -85,7 +85,7 @@ void BufferGeometry::createVertexBuffer()
 		vertexBuffer->setBufferAt(
 			*engine,
 			i,
-			filament::VertexBuffer::BufferDescriptor(pair.second->array, pair.second->count * getSize(pair.second->attributeType))
+			filament::VertexBuffer::BufferDescriptor(pair.second->getArray(), pair.second->getCount() * getSize(pair.second->getAttributeType()))
 		);
 		i++;
 	}
@@ -98,13 +98,13 @@ void BufferGeometry::createIndexBuffer()
 		return;
 	}
 	auto builder = filament::IndexBuffer::Builder();
-	builder.indexCount(index->count);
-	builder.bufferType(index->indexType);
+	builder.indexCount(index->getCount());
+	builder.bufferType(index->getIndexType());
 	indexBuffer = builder.build(*engine);
 
 	indexBuffer->setBuffer(
 		*engine,
-		filament::IndexBuffer::BufferDescriptor(index->array, index->count * getSize(index->indexType))
+		filament::IndexBuffer::BufferDescriptor(index->getArray(), index->getCount() * getSize(index->getIndexType()))
 	);
 }
 
@@ -118,8 +118,8 @@ void BufferGeometry::computeBoundingBox()
 	auto attribute = attributes.at(filament::VertexAttribute::POSITION);
 	if (attribute)
 	{
-		vertices = static_cast<float*>(attribute->array);
-		vertexCount = attribute->count;
+		vertices = static_cast<float*>(attribute->getArray());
+		vertexCount = attribute->getCount();
 	}
 
 	for (uint32_t i = 0, len = vertexCount; i < len; i++)

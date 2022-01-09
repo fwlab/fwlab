@@ -37,76 +37,24 @@ void BoxGeometry::create(float width, float height, float depth, uint16_t widthS
 	buildPlane("x", "y", "z", -1, -1, width, height, -depth, widthSegments, heightSegments, 5); // nz
 
 	// position
-	uint32_t vertexCount = vertices.size();
-	float* _vertices = new float[vertexCount * 3];
-	for (uint32_t i = 0; i < vertexCount; i++)
-	{
-		auto vertex = vertices[i];
-		_vertices[i * 3] = vertex.x;
-		_vertices[i * 3 + 1] = vertex.y;
-		_vertices[i * 3 + 2] = vertex.z;
-	}
-
-	auto position = new VertexBufferAttribute();
-	position->array = _vertices;
-	position->attribute = filament::VertexAttribute::POSITION;
-	position->attributeType = filament::VertexBuffer::AttributeType::FLOAT3;
-	position->itemSize = 3;
-	position->count = vertexCount;
+	auto position = new VertexBufferAttribute(vertices);
 	attributes.insert({ filament::VertexAttribute::POSITION, position });
 
 	// uv
-	uint32_t uvCount = uvs.size();
-	float* _uvs = new float[uvCount * 2];
-	for (uint32_t i = 0; i < uvCount; i++)
-	{
-		auto uv = uvs[i];
-		_uvs[i * 2] = uv.x;
-		_uvs[i * 2 + 1] = uv.y;
-	}
-
-	auto uv = new VertexBufferAttribute();
-	uv->array = _uvs;
-	uv->attribute = filament::VertexAttribute::UV0;
-	uv->attributeType = filament::VertexBuffer::AttributeType::FLOAT2;
-	uv->itemSize = 2;
-	uv->count = uvCount;
+	auto uv = new VertexBufferAttribute(uvs);
 	attributes.insert({ filament::VertexAttribute::UV0, uv });
 
 	// index
-	uint32_t triangleCount = triangles.size();
-	uint32_t* _indices = new uint32_t[triangleCount * 3];
-	for (uint32_t i = 0; i < triangleCount; i++)
-	{
-		auto index = triangles[i];
-		_indices[i * 3] = index.x;
-		_indices[i * 3 + 1] = index.y;
-		_indices[i * 3 + 2] = index.z;
-	}
-
-	index = new IndexBufferAttribute();
-	index->array = _indices;
-	index->indexType = filament::IndexBuffer::IndexType::UINT;
-	index->itemSize = 1;
-	index->count = triangleCount * 3;
+	index = new IndexBufferAttribute(triangles);
 
 	// normal
-	uint32_t normalCount = normals.size();
-	float* _normals = new float[normalCount * 3];
-	for (uint32_t i = 0; i < normalCount; i++)
-	{
-		auto normal = normals[i];
-		_normals[i * 3] = normal.x;
-		_normals[i * 3 + 1] = normal.y;
-		_normals[i * 3 + 2] = normal.z;
-	}
-
+	auto vertexCount = vertices.size();
 	auto* quats = filament::geometry::SurfaceOrientation::Builder()
 		.vertexCount(vertexCount)
 		.positions(vertices.data())
 		.normals(normals.data())
 		.uvs(uvs.data())
-		.triangleCount(triangleCount)
+		.triangleCount(triangles.size())
 		.triangles(triangles.data())
 		.build();
 	tangents = new filament::math::short4[vertexCount];
@@ -114,13 +62,7 @@ void BoxGeometry::create(float width, float height, float depth, uint16_t widthS
 	delete quats;
 	quats = nullptr;
 
-	auto normal = new VertexBufferAttribute();
-	normal->array = reinterpret_cast<float*>(tangents);
-	normal->attribute = filament::VertexAttribute::TANGENTS;
-	normal->attributeType = filament::VertexBuffer::AttributeType::SHORT4;
-	normal->itemSize = 4;
-	normal->count = vertexCount;
-	normal->normalized = true;
+	auto normal = new VertexBufferAttribute(tangents, 4, vertexCount, filament::VertexBuffer::AttributeType::SHORT4, true);
 	attributes.insert({ filament::VertexAttribute::TANGENTS, normal });
 
 	BufferGeometry::create();

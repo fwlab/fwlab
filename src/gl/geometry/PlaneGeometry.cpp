@@ -74,38 +74,19 @@ void PlaneGeometry::create(float width, float height, uint16_t widthSegments, ui
 	}
 
 	// position
-	auto position = new VertexBufferAttribute();
-	position->array = vertices;
-	position->attribute = filament::VertexAttribute::POSITION;
-	position->attributeType = filament::VertexBuffer::AttributeType::FLOAT3;
-	position->itemSize = 3;
-	position->count = verticesSize / position->itemSize;
+	auto position = new VertexBufferAttribute(vertices, 3, verticesSize / 3);
 	attributes.insert({ filament::VertexAttribute::POSITION, position });
 
 	// normal
-	auto normal = new VertexBufferAttribute();
-	normal->array = normals;
-	normal->attribute = filament::VertexAttribute::TANGENTS;
-	normal->attributeType = filament::VertexBuffer::AttributeType::FLOAT3;
-	normal->itemSize = 3;
-	normal->count = normalsSize / normal->itemSize;
+	auto normal = new VertexBufferAttribute(normals, 3, normalsSize / 3);
 	attributes.insert({ filament::VertexAttribute::TANGENTS, normal });
 
 	// uv
-	auto uv = new VertexBufferAttribute();
-	uv->array = uvs;
-	uv->attribute = filament::VertexAttribute::UV0;
-	uv->attributeType = filament::VertexBuffer::AttributeType::FLOAT2;
-	uv->itemSize = 2;
-	uv->count = uvsSize / uv->itemSize;
+	auto uv = new VertexBufferAttribute(uvs, 2, uvsSize / 2, filament::VertexBuffer::AttributeType::FLOAT2);
 	attributes.insert({ filament::VertexAttribute::UV0, uv });
 
 	// index
-	index = new IndexBufferAttribute();
-	index->array = triangles;
-	index->indexType = filament::IndexBuffer::IndexType::UINT;
-	index->itemSize = 1;
-	index->count = indicesSize / index->itemSize;
+	index = new IndexBufferAttribute(triangles, indicesSize);
 
 	BufferGeometry::create();
 }
