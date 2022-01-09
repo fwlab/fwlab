@@ -32,7 +32,7 @@ void BoxScene::setup(filament::Engine* engine, filament::View* view, filament::S
 
 	// loader
 	loader = new gl::TextureLoader();
-	auto texture = loader->load("assets/images/girl.jpg");
+	auto texture = loader->load("assets/images/girl.png", filament::Texture::Format::RGBA);
 
 	// material
 	gl::UnlitMaterial* material = new gl::UnlitMaterial();
