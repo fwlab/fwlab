@@ -10,6 +10,7 @@ namespace gl::utils
 	public:
 		static uint8_t getTextureInternalFormatChannels(filament::Texture::InternalFormat format);
 		static filament::Texture::Format textureInternalFormatToFormat(filament::Texture::InternalFormat format);
+		static filament::Texture::InternalFormat textureFormatToInternalFormat(filament::Texture::Format format);
 	};
 }
 

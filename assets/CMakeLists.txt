@@ -96,6 +96,10 @@ list(APPEND RESOURCE_BINS ${target_path})
 file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/fonts/Roboto-License.txt" DESTINATION "${ASSETS_DIR}/fonts")
 file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/fonts/Roboto-Medium.ttf" DESTINATION "${ASSETS_DIR}/fonts")
 
+# 复制图片
+file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/images/girl.jpg" DESTINATION "${ASSETS_DIR}/images")
+file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/images/girl.png" DESTINATION "${ASSETS_DIR}/images")
+
 # 复制模型
 file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/models/RobotDog/scene.gltf" DESTINATION "${ASSETS_DIR}/models/RobotDog")
 file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/models/RobotDog/scene.bin" DESTINATION "${ASSETS_DIR}/models/RobotDog")

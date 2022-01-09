@@ -1,26 +1,25 @@
 material {
     name : unlit_material,
+    requires : [ uv0 ],
     shadingModel : unlit,
     parameters : [
-        {
-            type : float4,
-            name : baseColor
-        },
-        {
-            type: float4,
-            name: emissive
-        },
-        {
-            type: float4,
-            name: postLightingColor
-        }
+        { type : float4, name : baseColor },
+        { type: float4, name: emissive },
+        { type: float4, name: postLightingColor },
+
+        { type: bool, name: enableMap },
+        { type : sampler2d, name : map }
     ],
 }
 
 fragment {
     void material(inout MaterialInputs material) {
         prepareMaterial(material);
-        material.baseColor = materialParams.baseColor;
+        if (materialParams.enableMap) {
+            material.baseColor = materialParams.baseColor * texture(materialParams_map, getUV0());
+        } else {
+            material.baseColor = materialParams.baseColor;
+        }
         material.emissive = materialParams.emissive;
         // material.postLightingColor = materialParams.postLightingColor;
     }

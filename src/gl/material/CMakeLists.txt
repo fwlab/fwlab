@@ -27,7 +27,7 @@ endforeach()
 
 # 打包资源
 add_custom_command(
-	OUTPUT ${ASSETS_DIR}/resources/resources.c
+	OUTPUT ${ASSETS_DIR}/resources/gl_materials.c
 	COMMAND resgen -c --package=gl_materials --deploy=${ASSETS_DIR}/resources ${RESOURCE_BINS}
 	DEPENDS ${RESOURCE_BINS}
 	COMMENT "Aggregating resources"

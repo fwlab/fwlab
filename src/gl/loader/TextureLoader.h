@@ -11,7 +11,7 @@ namespace gl::loader
 	public:
 		TextureLoader() = default;
 		virtual ~TextureLoader() = default;
-		gl::texture::Texture* load(char* filename, filament::Texture::InternalFormat format = filament::Texture::InternalFormat::RGB8);
+		gl::texture::Texture* load(const char* filename, filament::Texture::InternalFormat format = filament::Texture::InternalFormat::RGB8);
 		gl::texture::Texture* load(uint8_t* buffer, size_t size, filament::Texture::InternalFormat format = filament::Texture::InternalFormat::RGB8);
 	};
 }

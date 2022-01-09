@@ -11,7 +11,7 @@ using namespace gl::utils;
 
 static ImageLoader imageLoader;
 
-gl::texture::Texture* TextureLoader::load(char* filename, filament::Texture::InternalFormat format)
+gl::texture::Texture* TextureLoader::load(const char* filename, filament::Texture::InternalFormat format)
 {
 	auto req_channels = ImageUtils::getTextureInternalFormatChannels(format);
 	auto text_format = ImageUtils::textureInternalFormatToFormat(format);

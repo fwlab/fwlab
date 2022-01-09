@@ -3,7 +3,7 @@
 
 using namespace gl::loader;
 
-uint8_t* ImageLoader::load(char* filename, int* width, int* height, int* channels, int req_channels)
+uint8_t* ImageLoader::load(const char* filename, int* width, int* height, int* channels, int req_channels)
 {
 	return stbi_load(filename, width, height, channels, req_channels);
 }

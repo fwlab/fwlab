@@ -9,6 +9,7 @@ gl::PerspectiveCamera* camera;
 gl::Light* light;
 gl::Mesh* plane;
 gl::Mesh* box;
+gl::TextureLoader* loader;
 
 void BoxScene::setup(filament::Engine* engine, filament::View* view, filament::Scene* scene)
 {
@@ -29,8 +30,13 @@ void BoxScene::setup(filament::Engine* engine, filament::View* view, filament::S
 	// viewer
 	viewer = new filament::viewer::SimpleViewer(engine, scene, view);
 
+	// loader
+	loader = new gl::TextureLoader();
+	auto texture = loader->load("assets/images/girl.jpg");
+
 	// material
 	gl::UnlitMaterial* material = new gl::UnlitMaterial();
+	material->setMap(texture);
 
 	// plane
 	{
@@ -66,6 +72,7 @@ void BoxScene::cleanup(filament::Engine* engine, filament::View* view, filament:
 	delete light;
 	delete viewer;
 	delete camera;
+	delete loader;
 }
 
 void BoxScene::animate(filament::Engine* engine, filament::View* view, double now)
