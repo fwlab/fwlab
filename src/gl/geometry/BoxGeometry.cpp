@@ -64,6 +64,7 @@ void BoxGeometry::create(float width, float height, float depth, uint16_t widthS
 
 	auto normal = new VertexBufferAttribute(tangents, 4, vertexCount, filament::VertexBuffer::AttributeType::SHORT4, true);
 	attributes.insert({ filament::VertexAttribute::TANGENTS, normal });
+	delete tangents;
 
 	BufferGeometry::create();
 }

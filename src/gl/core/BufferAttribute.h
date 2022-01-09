@@ -20,19 +20,21 @@ namespace gl::core
 		void setCount(uint32_t count) noexcept;
 
 	protected:
-		// 禁止基类实例化
-		BufferAttribute(void* array = nullptr, uint8_t itemSize = 3, uint32_t count = 0);
+		BufferAttribute() = default;
+		template <typename T>
+		BufferAttribute(T* array, uint8_t itemSize = 3, uint32_t count = 0);
 		BufferAttribute(std::vector<filament::math::float2> vertices);
 		BufferAttribute(std::vector<filament::math::float3> vertices);
 		void* array = nullptr;
-		uint8_t itemSize = 0;
+		uint8_t itemSize = 3;
 		uint32_t count = 0;
 	};
 
 	class VertexBufferAttribute : public BufferAttribute {
 	public:
+		template <typename T>
 		VertexBufferAttribute(
-			void* array = nullptr,
+			T* array,
 			uint8_t itemSize = 3,
 			uint32_t count = 0,
 			filament::VertexBuffer::AttributeType attributeType = filament::VertexBuffer::AttributeType::FLOAT3,
@@ -59,8 +61,9 @@ namespace gl::core
 
 	class IndexBufferAttribute : public BufferAttribute {
 	public:
+		template <typename T>
 		IndexBufferAttribute(
-			void* array = nullptr,
+			T* array,
 			uint32_t count = 0,
 			filament::IndexBuffer::IndexType indexType = filament::IndexBuffer::IndexType::UINT
 		);

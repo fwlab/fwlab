@@ -5,13 +5,26 @@ using namespace gl::core;
 
 // BufferAttribute
 
-BufferAttribute::BufferAttribute(void* array, uint8_t itemSize, uint32_t count)
+template <typename T>
+BufferAttribute::BufferAttribute(T* array, uint8_t itemSize, uint32_t count)
 {
 	assert(itemSize > 0);
 	this->array = array;
 	this->itemSize = itemSize;
 	this->count = count;
 }
+
+template BufferAttribute::BufferAttribute(bool* array, uint8_t itemSize, uint32_t count);
+template BufferAttribute::BufferAttribute(int8_t* array, uint8_t itemSize, uint32_t count);
+template BufferAttribute::BufferAttribute(int16_t* array, uint8_t itemSize, uint32_t count);
+template BufferAttribute::BufferAttribute(int32_t* array, uint8_t itemSize, uint32_t count);
+template BufferAttribute::BufferAttribute(int64_t* array, uint8_t itemSize, uint32_t count);
+template BufferAttribute::BufferAttribute(uint8_t* array, uint8_t itemSize, uint32_t count);
+template BufferAttribute::BufferAttribute(uint16_t* array, uint8_t itemSize, uint32_t count);
+template BufferAttribute::BufferAttribute(uint32_t* array, uint8_t itemSize, uint32_t count);
+template BufferAttribute::BufferAttribute(uint64_t* array, uint8_t itemSize, uint32_t count);
+template BufferAttribute::BufferAttribute(float* array, uint8_t itemSize, uint32_t count);
+template BufferAttribute::BufferAttribute(double* array, uint8_t itemSize, uint32_t count);
 
 BufferAttribute::BufferAttribute(std::vector<filament::math::float2> vertices)
 {
@@ -75,8 +88,9 @@ void BufferAttribute::setCount(uint32_t count) noexcept
 
 // VertexBufferAttribute
 
+template <typename T>
 VertexBufferAttribute::VertexBufferAttribute(
-	void* array, uint8_t itemSize,
+	T* array, uint8_t itemSize,
 	uint32_t count,
 	filament::VertexBuffer::AttributeType attributeType,
 	bool normalized
@@ -85,6 +99,35 @@ VertexBufferAttribute::VertexBufferAttribute(
 	this->attributeType = attributeType;
 	this->normalized = normalized;
 }
+
+template <>
+VertexBufferAttribute::VertexBufferAttribute(
+	filament::math::short4* array, uint8_t itemSize,
+	uint32_t count,
+	filament::VertexBuffer::AttributeType attributeType,
+	bool normalized
+)
+{
+	this->itemSize = itemSize;
+	this->count = count;
+	this->array = new uint16_t[itemSize * count];
+	std::copy(array, array + count, static_cast<filament::math::short4*>(this->array));
+
+	this->attributeType = attributeType;
+	this->normalized = normalized;
+}
+
+template VertexBufferAttribute::VertexBufferAttribute(bool* array, uint8_t itemSize, uint32_t count, filament::VertexBuffer::AttributeType attributeType, bool normalized);
+template VertexBufferAttribute::VertexBufferAttribute(int8_t* array, uint8_t itemSize, uint32_t count, filament::VertexBuffer::AttributeType attributeType, bool normalized);
+template VertexBufferAttribute::VertexBufferAttribute(int16_t* array, uint8_t itemSize, uint32_t count, filament::VertexBuffer::AttributeType attributeType, bool normalized);
+template VertexBufferAttribute::VertexBufferAttribute(int32_t* array, uint8_t itemSize, uint32_t count, filament::VertexBuffer::AttributeType attributeType, bool normalized);
+template VertexBufferAttribute::VertexBufferAttribute(int64_t* array, uint8_t itemSize, uint32_t count, filament::VertexBuffer::AttributeType attributeType, bool normalized);
+template VertexBufferAttribute::VertexBufferAttribute(uint8_t* array, uint8_t itemSize, uint32_t count, filament::VertexBuffer::AttributeType attributeType, bool normalized);
+template VertexBufferAttribute::VertexBufferAttribute(uint16_t* array, uint8_t itemSize, uint32_t count, filament::VertexBuffer::AttributeType attributeType, bool normalized);
+template VertexBufferAttribute::VertexBufferAttribute(uint32_t* array, uint8_t itemSize, uint32_t count, filament::VertexBuffer::AttributeType attributeType, bool normalized);
+template VertexBufferAttribute::VertexBufferAttribute(uint64_t* array, uint8_t itemSize, uint32_t count, filament::VertexBuffer::AttributeType attributeType, bool normalized);
+template VertexBufferAttribute::VertexBufferAttribute(float* array, uint8_t itemSize, uint32_t count, filament::VertexBuffer::AttributeType attributeType, bool normalized);
+template VertexBufferAttribute::VertexBufferAttribute(double* array, uint8_t itemSize, uint32_t count, filament::VertexBuffer::AttributeType attributeType, bool normalized);
 
 VertexBufferAttribute::VertexBufferAttribute(std::vector<filament::math::float2> vertices, bool normalized) :
 	BufferAttribute(vertices)
@@ -144,11 +187,15 @@ void VertexBufferAttribute::setNormalized(bool normalized) noexcept
 
 // IndexBufferAttribute
 
-IndexBufferAttribute::IndexBufferAttribute(void* array, uint32_t count, filament::IndexBuffer::IndexType indexType) :
+template <typename T>
+IndexBufferAttribute::IndexBufferAttribute(T* array, uint32_t count, filament::IndexBuffer::IndexType indexType) :
 	BufferAttribute(array, 1, count)
 {
 	this->indexType = indexType;
 }
+
+template IndexBufferAttribute::IndexBufferAttribute(uint16_t* array, uint32_t count, filament::IndexBuffer::IndexType indexType);
+template IndexBufferAttribute::IndexBufferAttribute(uint32_t* array, uint32_t count, filament::IndexBuffer::IndexType indexType);
 
 IndexBufferAttribute::IndexBufferAttribute(std::vector<uint16_t> vertices)
 {
