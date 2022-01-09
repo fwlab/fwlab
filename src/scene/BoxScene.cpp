@@ -35,7 +35,7 @@ void BoxScene::setup(filament::Engine* engine, filament::View* view, filament::S
 	auto texture = loader->load("assets/images/girl.png", filament::Texture::Format::RGBA);
 
 	// material
-	auto material = new gl::SpecularGlossinessMaterial();
+	auto material = new gl::ClothMaterial();
 	material->setMap(texture);
 
 	// plane
