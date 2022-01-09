@@ -35,7 +35,7 @@ void BoxScene::setup(filament::Engine* engine, filament::View* view, filament::S
 	auto texture = loader->load("assets/images/girl.png", filament::Texture::Format::RGBA);
 
 	// material
-	gl::LitMaterial* material = new gl::LitMaterial();
+	auto material = new gl::SubsurfaceMaterial();
 	material->setMetallic(0);
 	material->setRoughness(0);
 	material->setMap(texture);

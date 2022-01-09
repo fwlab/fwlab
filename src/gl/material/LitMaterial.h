@@ -75,10 +75,10 @@ namespace gl::material
 		filament::math::float4 emissive = { 0, 0, 0, 0 };
 		filament::math::float4 postLightingColor;
 		float ior = 0.3;
-		float transmission;
-		float absorption;
-		float microThickness;
-		float thickness;
+		float transmission = 0;
+		float absorption = 0;
+		float microThickness = 0;
+		float thickness = 0;
 
 		bool enableMap = false;
 		gl::texture::Texture* map = nullptr;
