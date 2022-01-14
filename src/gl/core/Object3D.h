@@ -26,6 +26,13 @@ namespace gl::core
 		void setMatrix(filament::math::mat4 matrix) noexcept;
 		filament::math::mat4 getMatrixWorld() const noexcept;
 
+		Object3D* getParent() const noexcept;
+		void setParent(Object3D* parent) noexcept;
+		std::vector<Object3D*> getChildren() const noexcept;
+		bool hasChild(Object3D* child) const noexcept;
+		void addChild(Object3D* child) noexcept;
+		void removeChild(Object3D* child) noexcept;
+
 	protected:
 		void updateMatrix();
 		utils::Entity entity;
@@ -33,6 +40,10 @@ namespace gl::core
 		filament::math::quat rotation = { 1, 0, 0, 0 };
 		filament::math::double3 scale = { 1, 1, 1 };
 		filament::math::mat4 matrix;
+
+		Object3D* parent = nullptr;
+		std::vector<Object3D*> children;
+		static utils::Entity defaultParent;
 	};
 }
 

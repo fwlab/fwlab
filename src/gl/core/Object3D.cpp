@@ -6,6 +6,8 @@
 using namespace gl::context;
 using namespace gl::core;
 
+utils::Entity Object3D::defaultParent;
+
 Object3D::Object3D()
 {
 	auto& manager = engine->getTransformManager();
@@ -94,4 +96,53 @@ void Object3D::updateMatrix()
 	matrix = gl::math::compose(position, rotation, scale);
 	auto& manager = engine->getTransformManager();
 	manager.setTransform(manager.getInstance(entity), matrix);
+}
+
+Object3D* Object3D::getParent() const noexcept
+{
+	return parent;
+}
+
+void Object3D::setParent(Object3D* parent) noexcept
+{
+	assert(parent != this);
+	this->parent = parent;
+
+	auto& manager = engine->getTransformManager();
+	manager.setParent(manager.getInstance(entity), manager.getInstance(parent->entity));
+}
+
+std::vector<Object3D*> Object3D::getChildren() const noexcept
+{
+	return children;
+}
+
+bool Object3D::hasChild(Object3D* child) const noexcept
+{
+	return std::find(children.begin(), children.end(), child) != children.end();
+}
+
+void Object3D::addChild(Object3D* child) noexcept
+{
+	if (hasChild(child))
+	{
+		return;
+	}
+	children.push_back(child);
+
+	auto& manager = engine->getTransformManager();
+	manager.setParent(manager.getInstance(child->entity), manager.getInstance(entity));
+}
+
+void Object3D::removeChild(Object3D* child) noexcept
+{
+	auto iter = std::find(children.begin(), children.end(), child);
+	if (iter == children.end())
+	{
+		return;
+	}
+	children.erase(iter);
+
+	auto& manager = engine->getTransformManager();
+	manager.setParent(manager.getInstance(child->entity), manager.getInstance(Object3D::defaultParent));
 }
