@@ -22,7 +22,7 @@ Mesh* FilameshLoader::load(void const* data)
 	auto result = new Mesh();
 	result->geometry = geometry;
 	result->material = material;
-	result->entity = mesh.renderable;
+	result->setEntity(mesh.renderable);
 
 	return result;
 }
@@ -40,7 +40,7 @@ gl::object::Mesh* FilameshLoader::load(const utils::Path& path, filamesh::MeshRe
 	result->geometry = geometry;
 	// TODO: assign material to result->material
 	// result->material = defaultMaterial->getMaterial();
-	result->entity = mesh.renderable;
+	result->setEntity(mesh.renderable);
 
 	return result;
 }

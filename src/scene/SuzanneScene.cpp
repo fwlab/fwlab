@@ -24,13 +24,13 @@ void SuzanneScene::setup(filament::Engine* engine, filament::View* view, filamen
 	loader = new FilameshLoader();
 	mesh = loader->load(RESOURCES_MONKEY_DATA);
 	auto& manager = engine->getRenderableManager();
-	auto instance = manager.getInstance(mesh->entity);
+	auto instance = manager.getInstance(mesh->getEntity());
 	manager.setCastShadows(instance, true);
 	manager.setReceiveShadows(instance, true);
 
-	mesh->setTranslation({ 0, 0, -10 });
-	mesh->setScaling({ 2, 2, 2 });
-	scene->addEntity(mesh->entity);
+	mesh->setPosition({ 0, 0, -10 });
+	mesh->setScale({ 2, 2, 2 });
+	scene->addEntity(mesh->getEntity());
 }
 
 void SuzanneScene::cleanup(filament::Engine* engine, filament::View* view, filament::Scene* scene)
@@ -42,5 +42,5 @@ void SuzanneScene::cleanup(filament::Engine* engine, filament::View* view, filam
 
 void SuzanneScene::animate(filament::Engine* engine, filament::View* view, double now)
 {
-	mesh->setRotation(now, filament::math::double3{ 0, 1, 0 });
+	mesh->setRotation(filament::math::double3{ 0, 1, 0 }, now);
 }

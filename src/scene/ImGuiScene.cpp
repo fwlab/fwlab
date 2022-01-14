@@ -36,9 +36,9 @@ void ImGuiScene::setup(filament::Engine* engine, filament::View* view, filament:
 		plane = new Mesh();
 		plane->receiveShadows = true;
 		plane->create(geometry, material);
-		plane->setTranslation({ 0, -2, -10 });
-		plane->setRotation(-M_PI / 2, { 1, 0, 0 });
-		scene->addEntity(plane->entity);
+		plane->setPosition({ 0, -2, -10 });
+		plane->setRotation({ 1, 0, 0 }, -M_PI / 2);
+		scene->addEntity(plane->getEntity());
 	}
 
 	// box
@@ -55,8 +55,8 @@ void ImGuiScene::setup(filament::Engine* engine, filament::View* view, filament:
 		box->castShadows = true;
 		box->receiveShadows = true;
 		box->create(geometry, material);
-		box->setTranslation({ 0, 0, -10 });
-		scene->addEntity(box->entity);
+		box->setPosition({ 0, 0, -10 });
+		scene->addEntity(box->getEntity());
 	}
 
 	// UI
@@ -76,7 +76,7 @@ void ImGuiScene::cleanup(filament::Engine* engine, filament::View* view, filamen
 
 void ImGuiScene::animate(filament::Engine* engine, filament::View* view, double now)
 {
-	box->setRotation(now, filament::math::double3{ 0, 1, 0 });
+	box->setRotation(filament::math::double3{ 0, 1, 0 }, now);
 }
 
 void ImGuiScene::imgui(filament::Engine* engine, filament::View* view)

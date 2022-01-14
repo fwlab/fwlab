@@ -46,9 +46,9 @@ void BoxScene::setup(filament::Engine* engine, filament::View* view, filament::S
 		plane = new gl::Mesh();
 		plane->receiveShadows = true;
 		plane->create(geometry, material);
-		plane->setTranslation({ 0, -2, 0 });
-		plane->setRotation(-M_PI / 2, { 1, 0, 0 });
-		scene->addEntity(plane->entity);
+		plane->setPosition({ 0, -2, 0 });
+		plane->setRotation({ 1, 0, 0 }, -M_PI / 2);
+		scene->addEntity(plane->getEntity());
 	}
 
 	// box
@@ -60,8 +60,8 @@ void BoxScene::setup(filament::Engine* engine, filament::View* view, filament::S
 		box->castShadows = true;
 		box->receiveShadows = true;
 		box->create(geometry, material);
-		box->setTranslation({ 0, 0, 0 });
-		scene->addEntity(box->entity);
+		box->setPosition({ 0, 0, 0 });
+		scene->addEntity(box->getEntity());
 	}
 }
 
@@ -77,7 +77,7 @@ void BoxScene::cleanup(filament::Engine* engine, filament::View* view, filament:
 
 void BoxScene::animate(filament::Engine* engine, filament::View* view, double now)
 {
-	box->setRotation(now, filament::math::double3{ 0, 1, 0 });
+	box->setRotation(filament::math::double3{ 0, 1, 0 }, now);
 }
 
 void BoxScene::imgui(filament::Engine* engine, filament::View* view)

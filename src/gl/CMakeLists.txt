@@ -1,6 +1,7 @@
 set(MODULE_NAME fwlab_gl)
 
 add_subdirectory(context)
+add_subdirectory(math)
 add_subdirectory(utils)
 add_subdirectory(core)
 add_subdirectory(geometry)
@@ -16,7 +17,7 @@ add_subdirectory(helper)
 
 add_library(${MODULE_NAME} STATIC
 	"gl.cpp"
- )
+)
 
 target_link_libraries(${MODULE_NAME}
 	filament filamentapp

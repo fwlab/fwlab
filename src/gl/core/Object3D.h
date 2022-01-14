@@ -2,6 +2,8 @@
 #define GL_CORE_OBJECT3D_H
 #include <vector>
 #include <math/mat4.h>
+#include <math/quat.h>
+#include <math/vec3.h>
 #include <utils/Entity.h>
 
 namespace gl::core
@@ -11,26 +13,26 @@ namespace gl::core
 	public:
 		Object3D();
 		virtual ~Object3D();
-		void add(Object3D* object);
-		void remove(Object3D* object);
-		void removeFromParent();
-		void clear();
-		filament::math::mat4 getTransform();
-		filament::math::mat4 getWorldTransform();
-		void setTransform(filament::math::mat4 transform);
-		void setTranslation(filament::math::double3 translation);
-		void setRotation(double radian, filament::math::double3 axis);
-		void setScaling(filament::math::double3 scaling);
-		utils::Entity entity;
-		Object3D* parent;
-		std::vector<Object3D*> children;
+		utils::Entity getEntity() const noexcept;
+		void setEntity(utils::Entity entity) noexcept;
+		filament::math::double3 getPosition() const noexcept;
+		void setPosition(filament::math::double3 position) noexcept;
+		filament::math::quat getRotation() const noexcept;
+		void setRotation(filament::math::quat rotation) noexcept;
+		void setRotation(filament::math::double3 axis, double angle) noexcept;
+		filament::math::double3 getScale() const noexcept;
+		void setScale(filament::math::double3 scale) noexcept;
+		filament::math::mat4 getMatrix() const noexcept;
+		void setMatrix(filament::math::mat4 matrix) noexcept;
+		filament::math::mat4 getMatrixWorld() const noexcept;
 
 	protected:
-		filament::math::mat4* translateMatrix = nullptr;
-		filament::math::mat4* rotateMatrix = nullptr;
-		filament::math::mat4* scaleMatrix = nullptr;
-		filament::math::mat4* matrix = nullptr;
 		void updateMatrix();
+		utils::Entity entity;
+		filament::math::double3 position = { 0, 0, 0 };
+		filament::math::quat rotation = { 1, 0, 0, 0 };
+		filament::math::double3 scale = { 1, 1, 1 };
+		filament::math::mat4 matrix;
 	};
 }
 

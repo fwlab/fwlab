@@ -1,4 +1,5 @@
 #include <filament/TransformManager.h>
+#include "../math/mat4.h"
 #include "Object3D.h"
 #include "../context/context.h"
 
@@ -7,114 +8,90 @@ using namespace gl::core;
 
 Object3D::Object3D()
 {
-	translateMatrix = new filament::math::mat4();
-	rotateMatrix = new filament::math::mat4();
-	scaleMatrix = new filament::math::mat4();
-	matrix = new filament::math::mat4();
-	this->updateMatrix();
-
-	filament::TransformManager& manager = engine->getTransformManager();
+	auto& manager = engine->getTransformManager();
 	manager.setAccurateTranslationsEnabled(true);
 }
 
 Object3D::~Object3D()
 {
 	engine->destroy(entity);
-
-	this->clear();
-	delete translateMatrix;
-	delete rotateMatrix;
-	delete scaleMatrix;
-	delete matrix;
-	translateMatrix = nullptr;
-	rotateMatrix = nullptr;
-	scaleMatrix = nullptr;
-	matrix = nullptr;
 }
 
-void Object3D::add(Object3D* object)
+utils::Entity Object3D::getEntity() const noexcept
 {
-	assert(object != this);
-	if (object->parent != nullptr)
+	return entity;
+}
+
+void Object3D::setEntity(utils::Entity entity) noexcept
+{
+	if (this->entity)
 	{
-		object->parent->remove(object);
+		engine->destroy(this->entity);
 	}
-	object->parent = this;
-	this->children.push_back(object);
+	this->entity = entity;
 }
 
-void Object3D::remove(Object3D* object)
+filament::math::double3 Object3D::getPosition() const noexcept
 {
-	auto iterator = std::find(children.begin(), children.end(), object);
-	if (iterator != children.end())
-	{
-		children.erase(iterator);
-	}
+	return position;
 }
 
-void Object3D::removeFromParent()
+void Object3D::setPosition(filament::math::double3 position) noexcept
 {
-	if (parent != nullptr)
-	{
-		parent->remove(this);
-	}
+	this->position = position;
+	updateMatrix();
 }
 
-void Object3D::clear()
+filament::math::quat Object3D::getRotation() const noexcept
 {
-	for (auto& child : children)
-	{
-		child->parent = nullptr;
-		delete child;
-		child = nullptr;
-	}
-	children.clear();
+	return rotation;
 }
 
-filament::math::mat4 Object3D::getTransform()
+void Object3D::setRotation(filament::math::quat rotation) noexcept
 {
-	filament::TransformManager& manager = engine->getTransformManager();
+	this->rotation = rotation;
+	updateMatrix();
+}
+
+void Object3D::setRotation(filament::math::double3 axis, double angle) noexcept
+{
+	this->rotation = filament::math::quat::fromAxisAngle(axis, angle);
+	updateMatrix();
+}
+
+filament::math::double3 Object3D::getScale() const noexcept
+{
+	return scale;
+}
+
+void Object3D::setScale(filament::math::double3 scale) noexcept
+{
+	this->scale = scale;
+	updateMatrix();
+}
+
+filament::math::mat4 Object3D::getMatrix() const noexcept
+{
+	auto& manager = engine->getTransformManager();
 	return manager.getTransformAccurate(manager.getInstance(entity));
 }
 
-filament::math::mat4 Object3D::getWorldTransform()
+void Object3D::setMatrix(filament::math::mat4 matrix) noexcept
+{
+	this->matrix = matrix;
+	auto& manager = engine->getTransformManager();
+	manager.setTransform(manager.getInstance(entity), matrix);
+}
+
+filament::math::mat4 Object3D::getMatrixWorld() const noexcept
 {
 	filament::TransformManager& manager = engine->getTransformManager();
 	return manager.getWorldTransformAccurate(manager.getInstance(entity));
 }
 
-void Object3D::setTransform(filament::math::mat4 transform)
-{
-	filament::TransformManager& manager = engine->getTransformManager();
-	return manager.setTransform(manager.getInstance(entity), transform);
-}
-
-void Object3D::setTranslation(filament::math::double3 translation)
-{
-	filament::TransformManager& manager = engine->getTransformManager();
-	*translateMatrix = filament::math::mat4::translation(translation);
-	updateMatrix();
-	return manager.setTransform(manager.getInstance(entity), *matrix);
-}
-
-void Object3D::setRotation(double radian, filament::math::double3 axis)
-{
-	filament::TransformManager& manager = engine->getTransformManager();
-	*rotateMatrix = filament::math::mat4::rotation(radian, axis);
-	updateMatrix();
-	return manager.setTransform(manager.getInstance(entity), *matrix);
-}
-
-void Object3D::setScaling(filament::math::double3 scaling)
-{
-	filament::TransformManager& manager = engine->getTransformManager();
-	*scaleMatrix = filament::math::mat4::scaling(scaling);
-	updateMatrix();
-	return manager.setTransform(manager.getInstance(entity), *matrix);
-}
-
 void Object3D::updateMatrix()
 {
-	auto worldMatrix = getWorldTransform();
-	*matrix = (*translateMatrix) * (*rotateMatrix) * (*scaleMatrix);
+	matrix = gl::math::compose(position, rotation, scale);
+	auto& manager = engine->getTransformManager();
+	manager.setTransform(manager.getInstance(entity), matrix);
 }
