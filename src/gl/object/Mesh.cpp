@@ -31,8 +31,8 @@ void Mesh::create(BufferGeometry* geometry, Material* material)
 
 	entity = utils::EntityManager::get().create();
 	filament::RenderableManager::Builder(1)
-		.boundingBox(*geometry->boundingBox)
-		.geometry(0, material->getPrimitiveType(), geometry->vertexBuffer, geometry->indexBuffer)
+		.boundingBox(*geometry->getBoundingBox())
+		.geometry(0, material->getPrimitiveType(), geometry->getVertexBuffer(), geometry->getIndexBuffer())
 		.material(0, material->getInstance())
 		.culling(culling)
 		.castShadows(castShadows)

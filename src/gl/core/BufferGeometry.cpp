@@ -1,4 +1,5 @@
 #include <climits>
+#include "../utils/Utils.h"
 #include "BufferGeometry.h"
 #include "../context/context.h"
 
@@ -50,66 +51,108 @@ BufferGeometry::~BufferGeometry()
 	}
 }
 
-void BufferGeometry::create()
+void BufferGeometry::create() noexcept
 {
 	createVertexBuffer();
 	createIndexBuffer();
 	computeBoundingBox();
 }
 
-void BufferGeometry::createVertexBuffer()
+Attributes BufferGeometry::getAttributes() const noexcept
 {
-	assert(attributes.count(filament::VertexAttribute::POSITION) == 1);
-	auto vertices = attributes.at(filament::VertexAttribute::POSITION);
+	return attributes;
+}
 
-	auto builder = filament::VertexBuffer::Builder();
-	builder.vertexCount(vertices->getCount());
-	builder.bufferCount(attributes.size());
+bool BufferGeometry::hasAttribute(filament::VertexAttribute attrType) const noexcept
+{
+	return attributes.count(attrType) > 0;
+}
 
-	uint16_t i = 0;
-	for (auto pair : attributes)
+VertexBufferAttribute* BufferGeometry::getAttribute(filament::VertexAttribute attrType) const noexcept
+{
+	if (!hasAttribute(attrType))
 	{
-		builder.attribute(pair.first, i, pair.second->getAttributeType());
-		if (pair.second->isNormalized())
-		{
-			builder.normalized(pair.first, true);
-		}
-		i++;
+		return nullptr;
 	}
+	return attributes.at(attrType);
+}
 
-	vertexBuffer = builder.build(*engine);
-
-	i = 0;
-	for (auto pair : attributes)
+void BufferGeometry::setAttribute(filament::VertexAttribute attrType, VertexBufferAttribute* attribute) noexcept
+{
+	if (attributes.count(attrType) > 0)
 	{
-		vertexBuffer->setBufferAt(
-			*engine,
-			i,
-			filament::VertexBuffer::BufferDescriptor(pair.second->getArray(), pair.second->getCount() * getSize(pair.second->getAttributeType()))
-		);
-		i++;
+		auto& oldAttribute = attributes.at(attrType);
+		delete oldAttribute;
+		attributes.erase(attrType);
+	}
+	if (attribute)
+	{
+		attributes.insert({ attrType, attribute });
 	}
 }
 
-void BufferGeometry::createIndexBuffer()
+IndexBufferAttribute* BufferGeometry::getIndex() const noexcept
 {
-	if (index == nullptr)
-	{
-		return;
-	}
-	auto builder = filament::IndexBuffer::Builder();
-	builder.indexCount(index->getCount());
-	builder.bufferType(index->getIndexType());
-	indexBuffer = builder.build(*engine);
-
-	indexBuffer->setBuffer(
-		*engine,
-		filament::IndexBuffer::BufferDescriptor(index->getArray(), index->getCount() * getSize(index->getIndexType()))
-	);
+	return index;
 }
 
-void BufferGeometry::computeBoundingBox()
+void BufferGeometry::setIndex(IndexBufferAttribute* index) noexcept
 {
+	if (this->index)
+	{
+		delete this->index;
+	}
+	this->index = index;
+}
+
+filament::VertexBuffer* BufferGeometry::getVertexBuffer() const noexcept
+{
+	return vertexBuffer;
+}
+
+void BufferGeometry::setVertexBuffer(filament::VertexBuffer* buffer) noexcept
+{
+	if (vertexBuffer)
+	{
+		engine->destroy(vertexBuffer);
+	}
+	vertexBuffer = buffer;
+}
+
+filament::IndexBuffer* BufferGeometry::getIndexBuffer() const noexcept
+{
+	return indexBuffer;
+}
+
+void BufferGeometry::setIndexBuffer(filament::IndexBuffer* buffer) noexcept
+{
+	if (indexBuffer)
+	{
+		engine->destroy(indexBuffer);
+	}
+	indexBuffer = buffer;
+}
+
+
+filament::Box* BufferGeometry::getBoundingBox() const noexcept
+{
+	return boundingBox;
+}
+
+void BufferGeometry::computeBoundingBox() noexcept
+{
+	if (min)
+	{
+		delete min;
+	}
+	if (max)
+	{
+		delete max;
+	}
+	if (boundingBox)
+	{
+		delete boundingBox;
+	}
 	min = new filament::math::float3(FLT_MAX, FLT_MAX, FLT_MAX);
 	max = new filament::math::float3(-FLT_MAX, -FLT_MAX, -FLT_MAX);
 	float* vertices = nullptr;
@@ -188,7 +231,7 @@ void BufferGeometry::computeBoundingBox()
 	boundingBox->set(*min, *max);
 }
 
-void BufferGeometry::addGroup(int start, int count, int materialIndex)
+void BufferGeometry::addGroup(int start, int count, int materialIndex) noexcept
 {
 	Group* group = new Group{
 		.start = start,
@@ -198,7 +241,7 @@ void BufferGeometry::addGroup(int start, int count, int materialIndex)
 	groups->push_back(group);
 }
 
-void BufferGeometry::clearGroups()
+void BufferGeometry::clearGroups() noexcept
 {
 	for (auto& group : *groups)
 	{
@@ -208,76 +251,59 @@ void BufferGeometry::clearGroups()
 	groups->clear();
 }
 
-uint16_t BufferGeometry::getSize(filament::VertexBuffer::AttributeType type)
+void BufferGeometry::createVertexBuffer() noexcept
 {
-	switch (type)
+	assert(attributes.count(filament::VertexAttribute::POSITION) == 1);
+	auto& vertices = attributes.at(filament::VertexAttribute::POSITION);
+
+	auto builder = filament::VertexBuffer::Builder();
+	builder.vertexCount(vertices->getCount());
+	builder.bufferCount(attributes.size());
+
+	uint16_t i = 0;
+	for (auto pair : attributes)
 	{
-	case filament::VertexBuffer::AttributeType::BYTE:
-		return 1;
-	case filament::VertexBuffer::AttributeType::BYTE2:
-		return 2;
-	case filament::VertexBuffer::AttributeType::BYTE3:
-		return 3;
-	case filament::VertexBuffer::AttributeType::BYTE4:
-		return 4;
-	case filament::VertexBuffer::AttributeType::FLOAT:
-		return 4;
-	case filament::VertexBuffer::AttributeType::FLOAT2:
-		return 8;
-	case filament::VertexBuffer::AttributeType::FLOAT3:
-		return 12;
-	case filament::VertexBuffer::AttributeType::FLOAT4:
-		return 16;
-	case filament::VertexBuffer::AttributeType::HALF:
-		return 2;
-	case filament::VertexBuffer::AttributeType::HALF2:
-		return 4;
-	case filament::VertexBuffer::AttributeType::HALF3:
-		return 6;
-	case filament::VertexBuffer::AttributeType::HALF4:
-		return 8;
-	case filament::VertexBuffer::AttributeType::INT:
-		return 4;
-	case filament::VertexBuffer::AttributeType::SHORT:
-		return 2;
-	case filament::VertexBuffer::AttributeType::SHORT2:
-		return 4;
-	case filament::VertexBuffer::AttributeType::SHORT3:
-		return 6;
-	case filament::VertexBuffer::AttributeType::SHORT4:
-		return 8;
-	case filament::VertexBuffer::AttributeType::UBYTE:
-		return 1;
-	case filament::VertexBuffer::AttributeType::UBYTE2:
-		return 2;
-	case filament::VertexBuffer::AttributeType::UBYTE3:
-		return 3;
-	case filament::VertexBuffer::AttributeType::UBYTE4:
-		return 4;
-	case filament::VertexBuffer::AttributeType::UINT:
-		return 4;
-	case filament::VertexBuffer::AttributeType::USHORT:
-		return 2;
-	case filament::VertexBuffer::AttributeType::USHORT2:
-		return 4;
-	case filament::VertexBuffer::AttributeType::USHORT3:
-		return 6;
-	case filament::VertexBuffer::AttributeType::USHORT4:
-		return 8;
-	default:
-		throw "unknown vertex attribute type";
+		builder.attribute(pair.first, i, pair.second->getAttributeType());
+		if (pair.second->isNormalized())
+		{
+			builder.normalized(pair.first, true);
+		}
+		i++;
+	}
+
+	vertexBuffer = builder.build(*engine);
+
+	i = 0;
+	for (auto pair : attributes)
+	{
+		vertexBuffer->setBufferAt(
+			*engine,
+			i,
+			filament::VertexBuffer::BufferDescriptor(
+				pair.second->getArray(),
+				pair.second->getCount() * utils::Utils::getSize(pair.second->getAttributeType())
+			)
+		);
+		i++;
 	}
 }
 
-uint16_t BufferGeometry::getSize(filament::IndexBuffer::IndexType type)
+void BufferGeometry::createIndexBuffer() noexcept
 {
-	switch (type)
+	if (index == nullptr)
 	{
-	case filament::IndexBuffer::IndexType::USHORT:
-		return 2;
-	case filament::IndexBuffer::IndexType::UINT:
-		return 4;
-	default:
-		throw "unknown index buffer type";
+		return;
 	}
+	auto builder = filament::IndexBuffer::Builder();
+	builder.indexCount(index->getCount());
+	builder.bufferType(index->getIndexType());
+	indexBuffer = builder.build(*engine);
+
+	indexBuffer->setBuffer(
+		*engine,
+		filament::IndexBuffer::BufferDescriptor(
+			index->getArray(),
+			index->getCount() * utils::Utils::getSize(index->getIndexType())
+		)
+	);
 }

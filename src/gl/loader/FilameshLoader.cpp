@@ -15,8 +15,8 @@ Mesh* FilameshLoader::load(void const* data)
 	auto mesh = filamesh::MeshReader::loadMeshFromBuffer(engine, data, nullptr, nullptr, material->getInstance());
 
 	auto geometry = new BufferGeometry();
-	geometry->vertexBuffer = mesh.vertexBuffer;
-	geometry->indexBuffer = mesh.indexBuffer;
+	geometry->setVertexBuffer(mesh.vertexBuffer);
+	geometry->setIndexBuffer(mesh.indexBuffer);
 	// TODO: compute bounding box: geometry->boundingBox
 
 	auto result = new Mesh();
@@ -32,8 +32,8 @@ gl::object::Mesh* FilameshLoader::load(const utils::Path& path, filamesh::MeshRe
 	auto mesh = filamesh::MeshReader::loadMeshFromFile(engine, path, materials);
 
 	auto geometry = new BufferGeometry();
-	geometry->vertexBuffer = mesh.vertexBuffer;
-	geometry->indexBuffer = mesh.indexBuffer;
+	geometry->setVertexBuffer(mesh.vertexBuffer);
+	geometry->setIndexBuffer(mesh.indexBuffer);
 	// TODO: compute bounding box: geometry->boundingBox
 
 	auto result = new Mesh();
