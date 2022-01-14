@@ -52,5 +52,53 @@ mat4 gl::math::compose(double3 position, quat quaternion, double3 scale) noexcep
 
 void gl::math::decompose(mat4 mat, double3& position, quat& quaternion, double3& scale) noexcept
 {
+	auto& te = mat;
 
+	double3 _v1;
+
+	_v1.x = te[0][0];
+	_v1.y = te[0][1];
+	_v1.z = te[0][2];
+	auto sx = length(_v1);
+	_v1.x = te[1][0];
+	_v1.y = te[1][1];
+	_v1.z = te[1][2];
+	auto sy = length(_v1);
+	_v1.x = te[2][0];
+	_v1.y = te[2][1];
+	_v1.z = te[2][2];
+	auto sz = length(_v1);
+
+	// if determine is negative, we need to invert one scale
+	if (det(te) < 0)
+		sx = -sx;
+
+	position.x = te[3][0];
+	position.y = te[3][1];
+	position.z = te[3][2];
+
+	// scale the rotation part
+	mat4 _m1(te);
+
+	auto invSX = 1 / sx;
+	auto invSY = 1 / sy;
+	auto invSZ = 1 / sz;
+
+	_m1[0][0] *= invSX;
+	_m1[0][1] *= invSX;
+	_m1[0][2] *= invSX;
+
+	_m1[1][0] *= invSY;
+	_m1[1][1] *= invSY;
+	_m1[1][2] *= invSY;
+
+	_m1[2][0] *= invSZ;
+	_m1[2][1] *= invSZ;
+	_m1[2][2] *= invSZ;
+
+	quaternion = _m1.toQuaternion();
+
+	scale.x = sx;
+	scale.y = sy;
+	scale.z = sz;
 }
