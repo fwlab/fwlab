@@ -10,6 +10,7 @@ namespace gl::object
 	class Mesh : public gl::core::Object3D
 	{
 	public:
+		Mesh();
 		Mesh(gl::core::BufferGeometry* geometry, gl::material::Material* material);
 		virtual ~Mesh();
 		bool getCulling() const noexcept;

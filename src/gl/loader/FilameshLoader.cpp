@@ -6,6 +6,7 @@
 
 using namespace gl::context;
 using namespace gl::core;
+using namespace gl::material;
 using namespace gl::object;
 using namespace gl::loader;
 
@@ -20,8 +21,8 @@ Mesh* FilameshLoader::load(void const* data)
 	// TODO: compute bounding box: geometry->boundingBox
 
 	auto result = new Mesh();
-	result->geometry = geometry;
-	result->material = material;
+	result->setGeometry(geometry);
+	result->setMaterial(material);
 	result->setEntity(mesh.renderable);
 
 	return result;
@@ -29,6 +30,7 @@ Mesh* FilameshLoader::load(void const* data)
 
 gl::object::Mesh* FilameshLoader::load(const utils::Path& path, filamesh::MeshReader::MaterialRegistry materials)
 {
+	auto material = new Material();
 	auto mesh = filamesh::MeshReader::loadMeshFromFile(engine, path, materials);
 
 	auto geometry = new BufferGeometry();
@@ -37,9 +39,9 @@ gl::object::Mesh* FilameshLoader::load(const utils::Path& path, filamesh::MeshRe
 	// TODO: compute bounding box: geometry->boundingBox
 
 	auto result = new Mesh();
-	result->geometry = geometry;
+	result->setGeometry(geometry);
 	// TODO: assign material to result->material
-	// result->material = defaultMaterial->getMaterial();
+	result->setMaterial(material);
 	result->setEntity(mesh.renderable);
 
 	return result;

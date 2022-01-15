@@ -43,9 +43,8 @@ void BoxScene::setup(filament::Engine* engine, filament::View* view, filament::S
 		gl::PlaneGeometry* geometry = new gl::PlaneGeometry();
 		geometry->create(10, 10);
 
-		plane = new gl::Mesh();
-		plane->receiveShadows = true;
-		plane->create(geometry, material);
+		plane = new gl::Mesh(geometry, material);
+		plane->setReceiveShadows(true);
 		plane->setPosition({ 0, -2, 0 });
 		plane->setRotation({ 1, 0, 0 }, -M_PI / 2);
 		scene->addEntity(plane->getEntity());
@@ -56,10 +55,9 @@ void BoxScene::setup(filament::Engine* engine, filament::View* view, filament::S
 		gl::BoxGeometry* geometry = new gl::BoxGeometry();
 		geometry->create(1, 1, 1);
 
-		box = new gl::Mesh();
-		box->castShadows = true;
-		box->receiveShadows = true;
-		box->create(geometry, material);
+		box = new gl::Mesh(geometry, material);
+		box->setCastShadows(true);
+		box->setReceiveShadows(true);
 		box->setPosition({ 0, 0, 0 });
 		scene->addEntity(box->getEntity());
 	}

@@ -33,9 +33,8 @@ void ImGuiScene::setup(filament::Engine* engine, filament::View* view, filament:
 		material->setMetallic(0);
 		material->setRoughness(0);
 
-		plane = new Mesh();
-		plane->receiveShadows = true;
-		plane->create(geometry, material);
+		plane = new Mesh(geometry, material);
+		plane->setReceiveShadows(true);
 		plane->setPosition({ 0, -2, -10 });
 		plane->setRotation({ 1, 0, 0 }, -M_PI / 2);
 		scene->addEntity(plane->getEntity());
@@ -51,10 +50,9 @@ void ImGuiScene::setup(filament::Engine* engine, filament::View* view, filament:
 		material->setMetallic(0);
 		material->setRoughness(0);
 
-		box = new Mesh();
-		box->castShadows = true;
-		box->receiveShadows = true;
-		box->create(geometry, material);
+		box = new Mesh(geometry, material);
+		box->setCastShadows(true);
+		box->setReceiveShadows(true);
 		box->setPosition({ 0, 0, -10 });
 		scene->addEntity(box->getEntity());
 	}
