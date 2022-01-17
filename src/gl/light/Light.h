@@ -13,8 +13,7 @@ namespace gl::light
 		Light(
 			filament::LightManager::Type type = filament::LightManager::Type::SUN,
 			filament::sRGBColor color = filament::sRGBColor(0.98f, 0.92f, 0.89f),
-			float intensity = 110000,
-			filament::math::float3 direction = { 0.7, -1, -0.8 }
+			float intensity = 110000
 		);
 		virtual ~Light();
 
