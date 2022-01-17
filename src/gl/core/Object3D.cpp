@@ -98,6 +98,8 @@ void Object3D::updateMatrix()
 	manager.setTransform(manager.getInstance(entity), matrix);
 }
 
+// Transform Manager
+
 Object3D* Object3D::getParent() const noexcept
 {
 	return parent;
@@ -145,4 +147,29 @@ void Object3D::removeChild(Object3D* child) noexcept
 
 	auto& manager = engine->getTransformManager();
 	manager.setParent(manager.getInstance(child->entity), manager.getInstance(Object3D::defaultParent));
+}
+
+// Entity Manager
+uint8_t Object3D::getGenerationForIndex(size_t index) const noexcept
+{
+	auto& manager = engine->getEntityManager();
+	return manager.getGenerationForIndex(index);
+}
+
+bool Object3D::isAlive() const noexcept
+{
+	auto& manager = engine->getEntityManager();
+	return manager.isAlive(entity);
+}
+
+void Object3D::registerListener(utils::EntityManager::Listener* l) noexcept
+{
+	auto& manager = engine->getEntityManager();
+	manager.registerListener(l);
+}
+
+void Object3D::unregisterListener(utils::EntityManager::Listener* l) noexcept
+{
+	auto& manager = engine->getEntityManager();
+	manager.unregisterListener(l);
 }

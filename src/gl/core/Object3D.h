@@ -5,6 +5,7 @@
 #include <math/quat.h>
 #include <math/vec3.h>
 #include <utils/Entity.h>
+#include <utils/EntityManager.h>
 
 namespace gl::core
 {
@@ -26,12 +27,19 @@ namespace gl::core
 		void setMatrix(filament::math::mat4 matrix) noexcept;
 		filament::math::mat4 getMatrixWorld() const noexcept;
 
+		// Transform Manager
 		Object3D* getParent() const noexcept;
 		void setParent(Object3D* parent) noexcept;
 		std::vector<Object3D*> getChildren() const noexcept;
 		bool hasChild(Object3D* child) const noexcept;
 		void addChild(Object3D* child) noexcept;
 		void removeChild(Object3D* child) noexcept;
+
+		// Entity Manager
+		uint8_t getGenerationForIndex(size_t index) const noexcept;
+		bool isAlive() const noexcept;
+		void registerListener(utils::EntityManager::Listener* l) noexcept;
+		void unregisterListener(utils::EntityManager::Listener* l) noexcept;
 
 	protected:
 		void updateMatrix();
