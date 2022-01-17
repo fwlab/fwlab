@@ -17,8 +17,7 @@ void SuzanneScene::setup(filament::Engine* engine, filament::View* view, filamen
 
 	// light
 	light = new Light();
-	light->create();
-	scene->addEntity(light->entity);
+	scene->addEntity(light->getEntity());
 
 	// loader
 	loader = new FilameshLoader();

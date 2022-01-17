@@ -25,8 +25,7 @@ void BoxScene::setup(filament::Engine* engine, filament::View* view, filament::S
 
 	// light
 	light = new gl::Light();
-	light->create();
-	scene->addEntity(light->entity);
+	scene->addEntity(light->getEntity());
 
 	// viewer
 	viewer = new filament::viewer::SimpleViewer(engine, scene, view);

@@ -21,8 +21,7 @@ void ImGuiScene::setup(filament::Engine* engine, filament::View* view, filament:
 
 	// light
 	light = new Light();
-	light->create();
-	scene->addEntity(light->entity);
+	scene->addEntity(light->getEntity());
 
 	// plane
 	{
