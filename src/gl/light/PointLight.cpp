@@ -1,14 +1,14 @@
 #include "PointLight.h"
 
-using gl::light;
+using namespace gl::light;
 
-void PointLight::PointLight(filament::sRGBColor color, float intensity) :
-	Light(filament::LightManager::Type::PointLight, color, intensity)
+PointLight::PointLight(filament::sRGBColor color, float intensity) :
+	Light(filament::LightManager::Type::POINT, color, intensity)
 {
 
 }
 
-virtual PointLight::~PointLight()
+PointLight::~PointLight()
 {
 
 }

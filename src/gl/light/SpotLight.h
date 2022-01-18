@@ -8,11 +8,17 @@ namespace gl::light
 	class SpotLight : public gl::light::Light
 	{
 	public:
-		void SpotLight(
+		SpotLight(
 			filament::sRGBColor color = filament::sRGBColor(0.98f, 0.92f, 0.89f),
 			float intensity = 110000
 		);
+		using gl::light::Light::Light;
 		virtual ~SpotLight();
+
+		// Light Manager
+		float getSpotLightInnerCone() const noexcept;
+		float getSpotLightOuterCone() const noexcept;
+		void setSpotLightCone(float inner, float outer) noexcept;
 	};
 }
 

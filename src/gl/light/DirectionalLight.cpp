@@ -1,14 +1,14 @@
 #include "DirectionalLight.h"
 
-using gl::light;
+using namespace gl::light;
 
-void DirectionalLight::DirectionalLight(filament::sRGBColor color, float intensity) :
-	Light(filament::LightManager::Type::SUN, color, intensity)
+DirectionalLight::DirectionalLight(filament::sRGBColor color, float intensity) :
+	Light(filament::LightManager::Type::DIRECTIONAL, color, intensity)
 {
 
 }
 
-virtual DirectionalLight::~DirectionalLight()
+DirectionalLight::~DirectionalLight()
 {
 
 }

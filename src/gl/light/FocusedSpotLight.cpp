@@ -1,14 +1,14 @@
 #include "FocusedSpotLight.h"
 
-using gl::light;
+using namespace gl::light;
 
-void FocusedSpotLight::FocusedSpotLight(filament::sRGBColor color, float intensity) :
-	Light(filament::LightManager::Type::FocusedSpotLight, color, intensity)
+FocusedSpotLight::FocusedSpotLight(filament::sRGBColor color, float intensity) :
+	SpotLight(filament::LightManager::Type::FOCUSED_SPOT, color, intensity)
 {
 
 }
 
-virtual FocusedSpotLight::~FocusedSpotLight()
+FocusedSpotLight::~FocusedSpotLight()
 {
 
 }
