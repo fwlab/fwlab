@@ -4,7 +4,6 @@
 #include "resources/resources.h"
 #include "BoxScene.h"
 
-filament::viewer::SimpleViewer* viewer;
 gl::PerspectiveCamera* camera;
 gl::Light* light;
 gl::Mesh* plane;
@@ -26,9 +25,6 @@ void BoxScene::setup(filament::Engine* engine, filament::View* view, filament::S
 	// light
 	light = new gl::Light();
 	scene->addEntity(light->getEntity());
-
-	// viewer
-	viewer = new filament::viewer::SimpleViewer(engine, scene, view);
 
 	// loader
 	loader = new gl::TextureLoader();
@@ -68,7 +64,6 @@ void BoxScene::cleanup(filament::Engine* engine, filament::View* view, filament:
 	delete plane;
 	delete box;
 	delete light;
-	delete viewer;
 	delete camera;
 	delete loader;
 }
@@ -80,5 +75,18 @@ void BoxScene::animate(filament::Engine* engine, filament::View* view, double no
 
 void BoxScene::imgui(filament::Engine* engine, filament::View* view)
 {
-	viewer->updateUserInterface();
+	ImGui::Begin("Hello", nullptr, ImGuiWindowFlags_MenuBar);
+
+	if (ImGui::BeginMainMenuBar())
+	{
+		if (ImGui::BeginMenu("File", true))
+		{
+			ImGui::MenuItem("New", nullptr, false, true);
+			ImGui::EndMenu();
+		}
+
+		ImGui::EndMainMenuBar();
+	}
+
+	ImGui::End();
 }
