@@ -2,6 +2,7 @@ set(MODULE_NAME fwlab)
 
 add_subdirectory(utils)
 add_subdirectory(gl)
+add_subdirectory(event)
 add_subdirectory(scene)
 
 # 生成图标文件
