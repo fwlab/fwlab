@@ -1,5 +1,6 @@
 #ifndef FWLAB_APPLICATION_H
 #define FWLAB_APPLICATION_H
+#include <SDL.h>
 #include <filamentapp/Config.h>
 #include "scene/Scene.h"
 
@@ -13,6 +14,7 @@ public:
 
 private:
 	Config config;
+	SDL_Window *window;
 	Scene *scene = nullptr;
 };
 

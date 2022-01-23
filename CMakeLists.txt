@@ -9,6 +9,17 @@ set(FILAMENT_DIR ${CMAKE_SOURCE_DIR}/third_party/filament)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC")
 
+add_definitions(
+	-DFILAMENT_SUPPORTS_X11
+	-D_USE_MATH_DEFINES
+	-DFILAMENT_SUPPORTS_OPENGL
+	-DSTDC_HEADERS
+	-DHAVE_SYS_TYPES_H
+	-DHAVE_STDLIB_H
+	-DHAVE_STRING_H
+	-DHAVE_MATH_H
+)
+
 include_directories(
 	# third_party
 	${FILAMENT_DIR}/third_party/imgui

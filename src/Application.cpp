@@ -4,6 +4,7 @@
 #include <filament/Scene.h>
 #include <filamentapp/Config.h>
 #include <filamentapp/FilamentApp.h>
+#include "utils/SDLUtils.h"
 #include "scene/BoxScene.h"
 #include "Application.h"
 
@@ -11,6 +12,21 @@ static const char *IBL_FOLDER = "assets/ibl/lightroom_14b";
 
 Application::Application()
 {
+	SDL_Init(SDL_INIT_EVENTS);
+
+	const int x = SDL_WINDOWPOS_CENTERED;
+	const int y = SDL_WINDOWPOS_CENTERED;
+	uint32_t windowFlags = SDL_WINDOW_SHOWN | SDL_WINDOW_ALLOW_HIGHDPI | SDL_WINDOW_RESIZABLE;
+
+	window = SDL_CreateWindow("人工智能实验室", x, y, 1000, 600, windowFlags);
+
+	void *nativeWindow = utils::SDLUtils::getNativeWindow(window);
+
+	// Create the Engine after the window in case this happens to be a single-threaded platform.
+	// For single-threaded platforms, we need to ensure that Filament's OpenGL context is
+	// current, rather than the one created by SDL.
+	//mFilamentApp->mEngine = Engine::create(config.backend);
+
 	config.title = "人工智能实验室";
 	config.iblDirectory = FilamentApp::getRootAssetsPath() + IBL_FOLDER;
 	scene = new BoxScene();
@@ -18,11 +34,13 @@ Application::Application()
 
 Application::~Application()
 {
+	SDL_Quit();
 	delete scene;
 }
 
 void Application::start()
 {
+	return;
 	auto setup = [&](filament::Engine *engine, filament::View *view, filament::Scene *scene)
 	{
 		this->scene->setup(engine, view, scene);
@@ -57,7 +75,7 @@ void Application::start()
 	auto &app = FilamentApp::get();
 	app.animate(animate);
 	app.resize(resize);
-	app.run(config, setup, cleanup, imgui, preRender, postRender);
+	//app.run(config, (FilamentApp::SetupCallback)setup, (FilamentApp::CleanupCallback)cleanup);
 }
 
 void Application::stop()

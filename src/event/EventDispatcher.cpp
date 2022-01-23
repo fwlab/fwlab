@@ -33,6 +33,7 @@ void EventDispatcher::removeEventListener(const std::string &eventName, std::str
 
 bool EventDispatcher::hasEventListener(const std::string &eventName, std::string &id) const noexcept
 {
+	return true;
 }
 
 void EventDispatcher::dispatchEvent(const std::string &eventName) noexcept
