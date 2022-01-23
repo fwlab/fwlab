@@ -37,7 +37,7 @@ sudo update-alternatives --install /usr/bin/c++ c++ /usr/bin/clang++ 100
 ```sh
 mkdir -p out/cmake-release
 cd out/cmake-release
-cmake -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=../release/filament ../..
+cmake -G Ninja -DCMAKE_BUILD_TYPE=Release -DFILAMENT_SUPPORTS_VULKAN=OFF -DCMAKE_INSTALL_PREFIX=../release/filament ../..
 ninja
 ninja install
 ```
@@ -46,7 +46,7 @@ ninja install
 
 ```sh
 cd /etc/profile.d
-sudo sh -c 'echo export PATH=$HOME/fwlab/third_party/filament/out/release/filament/bin:\$PATH > filament.sh'
+sudo sh -c 'echo export PATH=/home/{username}/fwlab/third_party/filament/out/release/filament/bin:\$PATH > filament.sh'
 sudo chmod +x filament.sh
 source filament.sh
 echo $PATH

@@ -1,6 +1,6 @@
 set(MODULE_NAME fwlab_scene)
 
-# 使用BEFORE避免引入其他目录下的resources/resources.h
+# 浣跨敤BEFORE閬垮厤寮曞叆鍏朵粬鐩綍涓嬬殑resources/resources.h
 include_directories(
 	BEFORE "${CMAKE_BINARY_DIR}/assets"
 )
@@ -14,6 +14,6 @@ add_library(${MODULE_NAME} STATIC
 )
 
 target_link_libraries(${MODULE_NAME}
-	filament filamentapp viewer gltfio gltfio_core
+	filament filamentapp viewer gltfio gltfio_core smol-v
 	fwlab_gl
 )

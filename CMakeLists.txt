@@ -7,6 +7,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(FILAMENT_DIR ${CMAKE_SOURCE_DIR}/third_party/filament)
 
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC")
+
 include_directories(
 	# third_party
 	${FILAMENT_DIR}/third_party/imgui
@@ -118,7 +120,7 @@ link_libraries(
 
 	# libs
 	bluegl
-	bluevk
+	#bluevk
 	camutils
 	filabridge
 	filagui
