@@ -12,6 +12,7 @@ include_directories(
 	${FILAMENT_DIR}/third_party/imgui
 	${FILAMENT_DIR}/third_party/libsdl2/include
 	${FILAMENT_DIR}/third_party/stb
+
 	# filament
 	${FILAMENT_DIR}/out/release/filament/include
 	${FILAMENT_DIR}/libs/filamentapp/include
@@ -45,14 +46,39 @@ link_directories(
 	${FILAMENT_DIR}/out/cmake-release/third_party/tinyexr/tnt
 
 	# filament
-	${FILAMENT_DIR}/out/release/filament/lib/x86_64
+	${FILAMENT_DIR}/out/cmake-release/filament
+	${FILAMENT_DIR}/out/cmake-release/filament/backend
+	${FILAMENT_DIR}/out/cmake-release/shaders
+
+	# libs
+	${FILAMENT_DIR}/out/cmake-release/libs/bluegl
+	${FILAMENT_DIR}/out/cmake-release/libs/bluevk
+	${FILAMENT_DIR}/out/cmake-release/libs/camutils
+	${FILAMENT_DIR}/out/cmake-release/libs/filabridge
+	${FILAMENT_DIR}/out/cmake-release/libs/filaflat
+	${FILAMENT_DIR}/out/cmake-release/libs/filagui
+	${FILAMENT_DIR}/out/cmake-release/libs/filamat
 	${FILAMENT_DIR}/out/cmake-release/libs/filamentapp
+	${FILAMENT_DIR}/out/cmake-release/libs/filameshio
+	${FILAMENT_DIR}/out/cmake-release/libs/geometry
+	${FILAMENT_DIR}/out/cmake-release/libs/gltfio
+	${FILAMENT_DIR}/out/cmake-release/libs/ibl
+	${FILAMENT_DIR}/out/cmake-release/libs/iblprefilter
+	${FILAMENT_DIR}/out/cmake-release/libs/image
+	${FILAMENT_DIR}/out/cmake-release/libs/imageio
+	${FILAMENT_DIR}/out/cmake-release/libs/matdbg
+	${FILAMENT_DIR}/out/cmake-release/libs/math
+	${FILAMENT_DIR}/out/cmake-release/libs/mathio
+	${FILAMENT_DIR}/out/cmake-release/libs/utils
+	${FILAMENT_DIR}/out/cmake-release/libs/viewer
 )
 
 link_libraries(
 	c++
 	c++abi
 	pthread
+	-ldl
+
 	# third_party
 	astcenc
 	benchmark
@@ -82,21 +108,24 @@ link_libraries(
 	SPIRV-Tools-opt
 	SPIRV-Tools-reduce
 	tinyexr
+	filaflat
 
 	# filament
+	filament
 	backend
+	vkshaders
+	shaders
+
+	# libs
 	bluegl
 	bluevk
 	camutils
-	civetweb
-	dracodec
 	filabridge
-	filaflat
+	filagui
 	filamat
 	filamat_lite
-	filament
-	filament-iblprefilter
 	filamentapp
+	filamentapp-resources
 	filameshio
 	geometry
 	gltfio
@@ -105,19 +134,23 @@ link_libraries(
 	gltfio_resources_lite
 	ibl
 	ibl-lite
+	filament-iblprefilter
 	image
+	imageio
 	matdbg
-	meshoptimizer
-	shaders
-	smol-v
+	matdbg_resources
+	matdbg_combined
+	math
+	mathio
 	utils
 	viewer
-	vkshaders
 )
 
 # sub_directories
 add_subdirectory(assets)
+
 link_libraries(
 	fwlab_assets
 )
+
 add_subdirectory(src)
