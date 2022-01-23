@@ -16,34 +16,34 @@ link_directories(
 )
 
 link_libraries(
-	libbackend
-	libbluegl
-	libbluevk
-	libcamutils
-	libcivetweb
-	libdracodec
-	libfilabridge
-	libfilaflat
-	libfilamat
-	libfilamat_lite
-	libfilament
-	libfilament-iblprefilter
-	libfilameshio
-	libgeometry
-	libgltfio
-	libgltfio_core
-	libgltfio_resources
-	libgltfio_resources_lite
-	libibl
-	libibl-lite
-	libimage
-	libmatdbg
-	libmeshoptimizer
-	libshaders
-	libsmol-v
-	libutils
-	libviewer
-	libvkshaders
+	backend
+	bluegl
+	bluevk
+	camutils
+	civetweb
+	dracodec
+	filabridge
+	filaflat
+	filamat
+	filamat_lite
+	filament
+	filament-iblprefilter
+	filameshio
+	geometry
+	gltfio
+	gltfio_core
+	gltfio_resources
+	gltfio_resources_lite
+	ibl
+	ibl-lite
+	image
+	matdbg
+	meshoptimizer
+	shaders
+	smol-v
+	utils
+	viewer
+	vkshaders
 )
 
 # sub_directories
