@@ -18,19 +18,19 @@
 #include <viewer/SimpleViewer.h>
 #include "RobotDogScene.h"
 
-utils::NameComponentManager* names;
-gltfio::AssetLoader* loader;
-gltfio::FilamentAsset* asset;
-gltfio::ResourceLoader* resourceLoader;
+utils::NameComponentManager *names;
+gltfio::AssetLoader *loader;
+gltfio::FilamentAsset *asset;
+gltfio::ResourceLoader *resourceLoader;
 
-filament::viewer::SimpleViewer* viewer;
-filament::viewer::AutomationSpec* automationSpec;
-filament::viewer::AutomationEngine* automationEngine;
+filament::viewer::SimpleViewer *viewer;
+filament::viewer::AutomationSpec *automationSpec;
+filament::viewer::AutomationEngine *automationEngine;
 
-void RobotDogScene::setup(filament::Engine* engine, filament::View* view, filament::Scene* scene)
+void RobotDogScene::setup(filament::Engine *engine, filament::View *view, filament::Scene *scene)
 {
-	auto& viewport = view->getViewport();
-	auto& manager = engine->getTransformManager();
+	auto &viewport = view->getViewport();
+	auto &manager = engine->getTransformManager();
 
 	// load asset
 	utils::Path filename = "assets/models/RobotDog/scene.gltf";
@@ -40,12 +40,12 @@ void RobotDogScene::setup(filament::Engine* engine, filament::View* view, filame
 		return;
 	}
 
-	std::ifstream in(filename.c_str(), std::ifstream::ate || std::ifstream::binary);
+	std::ifstream in(filename.c_str(), std::ifstream::ate | std::ifstream::binary);
 	in.seekg(0, std::ios::end);
 	auto fileSize = static_cast<long>(in.tellg());
 	std::vector<uint8_t> buffer(fileSize);
 	in.seekg(0, std::ios::beg);
-	if (!in.read((char*)buffer.data(), fileSize))
+	if (!in.read((char *)buffer.data(), fileSize))
 	{
 		std::cerr << "unable to read " << filename << "." << std::endl;
 		return;
@@ -54,7 +54,7 @@ void RobotDogScene::setup(filament::Engine* engine, filament::View* view, filame
 	auto materials = gltfio::createMaterialGenerator(engine);
 	names = new utils::NameComponentManager(utils::EntityManager::get());
 
-	auto loader = gltfio::AssetLoader::create({ engine, materials, names });
+	auto loader = gltfio::AssetLoader::create({engine, materials, names});
 	asset = loader->createAssetFromJson(buffer.data(), buffer.size());
 	buffer.clear();
 	buffer.shrink_to_fit();
@@ -78,7 +78,7 @@ void RobotDogScene::setup(filament::Engine* engine, filament::View* view, filame
 
 	// set viewer
 	viewer = new filament::viewer::SimpleViewer(engine, scene, view);
-	auto& setting = viewer->getSettings();
+	auto &setting = viewer->getSettings();
 	setting.viewer.autoScaleEnabled = false;
 
 	// animation
@@ -87,18 +87,19 @@ void RobotDogScene::setup(filament::Engine* engine, filament::View* view, filame
 
 	// add light setting
 	auto ibl = FilamentApp::get().getIBL();
-	if (ibl) {
+	if (ibl)
+	{
 		viewer->setIndirectLight(ibl->getIndirectLight(), ibl->getSphericalHarmonics());
 	}
-	viewer->setUiCallback([&]() { this->uiCallback(); });
+	viewer->setUiCallback([&]()
+						  { this->uiCallback(); });
 }
 
 void RobotDogScene::uiCallback()
 {
-
 }
 
-void RobotDogScene::cleanup(filament::Engine* engine, filament::View* view, filament::Scene* scene)
+void RobotDogScene::cleanup(filament::Engine *engine, filament::View *view, filament::Scene *scene)
 {
 	automationEngine->terminate();
 	resourceLoader->asyncCancelLoad();
@@ -109,16 +110,16 @@ void RobotDogScene::cleanup(filament::Engine* engine, filament::View* view, fila
 	delete names;
 }
 
-void RobotDogScene::animate(filament::Engine* engine, filament::View* view, double now)
+void RobotDogScene::animate(filament::Engine *engine, filament::View *view, double now)
 {
 	resourceLoader->asyncUpdateLoad();
 
 	// Optionally fit the model into a unit cube at the origin.
 	// viewer->updateRootTransform();
 	// set transform
-	auto& manager = engine->getTransformManager();
+	auto &manager = engine->getTransformManager();
 	auto root = manager.getInstance(asset->getRoot());
-	filament::math::float3 scale = { 0.001, 0.001, 0.001 };
+	filament::math::float3 scale = {0.001, 0.001, 0.001};
 	auto transform = filament::math::mat4f::scaling(scale);
 	manager.setTransform(root, transform);
 
@@ -128,19 +129,19 @@ void RobotDogScene::animate(filament::Engine* engine, filament::View* view, doub
 	viewer->applyAnimation(now);
 }
 
-void RobotDogScene::imgui(filament::Engine* engine, filament::View* view)
+void RobotDogScene::imgui(filament::Engine *engine, filament::View *view)
 {
 	viewer->updateUserInterface();
 }
 
-void RobotDogScene::preRender(filament::Engine* engine, filament::View* view, filament::Scene* scene, filament::Renderer* renderer)
+void RobotDogScene::preRender(filament::Engine *engine, filament::View *view, filament::Scene *scene, filament::Renderer *renderer)
 {
-	
 }
 
-void RobotDogScene::postRender(filament::Engine* engine, filament::View* view, filament::Scene* scene, filament::Renderer* renderer)
+void RobotDogScene::postRender(filament::Engine *engine, filament::View *view, filament::Scene *scene, filament::Renderer *renderer)
 {
-	if (automationEngine->shouldClose()) {
+	if (automationEngine->shouldClose())
+	{
 		FilamentApp::get().close();
 		return;
 	}
@@ -153,7 +154,8 @@ void RobotDogScene::postRender(filament::Engine* engine, filament::View* view, f
 	automationEngine->tick(content, ImGui::GetIO().DeltaTime);
 }
 
-filament::math::mat4f RobotDogScene::fitIntoUnitCube(const filament::Aabb& bounds, float zoffset) {
+filament::math::mat4f RobotDogScene::fitIntoUnitCube(const filament::Aabb &bounds, float zoffset)
+{
 	using namespace filament::math;
 	auto minpt = bounds.min;
 	auto maxpt = bounds.max;

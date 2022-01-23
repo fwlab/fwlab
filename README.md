@@ -18,6 +18,8 @@ git submodule update --init
 
 ```sh
 sudo apt install build-essential clang libglu1-mesa-dev libc++-dev libc++abi-dev ninja-build libxi-dev cmake
+
+sudo apt install libsdl2-2.0-0 libsdl2-dev
 ```
 
 * ninja下载地址：https://github.com/ninja-build/ninja/releases
@@ -35,27 +37,17 @@ sudo update-alternatives --install /usr/bin/c++ c++ /usr/bin/clang++ 100
 ```sh
 mkdir -p out/cmake-release
 cd out/cmake-release
-cmake -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=../../../release/filament ../..
+cmake -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=../release/filament ../..
 ninja
 ninja install
 ```
-5. 将`third_party/release/filament/bin`目录添加到环境变量。
+
+5. 将`third_party/filament/out/release/filament/bin`目录添加到环境变量。
 
 ```sh
 cd /etc/profile.d
-sudo gedit filament.sh
-```
-将`third_party/release/filament/bin`的绝对路径添加到`filament.sh`文件中，例如：
-
-```sh
-export PATH=/home/user/fwlab/third_party/release/filament/bin:$PATH
-```
-
-给予执行权限：`sudo chmod +x filament.sh`
-
-验证是否添加成功。
-
-```sh
+sudo sh -c 'echo export PATH=$HOME/fwlab/third_party/filament/out/release/filament/bin:\$PATH > filament.sh'
+sudo chmod +x filament.sh
 source filament.sh
 echo $PATH
 ```
