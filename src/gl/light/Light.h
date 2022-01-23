@@ -8,13 +8,13 @@
 
 namespace gl::light
 {
-	class Light : public gl::core::Object3D {
+	class Light : public gl::core::Object3D
+	{
 	public:
 		Light(
 			filament::LightManager::Type type = filament::LightManager::Type::SUN,
 			filament::sRGBColor color = filament::sRGBColor(0.98f, 0.92f, 0.89f),
-			float intensity = 110000
-		);
+			float intensity = 110000);
 		virtual ~Light();
 
 		// Light Manager
@@ -22,12 +22,12 @@ namespace gl::light
 		const float EFFICIENCY_HALOGEN = filament::LightManager::EFFICIENCY_HALOGEN;
 		const float EFFICIENCY_INCANDESCENT = filament::LightManager::EFFICIENCY_INCANDESCENT;
 		const float EFFICIENCY_LED = filament::LightManager::EFFICIENCY_LED;
-		template<typename F>
+		template <typename F>
 		void forEachComponent(F func) noexcept;
 		const filament::math::float3 getColor() const noexcept;
 		size_t getComponentCount() const noexcept;
 		const filament::math::float3 getDirection() const noexcept;
-		const utils::Entity* getEntities() const noexcept;
+		const utils::Entity *getEntities() const noexcept;
 		float getFalloff() const noexcept;
 		float getIntensity() const noexcept;
 		bool getLightChannel(unsigned int channel) const noexcept;
@@ -46,7 +46,7 @@ namespace gl::light
 		void setLightChannel(unsigned int channel, bool enable) noexcept;
 		void setPosition(const filament::math::float3 position) noexcept;
 		void setShadowCaster(bool castShadows) noexcept;
-		void setShadowOptions(filament::LightManager::ShadowOptions const& options) noexcept;
+		void setShadowOptions(filament::LightManager::ShadowOptions const &options) noexcept;
 	};
 }
 

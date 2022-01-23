@@ -23,7 +23,7 @@ namespace gl::geometry
 		std::vector<filament::math::float3> normals;
 		std::vector<filament::math::float2> uvs;
 		std::vector<filament::math::uint3> triangles;
-		filament::math::short4* tangents = nullptr;
+		filament::math::short4 *tangents = nullptr;
 		uint32_t numberOfVertices = 0;
 		uint32_t groupStart = 0;
 		void buildPlane(std::string u, std::string v, std::string w, float udir, float vdir, float width, float height, float depth, int gridX, int gridY, int materialIndex);

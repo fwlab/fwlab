@@ -5,7 +5,8 @@
 
 namespace gl::geometry
 {
-	class PlaneGeometry : public gl::core::BufferGeometry {
+	class PlaneGeometry : public gl::core::BufferGeometry
+	{
 	public:
 		PlaneGeometry();
 		void create(float width = 1, float height = 1, uint16_t widthSegments = 1, uint16_t heightSegments = 1);

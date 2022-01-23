@@ -5,19 +5,9 @@ add_subdirectory(gl)
 add_subdirectory(event)
 add_subdirectory(scene)
 
-# 生成图标文件
-set(APP_ICON_RESOURCE_WINDOWS "${CMAKE_BINARY_DIR}/assets/app.rc")
-set(APP_ICON_DATA "APP_ICON ICON DISCARDABLE \"${CMAKE_SOURCE_DIR}/assets/icons/miku.ico\"")
-string(REPLACE "/" "\\\\" APP_ICON_DATA ${APP_ICON_DATA})
-add_custom_command(
-	OUTPUT ${APP_ICON_RESOURCE_WINDOWS}
-	COMMAND echo ${APP_ICON_DATA} > ${APP_ICON_RESOURCE_WINDOWS}
-)
-
-add_executable(${MODULE_NAME} WIN32
+add_executable(${MODULE_NAME}
     "main.cpp"
 	"Application.cpp"
-	${APP_ICON_RESOURCE_WINDOWS}
 )
 
 set_target_properties(${MODULE_NAME} PROPERTIES

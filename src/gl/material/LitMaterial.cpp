@@ -267,12 +267,12 @@ void LitMaterial::setThickness(float thickness) noexcept
 	instance->setParameter("thickness", thickness);
 }
 
-gl::texture::Texture* LitMaterial::getMap() const noexcept
+gl::texture::Texture *LitMaterial::getMap() const noexcept
 {
 	return map;
 }
 
-void LitMaterial::setMap(gl::texture::Texture* texture) noexcept
+void LitMaterial::setMap(gl::texture::Texture *texture) noexcept
 {
 	if (map)
 	{

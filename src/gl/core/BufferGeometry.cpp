@@ -1,4 +1,4 @@
-#include <climits>
+#include <float.h>
 #include "../utils/Utils.h"
 #include "BufferGeometry.h"
 #include "../context/context.h"
@@ -8,12 +8,12 @@ using namespace gl::core;
 
 BufferGeometry::BufferGeometry()
 {
-	this->groups = new std::vector<Group*>();
+	this->groups = new std::vector<Group *>();
 }
 
 BufferGeometry::~BufferGeometry()
 {
-	for (auto& pair : attributes)
+	for (auto &pair : attributes)
 	{
 		delete pair.second;
 		pair.second = nullptr;
@@ -35,7 +35,7 @@ BufferGeometry::~BufferGeometry()
 	}
 	if (groups)
 	{
-		for (auto& group : *groups)
+		for (auto &group : *groups)
 		{
 			delete group;
 			group = nullptr;
@@ -68,7 +68,7 @@ bool BufferGeometry::hasAttribute(filament::VertexAttribute attrType) const noex
 	return attributes.count(attrType) > 0;
 }
 
-VertexBufferAttribute* BufferGeometry::getAttribute(filament::VertexAttribute attrType) const noexcept
+VertexBufferAttribute *BufferGeometry::getAttribute(filament::VertexAttribute attrType) const noexcept
 {
 	if (!hasAttribute(attrType))
 	{
@@ -77,26 +77,26 @@ VertexBufferAttribute* BufferGeometry::getAttribute(filament::VertexAttribute at
 	return attributes.at(attrType);
 }
 
-void BufferGeometry::setAttribute(filament::VertexAttribute attrType, VertexBufferAttribute* attribute) noexcept
+void BufferGeometry::setAttribute(filament::VertexAttribute attrType, VertexBufferAttribute *attribute) noexcept
 {
 	if (attributes.count(attrType) > 0)
 	{
-		auto& oldAttribute = attributes.at(attrType);
+		auto &oldAttribute = attributes.at(attrType);
 		delete oldAttribute;
 		attributes.erase(attrType);
 	}
 	if (attribute)
 	{
-		attributes.insert({ attrType, attribute });
+		attributes.insert({attrType, attribute});
 	}
 }
 
-IndexBufferAttribute* BufferGeometry::getIndex() const noexcept
+IndexBufferAttribute *BufferGeometry::getIndex() const noexcept
 {
 	return index;
 }
 
-void BufferGeometry::setIndex(IndexBufferAttribute* index) noexcept
+void BufferGeometry::setIndex(IndexBufferAttribute *index) noexcept
 {
 	if (this->index)
 	{
@@ -105,12 +105,12 @@ void BufferGeometry::setIndex(IndexBufferAttribute* index) noexcept
 	this->index = index;
 }
 
-filament::VertexBuffer* BufferGeometry::getVertexBuffer() const noexcept
+filament::VertexBuffer *BufferGeometry::getVertexBuffer() const noexcept
 {
 	return vertexBuffer;
 }
 
-void BufferGeometry::setVertexBuffer(filament::VertexBuffer* buffer) noexcept
+void BufferGeometry::setVertexBuffer(filament::VertexBuffer *buffer) noexcept
 {
 	if (vertexBuffer)
 	{
@@ -119,12 +119,12 @@ void BufferGeometry::setVertexBuffer(filament::VertexBuffer* buffer) noexcept
 	vertexBuffer = buffer;
 }
 
-filament::IndexBuffer* BufferGeometry::getIndexBuffer() const noexcept
+filament::IndexBuffer *BufferGeometry::getIndexBuffer() const noexcept
 {
 	return indexBuffer;
 }
 
-void BufferGeometry::setIndexBuffer(filament::IndexBuffer* buffer) noexcept
+void BufferGeometry::setIndexBuffer(filament::IndexBuffer *buffer) noexcept
 {
 	if (indexBuffer)
 	{
@@ -133,8 +133,7 @@ void BufferGeometry::setIndexBuffer(filament::IndexBuffer* buffer) noexcept
 	indexBuffer = buffer;
 }
 
-
-filament::Box* BufferGeometry::getBoundingBox() const noexcept
+filament::Box *BufferGeometry::getBoundingBox() const noexcept
 {
 	return boundingBox;
 }
@@ -155,13 +154,13 @@ void BufferGeometry::computeBoundingBox() noexcept
 	}
 	min = new filament::math::float3(FLT_MAX, FLT_MAX, FLT_MAX);
 	max = new filament::math::float3(-FLT_MAX, -FLT_MAX, -FLT_MAX);
-	float* vertices = nullptr;
+	float *vertices = nullptr;
 	uint32_t vertexCount = 0;
 
 	auto attribute = attributes.at(filament::VertexAttribute::POSITION);
 	if (attribute)
 	{
-		vertices = static_cast<float*>(attribute->getArray());
+		vertices = static_cast<float *>(attribute->getArray());
 		vertexCount = attribute->getCount();
 	}
 
@@ -233,17 +232,17 @@ void BufferGeometry::computeBoundingBox() noexcept
 
 void BufferGeometry::addGroup(int start, int count, int materialIndex) noexcept
 {
-	Group* group = new Group{
+	Group *group = new Group{
 		.start = start,
 		.count = count,
-		.materialIndex = materialIndex };
+		.materialIndex = materialIndex};
 
 	groups->push_back(group);
 }
 
 void BufferGeometry::clearGroups() noexcept
 {
-	for (auto& group : *groups)
+	for (auto &group : *groups)
 	{
 		delete group;
 		group = nullptr;
@@ -254,7 +253,7 @@ void BufferGeometry::clearGroups() noexcept
 void BufferGeometry::createVertexBuffer() noexcept
 {
 	assert(attributes.count(filament::VertexAttribute::POSITION) == 1);
-	auto& vertices = attributes.at(filament::VertexAttribute::POSITION);
+	auto &vertices = attributes.at(filament::VertexAttribute::POSITION);
 
 	auto builder = filament::VertexBuffer::Builder();
 	builder.vertexCount(vertices->getCount());
@@ -281,9 +280,7 @@ void BufferGeometry::createVertexBuffer() noexcept
 			i,
 			filament::VertexBuffer::BufferDescriptor(
 				pair.second->getArray(),
-				pair.second->getCount() * utils::Utils::getSize(pair.second->getAttributeType())
-			)
-		);
+				pair.second->getCount() * utils::Utils::getSize(pair.second->getAttributeType())));
 		i++;
 	}
 }
@@ -303,7 +300,5 @@ void BufferGeometry::createIndexBuffer() noexcept
 		*engine,
 		filament::IndexBuffer::BufferDescriptor(
 			index->getArray(),
-			index->getCount() * utils::Utils::getSize(index->getIndexType())
-		)
-	);
+			index->getCount() * utils::Utils::getSize(index->getIndexType())));
 }

@@ -10,8 +10,7 @@ namespace gl::light
 	public:
 		DirectionalLight(
 			filament::sRGBColor color = filament::sRGBColor(0.98f, 0.92f, 0.89f),
-			float intensity = 110000
-		);
+			float intensity = 110000);
 		virtual ~DirectionalLight();
 	};
 }

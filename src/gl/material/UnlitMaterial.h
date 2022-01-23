@@ -6,7 +6,8 @@
 
 namespace gl::material
 {
-	class UnlitMaterial : public Material {
+	class UnlitMaterial : public Material
+	{
 	public:
 		UnlitMaterial();
 		virtual ~UnlitMaterial();
@@ -14,17 +15,17 @@ namespace gl::material
 		void setBaseColor(filament::math::float4 baseColor) noexcept;
 		filament::math::float4 getEmissive() const noexcept;
 		void setEmissive(filament::math::float4 emissive) noexcept;
-		filament::math::float4 getPostLightingColor() const noexcept; // not implemented
+		filament::math::float4 getPostLightingColor() const noexcept;				  // not implemented
 		void setPostLightingColor(filament::math::float4 postLightingColor) noexcept; // not implemented
-		gl::texture::Texture* getMap() const noexcept;
-		void setMap(gl::texture::Texture* texture) noexcept;
+		gl::texture::Texture *getMap() const noexcept;
+		void setMap(gl::texture::Texture *texture) noexcept;
 
 	protected:
-		filament::math::float4 baseColor = { 1, 1, 1, 1 };
-		filament::math::float4 emissive = { 0, 0, 0, 0 };
-		filament::math::float4 postLightingColor = { 0, 0, 0, 0 };
+		filament::math::float4 baseColor = {1, 1, 1, 1};
+		filament::math::float4 emissive = {0, 0, 0, 0};
+		filament::math::float4 postLightingColor = {0, 0, 0, 0};
 		bool enableMap = false;
-		gl::texture::Texture* map = nullptr;
+		gl::texture::Texture *map = nullptr;
 	};
 }
 

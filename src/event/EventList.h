@@ -3,7 +3,7 @@
 
 namespace event
 {
-	const char* APP_STARTED = "addStarted";
+	const char *APP_STARTED = "addStarted";
 }
 
 #endif

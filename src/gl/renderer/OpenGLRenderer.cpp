@@ -2,10 +2,8 @@
 
 OpenGLRenderer::OpenGLRenderer()
 {
-
 }
 
 OpenGLRenderer::~OpenGLRenderer()
 {
-
 }

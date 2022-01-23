@@ -8,7 +8,8 @@
 
 namespace gl::scene
 {
-	class Scene : gl::core::Object3D {
+	class Scene : gl::core::Object3D
+	{
 	public:
 		Scene();
 		virtual ~Scene();

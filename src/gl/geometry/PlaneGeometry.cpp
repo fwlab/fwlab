@@ -7,7 +7,6 @@ using namespace gl::geometry;
 
 PlaneGeometry::PlaneGeometry()
 {
-
 }
 
 void PlaneGeometry::create(float width, float height, uint16_t widthSegments, uint16_t heightSegments)
@@ -30,15 +29,17 @@ void PlaneGeometry::create(float width, float height, uint16_t widthSegments, ui
 	uint32_t uvsSize = gridY1 * gridX1 * 2;
 	uint32_t indicesSize = gridY * gridX * 6;
 
-	float* vertices = new float[verticesSize];
-	float* normals = new float[normalsSize];
-	float* uvs = new float[uvsSize];
-	uint32_t* triangles = new uint32_t[indicesSize];
+	float *vertices = new float[verticesSize];
+	float *normals = new float[normalsSize];
+	float *uvs = new float[uvsSize];
+	uint32_t *triangles = new uint32_t[indicesSize];
 
-	for (uint16_t iy = 0; iy < gridY1; iy++) {
+	for (uint16_t iy = 0; iy < gridY1; iy++)
+	{
 		double y = iy * segment_height - height_half;
 
-		for (uint16_t ix = 0; ix < gridX1; ix++) {
+		for (uint16_t ix = 0; ix < gridX1; ix++)
+		{
 			uint32_t index = gridX1 * iy + ix;
 			float x = ix * segment_width - width_half;
 
@@ -55,8 +56,10 @@ void PlaneGeometry::create(float width, float height, uint16_t widthSegments, ui
 		}
 	}
 
-	for (uint16_t iy = 0; iy < gridY; iy++) {
-		for (uint16_t ix = 0; ix < gridX; ix++) {
+	for (uint16_t iy = 0; iy < gridY; iy++)
+	{
+		for (uint16_t ix = 0; ix < gridX; ix++)
+		{
 			uint32_t index = gridX * iy + ix;
 
 			float a = ix + gridX1 * iy;
@@ -75,15 +78,15 @@ void PlaneGeometry::create(float width, float height, uint16_t widthSegments, ui
 
 	// position
 	auto position = new VertexBufferAttribute(vertices, 3, verticesSize / 3);
-	attributes.insert({ filament::VertexAttribute::POSITION, position });
+	attributes.insert({filament::VertexAttribute::POSITION, position});
 
 	// normal
 	auto normal = new VertexBufferAttribute(normals, 3, normalsSize / 3);
-	attributes.insert({ filament::VertexAttribute::TANGENTS, normal });
+	attributes.insert({filament::VertexAttribute::TANGENTS, normal});
 
 	// uv
 	auto uv = new VertexBufferAttribute(uvs, 2, uvsSize / 2, filament::VertexBuffer::AttributeType::FLOAT2);
-	attributes.insert({ filament::VertexAttribute::UV0, uv });
+	attributes.insert({filament::VertexAttribute::UV0, uv});
 
 	// index
 	index = new IndexBufferAttribute(triangles, indicesSize);

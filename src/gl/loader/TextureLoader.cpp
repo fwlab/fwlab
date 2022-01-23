@@ -11,12 +11,12 @@ using namespace gl::utils;
 
 static ImageLoader imageLoader;
 
-gl::texture::Texture* TextureLoader::load(const char* filename, filament::Texture::Format format)
+gl::texture::Texture *TextureLoader::load(const char *filename, filament::Texture::Format format)
 {
 	return load(filename, ImageUtils::textureFormatToInternalFormat(format));
 }
 
-gl::texture::Texture* TextureLoader::load(const char* filename, filament::Texture::InternalFormat format)
+gl::texture::Texture *TextureLoader::load(const char *filename, filament::Texture::InternalFormat format)
 {
 	auto req_channels = ImageUtils::getTextureInternalFormatChannels(format);
 	auto text_format = ImageUtils::textureInternalFormatToFormat(format);
@@ -28,19 +28,19 @@ gl::texture::Texture* TextureLoader::load(const char* filename, filament::Textur
 
 	auto texture = new Texture(width, height, format);
 	filament::Texture::PixelBufferDescriptor buffer(data, dataSize, text_format, filament::Texture::Type::UBYTE,
-		(filament::Texture::PixelBufferDescriptor::Callback)&stbi_image_free);
+													(filament::Texture::PixelBufferDescriptor::Callback)&stbi_image_free);
 	texture->setImage(0, std::move(buffer));
 	texture->generateMipmaps();
 
 	return texture;
 }
 
-gl::texture::Texture* TextureLoader::load(uint8_t* buffer, size_t size, filament::Texture::Format format)
+gl::texture::Texture *TextureLoader::load(uint8_t *buffer, size_t size, filament::Texture::Format format)
 {
 	return load(buffer, size, ImageUtils::textureFormatToInternalFormat(format));
 }
 
-gl::texture::Texture* TextureLoader::load(uint8_t* buffer, size_t size, filament::Texture::InternalFormat format)
+gl::texture::Texture *TextureLoader::load(uint8_t *buffer, size_t size, filament::Texture::InternalFormat format)
 {
 	auto req_channels = ImageUtils::getTextureInternalFormatChannels(format);
 	auto text_format = ImageUtils::textureInternalFormatToFormat(format);
@@ -51,7 +51,7 @@ gl::texture::Texture* TextureLoader::load(uint8_t* buffer, size_t size, filament
 
 	auto texture = new Texture(width, height);
 	filament::Texture::PixelBufferDescriptor bufferDescriptor(data, dataSize, text_format, filament::Texture::Type::UBYTE,
-		(filament::Texture::PixelBufferDescriptor::Callback)&stbi_image_free);
+															  (filament::Texture::PixelBufferDescriptor::Callback)&stbi_image_free);
 	texture->setImage(0, std::move(bufferDescriptor));
 	texture->generateMipmaps();
 

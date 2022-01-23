@@ -7,7 +7,7 @@
 namespace gl::math
 {
 	filament::math::mat4 compose(filament::math::double3 position, filament::math::quat quaternion, filament::math::double3 scale) noexcept;
-	void decompose(filament::math::mat4 mat, filament::math::double3& position, filament::math::quat& quaternion, filament::math::double3& scale) noexcept;
+	void decompose(filament::math::mat4 mat, filament::math::double3 &position, filament::math::quat &quaternion, filament::math::double3 &scale) noexcept;
 }
 
 #endif

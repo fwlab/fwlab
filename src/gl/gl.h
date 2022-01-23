@@ -45,5 +45,5 @@ namespace gl
 	using namespace gl::light;
 	using namespace gl::loader;
 
-	void init(FilamentApp* app, filament::Engine* engine, filament::View* view, filament::Scene* scene);
+	void init(FilamentApp *app, filament::Engine *engine, filament::View *view, filament::Scene *scene);
 }

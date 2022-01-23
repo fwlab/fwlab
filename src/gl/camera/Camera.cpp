@@ -18,12 +18,12 @@ Camera::~Camera()
 	utils::EntityManager::get().destroy(entity);
 }
 
-filament::Camera* Camera::getCamera() const noexcept
+filament::Camera *Camera::getCamera() const noexcept
 {
 	return camera;
 }
 
-void Camera::setCamera(filament::Camera* camera) noexcept
+void Camera::setCamera(filament::Camera *camera) noexcept
 {
 	this->camera = camera;
 }

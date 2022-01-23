@@ -14,12 +14,12 @@ namespace event
 		virtual ~EventDispatcher() = default;
 		void start() noexcept override;
 		void stop() noexcept override;
-		void addEventListener(const std::string& eventName, std::string& id, std::function<void()> listener) noexcept;
-		template<typename...args>
-		void addEventListener(const std::string& eventName, std::string& id, std::function<void(args...)> listener) noexcept;
-		void removeEventListener(const std::string& eventName, std::string& id) noexcept;
-		bool hasEventListener(const std::string& eventName, std::string& id) const noexcept;
-		void dispatchEvent(const std::string& eventName) noexcept;
+		void addEventListener(const std::string &eventName, std::string &id, std::function<void()> listener) noexcept;
+		template <typename... args>
+		void addEventListener(const std::string &eventName, std::string &id, std::function<void(args...)> listener) noexcept;
+		void removeEventListener(const std::string &eventName, std::string &id) noexcept;
+		bool hasEventListener(const std::string &eventName, std::string &id) const noexcept;
+		void dispatchEvent(const std::string &eventName) noexcept;
 
 	private:
 		struct EventData

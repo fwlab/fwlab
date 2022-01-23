@@ -28,29 +28,29 @@ namespace gl::core
 		filament::math::mat4 getMatrixWorld() const noexcept;
 
 		// Transform Manager
-		Object3D* getParent() const noexcept;
-		void setParent(Object3D* parent) noexcept;
-		std::vector<Object3D*> getChildren() const noexcept;
-		bool hasChild(Object3D* child) const noexcept;
-		void addChild(Object3D* child) noexcept;
-		void removeChild(Object3D* child) noexcept;
+		Object3D *getParent() const noexcept;
+		void setParent(Object3D *parent) noexcept;
+		std::vector<Object3D *> getChildren() const noexcept;
+		bool hasChild(Object3D *child) const noexcept;
+		void addChild(Object3D *child) noexcept;
+		void removeChild(Object3D *child) noexcept;
 
 		// Entity Manager
 		uint8_t getGenerationForIndex(size_t index) const noexcept;
 		bool isAlive() const noexcept;
-		void registerListener(utils::EntityManager::Listener* l) noexcept;
-		void unregisterListener(utils::EntityManager::Listener* l) noexcept;
+		void registerListener(utils::EntityManager::Listener *l) noexcept;
+		void unregisterListener(utils::EntityManager::Listener *l) noexcept;
 
 	protected:
 		void updateMatrix();
 		utils::Entity entity;
-		filament::math::double3 position = { 0, 0, 0 };
-		filament::math::quat rotation = { 1, 0, 0, 0 };
-		filament::math::double3 scale = { 1, 1, 1 };
+		filament::math::double3 position = {0, 0, 0};
+		filament::math::quat rotation = {1, 0, 0, 0};
+		filament::math::double3 scale = {1, 1, 1};
 		filament::math::mat4 matrix;
 
-		Object3D* parent = nullptr;
-		std::vector<Object3D*> children;
+		Object3D *parent = nullptr;
+		std::vector<Object3D *> children;
 		static utils::Entity defaultParent;
 	};
 }

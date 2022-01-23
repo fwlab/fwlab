@@ -11,8 +11,8 @@ namespace gl::loader
 	public:
 		FilameshLoader() = default;
 		virtual ~FilameshLoader() = default;
-		gl::object::Mesh* load(void const* data);
-		gl::object::Mesh* load(const utils::Path& path, filamesh::MeshReader::MaterialRegistry materials);
+		gl::object::Mesh *load(void const *data);
+		gl::object::Mesh *load(const utils::Path &path, filamesh::MeshReader::MaterialRegistry materials);
 	};
 }
 

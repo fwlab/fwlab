@@ -10,8 +10,7 @@ namespace gl::light
 	public:
 		SpotLight(
 			filament::sRGBColor color = filament::sRGBColor(0.98f, 0.92f, 0.89f),
-			float intensity = 110000
-		);
+			float intensity = 110000);
 		using gl::light::Light::Light;
 		virtual ~SpotLight();
 

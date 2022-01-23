@@ -231,12 +231,12 @@ void ClothMaterial::setThickness(float thickness) noexcept
 	instance->setParameter("thickness", thickness);
 }
 
-gl::texture::Texture* ClothMaterial::getMap() const noexcept
+gl::texture::Texture *ClothMaterial::getMap() const noexcept
 {
 	return map;
 }
 
-void ClothMaterial::setMap(gl::texture::Texture* texture) noexcept
+void ClothMaterial::setMap(gl::texture::Texture *texture) noexcept
 {
 	if (map)
 	{

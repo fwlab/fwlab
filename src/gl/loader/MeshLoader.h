@@ -10,7 +10,7 @@ namespace gl::loader
 	public:
 		MeshLoader() = default;
 		virtual ~MeshLoader() override = default;
-		virtual gl::object::Mesh* load(const utils::Path& path);
+		virtual gl::object::Mesh *load(const utils::Path &path);
 	};
 }
 

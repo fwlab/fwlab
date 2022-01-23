@@ -4,7 +4,8 @@
 
 namespace gl::camera
 {
-	class OrthographicCamera : public Camera {
+	class OrthographicCamera : public Camera
+	{
 	public:
 		OrthographicCamera(double left = -1, double right = 1, double top = 1, double bottom = -1, double near = -1, double far = 1);
 	};

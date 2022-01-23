@@ -15,8 +15,8 @@ namespace gl::camera
 	public:
 		Camera();
 		virtual ~Camera();
-		filament::Camera* getCamera() const noexcept;
-		void setCamera(filament::Camera* camera) noexcept;
+		filament::Camera *getCamera() const noexcept;
+		void setCamera(filament::Camera *camera) noexcept;
 
 		// filament::Camera
 		double computeEffectiveFocalLength(double focalLength, double focusDistance) noexcept;
@@ -41,7 +41,7 @@ namespace gl::camera
 		filament::math::float3 getUpVector() const noexcept;
 		filament::math::mat4 getViewMatrix() const noexcept;
 		filament::math::mat4 inverseProjection(filament::math::mat4 p) noexcept;
-		void lookAt(filament::math::float3 eye, filament::math::float3 center, filament::math::float3 up = { 0, 1, 0 }) noexcept;
+		void lookAt(filament::math::float3 eye, filament::math::float3 center, filament::math::float3 up = {0, 1, 0}) noexcept;
 		void setCustomProjection(filament::math::mat4 projection, double near, double far) noexcept;
 		void setCustomProjection(filament::math::mat4 projection, filament::math::mat4 projectionForCulling, double near, double far) noexcept;
 		void setExposure(float aperture, float shutterSpeed, float sensitivity) noexcept;
@@ -55,7 +55,7 @@ namespace gl::camera
 		void setShift(filament::math::double2 shift) noexcept;
 
 	protected:
-		filament::Camera* camera = nullptr;
+		filament::Camera *camera = nullptr;
 	};
 }
 

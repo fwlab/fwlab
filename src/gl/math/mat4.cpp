@@ -50,9 +50,9 @@ mat4 gl::math::compose(double3 position, quat quaternion, double3 scale) noexcep
 	return mat;
 }
 
-void gl::math::decompose(mat4 mat, double3& position, quat& quaternion, double3& scale) noexcept
+void gl::math::decompose(mat4 mat, double3 &position, quat &quaternion, double3 &scale) noexcept
 {
-	auto& te = mat;
+	auto &te = mat;
 
 	double3 _v1;
 

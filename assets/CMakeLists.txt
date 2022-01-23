@@ -3,7 +3,7 @@ set(MODULE_NAME fwlab_assets)
 set(ASSETS_DIR "${CMAKE_CURRENT_BINARY_DIR}")
 set(RESOURCE_BINS)
 
-# 资源文件
+# 璧勬簮鏂囦欢
 set(MATERIAL_SRCS
 	"materials/defaultMaterial.mat"
 	"materials/aiDefaultMat.mat"
@@ -14,9 +14,10 @@ set(MAP_SRCS
 	"environments/lightroom_14b.hdr"
 )
 
-# 处理材质
+# 澶勭悊鏉愯川
 foreach (mat_src ${MATERIAL_SRCS})
 	get_filename_component(filename "${mat_src}" NAME_WE)
+	file(MAKE_DIRECTORY "${ASSETS_DIR}/material")
 	set(input_path "${CMAKE_CURRENT_SOURCE_DIR}/${mat_src}")
 	set(output_path "${ASSETS_DIR}/material/${filename}.filamat")
 	add_custom_command(
@@ -26,7 +27,7 @@ foreach (mat_src ${MATERIAL_SRCS})
 	list(APPEND RESOURCE_BINS ${output_path})
 endforeach()
 
-# 处理环境贴图
+# 澶勭悊鐜璐村浘
 set(CMGEN_ARGS --format=ktx --size=256 --extract-blur=0.1)
 
 foreach(env_src ${MAP_SRCS})
@@ -44,7 +45,7 @@ foreach(env_src ${MAP_SRCS})
 	list(APPEND RESOURCE_BINS ${target_skybox} ${target_envmap})
 endforeach()
 
-# 处理OBJ模型
+# 澶勭悊OBJ妯″瀷
 set(OBJ_PATH
 	"models/monkey/monkey.obj"
 )
@@ -57,7 +58,7 @@ set(target_mesh "${ASSETS_DIR}/models/${meshname}/${meshname}.filamesh")
 )
 list(APPEND RESOURCE_BINS ${target_mesh})
 
-# 处理模型贴图
+# 澶勭悊妯″瀷璐村浘
 set(TEXTURE_SRCS
 	"models/monkey/albedo.png"
 	"models/monkey/roughness.png"
@@ -81,7 +82,7 @@ foreach(tex_src ${TEXTURE_SRCS})
 	list(APPEND RESOURCE_BINS ${target_path})
 endforeach()
 
-# 复制法线贴图
+# 澶嶅埗娉曠嚎璐村浘
 set(NORMAL_SRC "models/monkey/normal.png")
 get_filename_component(filename "${NORMAL_SRC}" NAME_WE)
 set(source_path "${CMAKE_CURRENT_SOURCE_DIR}/${NORMAL_SRC}")
@@ -92,15 +93,15 @@ add_custom_command(
 )
 list(APPEND RESOURCE_BINS ${target_path})
 
-# 复制字体文件
+# 澶嶅埗瀛椾綋鏂囦欢
 file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/fonts/Roboto-License.txt" DESTINATION "${ASSETS_DIR}/fonts")
 file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/fonts/Roboto-Medium.ttf" DESTINATION "${ASSETS_DIR}/fonts")
 
-# 复制图片
+# 澶嶅埗鍥剧墖
 file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/images/girl.jpg" DESTINATION "${ASSETS_DIR}/images")
 file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/images/girl.png" DESTINATION "${ASSETS_DIR}/images")
 
-# 复制模型
+# 澶嶅埗妯″瀷
 file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/models/RobotDog/scene.gltf" DESTINATION "${ASSETS_DIR}/models/RobotDog")
 file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/models/RobotDog/scene.bin" DESTINATION "${ASSETS_DIR}/models/RobotDog")
 file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/models/RobotDog/textures/spot_baseColor.png" DESTINATION "${ASSETS_DIR}/models/RobotDog/textures")
@@ -108,7 +109,7 @@ file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/models/RobotDog/textures/spot_emissive.jp
 file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/models/RobotDog/textures/spot_metallicRoughness.png" DESTINATION "${ASSETS_DIR}/models/RobotDog/textures")
 file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/models/RobotDog/textures/spot_normal.png" DESTINATION "${ASSETS_DIR}/models/RobotDog/textures")
 
-# 打包资源
+# 鎵撳寘璧勬簮
 add_custom_command(
 	OUTPUT ${ASSETS_DIR}/resources/resources.c
 	COMMAND resgen -c --deploy=${ASSETS_DIR}/resources ${RESOURCE_BINS}

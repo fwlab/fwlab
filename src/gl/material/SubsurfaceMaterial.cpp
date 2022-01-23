@@ -254,7 +254,7 @@ void SubsurfaceMaterial::setSubsurfaceColor(filament::math::float3 subsurfaceCol
 	instance->setParameter("subsurfaceColor", subsurfaceColor);
 }
 
-float SubsurfaceMaterial::getSubsurfacePower()  const noexcept
+float SubsurfaceMaterial::getSubsurfacePower() const noexcept
 {
 	return subsurfacePower;
 }
@@ -265,12 +265,12 @@ void SubsurfaceMaterial::setSubsurfacePower(float subsurfacePower) noexcept
 	instance->setParameter("subsurfacePower", subsurfacePower);
 }
 
-gl::texture::Texture* SubsurfaceMaterial::getMap() const noexcept
+gl::texture::Texture *SubsurfaceMaterial::getMap() const noexcept
 {
 	return map;
 }
 
-void SubsurfaceMaterial::setMap(gl::texture::Texture* texture) noexcept
+void SubsurfaceMaterial::setMap(gl::texture::Texture *texture) noexcept
 {
 	if (map)
 	{

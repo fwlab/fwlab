@@ -10,7 +10,7 @@ utils::Entity Object3D::defaultParent;
 
 Object3D::Object3D()
 {
-	auto& manager = engine->getTransformManager();
+	auto &manager = engine->getTransformManager();
 	manager.setAccurateTranslationsEnabled(true);
 }
 
@@ -74,57 +74,57 @@ void Object3D::setScale(filament::math::double3 scale) noexcept
 
 filament::math::mat4 Object3D::getMatrix() const noexcept
 {
-	auto& manager = engine->getTransformManager();
+	auto &manager = engine->getTransformManager();
 	return manager.getTransformAccurate(manager.getInstance(entity));
 }
 
 void Object3D::setMatrix(filament::math::mat4 matrix) noexcept
 {
 	this->matrix = matrix;
-	auto& manager = engine->getTransformManager();
+	auto &manager = engine->getTransformManager();
 	manager.setTransform(manager.getInstance(entity), matrix);
 }
 
 filament::math::mat4 Object3D::getMatrixWorld() const noexcept
 {
-	filament::TransformManager& manager = engine->getTransformManager();
+	filament::TransformManager &manager = engine->getTransformManager();
 	return manager.getWorldTransformAccurate(manager.getInstance(entity));
 }
 
 void Object3D::updateMatrix()
 {
 	matrix = gl::math::compose(position, rotation, scale);
-	auto& manager = engine->getTransformManager();
+	auto &manager = engine->getTransformManager();
 	manager.setTransform(manager.getInstance(entity), matrix);
 }
 
 // Transform Manager
 
-Object3D* Object3D::getParent() const noexcept
+Object3D *Object3D::getParent() const noexcept
 {
 	return parent;
 }
 
-void Object3D::setParent(Object3D* parent) noexcept
+void Object3D::setParent(Object3D *parent) noexcept
 {
 	assert(parent != this);
 	this->parent = parent;
 
-	auto& manager = engine->getTransformManager();
+	auto &manager = engine->getTransformManager();
 	manager.setParent(manager.getInstance(entity), manager.getInstance(parent->entity));
 }
 
-std::vector<Object3D*> Object3D::getChildren() const noexcept
+std::vector<Object3D *> Object3D::getChildren() const noexcept
 {
 	return children;
 }
 
-bool Object3D::hasChild(Object3D* child) const noexcept
+bool Object3D::hasChild(Object3D *child) const noexcept
 {
 	return std::find(children.begin(), children.end(), child) != children.end();
 }
 
-void Object3D::addChild(Object3D* child) noexcept
+void Object3D::addChild(Object3D *child) noexcept
 {
 	if (hasChild(child))
 	{
@@ -132,11 +132,11 @@ void Object3D::addChild(Object3D* child) noexcept
 	}
 	children.push_back(child);
 
-	auto& manager = engine->getTransformManager();
+	auto &manager = engine->getTransformManager();
 	manager.setParent(manager.getInstance(child->entity), manager.getInstance(entity));
 }
 
-void Object3D::removeChild(Object3D* child) noexcept
+void Object3D::removeChild(Object3D *child) noexcept
 {
 	auto iter = std::find(children.begin(), children.end(), child);
 	if (iter == children.end())
@@ -145,31 +145,31 @@ void Object3D::removeChild(Object3D* child) noexcept
 	}
 	children.erase(iter);
 
-	auto& manager = engine->getTransformManager();
+	auto &manager = engine->getTransformManager();
 	manager.setParent(manager.getInstance(child->entity), manager.getInstance(Object3D::defaultParent));
 }
 
 // Entity Manager
 uint8_t Object3D::getGenerationForIndex(size_t index) const noexcept
 {
-	auto& manager = engine->getEntityManager();
+	auto &manager = engine->getEntityManager();
 	return manager.getGenerationForIndex(index);
 }
 
 bool Object3D::isAlive() const noexcept
 {
-	auto& manager = engine->getEntityManager();
+	auto &manager = engine->getEntityManager();
 	return manager.isAlive(entity);
 }
 
-void Object3D::registerListener(utils::EntityManager::Listener* l) noexcept
+void Object3D::registerListener(utils::EntityManager::Listener *l) noexcept
 {
-	auto& manager = engine->getEntityManager();
+	auto &manager = engine->getEntityManager();
 	manager.registerListener(l);
 }
 
-void Object3D::unregisterListener(utils::EntityManager::Listener* l) noexcept
+void Object3D::unregisterListener(utils::EntityManager::Listener *l) noexcept
 {
-	auto& manager = engine->getEntityManager();
+	auto &manager = engine->getEntityManager();
 	manager.unregisterListener(l);
 }

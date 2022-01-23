@@ -4,10 +4,8 @@ using namespace gl::scene;
 
 Scene::Scene()
 {
-
 }
 
 Scene::~Scene()
 {
-
 }

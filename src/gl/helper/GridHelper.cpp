@@ -2,10 +2,8 @@
 
 GridHelper::GridHelper()
 {
-
 }
 
 GridHelper::~GridHelper()
 {
-
 }

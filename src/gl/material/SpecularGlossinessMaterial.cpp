@@ -239,12 +239,12 @@ void SpecularGlossinessMaterial::setThickness(float thickness) noexcept
 	instance->setParameter("thickness", thickness);
 }
 
-gl::texture::Texture* SpecularGlossinessMaterial::getMap() const noexcept
+gl::texture::Texture *SpecularGlossinessMaterial::getMap() const noexcept
 {
 	return map;
 }
 
-void SpecularGlossinessMaterial::setMap(gl::texture::Texture* texture) noexcept
+void SpecularGlossinessMaterial::setMap(gl::texture::Texture *texture) noexcept
 {
 	if (map)
 	{

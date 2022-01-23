@@ -56,12 +56,12 @@ void UnlitMaterial::setPostLightingColor(filament::math::float4 postLightingColo
 	setParameter("postLightingColor", postLightingColor);
 }
 
-gl::texture::Texture* UnlitMaterial::getMap() const noexcept
+gl::texture::Texture *UnlitMaterial::getMap() const noexcept
 {
 	return map;
 }
 
-void UnlitMaterial::setMap(gl::texture::Texture* texture) noexcept
+void UnlitMaterial::setMap(gl::texture::Texture *texture) noexcept
 {
 	if (map)
 	{

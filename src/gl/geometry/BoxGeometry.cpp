@@ -29,41 +29,41 @@ void BoxGeometry::create(float width, float height, float depth, uint16_t widthS
 	groupStart = 0;
 
 	// build each side of the box geometry
-	buildPlane("z", "y", "x", -1, -1, depth, height, width, depthSegments, heightSegments, 0);  // px
-	buildPlane("z", "y", "x", 1, -1, depth, height, -width, depthSegments, heightSegments, 1);  // nx
-	buildPlane("x", "z", "y", 1, 1, width, depth, height, widthSegments, depthSegments, 2);     // py
-	buildPlane("x", "z", "y", 1, -1, width, depth, -height, widthSegments, depthSegments, 3);   // ny
-	buildPlane("x", "y", "z", 1, -1, width, height, depth, widthSegments, heightSegments, 4);   // pz
+	buildPlane("z", "y", "x", -1, -1, depth, height, width, depthSegments, heightSegments, 0);	// px
+	buildPlane("z", "y", "x", 1, -1, depth, height, -width, depthSegments, heightSegments, 1);	// nx
+	buildPlane("x", "z", "y", 1, 1, width, depth, height, widthSegments, depthSegments, 2);		// py
+	buildPlane("x", "z", "y", 1, -1, width, depth, -height, widthSegments, depthSegments, 3);	// ny
+	buildPlane("x", "y", "z", 1, -1, width, height, depth, widthSegments, heightSegments, 4);	// pz
 	buildPlane("x", "y", "z", -1, -1, width, height, -depth, widthSegments, heightSegments, 5); // nz
 
 	// position
 	auto position = new VertexBufferAttribute(vertices);
-	attributes.insert({ filament::VertexAttribute::POSITION, position });
+	attributes.insert({filament::VertexAttribute::POSITION, position});
 
 	// uv
 	auto uv = new VertexBufferAttribute(uvs);
-	attributes.insert({ filament::VertexAttribute::UV0, uv });
+	attributes.insert({filament::VertexAttribute::UV0, uv});
 
 	// index
 	index = new IndexBufferAttribute(triangles);
 
 	// normal
 	auto vertexCount = vertices.size();
-	auto* quats = filament::geometry::SurfaceOrientation::Builder()
-		.vertexCount(vertexCount)
-		.positions(vertices.data())
-		.normals(normals.data())
-		.uvs(uvs.data())
-		.triangleCount(triangles.size())
-		.triangles(triangles.data())
-		.build();
+	auto *quats = filament::geometry::SurfaceOrientation::Builder()
+					  .vertexCount(vertexCount)
+					  .positions(vertices.data())
+					  .normals(normals.data())
+					  .uvs(uvs.data())
+					  .triangleCount(triangles.size())
+					  .triangles(triangles.data())
+					  .build();
 	tangents = new filament::math::short4[vertexCount];
 	quats->getQuats(tangents, vertexCount, sizeof(filament::math::short4));
 	delete quats;
 	quats = nullptr;
 
 	auto normal = new VertexBufferAttribute(tangents, 4, vertexCount, filament::VertexBuffer::AttributeType::SHORT4, true);
-	attributes.insert({ filament::VertexAttribute::TANGENTS, normal });
+	attributes.insert({filament::VertexAttribute::TANGENTS, normal});
 	delete tangents;
 
 	BufferGeometry::create();
@@ -97,18 +97,18 @@ void BoxGeometry::buildPlane(std::string u, std::string v, std::string w, float 
 
 			// set values to correct vector component
 			vector.clear();
-			vector.insert({ u, x * udir });
-			vector.insert({ v, y * vdir });
-			vector.insert({ w, depthHalf });
+			vector.insert({u, x * udir});
+			vector.insert({v, y * vdir});
+			vector.insert({w, depthHalf});
 
 			// now apply vector to vertex buffer
 			this->vertices.push_back(filament::math::float3(vector.at("x"), vector.at("y"), vector.at("z")));
 
 			// set values to correct vector component
 			vector.clear();
-			vector.insert({ u, 0 });
-			vector.insert({ v, 0 });
-			vector.insert({ w, depth > 0 ? 1 : -1 });
+			vector.insert({u, 0});
+			vector.insert({v, 0});
+			vector.insert({w, depth > 0 ? 1 : -1});
 
 			// now apply vector to normal buffer
 			this->normals.push_back(filament::math::float3(vector.at("x"), vector.at("y"), vector.at("z")));

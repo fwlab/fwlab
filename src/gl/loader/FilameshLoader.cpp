@@ -10,7 +10,7 @@ using namespace gl::material;
 using namespace gl::object;
 using namespace gl::loader;
 
-Mesh* FilameshLoader::load(void const* data)
+Mesh *FilameshLoader::load(void const *data)
 {
 	auto material = new Material();
 	auto mesh = filamesh::MeshReader::loadMeshFromBuffer(engine, data, nullptr, nullptr, material->getInstance());
@@ -28,7 +28,7 @@ Mesh* FilameshLoader::load(void const* data)
 	return result;
 }
 
-gl::object::Mesh* FilameshLoader::load(const utils::Path& path, filamesh::MeshReader::MaterialRegistry materials)
+gl::object::Mesh *FilameshLoader::load(const utils::Path &path, filamesh::MeshReader::MaterialRegistry materials)
 {
 	auto material = new Material();
 	auto mesh = filamesh::MeshReader::loadMeshFromFile(engine, path, materials);

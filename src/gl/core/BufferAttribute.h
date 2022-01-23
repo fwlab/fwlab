@@ -12,8 +12,8 @@ namespace gl::core
 	{
 	public:
 		virtual ~BufferAttribute();
-		void* getArray() const noexcept;
-		void setArray(void* array) noexcept;
+		void *getArray() const noexcept;
+		void setArray(void *array) noexcept;
 		uint8_t getItemSize() const noexcept;
 		void setItemSize(uint8_t itemSize) noexcept;
 		uint32_t getCount() const noexcept;
@@ -22,32 +22,30 @@ namespace gl::core
 	protected:
 		BufferAttribute() = default;
 		template <typename T>
-		BufferAttribute(T* array, uint8_t itemSize = 3, uint32_t count = 0);
+		BufferAttribute(T *array, uint8_t itemSize = 3, uint32_t count = 0);
 		BufferAttribute(std::vector<filament::math::float2> vertices);
 		BufferAttribute(std::vector<filament::math::float3> vertices);
-		void* array = nullptr;
+		void *array = nullptr;
 		uint8_t itemSize = 3;
 		uint32_t count = 0;
 	};
 
-	class VertexBufferAttribute : public BufferAttribute {
+	class VertexBufferAttribute : public BufferAttribute
+	{
 	public:
 		template <typename T>
 		VertexBufferAttribute(
-			T* array,
+			T *array,
 			uint8_t itemSize = 3,
 			uint32_t count = 0,
 			filament::VertexBuffer::AttributeType attributeType = filament::VertexBuffer::AttributeType::FLOAT3,
-			bool normalized = false
-		);
+			bool normalized = false);
 		VertexBufferAttribute(
 			std::vector<filament::math::float2> vertices,
-			bool normalized = false
-		);
+			bool normalized = false);
 		VertexBufferAttribute(
 			std::vector<filament::math::float3> vertices,
-			bool normalized = false
-		);
+			bool normalized = false);
 		virtual ~VertexBufferAttribute();
 		filament::VertexBuffer::AttributeType getAttributeType() const noexcept;
 		void setAttributeType(filament::VertexBuffer::AttributeType attributeType) noexcept;
@@ -59,14 +57,14 @@ namespace gl::core
 		bool normalized = false;
 	};
 
-	class IndexBufferAttribute : public BufferAttribute {
+	class IndexBufferAttribute : public BufferAttribute
+	{
 	public:
 		template <typename T>
 		IndexBufferAttribute(
-			T* array,
+			T *array,
 			uint32_t count = 0,
-			filament::IndexBuffer::IndexType indexType = filament::IndexBuffer::IndexType::UINT
-		);
+			filament::IndexBuffer::IndexType indexType = filament::IndexBuffer::IndexType::UINT);
 		IndexBufferAttribute(std::vector<uint16_t> vertices);
 		IndexBufferAttribute(std::vector<uint32_t> vertices);
 		IndexBufferAttribute(std::vector<filament::math::uint3> triangles);
