@@ -6,23 +6,31 @@ fwlab是一个人工智能实验室。
 
 ## 编译说明
 
-1. 安装以下软件：
+1. 下载项目。
 
 ```sh
-sudo apt install clang libglu1-mesa-dev libc++-dev libc++abi-dev ninja-build libxi-dev cmake
+git clone https://gitee.com/fwlab/fwlab.git
+cd fwlab
+git submodule update --init
+```
+
+2. 安装以下软件：
+
+```sh
+sudo apt install build-essential clang libglu1-mesa-dev libc++-dev libc++abi-dev ninja-build libxi-dev cmake
 ```
 
 * ninja下载地址：https://github.com/ninja-build/ninja/releases
 * cmake下载地址：https://github.com/Kitware/CMake/releases
 
-2. 使用`clang`作为默认编译器。
+3. 使用`clang`作为默认编译器。
 
 ```sh
 sudo update-alternatives --install /usr/bin/cc cc /usr/bin/clang 100
 sudo update-alternatives --install /usr/bin/c++ c++ /usr/bin/clang++ 100
 ```
 
-3. 在`third_party/filament`目录执行以下代码。
+4. 在`third_party/filament`目录执行以下代码。
 
 ```sh
 mkdir -p out/cmake-release
@@ -31,8 +39,7 @@ cmake -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=../../../releas
 ninja
 ninja install
 ```
-
-4. 将`third_party/release/filament/bin`目录添加到环境变量。
+5. 将`third_party/release/filament/bin`目录添加到环境变量。
 
 ```sh
 cd /etc/profile.d
@@ -53,7 +60,7 @@ source filament.sh
 echo $PATH
 ```
 
-5. 在`fwlab`根目录执行以下代码。
+6. 在`fwlab`根目录执行以下代码。
 
 ```
 mkdir build
