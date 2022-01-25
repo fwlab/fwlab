@@ -1,7 +1,11 @@
 #ifndef FWLAB_APPLICATION_H
 #define FWLAB_APPLICATION_H
 #include <SDL.h>
-#include <filamentapp/Config.h>
+#include <filament/Camera.h>
+#include <filament/Engine.h>
+#include <filament/Scene.h>
+#include <filament/SwapChain.h>
+#include <filament/View.h>
 #include "scene/Scene.h"
 
 class Application
@@ -13,9 +17,18 @@ public:
 	void stop();
 
 private:
-	Config config;
-	SDL_Window *window;
-	Scene *scene = nullptr;
+	SDL_Window *window = nullptr;
+	bool isRunning = false;
+
+	filament::Engine *engine = nullptr;
+	filament::SwapChain *swapChain = nullptr;
+	filament::Renderer *renderer = nullptr;
+
+	filament::Camera *camera = nullptr;
+	filament::View *view = nullptr;
+	filament::Scene *scene = nullptr;
+
+	Scene *myScene = nullptr;
 };
 
 #endif

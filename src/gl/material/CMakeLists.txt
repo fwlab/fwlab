@@ -50,6 +50,6 @@ add_library(${MODULE_NAME} STATIC
 )
 
 target_link_libraries(${MODULE_NAME}
-	filament filamentapp filamat smol-v
+	filament filamat smol-v
 	fwlab_assets
 )

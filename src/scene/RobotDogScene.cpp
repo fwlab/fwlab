@@ -5,7 +5,6 @@
 #include <filament/Camera.h>
 #include <filament/TransformManager.h>
 #include <filament/Viewport.h>
-#include <filamentapp/FilamentApp.h>
 #include <math/vec3.h>
 #include <math/mat4.h>
 #include <gltfio/AssetLoader.h>
@@ -86,11 +85,6 @@ void RobotDogScene::setup(filament::Engine *engine, filament::View *view, filame
 	automationEngine = new filament::viewer::AutomationEngine(automationSpec, &viewer->getSettings());
 
 	// add light setting
-	auto ibl = FilamentApp::get().getIBL();
-	if (ibl)
-	{
-		viewer->setIndirectLight(ibl->getIndirectLight(), ibl->getSphericalHarmonics());
-	}
 	viewer->setUiCallback([&]()
 						  { this->uiCallback(); });
 }
@@ -142,7 +136,6 @@ void RobotDogScene::postRender(filament::Engine *engine, filament::View *view, f
 {
 	if (automationEngine->shouldClose())
 	{
-		FilamentApp::get().close();
 		return;
 	}
 	filament::viewer::AutomationEngine::ViewerContent content = {

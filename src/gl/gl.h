@@ -1,7 +1,6 @@
 #include <filament/Engine.h>
 #include <filament/View.h>
 #include <filament/Scene.h>
-#include <filamentapp/FilamentApp.h>
 
 #include "context/context.h"
 
@@ -45,5 +44,5 @@ namespace gl
 	using namespace gl::light;
 	using namespace gl::loader;
 
-	void init(FilamentApp *app, filament::Engine *engine, filament::View *view, filament::Scene *scene);
+	void init(filament::Engine *engine, filament::View *view, filament::Scene *scene);
 }

@@ -2,82 +2,82 @@
 #include <filament/Engine.h>
 #include <filament/View.h>
 #include <filament/Scene.h>
-#include <filamentapp/Config.h>
-#include <filamentapp/FilamentApp.h>
+#include <filament/Viewport.h>
+#include <utils/EntityManager.h>
 #include "utils/SDLUtils.h"
+#include "gl/gl.h"
 #include "scene/BoxScene.h"
 #include "Application.h"
-
-static const char *IBL_FOLDER = "assets/ibl/lightroom_14b";
 
 Application::Application()
 {
 	SDL_Init(SDL_INIT_EVENTS);
-
-	const int x = SDL_WINDOWPOS_CENTERED;
-	const int y = SDL_WINDOWPOS_CENTERED;
-	uint32_t windowFlags = SDL_WINDOW_SHOWN | SDL_WINDOW_ALLOW_HIGHDPI | SDL_WINDOW_RESIZABLE;
-
-	window = SDL_CreateWindow("人工智能实验室", x, y, 1000, 600, windowFlags);
-
-	void *nativeWindow = utils::SDLUtils::getNativeWindow(window);
-
-	// Create the Engine after the window in case this happens to be a single-threaded platform.
-	// For single-threaded platforms, we need to ensure that Filament's OpenGL context is
-	// current, rather than the one created by SDL.
-	//mFilamentApp->mEngine = Engine::create(config.backend);
-
-	config.title = "人工智能实验室";
-	config.iblDirectory = FilamentApp::getRootAssetsPath() + IBL_FOLDER;
-	scene = new BoxScene();
+	// scene = new BoxScene();
 }
 
 Application::~Application()
 {
-	SDL_Quit();
-	delete scene;
+	delete myScene;
 }
 
 void Application::start()
 {
-	return;
-	auto setup = [&](filament::Engine *engine, filament::View *view, filament::Scene *scene)
-	{
-		this->scene->setup(engine, view, scene);
-	};
-	auto cleanup = [&](filament::Engine *engine, filament::View *view, filament::Scene *scene)
-	{
-		this->scene->cleanup(engine, view, scene);
-	};
-	auto animate = [&](filament::Engine *engine, filament::View *view, double now)
-	{
-		this->scene->animate(engine, view, now);
-	};
-	auto imgui = [&](filament::Engine *engine, filament::View *view)
-	{
-		this->scene->imgui(engine, view);
-	};
-	auto preRender = [&](filament::Engine *engine, filament::View *view, filament::Scene *scene, filament::Renderer *renderer)
-	{
-		this->scene->preRender(engine, view, scene, renderer);
-	};
+	uint32_t flags = SDL_WINDOW_SHOWN | SDL_WINDOW_ALLOW_HIGHDPI | SDL_WINDOW_RESIZABLE;
+	int width = 1000;
+	int height = 600;
+	window = SDL_CreateWindow("人工智能实验室", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, flags);
 
-	auto postRender = [&](filament::Engine *engine, filament::View *view, filament::Scene *scene, filament::Renderer *renderer)
-	{
-		this->scene->postRender(engine, view, scene, renderer);
-	};
+	engine = filament::Engine::create();
+	swapChain = engine->createSwapChain(utils::SDLUtils::getNativeWindow(window));
+	renderer = engine->createRenderer();
 
-	auto resize = [&](filament::Engine *engine, filament::View *view)
-	{
-		this->scene->resize(engine, view);
-	};
+	utils::Entity cameraEntity = utils::EntityManager::get().create();
+	camera = engine->createCamera(cameraEntity);
+	camera->setProjection(60, float(width) / height, 0.1, 2000, filament::Camera::Fov::VERTICAL);
+	camera->lookAt({5, 10, 15}, {0, 0, 0});
 
-	auto &app = FilamentApp::get();
-	app.animate(animate);
-	app.resize(resize);
-	//app.run(config, (FilamentApp::SetupCallback)setup, (FilamentApp::CleanupCallback)cleanup);
+	view = engine->createView();
+	auto viewport = new filament::Viewport(0, 0, 1000, 600);
+	view->setViewport(*viewport);
+	view->setCamera(camera);
+
+	scene = engine->createScene();
+	view->setScene(scene);
+
+	gl::init(engine, view, scene);
+	myScene = new BoxScene();
+	myScene->setup(engine, view, scene);
+
+	this->isRunning = true;
+
+	SDL_Event event;
+
+	while (this->isRunning)
+	{
+		if (SDL_PollEvent(&event) == 0)
+		{
+			continue;
+		}
+		switch (event.type)
+		{
+		case SDL_QUIT:
+			this->isRunning = false;
+			break;
+		}
+
+		if (renderer->beginFrame(swapChain))
+		{
+			renderer->render(view);
+			renderer->endFrame();
+		}
+
+		myScene->animate(engine, view, renderer->getUserTime());
+	}
+
+	myScene->cleanup(engine, view, scene);
 }
 
 void Application::stop()
 {
+	SDL_Quit();
 }

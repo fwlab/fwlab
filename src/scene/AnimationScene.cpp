@@ -20,8 +20,7 @@ gl::Mesh *mesh;
 
 void AnimationScene::setup(filament::Engine *engine, filament::View *view, filament::Scene *scene)
 {
-	FilamentApp &app = FilamentApp::get();
-	gl::init(&app, engine, view, scene);
+	gl::init(engine, view, scene);
 
 	camera = new gl::OrthographicCamera();
 	view->setCamera(camera->camera);
