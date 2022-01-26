@@ -1,27 +1,19 @@
 #include <functional>
-#include <filament/Engine.h>
-#include <filament/View.h>
-#include <filament/Scene.h>
-#include <filament/Viewport.h>
+#include <iostream>
 #include <utils/EntityManager.h>
 #include "utils/SDLUtils.h"
 #include "gl/gl.h"
 #include "scene/BoxScene.h"
 #include "Application.h"
 
-Application::Application()
-{
-	SDL_Init(SDL_INIT_EVENTS);
-	// scene = new BoxScene();
-}
-
-Application::~Application()
-{
-	delete myScene;
-}
-
 void Application::start()
 {
+	if (SDL_Init(SDL_INIT_EVENTS) > 0)
+	{
+		std::cerr << "failed to init SDL." << std::endl;
+		return;
+	}
+
 	uint32_t flags = SDL_WINDOW_SHOWN | SDL_WINDOW_ALLOW_HIGHDPI | SDL_WINDOW_RESIZABLE;
 	int width = 1000;
 	int height = 600;
@@ -31,13 +23,13 @@ void Application::start()
 	swapChain = engine->createSwapChain(utils::SDLUtils::getNativeWindow(window));
 	renderer = engine->createRenderer();
 
-	utils::Entity cameraEntity = utils::EntityManager::get().create();
+	cameraEntity = utils::EntityManager::get().create();
 	camera = engine->createCamera(cameraEntity);
 	camera->setProjection(60, float(width) / height, 0.1, 2000, filament::Camera::Fov::VERTICAL);
-	camera->lookAt({5, 10, 15}, {0, 0, 0});
+	camera->lookAt({3, 4, 5}, {0, 0, 0});
 
 	view = engine->createView();
-	auto viewport = new filament::Viewport(0, 0, 1000, 600);
+	viewport = new filament::Viewport(0, 0, width, height);
 	view->setViewport(*viewport);
 	view->setCamera(camera);
 
@@ -54,15 +46,14 @@ void Application::start()
 
 	while (this->isRunning)
 	{
-		if (SDL_PollEvent(&event) == 0)
+		if (SDL_PollEvent(&event) > 0)
 		{
-			continue;
-		}
-		switch (event.type)
-		{
-		case SDL_QUIT:
-			this->isRunning = false;
-			break;
+			switch (event.type)
+			{
+			case SDL_QUIT:
+				this->isRunning = false;
+				break;
+			}
 		}
 
 		if (renderer->beginFrame(swapChain))
@@ -73,11 +64,22 @@ void Application::start()
 
 		myScene->animate(engine, view, renderer->getUserTime());
 	}
-
-	myScene->cleanup(engine, view, scene);
 }
 
 void Application::stop()
 {
+	myScene->cleanup(engine, view, scene);
+	delete myScene;
+
+	engine->destroyCameraComponent(cameraEntity);
+	engine->destroy(scene);
+	engine->destroy(view);
+	engine->destroy(renderer);
+	engine->destroy(swapChain);
+	filament::Engine::destroy(engine);
+	delete viewport;
+
+	SDL_DestroyWindow(window);
+
 	SDL_Quit();
 }

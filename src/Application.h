@@ -6,17 +6,29 @@
 #include <filament/Scene.h>
 #include <filament/SwapChain.h>
 #include <filament/View.h>
+#include <filament/Viewport.h>
+#include <utils/Entity.h>
 #include "scene/Scene.h"
 
 class Application
 {
 public:
-	explicit Application();
-	virtual ~Application();
+	Application() = default;
+	virtual ~Application() = default;
 	void start();
 	void stop();
 
-private:
+	SDL_Window *getSDLWindow() const noexcept;
+	filament::Engine *getEngine() const noexcept;
+	filament::SwapChain *getSwapChain() const noexcept;
+	filament::Renderer *getRenderer() const noexcept;
+	utils::Entity &getCameraEntity() const noexcept;
+	filament::Camera *getCamera() const noexcept;
+	filament::View *getView() const noexcept;
+	filament::Viewport *getViewport() const noexcept;
+	filament::Scene *getScene() const noexcept;
+
+protected:
 	SDL_Window *window = nullptr;
 	bool isRunning = false;
 
@@ -24,8 +36,10 @@ private:
 	filament::SwapChain *swapChain = nullptr;
 	filament::Renderer *renderer = nullptr;
 
+	utils::Entity cameraEntity;
 	filament::Camera *camera = nullptr;
 	filament::View *view = nullptr;
+	filament::Viewport *viewport = nullptr;
 	filament::Scene *scene = nullptr;
 
 	Scene *myScene = nullptr;

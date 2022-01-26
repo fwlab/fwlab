@@ -1,6 +1,7 @@
 set(MODULE_NAME fwlab)
 
 add_subdirectory(utils)
+add_subdirectory(context)
 add_subdirectory(gl)
 add_subdirectory(event)
 add_subdirectory(scene)

@@ -1,7 +1,7 @@
 set(MODULE_NAME fwlab_utils)
 
 add_library(${MODULE_NAME} STATIC
-	"EncodingUtils.cpp"
-    "LogUtils.cpp"
+    "TimeUtils.cpp"
+    "Logger.cpp"
     "SDLUtils.cpp"
 )
