@@ -5,6 +5,7 @@
 #include "gl/gl.h"
 #include "scene/BoxScene.h"
 #include "Application.h"
+#include "context/context.h"
 
 void Application::start()
 {
@@ -13,6 +14,8 @@ void Application::start()
 		std::cerr << "failed to init SDL." << std::endl;
 		return;
 	}
+
+	::app = this;
 
 	uint32_t flags = SDL_WINDOW_SHOWN | SDL_WINDOW_ALLOW_HIGHDPI | SDL_WINDOW_RESIZABLE;
 	int width = 1000;
@@ -40,21 +43,14 @@ void Application::start()
 	myScene = new BoxScene();
 	myScene->setup(engine, view, scene);
 
-	this->isRunning = true;
+	isRunning = true;
 
-	SDL_Event event;
+	event = new event::EventDispatcher();
+	event->start();
 
-	while (this->isRunning)
+	while (isRunning)
 	{
-		if (SDL_PollEvent(&event) > 0)
-		{
-			switch (event.type)
-			{
-			case SDL_QUIT:
-				this->isRunning = false;
-				break;
-			}
-		}
+		event->pollEvent();
 
 		if (renderer->beginFrame(swapChain))
 		{
@@ -68,6 +64,11 @@ void Application::start()
 
 void Application::stop()
 {
+	isRunning = false;
+}
+
+void Application::clean() noexcept
+{
 	myScene->cleanup(engine, view, scene);
 	delete myScene;
 
@@ -79,7 +80,56 @@ void Application::stop()
 	filament::Engine::destroy(engine);
 	delete viewport;
 
+	delete event;
+
+	::app = nullptr;
+
 	SDL_DestroyWindow(window);
 
 	SDL_Quit();
+}
+
+SDL_Window *Application::getSDLWindow() const noexcept
+{
+	return window;
+}
+
+filament::Engine *Application::getEngine() const noexcept
+{
+	return engine;
+}
+
+filament::SwapChain *Application::getSwapChain() const noexcept
+{
+	return swapChain;
+}
+
+filament::Renderer *Application::getRenderer() const noexcept
+{
+	return renderer;
+}
+
+utils::Entity Application::getCameraEntity() const noexcept
+{
+	return cameraEntity;
+}
+
+filament::Camera *Application::getCamera() const noexcept
+{
+	return camera;
+}
+
+filament::View *Application::getView() const noexcept
+{
+	return view;
+}
+
+filament::Viewport *Application::getViewport() const noexcept
+{
+	return viewport;
+}
+
+filament::Scene *Application::getScene() const noexcept
+{
+	return scene;
 }

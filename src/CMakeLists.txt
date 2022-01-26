@@ -16,6 +16,6 @@ set_target_properties(${MODULE_NAME} PROPERTIES
 )
 
 target_link_libraries(${MODULE_NAME}
-	filament shaders smol-v filagui camutils
-	fwlab_assets fwlab_scene fwlab_utils
+	filament sdl2
+	fwlab_assets fwlab_context fwlab_event fwlab_scene fwlab_utils
 )

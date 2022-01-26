@@ -10,10 +10,7 @@ namespace event
 	class EventDispatcher : public BaseEvent
 	{
 	public:
-		EventDispatcher() = default;
-		virtual ~EventDispatcher() = default;
-		void start() noexcept override;
-		void stop() noexcept override;
+		void pollEvent() const noexcept;
 		void addEventListener(const std::string &eventName, std::string &id, std::function<void()> listener) noexcept;
 		template <typename... args>
 		void addEventListener(const std::string &eventName, std::string &id, std::function<void(args...)> listener) noexcept;

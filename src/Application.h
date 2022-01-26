@@ -8,6 +8,7 @@
 #include <filament/View.h>
 #include <filament/Viewport.h>
 #include <utils/Entity.h>
+#include "event/EventDispatcher.h"
 #include "scene/Scene.h"
 
 class Application
@@ -17,20 +18,21 @@ public:
 	virtual ~Application() = default;
 	void start();
 	void stop();
-
 	SDL_Window *getSDLWindow() const noexcept;
 	filament::Engine *getEngine() const noexcept;
 	filament::SwapChain *getSwapChain() const noexcept;
 	filament::Renderer *getRenderer() const noexcept;
-	utils::Entity &getCameraEntity() const noexcept;
+	utils::Entity getCameraEntity() const noexcept;
 	filament::Camera *getCamera() const noexcept;
 	filament::View *getView() const noexcept;
 	filament::Viewport *getViewport() const noexcept;
 	filament::Scene *getScene() const noexcept;
 
 protected:
+	void clean() noexcept;
 	SDL_Window *window = nullptr;
 	bool isRunning = false;
+	event::EventDispatcher *event = nullptr;
 
 	filament::Engine *engine = nullptr;
 	filament::SwapChain *swapChain = nullptr;

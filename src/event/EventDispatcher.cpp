@@ -1,15 +1,23 @@
 #include <algorithm>
-#include <utils/Log.h>
+#include <SDL.h>
+#include "../context/context.h"
 #include "EventDispatcher.h"
 
 using namespace event;
 
-void EventDispatcher::start() noexcept
+void EventDispatcher::pollEvent() const noexcept
 {
-}
+	SDL_Event event;
 
-void EventDispatcher::stop() noexcept
-{
+	if (SDL_PollEvent(&event) > 0)
+	{
+		switch (event.type)
+		{
+		case SDL_QUIT:
+			app->stop();
+			break;
+		}
+	}
 }
 
 void EventDispatcher::addEventListener(const std::string &eventName, std::string &id, std::function<void()> listener) noexcept
