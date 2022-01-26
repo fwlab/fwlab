@@ -1,8 +1,9 @@
-#ifndef FWLAB_EVENT_EVENT_DISPATCHER_H
-#define FWLAB_EVENT_EVENT_DISPATCHER_H
+#ifndef EVENT_EVENT_DISPATCHER_H
+#define EVENT_EVENT_DISPATCHER_H
 #include <functional>
 #include <string>
 #include <unordered_map>
+#include <vector>
 #include "BaseEvent.h"
 
 namespace event
@@ -11,20 +12,18 @@ namespace event
 	{
 	public:
 		void pollEvent() const noexcept;
-		void addEventListener(const std::string &eventName, std::string &id, std::function<void()> listener) noexcept;
-		template <typename... args>
-		void addEventListener(const std::string &eventName, std::string &id, std::function<void(args...)> listener) noexcept;
+		void addEventListener(const std::string &eventName, std::string &id, std::function<void(void *)> listener) noexcept;
 		void removeEventListener(const std::string &eventName, std::string &id) noexcept;
 		bool hasEventListener(const std::string &eventName, std::string &id) const noexcept;
-		void dispatchEvent(const std::string &eventName) noexcept;
+		void dispatchEvent(const std::string &eventName, void *params = nullptr) noexcept;
 
 	private:
 		struct EventData
 		{
 			std::string id;
-			BaseEvent event;
+			std::function<void(void *)> listener;
 		};
-		std::unordered_map<std::string, EventData> events;
+		std::unordered_map<std::string, std::vector<EventData>> events;
 	};
 }
 

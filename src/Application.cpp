@@ -6,6 +6,7 @@
 #include "scene/BoxScene.h"
 #include "Application.h"
 #include "context/context.h"
+#include "event/EventList.h"
 
 void Application::start()
 {
@@ -47,10 +48,13 @@ void Application::start()
 
 	event = new event::EventDispatcher();
 	event->start();
+	event->dispatchEvent(event::APP_STARTED);
 
 	while (isRunning)
 	{
 		event->pollEvent();
+
+		event->dispatchEvent(event::BEFORE_RENDER);
 
 		if (renderer->beginFrame(swapChain))
 		{
@@ -58,7 +62,11 @@ void Application::start()
 			renderer->endFrame();
 		}
 
+		event->dispatchEvent(event::RENDER);
+
 		myScene->animate(engine, view, renderer->getUserTime());
+
+		event->dispatchEvent(event::ANIMATE);
 	}
 }
 
@@ -69,6 +77,8 @@ void Application::stop()
 
 void Application::clean() noexcept
 {
+	event->dispatchEvent(event::BEFORE_APP_STOP);
+
 	myScene->cleanup(engine, view, scene);
 	delete myScene;
 
@@ -80,6 +90,7 @@ void Application::clean() noexcept
 	filament::Engine::destroy(engine);
 	delete viewport;
 
+	event->dispatchEvent(event::APP_STOPPED);
 	delete event;
 
 	::app = nullptr;
