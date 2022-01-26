@@ -6,3 +6,7 @@
 	path = third_party/bullet3
 	url = https://gitee.com/tengge1/bullet3.git
 	branch = master
+	branch = main
+[submodule "third_party/glog"]
+	path = third_party/glog
+	url = https://gitee.com/tengge1/glog.git
