@@ -1,5 +1,5 @@
 #include <imgui.h>
-#include <SDL.h>
+#include "../event/EventList.h"
 #include "UIHelper.h"
 #include "../context/context.h"
 
@@ -8,6 +8,9 @@ using namespace ui;
 UIHelper::UIHelper()
 {
     helper = new filagui::ImGuiHelper(app->getEngine(), app->getView(), fontPath);
+
+    auto viewport = app->getViewport();
+    helper->setDisplaySize(viewport->width, viewport->height);
 
     ImGuiIO &io = ImGui::GetIO();
     io.KeyMap[ImGuiKey_Tab] = SDL_SCANCODE_TAB;
@@ -39,9 +42,73 @@ UIHelper::UIHelper()
         return SDL_GetClipboardText();
     };
     io.ClipboardUserData = nullptr;
+
+    app->addEventListener(event::SDL_EVENT, id, [&](void *params)
+                          { handleSDLEvent(reinterpret_cast<SDL_Event *>(params)); });
+
+    app->addEventListener(event::RENDER, id, [&](void *params)
+                          { handleRender(); });
 }
 
 UIHelper::~UIHelper()
 {
     delete helper;
+}
+
+void UIHelper::handleSDLEvent(SDL_Event *event) const noexcept
+{
+    ImGuiIO &io = ImGui::GetIO();
+
+    bool mousePressed[3] = {false};
+
+    switch (event->type)
+    {
+    case SDL_MOUSEWHEEL:
+    {
+        if (event->wheel.x > 0)
+            io.MouseWheelH += 1;
+        if (event->wheel.x < 0)
+            io.MouseWheelH -= 1;
+        if (event->wheel.y > 0)
+            io.MouseWheel += 1;
+        if (event->wheel.y < 0)
+            io.MouseWheel -= 1;
+        break;
+    }
+    case SDL_MOUSEBUTTONDOWN:
+    {
+        if (event->button.button == SDL_BUTTON_LEFT)
+            mousePressed[0] = true;
+        if (event->button.button == SDL_BUTTON_RIGHT)
+            mousePressed[1] = true;
+        if (event->button.button == SDL_BUTTON_MIDDLE)
+            mousePressed[2] = true;
+        break;
+    }
+    case SDL_TEXTINPUT:
+    {
+        io.AddInputCharactersUTF8(event->text.text);
+        break;
+    }
+    case SDL_KEYDOWN:
+    case SDL_KEYUP:
+    {
+        int key = event->key.keysym.scancode;
+        IM_ASSERT(key >= 0 && key < IM_ARRAYSIZE(io.KeysDown));
+        io.KeysDown[key] = (event->type == SDL_KEYDOWN);
+        io.KeyShift = ((SDL_GetModState() & KMOD_SHIFT) != 0);
+        io.KeyAlt = ((SDL_GetModState() & KMOD_ALT) != 0);
+        io.KeyCtrl = ((SDL_GetModState() & KMOD_CTRL) != 0);
+        io.KeySuper = ((SDL_GetModState() & KMOD_GUI) != 0);
+        break;
+    }
+    }
+}
+
+void UIHelper::handleRender()
+{
+    float time = 10;
+    helper->render(time, [](filament::Engine *engine, filament::View *view) {
+
+    });
 }

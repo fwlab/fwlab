@@ -13,7 +13,7 @@ void EventDispatcher::pollEvent() const noexcept
 
 	if (SDL_PollEvent(&event) > 0)
 	{
-		dispatchEvent(event::SDL_EVENT);
+		dispatchEvent(event::SDL_EVENT, &event);
 		switch (event.type)
 		{
 		case SDL_QUIT:
@@ -23,7 +23,7 @@ void EventDispatcher::pollEvent() const noexcept
 	}
 }
 
-void EventDispatcher::addEventListener(const std::string &eventName, std::string &id, std::function<void(void *)> listener) noexcept
+void EventDispatcher::addEventListener(const std::string eventName, std::string id, std::function<void(void *)> listener) noexcept
 {
 	if (events.find(eventName) == events.end())
 	{
@@ -42,7 +42,7 @@ void EventDispatcher::addEventListener(const std::string &eventName, std::string
 	}
 }
 
-void EventDispatcher::removeEventListener(const std::string &eventName, std::string &id) noexcept
+void EventDispatcher::removeEventListener(const std::string eventName, std::string id) noexcept
 {
 	if (events.find(eventName) == events.end())
 	{
@@ -55,7 +55,7 @@ void EventDispatcher::removeEventListener(const std::string &eventName, std::str
 	list.erase(std::find_if(list.begin(), list.end(), pred));
 }
 
-bool EventDispatcher::hasEventListener(const std::string &eventName, std::string &id) const noexcept
+bool EventDispatcher::hasEventListener(const std::string eventName, std::string id) const noexcept
 {
 	if (events.find(eventName) == events.end())
 	{
@@ -67,7 +67,7 @@ bool EventDispatcher::hasEventListener(const std::string &eventName, std::string
 	return std::find_if(list.begin(), list.end(), pred) != list.end();
 }
 
-void EventDispatcher::dispatchEvent(const std::string &eventName, void *params) const noexcept
+void EventDispatcher::dispatchEvent(const std::string eventName, void *params) const noexcept
 {
 	if (events.find(eventName) == events.end())
 	{

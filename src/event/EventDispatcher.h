@@ -12,10 +12,10 @@ namespace event
 	{
 	public:
 		void pollEvent() const noexcept;
-		void addEventListener(const std::string &eventName, std::string &id, std::function<void(void *)> listener) noexcept;
-		void removeEventListener(const std::string &eventName, std::string &id) noexcept;
-		bool hasEventListener(const std::string &eventName, std::string &id) const noexcept;
-		void dispatchEvent(const std::string &eventName, void *params = nullptr) const noexcept;
+		void addEventListener(const std::string eventName, std::string id, std::function<void(void *)> listener) noexcept;
+		void removeEventListener(const std::string eventName, std::string id) noexcept;
+		bool hasEventListener(const std::string eventName, std::string id) const noexcept;
+		void dispatchEvent(const std::string eventName, void *params = nullptr) const noexcept;
 
 	private:
 		struct EventData

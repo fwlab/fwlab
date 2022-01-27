@@ -28,6 +28,12 @@ public:
 	filament::View *getView() const noexcept;
 	filament::Viewport *getViewport() const noexcept;
 	filament::Scene *getScene() const noexcept;
+	event::EventDispatcher *getEventDispatcher() const noexcept;
+	ui::UIHelper *getUIHelper() const noexcept;
+	void addEventListener(const std::string eventName, std::string id, std::function<void(void *)> listener) noexcept;
+	void removeEventListener(const std::string eventName, std::string id) noexcept;
+	bool hasEventListener(const std::string eventName, std::string id) const noexcept;
+	void dispatchEvent(const std::string eventName, void *params = nullptr) const noexcept;
 
 protected:
 	void clean() noexcept;

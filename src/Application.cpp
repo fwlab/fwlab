@@ -148,3 +148,33 @@ filament::Scene *Application::getScene() const noexcept
 {
 	return scene;
 }
+
+event::EventDispatcher *Application::getEventDispatcher() const noexcept
+{
+	return event;
+}
+
+ui::UIHelper *Application::getUIHelper() const noexcept
+{
+	return ui;
+}
+
+void Application::addEventListener(const std::string eventName, std::string id, std::function<void(void *)> listener) noexcept
+{
+	event->addEventListener(eventName, id, listener);
+}
+
+void Application::removeEventListener(const std::string eventName, std::string id) noexcept
+{
+	event->removeEventListener(eventName, id);
+}
+
+bool Application::hasEventListener(const std::string eventName, std::string id) const noexcept
+{
+	return event->hasEventListener(eventName, id);
+}
+
+void Application::dispatchEvent(const std::string eventName, void *params) const noexcept
+{
+	event->dispatchEvent(eventName, params);
+}
