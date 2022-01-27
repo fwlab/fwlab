@@ -9,6 +9,7 @@
 #include <filament/Viewport.h>
 #include <utils/Entity.h>
 #include "event/EventDispatcher.h"
+#include "ui/UIHelper.h"
 #include "scene/Scene.h"
 
 class Application
@@ -33,6 +34,7 @@ protected:
 	SDL_Window *window = nullptr;
 	bool isRunning = false;
 	event::EventDispatcher *event = nullptr;
+	ui::UIHelper *ui = nullptr;
 
 	filament::Engine *engine = nullptr;
 	filament::SwapChain *swapChain = nullptr;

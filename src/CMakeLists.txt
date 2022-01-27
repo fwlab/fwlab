@@ -4,6 +4,8 @@ add_subdirectory(utils)
 add_subdirectory(context)
 add_subdirectory(gl)
 add_subdirectory(event)
+add_subdirectory(ui)
+add_subdirectory(editor)
 add_subdirectory(scene)
 
 add_executable(${MODULE_NAME}
@@ -17,5 +19,5 @@ set_target_properties(${MODULE_NAME} PROPERTIES
 
 target_link_libraries(${MODULE_NAME}
 	filament sdl2
-	fwlab_assets fwlab_context fwlab_event fwlab_scene fwlab_utils
+	fwlab_assets fwlab_context fwlab_event fwlab_ui fwlab_scene fwlab_utils
 )

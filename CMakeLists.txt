@@ -28,7 +28,16 @@ include_directories(
 
 	# filament
 	${FILAMENT_DIR}/out/release/filament/include
-	${FILAMENT_DIR}/libs/filamentapp/include
+
+	# libs
+	${FILAMENT_DIR}/libs/bluegl/include
+	${FILAMENT_DIR}/libs/filabridge/include
+	${FILAMENT_DIR}/libs/filaflat/include
+	${FILAMENT_DIR}/libs/filagui/include
+	#${FILAMENT_DIR}/libs/filamentapp/include
+	${FILAMENT_DIR}/libs/iblprefilter/include
+	${FILAMENT_DIR}/libs/imageio/include
+	${FILAMENT_DIR}/libs/matdbg/include
 )
 
 link_directories(

@@ -50,6 +50,8 @@ void Application::start()
 	event->start();
 	event->dispatchEvent(event::APP_STARTED);
 
+	ui = new ui::UIHelper();
+
 	while (isRunning)
 	{
 		event->pollEvent();
@@ -89,6 +91,8 @@ void Application::clean() noexcept
 	engine->destroy(swapChain);
 	filament::Engine::destroy(engine);
 	delete viewport;
+
+	delete ui;
 
 	event->dispatchEvent(event::APP_STOPPED);
 	delete event;

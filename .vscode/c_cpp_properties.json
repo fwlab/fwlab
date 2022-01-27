@@ -5,7 +5,7 @@
             "includePath": [
                 "${workspaceFolder}/**",
                 "${workspaceFolder}/third_party/filament/out/release/filament/include",
-                "${workspaceFolder}/third_party/filament/libs/filamentapp/include"
+                "${workspaceFolder}/third_party/filament/libs/filagui/include"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/clang",
