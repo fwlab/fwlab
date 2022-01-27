@@ -7,7 +7,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(FILAMENT_DIR ${CMAKE_SOURCE_DIR}/third_party/filament)
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC -stdlib=libc++")
 
 add_definitions(
 	-DFILAMENT_SUPPORTS_X11
@@ -96,6 +96,8 @@ link_directories(
 )
 
 link_libraries(
+	-static-libgcc
+	-static-libstdc++
 	c++
 	c++abi
 	pthread

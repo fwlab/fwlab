@@ -107,8 +107,7 @@ void UIHelper::handleSDLEvent(SDL_Event *event) const noexcept
 
 void UIHelper::handleRender()
 {
-    float time = 10;
-    helper->render(time, [](filament::Engine *engine, filament::View *view) {
+    helper->render(10.0f, [&](filament::Engine *engine, filament::View *view) {
 
     });
 }

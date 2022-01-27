@@ -2,6 +2,7 @@
 #define GL_CORE_BUFFER_GEOMETRY_H
 #include <stdint.h>
 #include <vector>
+#include <unordered_map>
 #include <filament/Box.h>
 #include "BufferAttribute.h"
 
