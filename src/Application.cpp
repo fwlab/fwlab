@@ -30,12 +30,18 @@ void Application::start()
 	cameraEntity = utils::EntityManager::get().create();
 	camera = engine->createCamera(cameraEntity);
 	camera->setProjection(60, float(width) / height, 0.1, 2000, filament::Camera::Fov::VERTICAL);
+	camera->setExposure(16.0f, 1 / 125.0f, 100.0f);
 	camera->lookAt({3, 4, 5}, {0, 0, 0});
 
 	view = engine->createView();
 	viewport = new filament::Viewport(0, 0, width, height);
 	view->setViewport(*viewport);
 	view->setCamera(camera);
+
+	controller = filament::camutils::Manipulator<float>::Builder()
+					 .targetPosition(0, 0, -4)
+					 .flightMoveDamping(15.0)
+					 .build(filament::camutils::Mode::ORBIT);
 
 	scene = engine->createScene();
 	view->setScene(scene);
@@ -112,6 +118,11 @@ SDL_Window *Application::getSDLWindow() const noexcept
 filament::Engine *Application::getEngine() const noexcept
 {
 	return engine;
+}
+
+filament::Engine::Backend Application::getBackend() const noexcept
+{
+	return engine->getBackend();
 }
 
 filament::SwapChain *Application::getSwapChain() const noexcept

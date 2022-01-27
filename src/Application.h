@@ -7,6 +7,7 @@
 #include <filament/SwapChain.h>
 #include <filament/View.h>
 #include <filament/Viewport.h>
+#include <camutils/Manipulator.h>
 #include <utils/Entity.h>
 #include "event/EventDispatcher.h"
 #include "ui/UIHelper.h"
@@ -21,6 +22,7 @@ public:
 	void stop();
 	SDL_Window *getSDLWindow() const noexcept;
 	filament::Engine *getEngine() const noexcept;
+	filament::Engine::Backend getBackend() const noexcept;
 	filament::SwapChain *getSwapChain() const noexcept;
 	filament::Renderer *getRenderer() const noexcept;
 	utils::Entity getCameraEntity() const noexcept;
@@ -50,6 +52,7 @@ protected:
 	filament::Camera *camera = nullptr;
 	filament::View *view = nullptr;
 	filament::Viewport *viewport = nullptr;
+	filament::camutils::Manipulator<float> *controller;
 	filament::Scene *scene = nullptr;
 
 	Scene *myScene = nullptr;

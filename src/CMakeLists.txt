@@ -18,6 +18,6 @@ set_target_properties(${MODULE_NAME} PROPERTIES
 )
 
 target_link_libraries(${MODULE_NAME}
-	filament sdl2
+	filament sdl2 camutils
 	fwlab_assets fwlab_context fwlab_event fwlab_ui fwlab_scene fwlab_utils
 )

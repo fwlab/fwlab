@@ -46,13 +46,18 @@ UIHelper::UIHelper()
     app->addEventListener(event::SDL_EVENT, id, [&](void *params)
                           { handleSDLEvent(reinterpret_cast<SDL_Event *>(params)); });
 
-    app->addEventListener(event::RENDER, id, [&](void *params)
+    app->addEventListener(event::BEFORE_RENDER, id, [&](void *params)
                           { handleRender(); });
 }
 
 UIHelper::~UIHelper()
 {
     delete helper;
+}
+
+filament::View *UIHelper::getView() const noexcept
+{
+    return helper->getView();
 }
 
 void UIHelper::handleSDLEvent(SDL_Event *event) const noexcept
@@ -107,7 +112,21 @@ void UIHelper::handleSDLEvent(SDL_Event *event) const noexcept
 
 void UIHelper::handleRender()
 {
-    helper->render(10.0f, [&](filament::Engine *engine, filament::View *view) {
+    helper->render(10.0f, [&](filament::Engine *engine, filament::View *view)
+                   {
+                       ImGui::Begin("Hello", nullptr, ImGuiWindowFlags_MenuBar);
 
-    });
+                       if (ImGui::BeginMainMenuBar())
+                       {
+                           if (ImGui::BeginMenu("File", true))
+                           {
+                               ImGui::MenuItem("New", nullptr, false, true);
+                               ImGui::EndMenu();
+                           }
+
+                           ImGui::EndMainMenuBar();
+                       }
+
+                       ImGui::End();
+                   });
 }
