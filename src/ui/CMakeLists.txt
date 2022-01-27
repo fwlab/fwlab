@@ -6,5 +6,5 @@ add_library(${MODULE_NAME} STATIC
 
 target_link_libraries(${MODULE_NAME}
 	filament filagui
-	fwlab_context
+	utils fwlab_context fwlab_event
 )

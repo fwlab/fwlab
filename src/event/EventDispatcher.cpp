@@ -2,6 +2,7 @@
 #include <iostream>
 #include <SDL.h>
 #include "../context/context.h"
+#include "EventList.h"
 #include "EventDispatcher.h"
 
 using namespace event;
@@ -12,6 +13,7 @@ void EventDispatcher::pollEvent() const noexcept
 
 	if (SDL_PollEvent(&event) > 0)
 	{
+		dispatchEvent(event::SDL_EVENT);
 		switch (event.type)
 		{
 		case SDL_QUIT:
@@ -65,7 +67,7 @@ bool EventDispatcher::hasEventListener(const std::string &eventName, std::string
 	return std::find_if(list.begin(), list.end(), pred) != list.end();
 }
 
-void EventDispatcher::dispatchEvent(const std::string &eventName, void *params) noexcept
+void EventDispatcher::dispatchEvent(const std::string &eventName, void *params) const noexcept
 {
 	if (events.find(eventName) == events.end())
 	{
