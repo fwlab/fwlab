@@ -7,12 +7,16 @@ using namespace controller;
 
 OrbitController::OrbitController()
 {
-    manipulator = CameraManipulator::Builder()
-                      .targetPosition(0, 0, -4)
-                      .flightMoveDamping(15.0)
-                      .build(filament::camutils::Mode::ORBIT);
     auto viewport = app->getViewport();
-    manipulator->setViewport(viewport->width, viewport->height);
+    auto cameraPosition = app->getCamera()->getPosition();
+
+    manipulator = CameraManipulator::Builder()
+                      .viewport(viewport->width, viewport->height)
+                      .targetPosition(0, 0, 0)
+                      .zoomSpeed(0.1)
+                      .orbitHomePosition(cameraPosition.x, cameraPosition.y, cameraPosition.z)
+                      .orbitSpeed(0.04, 0.04)
+                      .build(filament::camutils::Mode::ORBIT);
 
     app->addEventListener(event::MOUSE_DOWN, id, [&](void *event)
                           { handleMouseDown(reinterpret_cast<event::MouseEvent *>(event)); });

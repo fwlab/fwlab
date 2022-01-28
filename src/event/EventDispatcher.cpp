@@ -93,7 +93,7 @@ void EventDispatcher::addEventListener(const std::string eventName, std::string 
 	{
 		events.insert({eventName, std::vector<EventData>()});
 	}
-	auto list = events.at(eventName);
+	auto &list = events.at(eventName);
 	auto pred = [&](EventData &data)
 	{ return data.id == id; };
 	if (std::find_if(list.begin(), list.end(), pred) == list.end())
