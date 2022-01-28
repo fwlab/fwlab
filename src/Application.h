@@ -7,10 +7,10 @@
 #include <filament/SwapChain.h>
 #include <filament/View.h>
 #include <filament/Viewport.h>
-#include <camutils/Manipulator.h>
 #include <utils/Entity.h>
 #include "event/EventDispatcher.h"
 #include "ui/UIHelper.h"
+#include "controller/OrbitController.h"
 #include "scene/Scene.h"
 
 class Application
@@ -32,6 +32,7 @@ public:
 	filament::Scene *getScene() const noexcept;
 	event::EventDispatcher *getEventDispatcher() const noexcept;
 	ui::UIHelper *getUIHelper() const noexcept;
+	controller::OrbitController *getController() const noexcept;
 	void addEventListener(const std::string eventName, std::string id, std::function<void(void *)> listener) noexcept;
 	void removeEventListener(const std::string eventName, std::string id) noexcept;
 	bool hasEventListener(const std::string eventName, std::string id) const noexcept;
@@ -52,8 +53,9 @@ protected:
 	filament::Camera *camera = nullptr;
 	filament::View *view = nullptr;
 	filament::Viewport *viewport = nullptr;
-	filament::camutils::Manipulator<float> *controller;
 	filament::Scene *scene = nullptr;
+
+	controller::OrbitController *controller = nullptr;
 
 	Scene *myScene = nullptr;
 };

@@ -1,8 +1,10 @@
 #include <algorithm>
 #include <iostream>
 #include <SDL.h>
+#include <SDL_events.h>
 #include "../context/context.h"
 #include "EventList.h"
+#include "EventStruct.h"
 #include "EventDispatcher.h"
 
 using namespace event;
@@ -16,9 +18,71 @@ void EventDispatcher::pollEvent() const noexcept
 		dispatchEvent(event::SDL_EVENT, &event);
 		switch (event.type)
 		{
+		// 生命周期事件：
 		case SDL_QUIT:
+			app->dispatchEvent(event::CLOSE);
 			app->stop();
 			break;
+		// 鼠标键盘事件
+		case SDL_KEYDOWN:
+		{
+			KeyboardEvent evt = {.scancode = event.key.keysym.scancode, .event = &event};
+			app->dispatchEvent(event::KEY_DOWN, &evt);
+			break;
+		}
+		case SDL_KEYUP:
+		{
+			KeyboardEvent evt = {.scancode = event.key.keysym.scancode, .event = &event};
+			app->dispatchEvent(event::KEY_UP, &evt);
+			break;
+		}
+		case SDL_MOUSEBUTTONDOWN:
+		{
+			MouseEvent evt = {.button = event.button.button, .x = event.button.x, .y = event.button.y, .event = &event};
+			app->dispatchEvent(event::MOUSE_DOWN, &evt);
+			break;
+		}
+		case SDL_MOUSEMOTION:
+		{
+			MouseEvent evt = {.button = event.button.button, .x = event.motion.x, .y = event.motion.y, .event = &event};
+			app->dispatchEvent(event::MOUSE_MOVE, &evt);
+			break;
+		}
+		case SDL_MOUSEBUTTONUP:
+		{
+			MouseEvent evt = {.button = event.button.button, .x = event.button.x, .y = event.button.y, .event = &event};
+			app->dispatchEvent(event::MOUSE_UP, &evt);
+			break;
+		}
+		case SDL_MOUSEWHEEL:
+		{
+			WheelEvent evt = {.deltaX = event.wheel.x, .deltaY = event.wheel.y, .event = &event};
+			app->dispatchEvent(event::WHEEL, &evt);
+			break;
+		}
+		// 其他事件
+		case SDL_WINDOWEVENT:
+		{
+			switch (event.window.event)
+			{
+			case SDL_WINDOWEVENT_RESIZED:
+			{
+				ResizeEvent evt = {.event = &event};
+				app->dispatchEvent(event::RESIZE, &evt);
+				break;
+			}
+			default:
+				break;
+			}
+			break;
+		}
+		case SDL_DROPFILE:
+		{
+			DropFileEvent evt = {.file = event.drop.file, .event = &event};
+			app->dispatchEvent(event::DROP_FILE);
+			SDL_free(event.drop.file);
+			break;
+		}
 		}
 	}
 }

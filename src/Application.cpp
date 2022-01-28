@@ -18,6 +18,10 @@ void Application::start()
 
 	::app = this;
 
+	event = new event::EventDispatcher();
+	event->start();
+	event->dispatchEvent(event::BEFORE_APP_START);
+
 	uint32_t flags = SDL_WINDOW_SHOWN | SDL_WINDOW_ALLOW_HIGHDPI | SDL_WINDOW_RESIZABLE;
 	int width = 1000;
 	int height = 600;
@@ -38,10 +42,7 @@ void Application::start()
 	view->setViewport(*viewport);
 	view->setCamera(camera);
 
-	controller = filament::camutils::Manipulator<float>::Builder()
-					 .targetPosition(0, 0, -4)
-					 .flightMoveDamping(15.0)
-					 .build(filament::camutils::Mode::ORBIT);
+	controller = new controller::OrbitController();
 
 	scene = engine->createScene();
 	view->setScene(scene);
@@ -52,11 +53,9 @@ void Application::start()
 
 	isRunning = true;
 
-	event = new event::EventDispatcher();
-	event->start();
 	event->dispatchEvent(event::APP_STARTED);
 
-	ui = new ui::UIHelper();
+	// ui = new ui::UIHelper();
 
 	while (isRunning)
 	{
@@ -99,6 +98,7 @@ void Application::clean() noexcept
 	delete viewport;
 
 	delete ui;
+	delete controller;
 
 	event->dispatchEvent(event::APP_STOPPED);
 	delete event;
@@ -168,6 +168,11 @@ event::EventDispatcher *Application::getEventDispatcher() const noexcept
 ui::UIHelper *Application::getUIHelper() const noexcept
 {
 	return ui;
+}
+
+controller::OrbitController *Application::getController() const noexcept
+{
+	return controller;
 }
 
 void Application::addEventListener(const std::string eventName, std::string id, std::function<void(void *)> listener) noexcept
