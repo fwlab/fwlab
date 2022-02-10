@@ -29,6 +29,8 @@ namespace event
 
     using ResizeEvent = struct
     {
+        int32_t width;
+        int32_t height;
         SDL_Event *event;
     };
 
