@@ -2,7 +2,7 @@
 #define CONTROLLER_ORBIT_CONTROLLER_H
 #include <string>
 #include <camutils/Manipulator.h>
-#include "../event/EventStruct.h"
+#include "../event/Structure.h"
 
 namespace controller
 {

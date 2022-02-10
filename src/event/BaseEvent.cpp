@@ -2,10 +2,10 @@
 
 using namespace event;
 
-void BaseEvent::start() noexcept
+void BaseEvent::start()
 {
 }
 
-void BaseEvent::stop() noexcept
+void BaseEvent::stop()
 {
 }

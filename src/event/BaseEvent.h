@@ -8,8 +8,8 @@ namespace event
 	public:
 		BaseEvent() = default;
 		virtual ~BaseEvent() = default;
-		virtual void start() noexcept;
-		virtual void stop() noexcept;
+		virtual void start();
+		virtual void stop();
 	};
 }
 

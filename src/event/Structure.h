@@ -1,5 +1,5 @@
-#ifndef EVENT_EVENT_STRUCT_H
-#define EVENT_EVENT_STRUCT_H
+#ifndef EVENT_STRUCTURE_H
+#define EVENT_STRUCTURE_H
 #include <stdint.h>
 #include <SDL.h>
 #include <SDL_events.h>

@@ -18,7 +18,7 @@ void Application::start()
 
 	::app = this;
 
-	event = new event::EventDispatcher();
+	event = new EventDispatcher();
 	event->start();
 	event->dispatchEvent(event::BEFORE_APP_START);
 
@@ -160,7 +160,7 @@ filament::Scene *Application::getScene() const noexcept
 	return scene;
 }
 
-event::EventDispatcher *Application::getEventDispatcher() const noexcept
+EventDispatcher *Application::getEventDispatcher() const noexcept
 {
 	return event;
 }
