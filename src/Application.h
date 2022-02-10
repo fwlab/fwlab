@@ -16,8 +16,8 @@
 class Application
 {
 public:
-	Application() = default;
-	virtual ~Application() = default;
+	Application();
+	virtual ~Application();
 	void start();
 	void stop();
 	SDL_Window *getSDLWindow() const noexcept;

@@ -34,7 +34,4 @@ void ResizeEvent::handleResize(void *data)
     auto viewport = app->getViewport();
 
     view->setViewport({0, 0, width, height});
-
-    // auto ui = app->getUIHelper();
-    // ui->setViewport({0, 0, width, height});
 }

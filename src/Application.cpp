@@ -8,16 +8,23 @@
 #include "context/context.h"
 #include "event/EventList.h"
 
-void Application::start()
+Application::Application()
 {
 	if (SDL_Init(SDL_INIT_EVENTS) > 0)
 	{
 		std::cerr << "failed to init SDL." << std::endl;
 		return;
 	}
-
 	::app = this;
+}
 
+Application::~Application()
+{
+	SDL_Quit();
+}
+
+void Application::start()
+{
 	event = new EventDispatcher();
 	event->start();
 	event->dispatchEvent(event::BEFORE_APP_START);
@@ -55,7 +62,7 @@ void Application::start()
 
 	event->dispatchEvent(event::APP_STARTED);
 
-	// ui = new ui::UIHelper();
+	ui = new ui::UIHelper();
 
 	while (isRunning)
 	{
@@ -66,10 +73,9 @@ void Application::start()
 		if (renderer->beginFrame(swapChain))
 		{
 			renderer->render(view);
+			event->dispatchEvent(event::RENDER);
 			renderer->endFrame();
 		}
-
-		event->dispatchEvent(event::RENDER);
 
 		myScene->animate(engine, view, renderer->getUserTime());
 
@@ -106,8 +112,6 @@ void Application::clean() noexcept
 	::app = nullptr;
 
 	SDL_DestroyWindow(window);
-
-	SDL_Quit();
 }
 
 SDL_Window *Application::getSDLWindow() const noexcept

@@ -38,7 +38,8 @@ UIHelper::UIHelper()
     {
         SDL_SetClipboardText(text);
     };
-    io.GetClipboardTextFn = [](void *) -> const char * {
+    io.GetClipboardTextFn = [](void *) -> const char *
+    {
         return SDL_GetClipboardText();
     };
     io.ClipboardUserData = nullptr;
@@ -46,8 +47,7 @@ UIHelper::UIHelper()
     app->addEventListener(event::SDL_EVENT, id, [&](void *params)
                           { handleSDLEvent(reinterpret_cast<SDL_Event *>(params)); });
 
-    app->addEventListener(event::BEFORE_RENDER, id, [&](void *params)
-                          { handleRender(); });
+    app->addEventListener(event::BEFORE_RENDER, id, std::bind(&UIHelper::handleRender, this, std::placeholders::_1));
 }
 
 UIHelper::~UIHelper()
@@ -58,6 +58,11 @@ UIHelper::~UIHelper()
 filament::View *UIHelper::getView() const noexcept
 {
     return helper->getView();
+}
+
+filagui::ImGuiHelper *UIHelper::getImGuiHelper()
+{
+    return helper;
 }
 
 void UIHelper::handleSDLEvent(SDL_Event *event) const noexcept
@@ -110,23 +115,35 @@ void UIHelper::handleSDLEvent(SDL_Event *event) const noexcept
     }
 }
 
-void UIHelper::handleRender()
+void UIHelper::handleRender(void *data)
 {
-    helper->render(10.0f, [&](filament::Engine *engine, filament::View *view)
-                   {
-                       ImGui::Begin("Hello", nullptr, ImGuiWindowFlags_MenuBar);
+    static uint64_t frequency = SDL_GetPerformanceFrequency();
+    uint64_t now = SDL_GetPerformanceCounter();
+    const float timeStep = mTime > 0 ? (float)((double)(now - mTime) / frequency) : (float)(1.0f / 60.0f);
+    mTime = now;
 
-                       if (ImGui::BeginMainMenuBar())
-                       {
-                           if (ImGui::BeginMenu("File", true))
-                           {
-                               ImGui::MenuItem("New", nullptr, false, true);
-                               ImGui::EndMenu();
-                           }
+    helper->render(timeStep, [&](filament::Engine *engine, filament::View *view)
+                   { this->handleImguiCommands(engine, view); });
+}
 
-                           ImGui::EndMainMenuBar();
-                       }
+void UIHelper::handleImguiCommands(filament::Engine *engine, filament::View *view)
+{
+    ImGui::Begin("Hello", nullptr, ImGuiWindowFlags_MenuBar);
 
-                       ImGui::End();
-                   });
+    if (ImGui::BeginMainMenuBar())
+    {
+        if (ImGui::BeginMenu("File", true))
+        {
+            ImGui::MenuItem("New", nullptr, false, true);
+            ImGui::EndMenu();
+        }
+
+        ImGui::EndMainMenuBar();
+    }
+
+    ImGui::End();
+}
+
+void UIHelper::handleAfterRender(void *data)
+{
 }
