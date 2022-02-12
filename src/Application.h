@@ -11,6 +11,7 @@
 #include "utils/Clock.h"
 #include "EventDispatcher.h"
 #include "ui/UIHelper.h"
+#include "Editor.h"
 #include "controller/OrbitController.h"
 #include "scene/Scene.h"
 
@@ -55,6 +56,7 @@ protected:
 	event::Time *time = nullptr;
 	EventDispatcher *event = nullptr;
 	ui::UIHelper *ui = nullptr;
+	Editor *editor = nullptr;
 
 	SDL_Window *window = nullptr;
 

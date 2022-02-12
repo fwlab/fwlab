@@ -73,6 +73,16 @@ filagui::ImGuiHelper *UIHelper::getImGuiHelper()
     return helper;
 }
 
+std::function<void()> UIHelper::getCallback()
+{
+    return callback;
+}
+
+void UIHelper::setCallback(std::function<void()> callback)
+{
+    this->callback = callback;
+}
+
 void UIHelper::handleSDLEvent(SDL_Event *event) const noexcept
 {
     ImGuiIO &io = ImGui::GetIO();
@@ -143,28 +153,14 @@ void UIHelper::handleRender(void *data)
     event::Time *time = reinterpret_cast<event::Time *>(data);
 
     helper->render(time->deltaTime, [&](filament::Engine *engine, filament::View *view)
-                   { this->handleImguiCommands(engine, view); });
+                   {  
+                       if (callback)
+                       {
+                           callback();
+                       } });
 
     auto renderer = app->getRenderer();
     renderer->render(view);
-}
-
-void UIHelper::handleImguiCommands(filament::Engine *engine, filament::View *view)
-{
-    ImGui::Begin("Hello", nullptr, ImGuiWindowFlags_MenuBar);
-
-    if (ImGui::BeginMainMenuBar())
-    {
-        if (ImGui::BeginMenu("File", true))
-        {
-            ImGui::MenuItem("New", nullptr, false, true);
-            ImGui::EndMenu();
-        }
-
-        ImGui::EndMainMenuBar();
-    }
-
-    ImGui::End();
 }
 
 void UIHelper::handleSizeChanged(void *data)

@@ -71,6 +71,9 @@ void Application::start()
 	event->dispatchEvent(event::APP_STARTED);
 
 	ui = new ui::UIHelper();
+	editor = new Editor();
+	ui->setCallback([&]()
+					{ editor->render(); });
 
 	while (isRunning)
 	{
@@ -114,6 +117,7 @@ void Application::clean() noexcept
 	filament::Engine::destroy(engine);
 	delete viewport;
 
+	delete editor;
 	delete ui;
 	delete controller;
 

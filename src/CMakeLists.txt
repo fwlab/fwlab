@@ -7,13 +7,13 @@ add_subdirectory(event)
 add_subdirectory(event/core)
 add_subdirectory(ui)
 add_subdirectory(controller)
-add_subdirectory(editor)
 add_subdirectory(scene)
 
 add_executable(${MODULE_NAME}
     "main.cpp"
 	"Application.cpp"
 	"EventDispatcher.cpp"
+	"Editor.cpp"
 )
 
 set_target_properties(${MODULE_NAME} PROPERTIES

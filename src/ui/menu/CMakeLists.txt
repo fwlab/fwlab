@@ -1,8 +1,7 @@
-set(MODULE_NAME fwlab_ui)
+set(MODULE_NAME fwlab_ui_menu)
 
 add_library(${MODULE_NAME} STATIC
-	"UIHelper.cpp"
-	"Component.cpp"
+
 )
 
 target_link_libraries(${MODULE_NAME}
