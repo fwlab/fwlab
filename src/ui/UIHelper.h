@@ -19,7 +19,7 @@ namespace ui
         void handleSDLEvent(SDL_Event *event) const noexcept;
         void handleRender(void *data);
         void handleImguiCommands(filament::Engine *engine, filament::View *view);
-        void handleResize(void *data);
+        void handleSizeChanged(void *data);
         const std::string id = "UIHelper";
         filament::View *view;
         utils::Path fontPath = "assets/fonts/Roboto-Medium.ttf";

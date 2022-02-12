@@ -14,6 +14,7 @@ UIHelper::UIHelper()
     view->setViewport(*viewport);
 
     helper = new filagui::ImGuiHelper(app->getEngine(), view, fontPath);
+    helper->setDisplaySize(viewport->width, viewport->height);
 
     ImGuiIO &io = ImGui::GetIO();
     io.KeyMap[ImGuiKey_Tab] = SDL_SCANCODE_TAB;
@@ -51,7 +52,7 @@ UIHelper::UIHelper()
                           { handleSDLEvent(reinterpret_cast<SDL_Event *>(params)); });
 
     app->addEventListener(event::RENDER, id, std::bind(&UIHelper::handleRender, this, std::placeholders::_1));
-    app->addEventListener(event::RESIZE, id, std::bind(&UIHelper::handleRender, this, std::placeholders::_1));
+    app->addEventListener(event::SIZE_CHANGED, id, std::bind(&UIHelper::handleSizeChanged, this, std::placeholders::_1));
 }
 
 UIHelper::~UIHelper()
@@ -128,6 +129,9 @@ void UIHelper::handleRender(void *data)
 
     helper->render(time->deltaTime, [&](filament::Engine *engine, filament::View *view)
                    { this->handleImguiCommands(engine, view); });
+
+    auto renderer = app->getRenderer();
+    renderer->render(view);
 }
 
 void UIHelper::handleImguiCommands(filament::Engine *engine, filament::View *view)
@@ -148,6 +152,10 @@ void UIHelper::handleImguiCommands(filament::Engine *engine, filament::View *vie
     ImGui::End();
 }
 
-void UIHelper::handleResize(void *data)
+void UIHelper::handleSizeChanged(void *data)
 {
+    auto viewport = app->getViewport();
+    view->setViewport(*viewport);
+
+    helper->setDisplaySize(viewport->width, viewport->height);
 }

@@ -26,8 +26,9 @@ namespace event
 	extern const char *WHEEL;	   // 参数：WheelEvent
 
 	// 其他事件
-	extern const char *RESIZE;	  // 参数：ResizeEvent
-	extern const char *DROP_FILE; // 参数：DropFileEvent
+	extern const char *RESIZE;		 // 参数：SizeEvent
+	extern const char *SIZE_CHANGED; // 参数：SizeEvent
+	extern const char *DROP_FILE;	 // 参数：DropFileEvent
 }
 
 #endif

@@ -108,7 +108,7 @@ void EventDispatcher::pollEvent() const noexcept
 			{
 			case SDL_WINDOWEVENT_RESIZED:
 			{
-				ResizeEvent evt = {.width = event.window.data1, .height = event.window.data2, .event = &event};
+				SizeEvent evt = {.width = event.window.data1, .height = event.window.data2, .event = &event};
 				app->dispatchEvent(event::RESIZE, &evt);
 				break;
 			}

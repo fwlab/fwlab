@@ -38,7 +38,7 @@ namespace event
     };
 
     // 其他事件
-    using ResizeEvent = struct
+    using SizeEvent = struct
     {
         int32_t width;
         int32_t height;

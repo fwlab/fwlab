@@ -25,5 +25,6 @@ namespace event
 
     // 其他事件
     const char *RESIZE = "resize";
+    const char *SIZE_CHANGED = "sizeChanged";
     const char *DROP_FILE = "dropFile";
 }

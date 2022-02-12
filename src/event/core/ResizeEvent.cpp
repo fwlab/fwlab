@@ -17,21 +17,22 @@ void ResizeEvent::stop()
 
 void ResizeEvent::handleResize(void *data)
 {
-    auto window = app->getSDLWindow();
-
-    uint32_t width, height;
-    SDL_GL_GetDrawableSize(window, (int *)&width, (int *)&height);
+    auto event = reinterpret_cast<event::SizeEvent *>(data);
 
     auto camera = app->getCamera();
 
     camera->setProjection(
         camera->getFieldOfViewInDegrees(filament::Camera::Fov::VERTICAL),
-        double(width) / height,
+        double(event->width) / event->height,
         camera->getNear(),
         camera->getCullingFar());
 
-    auto view = app->getView();
     auto viewport = app->getViewport();
+    viewport->width = event->width;
+    viewport->height = event->height;
 
-    view->setViewport({0, 0, width, height});
+    auto view = app->getView();
+    view->setViewport(*viewport);
+
+    app->dispatchEvent(event::SIZE_CHANGED, event);
 }
