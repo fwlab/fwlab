@@ -6,6 +6,16 @@
 
 namespace event
 {
+    // 生命周期事件
+    using Time = struct
+    {
+        // 从开始渲染到当前的时间（单位：秒）
+        double time;
+        // 两次渲染间隔的时间（单位：秒）
+        double deltaTime;
+    };
+
+    // 键盘鼠标事件
     using KeyboardEvent = struct
     {
         SDL_Scancode scancode;
@@ -27,6 +37,7 @@ namespace event
         SDL_Event *event;
     };
 
+    // 其他事件
     using ResizeEvent = struct
     {
         int32_t width;

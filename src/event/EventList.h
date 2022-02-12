@@ -5,29 +5,29 @@
 namespace event
 {
 	// 生命周期事件
-	extern const char *BEFORE_APP_START;
-	extern const char *APP_STARTED;
-	extern const char *BEFORE_RENDER;
-	extern const char *RENDER;
-	extern const char *ANIMATE;
-	extern const char *CLOSE;
-	extern const char *BEFORE_APP_STOP;
-	extern const char *APP_STOPPED;
+	extern const char *BEFORE_APP_START; // 参数：无
+	extern const char *APP_STARTED;		 // 参数：无
+	extern const char *BEFORE_RENDER;	 // 参数：Time
+	extern const char *RENDER;			 // 参数：Time
+	extern const char *ANIMATE;			 // 参数：Time
+	extern const char *CLOSE;			 // 参数：无
+	extern const char *BEFORE_APP_STOP;	 // 参数：无
+	extern const char *APP_STOPPED;		 // 参数：无
 
 	// SDL事件
-	extern const char *SDL_EVENT;
+	extern const char *SDL_EVENT; // 参数：SDL_Event
 
-	// 鼠标键盘事件
-	extern const char *KEY_DOWN;
-	extern const char *KEY_UP;
-	extern const char *MOUSE_DOWN;
-	extern const char *MOUSE_MOVE;
-	extern const char *MOUSE_UP;
-	extern const char *WHEEL;
+	// 键盘鼠标事件
+	extern const char *KEY_DOWN;   // 参数：KeyboardEvent
+	extern const char *KEY_UP;	   // 参数：KeyboardEvent
+	extern const char *MOUSE_DOWN; // 参数：MouseEvent
+	extern const char *MOUSE_MOVE; // 参数：MouseEvent
+	extern const char *MOUSE_UP;   // 参数：MouseEvent
+	extern const char *WHEEL;	   // 参数：WheelEvent
 
 	// 其他事件
-	extern const char *RESIZE;
-	extern const char *DROP_FILE;
+	extern const char *RESIZE;	  // 参数：ResizeEvent
+	extern const char *DROP_FILE; // 参数：DropFileEvent
 }
 
 #endif

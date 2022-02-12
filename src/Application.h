@@ -8,6 +8,7 @@
 #include <filament/View.h>
 #include <filament/Viewport.h>
 #include <utils/Entity.h>
+#include "utils/Clock.h"
 #include "EventDispatcher.h"
 #include "ui/UIHelper.h"
 #include "controller/OrbitController.h"
@@ -20,19 +21,28 @@ public:
 	virtual ~Application();
 	void start();
 	void stop();
+
+	bool getIsRunning() const noexcept;
+	utils::Clock *getClock() const noexcept;
+	event::Time *getTime() const noexcept;
+	EventDispatcher *getEventDispatcher() const noexcept;
+	ui::UIHelper *getUIHelper() const noexcept;
+
 	SDL_Window *getSDLWindow() const noexcept;
+
 	filament::Engine *getEngine() const noexcept;
 	filament::Engine::Backend getBackend() const noexcept;
 	filament::SwapChain *getSwapChain() const noexcept;
 	filament::Renderer *getRenderer() const noexcept;
+
 	utils::Entity getCameraEntity() const noexcept;
 	filament::Camera *getCamera() const noexcept;
 	filament::View *getView() const noexcept;
 	filament::Viewport *getViewport() const noexcept;
 	filament::Scene *getScene() const noexcept;
-	EventDispatcher *getEventDispatcher() const noexcept;
-	ui::UIHelper *getUIHelper() const noexcept;
+
 	controller::OrbitController *getController() const noexcept;
+
 	void addEventListener(const std::string eventName, std::string id, std::function<void(void *)> listener) noexcept;
 	void removeEventListener(const std::string eventName, std::string id) noexcept;
 	bool hasEventListener(const std::string eventName, std::string id) const noexcept;
@@ -40,10 +50,13 @@ public:
 
 protected:
 	void clean() noexcept;
-	SDL_Window *window = nullptr;
 	bool isRunning = false;
+	utils::Clock *clock = nullptr;
+	event::Time *time = nullptr;
 	EventDispatcher *event = nullptr;
 	ui::UIHelper *ui = nullptr;
+
+	SDL_Window *window = nullptr;
 
 	filament::Engine *engine = nullptr;
 	filament::SwapChain *swapChain = nullptr;

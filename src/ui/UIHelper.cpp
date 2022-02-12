@@ -7,10 +7,13 @@ using namespace ui;
 
 UIHelper::UIHelper()
 {
-    helper = new filagui::ImGuiHelper(app->getEngine(), app->getView(), fontPath);
-
+    auto engine = app->getEngine();
     auto viewport = app->getViewport();
-    helper->setDisplaySize(viewport->width, viewport->height);
+
+    view = engine->createView();
+    view->setViewport(*viewport);
+
+    helper = new filagui::ImGuiHelper(app->getEngine(), view, fontPath);
 
     ImGuiIO &io = ImGui::GetIO();
     io.KeyMap[ImGuiKey_Tab] = SDL_SCANCODE_TAB;
@@ -47,11 +50,15 @@ UIHelper::UIHelper()
     app->addEventListener(event::SDL_EVENT, id, [&](void *params)
                           { handleSDLEvent(reinterpret_cast<SDL_Event *>(params)); });
 
-    app->addEventListener(event::BEFORE_RENDER, id, std::bind(&UIHelper::handleRender, this, std::placeholders::_1));
+    app->addEventListener(event::RENDER, id, std::bind(&UIHelper::handleRender, this, std::placeholders::_1));
+    app->addEventListener(event::RESIZE, id, std::bind(&UIHelper::handleRender, this, std::placeholders::_1));
 }
 
 UIHelper::~UIHelper()
 {
+    auto engine = app->getEngine();
+    engine->destroy(view);
+
     delete helper;
 }
 
@@ -117,12 +124,9 @@ void UIHelper::handleSDLEvent(SDL_Event *event) const noexcept
 
 void UIHelper::handleRender(void *data)
 {
-    static uint64_t frequency = SDL_GetPerformanceFrequency();
-    uint64_t now = SDL_GetPerformanceCounter();
-    const float timeStep = mTime > 0 ? (float)((double)(now - mTime) / frequency) : (float)(1.0f / 60.0f);
-    mTime = now;
+    event::Time *time = reinterpret_cast<event::Time *>(data);
 
-    helper->render(timeStep, [&](filament::Engine *engine, filament::View *view)
+    helper->render(time->deltaTime, [&](filament::Engine *engine, filament::View *view)
                    { this->handleImguiCommands(engine, view); });
 }
 
@@ -144,6 +148,6 @@ void UIHelper::handleImguiCommands(filament::Engine *engine, filament::View *vie
     ImGui::End();
 }
 
-void UIHelper::handleAfterRender(void *data)
+void UIHelper::handleResize(void *data)
 {
 }

@@ -16,11 +16,17 @@ Application::Application()
 		return;
 	}
 	::app = this;
+
+	clock = new utils::Clock(false);
+	time = new event::Time;
 }
 
 Application::~Application()
 {
 	SDL_Quit();
+
+	delete clock;
+	delete time;
 }
 
 void Application::start()
@@ -60,6 +66,8 @@ void Application::start()
 
 	isRunning = true;
 
+	clock->start();
+
 	event->dispatchEvent(event::APP_STARTED);
 
 	ui = new ui::UIHelper();
@@ -68,18 +76,21 @@ void Application::start()
 	{
 		event->pollEvent();
 
-		event->dispatchEvent(event::BEFORE_RENDER);
+		time->time = clock->getElapsedTime();
+		time->deltaTime = clock->getDelta();
+
+		event->dispatchEvent(event::BEFORE_RENDER, time);
 
 		if (renderer->beginFrame(swapChain))
 		{
 			renderer->render(view);
-			event->dispatchEvent(event::RENDER);
+			event->dispatchEvent(event::RENDER, time);
 			renderer->endFrame();
 		}
 
-		myScene->animate(engine, view, renderer->getUserTime());
+		myScene->animate(engine, view, time->time);
 
-		event->dispatchEvent(event::ANIMATE);
+		event->dispatchEvent(event::ANIMATE, time);
 	}
 }
 
@@ -112,6 +123,31 @@ void Application::clean() noexcept
 	::app = nullptr;
 
 	SDL_DestroyWindow(window);
+}
+
+bool Application::getIsRunning() const noexcept
+{
+	return isRunning;
+}
+
+utils::Clock *Application::getClock() const noexcept
+{
+	return clock;
+}
+
+event::Time *Application::getTime() const noexcept
+{
+	return time;
+}
+
+EventDispatcher *Application::getEventDispatcher() const noexcept
+{
+	return event;
+}
+
+ui::UIHelper *Application::getUIHelper() const noexcept
+{
+	return ui;
 }
 
 SDL_Window *Application::getSDLWindow() const noexcept
@@ -162,16 +198,6 @@ filament::Viewport *Application::getViewport() const noexcept
 filament::Scene *Application::getScene() const noexcept
 {
 	return scene;
-}
-
-EventDispatcher *Application::getEventDispatcher() const noexcept
-{
-	return event;
-}
-
-ui::UIHelper *Application::getUIHelper() const noexcept
-{
-	return ui;
 }
 
 controller::OrbitController *Application::getController() const noexcept
