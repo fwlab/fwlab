@@ -1,5 +1,6 @@
 #include <algorithm>
 #include <iostream>
+#include <imgui.h>
 #include <SDL.h>
 #include <SDL_events.h>
 #include "context/context.h"
@@ -54,6 +55,8 @@ void EventDispatcher::pollEvent() const noexcept
 {
 	SDL_Event event;
 
+	ImGuiIO &io = ImGui::GetIO();
+
 	if (SDL_PollEvent(&event) > 0)
 	{
 		dispatchEvent(event::SDL_EVENT, &event);
@@ -67,38 +70,56 @@ void EventDispatcher::pollEvent() const noexcept
 		// 鼠标键盘事件
 		case SDL_KEYDOWN:
 		{
-			KeyboardEvent evt = {.scancode = event.key.keysym.scancode, .event = &event};
-			app->dispatchEvent(event::KEY_DOWN, &evt);
+			if (!io.WantCaptureKeyboard)
+			{
+				KeyboardEvent evt = {.scancode = event.key.keysym.scancode, .event = &event};
+				app->dispatchEvent(event::KEY_DOWN, &evt);
+			}
 			break;
 		}
 		case SDL_KEYUP:
 		{
-			KeyboardEvent evt = {.scancode = event.key.keysym.scancode, .event = &event};
-			app->dispatchEvent(event::KEY_UP, &evt);
+			if (!io.WantCaptureKeyboard)
+			{
+				KeyboardEvent evt = {.scancode = event.key.keysym.scancode, .event = &event};
+				app->dispatchEvent(event::KEY_UP, &evt);
+			}
 			break;
 		}
 		case SDL_MOUSEBUTTONDOWN:
 		{
-			MouseEvent evt = {.button = event.button.button, .x = event.button.x, .y = event.button.y, .event = &event};
-			app->dispatchEvent(event::MOUSE_DOWN, &evt);
+			if (!io.WantCaptureMouse)
+			{
+				MouseEvent evt = {.button = event.button.button, .x = event.button.x, .y = event.button.y, .event = &event};
+				app->dispatchEvent(event::MOUSE_DOWN, &evt);
+			}
 			break;
 		}
 		case SDL_MOUSEMOTION:
 		{
-			MouseEvent evt = {.button = event.button.button, .x = event.motion.x, .y = event.motion.y, .event = &event};
-			app->dispatchEvent(event::MOUSE_MOVE, &evt);
+			if (!io.WantCaptureMouse)
+			{
+				MouseEvent evt = {.button = event.button.button, .x = event.motion.x, .y = event.motion.y, .event = &event};
+				app->dispatchEvent(event::MOUSE_MOVE, &evt);
+			}
 			break;
 		}
 		case SDL_MOUSEBUTTONUP:
 		{
-			MouseEvent evt = {.button = event.button.button, .x = event.button.x, .y = event.button.y, .event = &event};
-			app->dispatchEvent(event::MOUSE_UP, &evt);
+			if (!io.WantCaptureMouse)
+			{
+				MouseEvent evt = {.button = event.button.button, .x = event.button.x, .y = event.button.y, .event = &event};
+				app->dispatchEvent(event::MOUSE_UP, &evt);
+			}
 			break;
 		}
 		case SDL_MOUSEWHEEL:
 		{
-			WheelEvent evt = {.deltaX = event.wheel.x, .deltaY = event.wheel.y, .event = &event};
-			app->dispatchEvent(event::WHEEL, &evt);
+			if (!io.WantCaptureMouse)
+			{
+				WheelEvent evt = {.deltaX = event.wheel.x, .deltaY = event.wheel.y, .event = &event};
+				app->dispatchEvent(event::WHEEL, &evt);
+			}
 			break;
 		}
 		// 其他事件

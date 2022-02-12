@@ -121,6 +121,21 @@ void UIHelper::handleSDLEvent(SDL_Event *event) const noexcept
         break;
     }
     }
+
+    int mx, my;
+    Uint32 buttons = SDL_GetMouseState(&mx, &my);
+    io.MousePos = ImVec2(-FLT_MAX, -FLT_MAX);
+    io.MouseDown[0] = mousePressed[0] || (buttons & SDL_BUTTON(SDL_BUTTON_LEFT)) != 0;
+    io.MouseDown[1] = mousePressed[1] || (buttons & SDL_BUTTON(SDL_BUTTON_RIGHT)) != 0;
+    io.MouseDown[2] = mousePressed[2] || (buttons & SDL_BUTTON(SDL_BUTTON_MIDDLE)) != 0;
+    mousePressed[0] = mousePressed[1] = mousePressed[2] = false;
+
+    // TODO: Update to a newer SDL and use SDL_CaptureMouse() to retrieve mouse coordinates
+    // outside of the client area; see the imgui SDL example.
+    if ((SDL_GetWindowFlags(app->getSDLWindow()) & SDL_WINDOW_INPUT_FOCUS) != 0)
+    {
+        io.MousePos = ImVec2((float)mx, (float)my);
+    }
 }
 
 void UIHelper::handleRender(void *data)
