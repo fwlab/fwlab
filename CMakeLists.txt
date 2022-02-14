@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.19)
 
 project(fwlab VERSION 0.0.1)
 
-set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(FILAMENT_DIR ${CMAKE_SOURCE_DIR}/third_party/filament)
@@ -38,6 +38,9 @@ include_directories(
 	${FILAMENT_DIR}/libs/iblprefilter/include
 	${FILAMENT_DIR}/libs/imageio/include
 	${FILAMENT_DIR}/libs/matdbg/include
+
+	# asserts
+	${CMAKE_BINARY_DIR}/assets
 )
 
 link_directories(

@@ -5,18 +5,17 @@ void Editor::render()
 {
     if (ImGui::BeginMainMenuBar())
     {
-        if (ImGui::BeginMenu("File", true))
+        if (ImGui::BeginMenu(u8"文件", true))
         {
-            ImGui::MenuItem("New", nullptr, false, true);
+            ImGui::MenuItem(u8"新建", nullptr, false, true);
             ImGui::EndMenu();
         }
 
         ImGui::EndMainMenuBar();
     }
 
-    if (ImGui::Begin("Hello", nullptr, ImGuiWindowFlags_MenuBar))
+    if (ImGui::Begin(u8"你好", nullptr, ImGuiWindowFlags_MenuBar))
     {
-
         ImGui::End();
     }
 }

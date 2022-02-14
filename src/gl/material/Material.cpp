@@ -79,7 +79,7 @@ void Material::dispose()
 
 void Material::create(const void *payload, size_t size)
 {
-	if (materials.contains(payload))
+	if (materials.find(payload) != materials.end())
 	{
 		material = materials.at(payload);
 	}

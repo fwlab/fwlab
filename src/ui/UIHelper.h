@@ -24,7 +24,7 @@ namespace ui
         void handleSizeChanged(void *data);
         const std::string id = "UIHelper";
         filament::View *view;
-        utils::Path fontPath = "assets/fonts/Roboto-Medium.ttf";
+        utils::Path fontPath = "assets/fonts/simhei.ttf";
         filagui::ImGuiHelper *helper;
         std::function<void()> callback = nullptr;
     };

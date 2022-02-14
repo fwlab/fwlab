@@ -5,6 +5,7 @@ set(RESOURCE_BINS)
 
 # 资源文件
 set(MATERIAL_SRCS
+	"materials/uiBlit.mat"
 	"materials/defaultMaterial.mat"
 	"materials/aiDefaultMat.mat"
 	"materials/textured.mat"
@@ -94,8 +95,11 @@ add_custom_command(
 list(APPEND RESOURCE_BINS ${target_path})
 
 # 复制字体文件
-file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/fonts/Roboto-License.txt" DESTINATION "${ASSETS_DIR}/fonts")
 file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/fonts/Roboto-Medium.ttf" DESTINATION "${ASSETS_DIR}/fonts")
+file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/fonts/Roboto-License.txt" DESTINATION "${ASSETS_DIR}/fonts")
+file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/fonts/Alibaba-PuHuiTi-Bold.ttf" DESTINATION "${ASSETS_DIR}/fonts")
+file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/fonts/Law Policy for Alibaba Sans.pdf" DESTINATION "${ASSETS_DIR}/fonts")
+file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/fonts/法务版权声明.pdf" DESTINATION "${ASSETS_DIR}/fonts")
 
 # 复制图片
 file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/images/girl.jpg" DESTINATION "${ASSETS_DIR}/images")
