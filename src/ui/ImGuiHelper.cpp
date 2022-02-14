@@ -62,7 +62,7 @@ namespace filagui
         // tiny "pixel art" texture that is compiled into the library.
         if (!fontPath.isEmpty())
         {
-            io.Fonts->AddFontFromFileTTF(fontPath.c_str(), 16.0f, nullptr, io.Fonts->GetGlyphRangesChineseFull());
+            io.Fonts->AddFontFromFileTTF(fontPath.c_str(), 20.0f, nullptr, io.Fonts->GetGlyphRangesChineseFull());
         }
         createAtlasTexture(engine);
 

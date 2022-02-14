@@ -1,4 +1,5 @@
 #include <algorithm>
+#include <iostream>
 #include "BufferAttribute.h"
 
 using namespace gl::core;
@@ -45,11 +46,11 @@ BufferAttribute::BufferAttribute(std::vector<filament::math::float3> vertices)
 BufferAttribute::~BufferAttribute()
 {
 	// ���ڲ�֪��array�Ĵ�С���޷�ɾ��array
-	//if (array != nullptr) {
+	// if (array != nullptr) {
 	//	delete[] array;
 	//	array = nullptr;
 	//}
-	//count = 0;
+	// count = 0;
 }
 
 void *BufferAttribute::getArray() const noexcept
@@ -61,6 +62,7 @@ void BufferAttribute::setArray(void *array) noexcept
 {
 	if (this->array)
 	{
+		// TODO: 无法删除void*数组
 		delete[] this->array;
 	}
 	this->array = array;
@@ -156,7 +158,7 @@ VertexBufferAttribute::~VertexBufferAttribute()
 		}
 		else
 		{
-			throw "VertexBufferAttribute::~VertexBufferAttribute: not implemented";
+			std::cerr << "VertexBufferAttribute::~VertexBufferAttribute: not implemented" << std::endl;
 		}
 	}
 }
