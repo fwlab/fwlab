@@ -3,6 +3,8 @@
 #include "../Component.h"
 #include "FileMenu.h"
 #include "EditMenu.h"
+#include "ObjectMenu.h"
+#include "HelpMenu.h"
 
 namespace ui::menubar
 {
@@ -16,6 +18,8 @@ namespace ui::menubar
     private:
         FileMenu *fileMenu;
         EditMenu *editMenu;
+        ObjectMenu *objectMenu;
+        HelpMenu *helpMenu;
     };
 }
 

@@ -4,6 +4,8 @@ add_library(${MODULE_NAME} STATIC
 	"MenuBar.cpp"
 	"FileMenu.cpp"
 	"EditMenu.cpp"
+	"ObjectMenu.cpp"
+	"HelpMenu.cpp"
 )
 
 target_link_libraries(${MODULE_NAME}
