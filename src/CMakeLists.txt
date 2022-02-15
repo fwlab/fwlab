@@ -6,6 +6,7 @@ add_subdirectory(gl)
 add_subdirectory(event)
 add_subdirectory(event/core)
 add_subdirectory(ui)
+add_subdirectory(ui/menubar)
 add_subdirectory(controller)
 add_subdirectory(scene)
 
@@ -23,5 +24,5 @@ set_target_properties(${MODULE_NAME} PROPERTIES
 target_link_libraries(${MODULE_NAME}
 	filament sdl2 camutils
 	fwlab_assets fwlab_context fwlab_event fwlab_event_core
-	fwlab_ui fwlab_scene fwlab_controller fwlab_utils
+	fwlab_ui fwlab_ui_menubar fwlab_scene fwlab_controller fwlab_utils
 )
