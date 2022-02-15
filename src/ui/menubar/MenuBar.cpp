@@ -3,15 +3,24 @@
 
 using namespace ui::menubar;
 
+MenuBar::MenuBar()
+{
+    fileMenu = new FileMenu();
+    editMenu = new EditMenu();
+}
+
+MenuBar::~MenuBar()
+{
+    delete fileMenu;
+    delete editMenu;
+}
+
 void MenuBar::render()
 {
     if (ImGui::BeginMainMenuBar())
     {
-        if (ImGui::BeginMenu("文件", true))
-        {
-            ImGui::MenuItem("新建", nullptr, false, true);
-            ImGui::EndMenu();
-        }
+        fileMenu->render();
+        editMenu->render();
 
         ImGui::EndMainMenuBar();
     }

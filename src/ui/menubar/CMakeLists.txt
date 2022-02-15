@@ -1,7 +1,9 @@
 set(MODULE_NAME fwlab_ui_menubar)
 
 add_library(${MODULE_NAME} STATIC
-	MenuBar.cpp
+	"MenuBar.cpp"
+	"FileMenu.cpp"
+	"EditMenu.cpp"
 )
 
 target_link_libraries(${MODULE_NAME}
