@@ -8,6 +8,9 @@ namespace ui::menubar
     {
     public:
         void render() override;
+        bool isDemoWindowShow = false;
+        bool isMetricsWindowShow = false;
+        bool isAboutWindowShow = false;
         bool isOpen = true;
     };
 }

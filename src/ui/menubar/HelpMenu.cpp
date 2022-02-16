@@ -9,20 +9,34 @@ void HelpMenu::render()
     {
         if (ImGui::MenuItem("演示窗口", nullptr, false, true))
         {
-            ImGui::ShowDemoWindow(&isOpen);
+            isDemoWindowShow = true;
         }
         if (ImGui::MenuItem("矩阵窗口", nullptr, false, true))
         {
-            ImGui::ShowMetricsWindow(&isOpen);
-        }
-        if (ImGui::MenuItem("样式编辑器", nullptr, false, true))
-        {
-            ImGui::ShowStyleEditor();
+            isMetricsWindowShow = true;
         }
         if (ImGui::MenuItem("关于窗口", nullptr, false, true))
         {
-            ImGui::ShowAboutWindow(&isOpen);
+            isAboutWindowShow = true;
         }
         ImGui::EndMenu();
+    }
+
+    // 演示窗口
+    if (isDemoWindowShow)
+    {
+        ImGui::ShowDemoWindow(&isDemoWindowShow);
+    }
+
+    // 矩阵窗口
+    if (isMetricsWindowShow)
+    {
+        ImGui::ShowMetricsWindow(&isMetricsWindowShow);
+    }
+
+    // 关于窗口
+    if (isAboutWindowShow)
+    {
+        ImGui::ShowAboutWindow(&isAboutWindowShow);
     }
 }
