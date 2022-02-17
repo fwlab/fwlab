@@ -2,6 +2,7 @@
 #define FWLAB_EDITOR_H
 #include "ui/Component.h"
 #include "ui/menubar/MenuBar.h"
+#include "ui/sidebar/SideBar.h"
 
 class Editor final : public ui::Component
 {
@@ -12,6 +13,7 @@ public:
 
 private:
     ui::menubar::MenuBar *menubar;
+    ui::sidebar::SideBar *sidebar;
 };
 
 #endif
