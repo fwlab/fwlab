@@ -8,6 +8,7 @@ add_subdirectory(event/core)
 add_subdirectory(ui)
 add_subdirectory(ui/menubar)
 add_subdirectory(controller)
+add_subdirectory(object)
 add_subdirectory(scene)
 
 add_executable(${MODULE_NAME}

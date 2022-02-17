@@ -4,8 +4,9 @@
 #include "../gl/gl.h"
 #include "resources/resources.h"
 #include "BoxScene.h"
+#include "../object/sky/SkyBox.h"
 
-gl::PerspectiveCamera *camera;
+object::sky::Skybox *skybox;
 gl::Light *light;
 gl::Mesh *plane;
 gl::Mesh *box;
@@ -13,14 +14,9 @@ gl::TextureLoader *loader;
 
 void BoxScene::setup(filament::Engine *engine, filament::View *view, filament::Scene *scene)
 {
-	// gl::init(engine, view, scene);
-
-	// // camera
-	// auto &viewport = view->getViewport();
-	// camera = new gl::PerspectiveCamera(50, float(viewport.width) / viewport.height, 0.1, 2000);
-	// camera->lookAt({2, 2, 2}, {0, 0, 0});
-	// camera->setScaling({2, 2});
-	// view->setCamera(camera->getCamera());
+	// skybox
+	skybox = new object::sky::Skybox();
+	scene->setSkybox(skybox->getSkybox());
 
 	// light
 	light = new gl::Light();
@@ -64,8 +60,8 @@ void BoxScene::cleanup(filament::Engine *engine, filament::View *view, filament:
 	delete plane;
 	delete box;
 	delete light;
-	delete camera;
 	delete loader;
+	delete skybox;
 }
 
 void BoxScene::animate(filament::Engine *engine, filament::View *view, double now)

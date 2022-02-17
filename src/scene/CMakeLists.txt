@@ -15,5 +15,5 @@ add_library(${MODULE_NAME} STATIC
 
 target_link_libraries(${MODULE_NAME}
 	filament viewer gltfio gltfio_core smol-v
-	fwlab_gl
+	fwlab_gl fwlab_object_sky
 )
