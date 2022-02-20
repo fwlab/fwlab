@@ -1,7 +1,7 @@
 #ifndef UI_SIDEBAR_SIDE_BAR_H
 #define UI_SIDEBAR_SIDE_BAR_H
 #include "../Component.h"
-#include "scene/HirarchyPanel.h"
+#include "scene/ScenePanel.h"
 
 namespace ui::sidebar
 {
@@ -14,7 +14,7 @@ namespace ui::sidebar
 
     private:
         float width = 240;
-        scene::HirarchyPanel *hirarchy = nullptr;
+        scene::ScenePanel *scenePanel = nullptr;
     };
 }
 

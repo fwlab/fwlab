@@ -5,12 +5,12 @@ using namespace ui::sidebar;
 
 SideBar::SideBar()
 {
-    hirarchy = new scene::HirarchyPanel();
+    scenePanel = new scene::ScenePanel();
 }
 
 SideBar::~SideBar()
 {
-    delete hirarchy;
+    delete scenePanel;
 }
 
 void SideBar::render()
@@ -28,6 +28,8 @@ void SideBar::render()
 
     if (ImGui::Begin("SideBar", nullptr, ImGuiWindowFlags_NoTitleBar))
     {
+        scenePanel->render();
+
         ImGui::End();
     }
 }
