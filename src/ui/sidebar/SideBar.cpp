@@ -3,6 +3,16 @@
 
 using namespace ui::sidebar;
 
+SideBar::SideBar()
+{
+    hirarchy = new scene::HirarchyPanel();
+}
+
+SideBar::~SideBar()
+{
+    delete hirarchy;
+}
+
 void SideBar::render()
 {
     float top = 26;
@@ -16,5 +26,8 @@ void SideBar::render()
     ImGui::SetNextWindowSize(ImVec2(size.x, size.y - top), ImGuiCond_Once);
     ImGui::SetNextWindowSizeConstraints(ImVec2(20, size.y - top), ImVec2(width, size.y - top));
 
-    ImGui::Begin("SideBar", nullptr, ImGuiWindowFlags_NoTitleBar);
+    if (ImGui::Begin("SideBar", nullptr, ImGuiWindowFlags_NoTitleBar))
+    {
+        ImGui::End();
+    }
 }
