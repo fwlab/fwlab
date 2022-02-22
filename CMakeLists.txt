@@ -140,6 +140,10 @@ link_directories(
 )
 
 if (WIN32)
+	link_directories(
+		# third_party
+		${RELEASE_DIR}/third_party/glslang/tnt/glslang/OSDependent/Windows
+	)
 	link_libraries(
 		IMM32.lib
 		shlwapi.lib
@@ -225,12 +229,13 @@ if (WIN32)
 	link_libraries(
 		# third_party
 		glslangd
+		OSDependentd
 		OGLCompilerd
 		SPIRVd
 		#SPVRemapperd
 
 		# libs
-		matdbg_combined
+		#matdbg_combined
 	)
 else ()
 	link_libraries(

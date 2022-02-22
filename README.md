@@ -91,4 +91,4 @@ Visual Studio 2019, 安装时选中使用C++的桌面开发。
 
 右键`CMakeLists.txt`，选择生成。
 
-选择调试菜单中的开始调试，运行程序。
+工具栏设置启动项为`out/build/x64-Debug/fwlab.exe`，点击`fwlab.exe`启动程序。
