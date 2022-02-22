@@ -17,6 +17,14 @@ endif()
 
 if (WIN32)
 	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /utf-8")
+	set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
+	add_compile_options(
+        $<$<CONFIG:>:/MT>
+        $<$<CONFIG:Debug>:/MTd>
+        $<$<CONFIG:Release>:/MT>
+    )
+	set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /Z7")
+    set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} /Z7")
 else ()
 	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC -stdlib=libc++")
 endif()
@@ -131,7 +139,15 @@ link_directories(
 	${RELEASE_DIR}/libs/viewer
 )
 
-if (LINUX)
+if (WIN32)
+	link_libraries(
+		IMM32.lib
+		shlwapi.lib
+		winmm.lib
+		Version.lib
+		Opengl32.lib
+	)
+else ()
 	link_libraries(
 		-static-libgcc
 		-static-libstdc++
@@ -151,10 +167,6 @@ link_libraries(
 	dracodec
 	EtcLib
 	getopt
-	glslang
-	OGLCompiler
-	SPIRV
-	#SPVRemapper
 	imgui
 	assimp
 	gtest
@@ -203,12 +215,35 @@ link_libraries(
 	imageio
 	matdbg
 	matdbg_resources
-	matdbg_combined
 	math
 	mathio
 	utils
 	viewer
 )
+
+if (WIN32)
+	link_libraries(
+		# third_party
+		glslangd
+		OGLCompilerd
+		SPIRVd
+		#SPVRemapperd
+
+		# libs
+		matdbg_combined
+	)
+else ()
+	link_libraries(
+		# third_party
+		glslang
+		OGLCompiler
+		SPIRV
+		#SPVRemapper
+
+		# libs
+		matdbg_combined
+	)
+endif()
 
 # sub_directories
 add_subdirectory(assets)
