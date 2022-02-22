@@ -4,7 +4,7 @@ fwlab是一个人工智能实验室。
 
 ![image](image/screenshot.png)
 
-## 编译说明
+## 使用Ubuntu编译项目
 
 1. 下载项目。
 
@@ -60,3 +60,35 @@ cd build
 cmake ..
 make
 ```
+
+## 使用Windows编译项目
+
+1. 下载项目。
+
+```sh
+git clone https://gitee.com/fwlab/fwlab.git
+cd fwlab
+git submodule update --init
+```
+
+2. 安装以下软件：
+
+Visual Studio 2019, 安装时选中使用C++的桌面开发。
+
+3. 编译`third_party/filament`项目。
+
+使用Visual Studio 2019打开目录`third_party/filament`。
+
+右键`CMakeLists.txt`，选择生成。
+
+然后右键`CMakeLists.txt`，选择安装。
+
+将目录`third_party/filament/out/install/x64-Debug/bin`添加到环境变量，保证`cmgen`、`matc`、`resgen`能在命令行运行。
+
+4. 编译`fwlab`项目。
+
+使用Visual Studio 2019打开目录`fwlab`。
+
+右键`CMakeLists.txt`，选择生成。
+
+选择调试菜单中的开始调试，运行程序。
