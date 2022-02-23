@@ -12,12 +12,21 @@ add_subdirectory(controller)
 add_subdirectory(object)
 add_subdirectory(scene)
 
-add_executable(${MODULE_NAME} WIN32
-    "main.cpp"
-	"Application.cpp"
-	"EventDispatcher.cpp"
-	"Editor.cpp"
-)
+if (WIN32)
+	add_executable(${MODULE_NAME} WIN32
+		"main.cpp"
+		"Application.cpp"
+		"EventDispatcher.cpp"
+		"Editor.cpp"
+	)
+else()
+	add_executable(${MODULE_NAME}
+		"main.cpp"
+		"Application.cpp"
+		"EventDispatcher.cpp"
+		"Editor.cpp"
+	)
+endif()
 
 set_target_properties(${MODULE_NAME} PROPERTIES
 	RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}
