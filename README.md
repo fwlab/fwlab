@@ -77,11 +77,13 @@ Visual Studio 2019, 安装时选中使用C++的桌面开发。
 
 3. 编译`third_party/filament`项目。
 
+将`third_party/patch/filament/CMakeSettings.json`拷贝到`third_party/filament`目录。
+
 使用Visual Studio 2019打开目录`third_party/filament`。
 
 右键`CMakeLists.txt`，选择生成。
 
-然后右键`CMakeLists.txt`，选择安装。
+右键`CMakeLists.txt`，选择安装。
 
 将目录`third_party/filament/out/release/bin`添加到环境变量，保证`cmgen`、`matc`、`resgen`能在命令行运行。
 
@@ -89,6 +91,6 @@ Visual Studio 2019, 安装时选中使用C++的桌面开发。
 
 使用Visual Studio 2019打开目录`fwlab`。
 
-右键`CMakeLists.txt`，选择生成。
+右键`CMakeLists.txt`，选择生成，生成的文件是`build/fwlab.exe`。
 
-工具栏设置启动项为`out/build/x64-Debug/fwlab.exe`，点击`fwlab.exe`启动程序。
+工具栏设置启动项为`build/fwlab.exe`，点击`fwlab.exe`启动程序。
