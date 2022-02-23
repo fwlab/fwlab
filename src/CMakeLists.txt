@@ -12,7 +12,7 @@ add_subdirectory(controller)
 add_subdirectory(object)
 add_subdirectory(scene)
 
-add_executable(${MODULE_NAME}
+add_executable(${MODULE_NAME} WIN32
     "main.cpp"
 	"Application.cpp"
 	"EventDispatcher.cpp"

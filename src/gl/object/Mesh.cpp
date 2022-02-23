@@ -208,8 +208,8 @@ void Mesh::setMaterialInstanceAt(size_t primitiveIndex, filament::MaterialInstan
 
 void Mesh::setMorphWeights(filament::math::float4 &weights) noexcept
 {
-	auto &manager = engine->getRenderableManager();
-	manager.setMorphWeights(manager.getInstance(entity), weights);
+	//auto &manager = engine->getRenderableManager();
+	//manager.setMorphWeights(manager.getInstance(entity), weights);
 }
 
 void Mesh::setPriority(uint8_t priority) noexcept

@@ -83,7 +83,7 @@ Visual Studio 2019, 安装时选中使用C++的桌面开发。
 
 然后右键`CMakeLists.txt`，选择安装。
 
-将目录`third_party/filament/out/install/x64-Debug/bin`添加到环境变量，保证`cmgen`、`matc`、`resgen`能在命令行运行。
+将目录`third_party/filament/out/release/bin`添加到环境变量，保证`cmgen`、`matc`、`resgen`能在命令行运行。
 
 4. 编译`fwlab`项目。
 

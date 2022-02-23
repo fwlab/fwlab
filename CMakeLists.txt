@@ -6,14 +6,8 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(FILAMENT_DIR ${CMAKE_SOURCE_DIR}/third_party/filament)
-
-if (WIN32)
-	set(RELEASE_DIR ${FILAMENT_DIR}/out/build/x64-Debug)
-	set(INSTALL_DIR ${FILAMENT_DIR}/out/install/x64-Debug)
-else ()
-	set(RELEASE_DIR ${FILAMENT_DIR}/out/cmake-release)
-	set(INSTALL_DIR ${FILAMENT_DIR}/out/release)
-endif()
+set(RELEASE_DIR ${FILAMENT_DIR}/out/cmake-release)
+set(INSTALL_DIR ${FILAMENT_DIR}/out/release)
 
 if (WIN32)
 	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /utf-8")
@@ -58,6 +52,9 @@ include_directories(
 	${FILAMENT_DIR}/third_party/libsdl2/include
 	${FILAMENT_DIR}/third_party/stb
 
+	# filament
+	${INSTALL_DIR}/include
+
 	# libs
 	${FILAMENT_DIR}/libs/bluegl/include
 	${FILAMENT_DIR}/libs/filabridge/include
@@ -71,18 +68,6 @@ include_directories(
 	# asserts
 	${CMAKE_BINARY_DIR}/assets
 )
-
-if (WIN32)
-	include_directories(
-		# filament
-		${INSTALL_DIR}/include
-	)
-else ()
-	include_directories(
-		# filament
-		${INSTALL_DIR}/filament/include
-	)
-endif ()
 
 link_directories(
 	# third_party
@@ -165,7 +150,7 @@ endif()
 link_libraries(
 	# third_party
 	astcenc
-	benchmark
+	#benchmark
 	#benchmark_main
 	civetweb
 	dracodec
@@ -228,10 +213,10 @@ link_libraries(
 if (WIN32)
 	link_libraries(
 		# third_party
-		glslangd
-		OSDependentd
-		OGLCompilerd
-		SPIRVd
+		glslang
+		OSDependent
+		OGLCompiler
+		SPIRV
 		#SPVRemapperd
 
 		# libs
