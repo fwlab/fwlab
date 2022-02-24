@@ -5,15 +5,16 @@ using namespace utils;
 
 Clock::Clock(bool autoStart)
 {
-    this->autoStart = autoStart;
+	this->autoStart = autoStart;
 
-    frequency = SDL_GetPerformanceFrequency();
+	frequency = SDL_GetPerformanceFrequency();
 
-    this->startTime = 0;
-    this->oldTime = 0;
-    this->elapsedTime = 0;
+	startTime = 0;
+	oldTime = 0;
+	elapsedTime = 0;
+	deltaTime = 0;
 
-    this->running = false;
+	running = false;
 }
 
 Clock::~Clock()
@@ -22,50 +23,50 @@ Clock::~Clock()
 
 void Clock::start()
 {
-    this->startTime = now();
+	startTime = now();
 
-    this->oldTime = this->startTime;
-    this->elapsedTime = 0;
-    this->running = true;
+	oldTime = startTime;
+	elapsedTime = 0;
+	deltaTime = 0;
+	running = true;
 }
 
 void Clock::stop()
 {
-    this->getElapsedTime();
-    this->running = false;
-    this->autoStart = false;
+	update();
+	running = false;
+	autoStart = false;
 }
 
 double Clock::getElapsedTime()
 {
-    this->getDelta();
-    return this->elapsedTime;
+	return elapsedTime;
 }
 
 double Clock::getDelta()
 {
-    double diff = 0;
+	return deltaTime;
+}
 
-    if (this->autoStart && !this->running)
-    {
-        this->start();
-        return 0;
-    }
+void Clock::update()
+{
+	if (autoStart && !running)
+	{
+		start();
+	}
+	if (!running)
+	{
+		return;
+	}
 
-    if (this->running)
-    {
-        double newTime = now();
+	double newTime = now();
+	deltaTime = newTime - oldTime;
+	oldTime = newTime;
 
-        diff = newTime - this->oldTime;
-        this->oldTime = newTime;
-
-        this->elapsedTime += diff;
-    }
-
-    return diff;
+	elapsedTime += deltaTime;
 }
 
 double Clock::now()
 {
-    return double(SDL_GetPerformanceCounter()) / frequency;
+	return double(SDL_GetPerformanceCounter()) / frequency;
 }

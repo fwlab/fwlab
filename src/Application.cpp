@@ -79,10 +79,10 @@ void Application::start()
 
 	while (isRunning)
 	{
-		event->pollEvent();
-
 		time->time = clock->getElapsedTime();
 		time->deltaTime = clock->getDelta();
+
+		event->pollEvent();
 
 		event->dispatchEvent(event::BEFORE_RENDER, time);
 
@@ -97,7 +97,14 @@ void Application::start()
 
 		event->dispatchEvent(event::ANIMATE, time);
 
-		std::this_thread::sleep_for(std::chrono::milliseconds(16));
+		clock->update();
+
+		// 保持帧率稳定在60fps
+		int sleepTime = 1000.0 / 60 - clock->getDelta() * 1000;
+		if (sleepTime > 0)
+		{
+			std::this_thread::sleep_for(std::chrono::milliseconds(sleepTime));
+		}
 	}
 }
 
