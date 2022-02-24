@@ -1,14 +1,14 @@
 ﻿{
   "configurations": [
     {
-      "name": "Release",
+      "name": "Build",
       "generator": "Ninja",
       "configurationType": "Release",
       "inheritEnvironments": [
         "msvc_x64_x64"
       ],
-      "buildRoot": "${projectDir}\\out\\cmake-release",
-      "installRoot": "${projectDir}\\out\\release",
+      "buildRoot": "${projectDir}\\out\\build",
+      "installRoot": "${projectDir}\\out\\install",
       "cmakeCommandArgs": "",
       "buildCommandArgs": "",
       "ctestCommandArgs": ""

@@ -6,8 +6,8 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(FILAMENT_DIR ${CMAKE_SOURCE_DIR}/third_party/filament)
-set(RELEASE_DIR ${FILAMENT_DIR}/out/cmake-release)
-set(INSTALL_DIR ${FILAMENT_DIR}/out/release)
+set(RELEASE_DIR ${FILAMENT_DIR}/out/build)
+set(INSTALL_DIR ${FILAMENT_DIR}/out/install)
 
 if (WIN32)
 	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /utf-8")
@@ -211,17 +211,31 @@ link_libraries(
 )
 
 if (WIN32)
-	link_libraries(
-		# third_party
-		glslang
-		OSDependent
-		OGLCompiler
-		SPIRV
-		#SPVRemapperd
-
-		# libs
-		#matdbg_combined
-	)
+	if (${CMAKE_BUILD_TYPE} STREQUAL "Debug")
+		link_libraries(
+			# third_party
+			glslangd
+			OSDependentd
+			OGLCompilerd
+			SPIRVd
+			#SPVRemapperd
+			
+			# libs
+			#matdbg_combined
+		)
+	else()
+		link_libraries(
+			# third_party
+			glslang
+			OSDependent
+			OGLCompiler
+			SPIRV
+			#SPVRemapper
+			
+			# libs
+			#matdbg_combined
+		)
+	endif()
 else ()
 	link_libraries(
 		# third_party
