@@ -18,3 +18,4 @@ CTestTestfile.cmake
 /third_party/release
 /build
 a.out
+/CMakeSettings.json

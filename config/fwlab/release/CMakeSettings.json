@@ -5,12 +5,11 @@
       "generator": "Ninja",
       "configurationType": "Release",
       "inheritEnvironments": [ "msvc_x64_x64" ],
-      "buildRoot": "${projectDir}\\build",
-      "installRoot": "${projectDir}\\build\\install",
+      "buildRoot": "${projectDir}\\build\\release",
+      "installRoot": "${projectDir}\\build\\release\\install",
       "cmakeCommandArgs": "",
       "buildCommandArgs": "",
-      "ctestCommandArgs": "",
-      "variables": []
+      "ctestCommandArgs": ""
     }
   ]
 }
