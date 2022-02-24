@@ -1,5 +1,7 @@
+#include <chrono>
 #include <functional>
 #include <iostream>
+#include <thread>
 #include <utils/EntityManager.h>
 #include "utils/SDLUtils.h"
 #include "gl/gl.h"
@@ -48,7 +50,7 @@ void Application::start()
 	camera = engine->createCamera(cameraEntity);
 	camera->setProjection(60, float(width) / height, 0.1, 2000, filament::Camera::Fov::VERTICAL);
 	camera->setExposure(16.0f, 1 / 125.0f, 100.0f);
-	camera->lookAt({3, 4, 5}, {0, 0, 0});
+	camera->lookAt({ 3, 4, 5 }, { 0, 0, 0 });
 
 	view = engine->createView();
 	viewport = new filament::Viewport(0, 0, width, height);
@@ -73,7 +75,7 @@ void Application::start()
 	ui = new ui::UIHelper();
 	editor = new Editor();
 	ui->setCallback([&]()
-					{ editor->render(); });
+		{ editor->render(); });
 
 	while (isRunning)
 	{
@@ -94,6 +96,8 @@ void Application::start()
 		myScene->animate(engine, view, time->time);
 
 		event->dispatchEvent(event::ANIMATE, time);
+
+		std::this_thread::sleep_for(std::chrono::milliseconds(16));
 	}
 }
 
@@ -134,32 +138,32 @@ bool Application::getIsRunning() const noexcept
 	return isRunning;
 }
 
-utils::Clock *Application::getClock() const noexcept
+utils::Clock* Application::getClock() const noexcept
 {
 	return clock;
 }
 
-event::Time *Application::getTime() const noexcept
+event::Time* Application::getTime() const noexcept
 {
 	return time;
 }
 
-EventDispatcher *Application::getEventDispatcher() const noexcept
+EventDispatcher* Application::getEventDispatcher() const noexcept
 {
 	return event;
 }
 
-ui::UIHelper *Application::getUIHelper() const noexcept
+ui::UIHelper* Application::getUIHelper() const noexcept
 {
 	return ui;
 }
 
-SDL_Window *Application::getSDLWindow() const noexcept
+SDL_Window* Application::getSDLWindow() const noexcept
 {
 	return window;
 }
 
-filament::Engine *Application::getEngine() const noexcept
+filament::Engine* Application::getEngine() const noexcept
 {
 	return engine;
 }
@@ -169,12 +173,12 @@ filament::Engine::Backend Application::getBackend() const noexcept
 	return engine->getBackend();
 }
 
-filament::SwapChain *Application::getSwapChain() const noexcept
+filament::SwapChain* Application::getSwapChain() const noexcept
 {
 	return swapChain;
 }
 
-filament::Renderer *Application::getRenderer() const noexcept
+filament::Renderer* Application::getRenderer() const noexcept
 {
 	return renderer;
 }
@@ -184,32 +188,32 @@ utils::Entity Application::getCameraEntity() const noexcept
 	return cameraEntity;
 }
 
-filament::Camera *Application::getCamera() const noexcept
+filament::Camera* Application::getCamera() const noexcept
 {
 	return camera;
 }
 
-filament::View *Application::getView() const noexcept
+filament::View* Application::getView() const noexcept
 {
 	return view;
 }
 
-filament::Viewport *Application::getViewport() const noexcept
+filament::Viewport* Application::getViewport() const noexcept
 {
 	return viewport;
 }
 
-filament::Scene *Application::getScene() const noexcept
+filament::Scene* Application::getScene() const noexcept
 {
 	return scene;
 }
 
-controller::OrbitController *Application::getController() const noexcept
+controller::OrbitController* Application::getController() const noexcept
 {
 	return controller;
 }
 
-void Application::addEventListener(const std::string eventName, std::string id, std::function<void(void *)> listener) noexcept
+void Application::addEventListener(const std::string eventName, std::string id, std::function<void(void*)> listener) noexcept
 {
 	event->addEventListener(eventName, id, listener);
 }
@@ -224,7 +228,7 @@ bool Application::hasEventListener(const std::string eventName, std::string id) 
 	return event->hasEventListener(eventName, id);
 }
 
-void Application::dispatchEvent(const std::string eventName, void *params) const noexcept
+void Application::dispatchEvent(const std::string eventName, void* params) const noexcept
 {
 	event->dispatchEvent(eventName, params);
 }
