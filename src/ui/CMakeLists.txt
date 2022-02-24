@@ -4,7 +4,7 @@ add_library(${MODULE_NAME} STATIC
 	"ImGuiHelper.cpp"
 	"UIHelper.cpp"
 	"Component.cpp"
-)
+ "framerate/Framerate.h" "framerate/Framerate.cpp")
 
 target_link_libraries(${MODULE_NAME}
 	filament filagui utils
