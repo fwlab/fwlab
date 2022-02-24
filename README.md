@@ -75,6 +75,8 @@ git submodule update --init
 
 Visual Studio 2019, 安装时选中使用C++的桌面开发。
 
+CMake，并将`cmake.exe`所在目录添加到环境变量。
+
 3. 编译`third_party/filament`项目。
 
 将`third_party/patch/filament/CMakeSettings.json`拷贝到`third_party/filament`目录。

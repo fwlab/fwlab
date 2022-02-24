@@ -32,6 +32,9 @@
             "command": "/usr/bin/cmake",
             "args": [
                 "-DCMAKE_BUILD_TYPE=Debug",
+                "-DCMAKE_SYSTEM_VERSION=10.0.19041.0",
+                "-LC:/Program Files (x86)/Microsoft Visual Studio/2019/Enterprise/VC/Tools/MSVC/14.29.30133/lib/x64",
+                "-LC:/Program Files (x86)/Windows Kits/10/Lib/10.0.19041.0/um/x64",
                 ".."
             ],
             "options": {
@@ -43,6 +46,13 @@
                 "panel": "shared",
                 "showReuseMessage": false,
                 "clear": false
+            },
+            "windows": {
+                "command": "cmake",
+                "args": [
+                    "-DCMAKE_BUILD_TYPE=Debug",
+                    ".."
+                ],
             },
             "dependsOn": [
                 "fwlab_mkbuild"
@@ -63,6 +73,13 @@
                 "panel": "shared",
                 "showReuseMessage": false,
                 "clear": true
+            },
+            "windows": {
+                "command": "mkdir",
+                "args": [
+                    "-Force",
+                    "build"
+                ],
             },
             "detail": "fwlab创建build文件夹。"
         }
