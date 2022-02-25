@@ -35,14 +35,14 @@ sudo update-alternatives --install /usr/bin/c++ c++ /usr/bin/clang++ 100
 4. 在`third_party/filament`目录执行以下代码。
 
 ```sh
-mkdir -p out/cmake-release
-cd out/cmake-release
-cmake -G Ninja -DCMAKE_BUILD_TYPE=Release -DFILAMENT_SUPPORTS_VULKAN=OFF -DCMAKE_INSTALL_PREFIX=../release/filament ../..
+mkdir -p out/build
+cd out/build
+cmake -G Ninja -DCMAKE_BUILD_TYPE=Debug -DFILAMENT_SUPPORTS_VULKAN=OFF -DCMAKE_INSTALL_PREFIX=../install ../..
 ninja
 ninja install
 ```
 
-5. 将`third_party/filament/out/release/filament/bin`目录添加到环境变量。
+5. 将`third_party/filament/out/install/bin`目录添加到环境变量。
 
 ```sh
 cd /etc/profile.d
@@ -55,9 +55,9 @@ echo $PATH
 6. 在`fwlab`根目录执行以下代码。
 
 ```
-mkdir build
-cd build
-cmake ..
+mkdir -p out/build
+cd out/build
+cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_INSTALL_PREFIX=../install ../..
 make
 ```
 
@@ -74,8 +74,6 @@ git submodule update --init
 2. 安装以下软件：
 
 Visual Studio 2019, 安装时选中使用C++的桌面开发。
-
-CMake，并将`cmake.exe`所在目录添加到环境变量。
 
 3. 编译`third_party/filament`项目。
 

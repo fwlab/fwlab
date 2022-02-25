@@ -137,6 +137,10 @@ if (WIN32)
 		Opengl32.lib
 	)
 else ()
+	link_directories(
+		# third_party
+		${RELEASE_DIR}/third_party/glslang/tnt/glslang/OSDependent/Unix
+	)
 	link_libraries(
 		-static-libgcc
 		-static-libstdc++
@@ -240,6 +244,7 @@ else ()
 	link_libraries(
 		# third_party
 		glslang
+		OSDependent
 		OGLCompiler
 		SPIRV
 		#SPVRemapper

@@ -17,15 +17,19 @@ ScenePanel::~ScenePanel()
 
 void ScenePanel::render()
 {
-    ImGuiTabBarFlags flags = ImGuiTabBarFlags_None;
-    if (ImGui::BeginTabBar("scene-tab", flags))
+    isSceneTabShow = false;
+    isHistoryTabShow = false;
+
+    if (ImGui::BeginTabBar("scene-tab"))
     {
-        if (ImGui::BeginTabItem("场景", &isSceneTabShow))
+        if (ImGui::BeginTabItem("场景"))
         {
+            isSceneTabShow = true;
             ImGui::EndTabItem();
         }
-        if (ImGui::BeginTabItem("历史", &isHistoryTabShow))
+        if (ImGui::BeginTabItem("历史"))
         {
+            isHistoryTabShow = true;
             ImGui::EndTabItem();
         }
 

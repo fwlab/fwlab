@@ -4,23 +4,23 @@
 
 using namespace utils;
 
-void* SDLUtils::getNativeWindow(SDL_Window* sdlWindow)
+void *SDLUtils::getNativeWindow(SDL_Window *sdlWindow)
 {
 	SDL_SysWMinfo wmi;
 	SDL_VERSION(&wmi.version);
 	SDL_GetWindowWMInfo(sdlWindow, &wmi);
 
+#if defined(SDL_VIDEO_DRIVER_WINDOWS)
 	if (wmi.subsystem == SDL_VIDEO_DRIVER_WINDOWS)
 	{
-#if defined(SDL_VIDEO_DRIVER_WINDOWS)
 		return wmi.info.win.window;
-#endif
 	}
+#endif
 	if (wmi.subsystem == SDL_SYSWM_X11)
 	{
 #if defined(FILAMENT_SUPPORTS_X11)
 		Window win = (Window)wmi.info.x11.window;
-		return (void*)win;
+		return (void *)win;
 #endif
 	}
 	else if (wmi.subsystem == SDL_SYSWM_WAYLAND)
