@@ -6,7 +6,7 @@
             "command": "/usr/bin/make",
             "args": [],
             "options": {
-                "cwd": "${workspaceFolder}/build/"
+                "cwd": "${workspaceFolder}/out/build/"
             },
             "problemMatcher": [
                 "$gcc"
@@ -32,13 +32,11 @@
             "command": "/usr/bin/cmake",
             "args": [
                 "-DCMAKE_BUILD_TYPE=Debug",
-                "-DCMAKE_SYSTEM_VERSION=10.0.19041.0",
-                "-LC:/Program Files (x86)/Microsoft Visual Studio/2019/Enterprise/VC/Tools/MSVC/14.29.30133/lib/x64",
-                "-LC:/Program Files (x86)/Windows Kits/10/Lib/10.0.19041.0/um/x64",
-                ".."
+                "-DCMAKE_INSTALL_PREFIX=../install",
+                "../.."
             ],
             "options": {
-                "cwd": "${workspaceFolder}/build/"
+                "cwd": "${workspaceFolder}/out/build/"
             },
             "group": "build",
             "presentation": {
@@ -65,7 +63,7 @@
             "command": "/usr/bin/mkdir",
             "args": [
                 "-p",
-                "build"
+                "out/build"
             ],
             "group": "build",
             "presentation": {
@@ -78,10 +76,10 @@
                 "command": "mkdir",
                 "args": [
                     "-Force",
-                    "build"
+                    "out/build"
                 ],
             },
-            "detail": "fwlab创建build文件夹。"
+            "detail": "fwlab创建out/build文件夹。"
         }
     ],
     "version": "2.0.0"

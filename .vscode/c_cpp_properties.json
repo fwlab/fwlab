@@ -4,9 +4,9 @@
             "name": "Linux",
             "includePath": [
                 "${workspaceFolder}/**",
-                "${workspaceFolder}/third_party/filament/out/release/include",
+                "${workspaceFolder}/third_party/filament/out/install/include",
                 "${workspaceFolder}/third_party/filament/libs/filagui/include",
-                "${workspaceFolder}/build/assets"
+                "${workspaceFolder}/out/build/assets"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/clang",
@@ -18,9 +18,9 @@
             "name": "Win32",
             "includePath": [
                 "${workspaceFolder}/**",
-                "${workspaceFolder}/third_party/filament/out/release/include",
+                "${workspaceFolder}/third_party/filament/out/install/include",
                 "${workspaceFolder}/third_party/filament/libs/filagui/include",
-                "${workspaceFolder}/build/assets"
+                "${workspaceFolder}/out/build/assets"
             ],
             "defines": [
                 "_DEBUG",
