@@ -1,7 +1,7 @@
-#ifndef CONTEXT_CONTEXT_H
-#define CONTEXT_CONTEXT_H
+#ifndef FWLAB_CONTEXT_CONTEXT_H
+#define FWLAB_CONTEXT_CONTEXT_H
 #include "../Application.h"
 
-extern Application *app;
+extern fwlab::Application* app;
 
 #endif

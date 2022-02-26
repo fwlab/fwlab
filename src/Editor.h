@@ -5,17 +5,20 @@
 #include "ui/sidebar/SideBar.h"
 #include "ui/framerate/Framerate.h"
 
-class Editor final : public ui::Component
+namespace fwlab
 {
-public:
-	Editor();
-	virtual ~Editor();
-	void render() override;
+	class Editor final : public ui::Component
+	{
+	public:
+		Editor();
+		virtual ~Editor();
+		void render() override;
 
-private:
-	ui::menubar::MenuBar* menubar;
-	ui::sidebar::SideBar* sidebar;
-	ui::framerate::Framerate* framerate;
-};
+	private:
+		ui::menubar::MenuBar* menubar;
+		ui::sidebar::SideBar* sidebar;
+		ui::framerate::Framerate* framerate;
+	};
+}
 
 #endif

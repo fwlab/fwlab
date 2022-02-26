@@ -1,14 +1,14 @@
-#ifndef UI_MENUBAR_EDIT_MENU_H
-#define UI_MENUBAR_EDIT_MENU_H
+#ifndef FWLAB_UI_MENUBAR_EDIT_MENU_H
+#define FWLAB_UI_MENUBAR_EDIT_MENU_H
 #include "../Component.h"
 
-namespace ui::menubar
+namespace fwlab::ui::menubar
 {
-    class EditMenu : public Component
-    {
-    public:
-        void render() override;
-    };
+	class EditMenu : public Component
+	{
+	public:
+		void render() override;
+	};
 }
 
 #endif

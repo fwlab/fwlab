@@ -1,33 +1,34 @@
 #include <imgui.h>
 #include "MenuBar.h"
 
-using namespace ui::menubar;
-
-MenuBar::MenuBar()
+namespace fwlab::ui::menubar
 {
-    fileMenu = new FileMenu();
-    editMenu = new EditMenu();
-    objectMenu = new ObjectMenu();
-    helpMenu = new HelpMenu();
-}
+	MenuBar::MenuBar()
+	{
+		fileMenu = new FileMenu();
+		editMenu = new EditMenu();
+		objectMenu = new ObjectMenu();
+		helpMenu = new HelpMenu();
+	}
 
-MenuBar::~MenuBar()
-{
-    delete fileMenu;
-    delete editMenu;
-    delete objectMenu;
-    delete helpMenu;
-}
+	MenuBar::~MenuBar()
+	{
+		delete fileMenu;
+		delete editMenu;
+		delete objectMenu;
+		delete helpMenu;
+	}
 
-void MenuBar::render()
-{
-    if (ImGui::BeginMainMenuBar())
-    {
-        fileMenu->render();
-        editMenu->render();
-        objectMenu->render();
-        helpMenu->render();
+	void MenuBar::render()
+	{
+		if (ImGui::BeginMainMenuBar())
+		{
+			fileMenu->render();
+			editMenu->render();
+			objectMenu->render();
+			helpMenu->render();
 
-        ImGui::EndMainMenuBar();
-    }
+			ImGui::EndMainMenuBar();
+		}
+	}
 }

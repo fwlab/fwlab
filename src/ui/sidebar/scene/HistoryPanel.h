@@ -1,14 +1,14 @@
-#ifndef UI_SIDEBAR_SCENE_HISTORY_PANEL_H
-#define UI_SIDEBAR_SCENE_HISTORY_PANEL_H
+#ifndef FWLAB_UI_SIDEBAR_SCENE_HISTORY_PANEL_H
+#define FWLAB_UI_SIDEBAR_SCENE_HISTORY_PANEL_H
 #include "../../Component.h"
 
-namespace ui::sidebar::scene
+namespace fwlab::ui::sidebar::scene
 {
-    class HistoryPanel : public Component
-    {
-    public:
-        void render() override;
-    };
+	class HistoryPanel : public Component
+	{
+	public:
+		void render() override;
+	};
 }
 
 #endif

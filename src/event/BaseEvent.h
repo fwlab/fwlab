@@ -1,7 +1,7 @@
 #ifndef FWLAB_EVENT_BASE_EVENT_H
 #define FWLAB_EVENT_BASE_EVENT_H
 
-namespace event
+namespace fwlab::event
 {
 	class BaseEvent
 	{

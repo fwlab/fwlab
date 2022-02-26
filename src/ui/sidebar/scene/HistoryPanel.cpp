@@ -1,9 +1,10 @@
 #include <imgui.h>
 #include "HistoryPanel.h"
 
-using namespace ui::sidebar::scene;
-
-void HistoryPanel::render()
+namespace fwlab::ui::sidebar::scene
 {
-    ImGui::Text("历史面板");
+	void HistoryPanel::render()
+	{
+		ImGui::Text("历史面板");
+	}
 }

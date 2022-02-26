@@ -1,42 +1,44 @@
 #include <imgui.h>
 #include "HelpMenu.h"
 
-using namespace ui::menubar;
-
-void HelpMenu::render()
+namespace fwlab::ui::menubar
 {
-    if (ImGui::BeginMenu("帮助", true))
-    {
-        if (ImGui::MenuItem("演示窗口", nullptr, false, true))
-        {
-            isDemoWindowShow = true;
-        }
-        if (ImGui::MenuItem("矩阵窗口", nullptr, false, true))
-        {
-            isMetricsWindowShow = true;
-        }
-        if (ImGui::MenuItem("关于窗口", nullptr, false, true))
-        {
-            isAboutWindowShow = true;
-        }
-        ImGui::EndMenu();
-    }
 
-    // 演示窗口
-    if (isDemoWindowShow)
-    {
-        ImGui::ShowDemoWindow(&isDemoWindowShow);
-    }
+	void HelpMenu::render()
+	{
+		if (ImGui::BeginMenu("帮助", true))
+		{
+			if (ImGui::MenuItem("演示窗口", nullptr, false, true))
+			{
+				isDemoWindowShow = true;
+			}
+			if (ImGui::MenuItem("矩阵窗口", nullptr, false, true))
+			{
+				isMetricsWindowShow = true;
+			}
+			if (ImGui::MenuItem("关于窗口", nullptr, false, true))
+			{
+				isAboutWindowShow = true;
+			}
+			ImGui::EndMenu();
+		}
 
-    // 矩阵窗口
-    if (isMetricsWindowShow)
-    {
-        ImGui::ShowMetricsWindow(&isMetricsWindowShow);
-    }
+		// 演示窗口
+		if (isDemoWindowShow)
+		{
+			ImGui::ShowDemoWindow(&isDemoWindowShow);
+		}
 
-    // 关于窗口
-    if (isAboutWindowShow)
-    {
-        ImGui::ShowAboutWindow(&isAboutWindowShow);
-    }
+		// 矩阵窗口
+		if (isMetricsWindowShow)
+		{
+			ImGui::ShowMetricsWindow(&isMetricsWindowShow);
+		}
+
+		// 关于窗口
+		if (isAboutWindowShow)
+		{
+			ImGui::ShowAboutWindow(&isAboutWindowShow);
+		}
+	}
 }

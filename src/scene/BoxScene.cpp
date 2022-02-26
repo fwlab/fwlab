@@ -6,7 +6,7 @@
 #include "BoxScene.h"
 #include "../object/sky/SkyBox.h"
 
-object::sky::Skybox *skybox;
+fwlab::object::sky::Skybox *skybox;
 gl::Light *light;
 gl::Mesh *plane;
 gl::Mesh *box;
@@ -15,7 +15,7 @@ gl::TextureLoader *loader;
 void BoxScene::setup(filament::Engine *engine, filament::View *view, filament::Scene *scene)
 {
 	// skybox
-	skybox = new object::sky::Skybox();
+	skybox = new fwlab::object::sky::Skybox();
 	scene->setSkybox(skybox->getSkybox());
 
 	// light

@@ -1,11 +1,12 @@
 #include "BaseEvent.h"
 
-using namespace event;
-
-void BaseEvent::start()
+namespace fwlab::event
 {
-}
+	void BaseEvent::start()
+	{
+	}
 
-void BaseEvent::stop()
-{
+	void BaseEvent::stop()
+	{
+	}
 }

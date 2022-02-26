@@ -6,27 +6,30 @@
 #include <vector>
 #include "event/BaseEvent.h"
 
-class EventDispatcher final : public event::BaseEvent
+namespace fwlab
 {
-public:
-	EventDispatcher();
-	virtual ~EventDispatcher();
-	void start() override;
-	void stop() override;
-	void pollEvent() const noexcept;
-	void addEventListener(const std::string eventName, std::string id, std::function<void(void *)> listener) noexcept;
-	void removeEventListener(const std::string eventName, std::string id) noexcept;
-	bool hasEventListener(const std::string eventName, std::string id) const noexcept;
-	void dispatchEvent(const std::string eventName, void *params = nullptr) const noexcept;
-
-private:
-	struct EventData
+	class EventDispatcher final : public event::BaseEvent
 	{
-		std::string id;
-		std::function<void(void *)> listener;
+	public:
+		EventDispatcher();
+		virtual ~EventDispatcher();
+		void start() override;
+		void stop() override;
+		void pollEvent() const noexcept;
+		void addEventListener(const std::string eventName, std::string id, std::function<void(void*)> listener) noexcept;
+		void removeEventListener(const std::string eventName, std::string id) noexcept;
+		bool hasEventListener(const std::string eventName, std::string id) const noexcept;
+		void dispatchEvent(const std::string eventName, void* params = nullptr) const noexcept;
+
+	private:
+		struct EventData
+		{
+			std::string id;
+			std::function<void(void*)> listener;
+		};
+		std::vector<BaseEvent*> events;
+		std::unordered_map<std::string, std::vector<EventData>> eventMap;
 	};
-	std::vector<BaseEvent *> events;
-	std::unordered_map<std::string, std::vector<EventData>> eventMap;
-};
+}
 
 #endif

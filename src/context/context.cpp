@@ -1,3 +1,3 @@
 #include "context.h"
 
-Application *app = nullptr;
+fwlab::Application* app = nullptr;

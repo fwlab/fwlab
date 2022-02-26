@@ -14,7 +14,7 @@ int WINAPI WinMain(
 int main()
 #endif
 {
-	Application app;
+	fwlab::Application app;
 	app.start();
 
 	return 0;

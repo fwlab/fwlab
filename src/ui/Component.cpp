@@ -1,18 +1,20 @@
 #include "Component.h"
 
-using namespace ui;
-
-Component::Component()
+namespace fwlab::ui
 {
-	static int i = -1;
+	Component::Component()
+	{
+		static int i = -1;
 
-	id = "Component" + i--;
-}
+		id = "Component" + i--;
+	}
 
-Component::~Component()
-{
-}
+	Component::~Component()
+	{
+	}
 
-void Component::render()
-{
+	void Component::render()
+	{
+	}
+
 }

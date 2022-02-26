@@ -2,7 +2,7 @@
 #define FWLAB_UI_COMPONENT_H
 #include <string>
 
-namespace ui
+namespace fwlab::ui
 {
 	class Component
 	{

@@ -3,18 +3,18 @@
 #include <string>
 #include "../BaseEvent.h"
 
-namespace event::core
+namespace fwlab::event::core
 {
-    class ResizeEvent final : public event::BaseEvent
-    {
-    public:
-        virtual void start() override;
-        virtual void stop() override;
+	class ResizeEvent final : public event::BaseEvent
+	{
+	public:
+		virtual void start() override;
+		virtual void stop() override;
 
-    private:
-        void handleResize(void *data);
-        const std::string id = "ResizeEvent";
-    };
+	private:
+		void handleResize(void* data);
+		const std::string id = "ResizeEvent";
+	};
 }
 
 #endif

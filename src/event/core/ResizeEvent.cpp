@@ -4,35 +4,36 @@
 #include "../Structure.h"
 #include "../../context/context.h"
 
-using namespace event::core;
-
-void ResizeEvent::start()
+namespace fwlab::event::core
 {
-    app->addEventListener(RESIZE, id, std::bind(&ResizeEvent::handleResize, this, std::placeholders::_1));
-}
+	void ResizeEvent::start()
+	{
+		app->addEventListener(RESIZE, id, std::bind(&ResizeEvent::handleResize, this, std::placeholders::_1));
+	}
 
-void ResizeEvent::stop()
-{
-}
+	void ResizeEvent::stop()
+	{
+	}
 
-void ResizeEvent::handleResize(void *data)
-{
-    auto event = reinterpret_cast<event::SizeEvent *>(data);
+	void ResizeEvent::handleResize(void* data)
+	{
+		auto event = reinterpret_cast<event::SizeEvent*>(data);
 
-    auto camera = app->getCamera();
+		auto camera = app->getCamera();
 
-    camera->setProjection(
-        camera->getFieldOfViewInDegrees(filament::Camera::Fov::VERTICAL),
-        double(event->width) / event->height,
-        camera->getNear(),
-        camera->getCullingFar());
+		camera->setProjection(
+			camera->getFieldOfViewInDegrees(filament::Camera::Fov::VERTICAL),
+			double(event->width) / event->height,
+			camera->getNear(),
+			camera->getCullingFar());
 
-    auto viewport = app->getViewport();
-    viewport->width = event->width;
-    viewport->height = event->height;
+		auto viewport = app->getViewport();
+		viewport->width = event->width;
+		viewport->height = event->height;
 
-    auto view = app->getView();
-    view->setViewport(*viewport);
+		auto view = app->getView();
+		view->setViewport(*viewport);
 
-    app->dispatchEvent(event::SIZE_CHANGED, event);
+		app->dispatchEvent(event::SIZE_CHANGED, event);
+	}
 }

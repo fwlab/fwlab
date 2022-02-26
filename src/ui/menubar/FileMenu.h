@@ -1,14 +1,14 @@
-#ifndef UI_MENUBAR_FILE_MENU_H
-#define UI_MENUBAR_FILE_MENU_H
+#ifndef FWLAB_UI_MENUBAR_FILE_MENU_H
+#define FWLAB_UI_MENUBAR_FILE_MENU_H
 #include "../Component.h"
 
-namespace ui::menubar
+namespace fwlab::ui::menubar
 {
-    class FileMenu : public Component
-    {
-    public:
-        void render() override;
-    };
+	class FileMenu : public Component
+	{
+	public:
+		void render() override;
+	};
 }
 
 #endif
