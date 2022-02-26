@@ -215,7 +215,7 @@ link_libraries(
 )
 
 if (WIN32)
-	if ((${CMAKE_BUILD_TYPE}) STREQUAL "Debug")
+	if ("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
 		link_libraries(
 			# third_party
 			glslangd
