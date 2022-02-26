@@ -3,6 +3,9 @@
 
 Editor::Editor()
 {
+	ImGui::GetStyle().WindowRounding = 0;
+	ImGui::GetStyle().WindowBorderSize = 0;
+
 	menubar = new ui::menubar::MenuBar();
 	sidebar = new ui::sidebar::SideBar();
 	framerate = new ui::framerate::Framerate();

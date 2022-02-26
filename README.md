@@ -2,7 +2,7 @@
 
 fwlab是一个人工智能实验室。
 
-技术栈：C/C++、OpenGL、Vulkan、filament、bullet3、OCCT、Tensorflow。
+技术栈：C/C++、OpenGL、Vulkan、imgui、filament、bullet3、OCCT、Tensorflow。
 
 ![image](image/screenshot.png)
 
@@ -109,6 +109,8 @@ Visual Studio 2019, 安装时选中使用C++的桌面开发。
 
 fwlab: MIT License
 
+imgui: MIT License
+
 filament: Apache-2.0 License
 
 bullet3: Zlib License
@@ -120,6 +122,8 @@ tensorflow: Apache-2.0 License
 ## 开源项目
 
 感谢以下开源项目：
+
+imgui: https://github.com/ocornut/imgui
 
 filament: https://github.com/google/filament
 

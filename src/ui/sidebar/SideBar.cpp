@@ -17,8 +17,6 @@ void SideBar::render()
 {
 	float top = 26;
 
-	// Disable rounding and draw a fixed-height ImGui window that looks like a sidebar.
-	ImGui::GetStyle().WindowRounding = 0;
 	ImGui::SetNextWindowPos(ImVec2(0, top));
 
 	ImVec2 size = ImGui::GetIO().DisplaySize;
