@@ -105,6 +105,18 @@ Visual Studio 2019, 安装时选中使用C++的桌面开发。
 
 工具栏设置启动项为`out/build/fwlab.exe`，点击`fwlab.exe`启动程序。
 
+## License
+
+fwlab: MIT License
+
+filament: Apache-2.0 License
+
+bullet3: Zlib License
+
+OCCT: LGPL-2.1 License
+
+tensorflow: Apache-2.0 License
+
 ## 开源项目
 
 感谢以下开源项目：
@@ -114,3 +126,5 @@ filament: https://github.com/google/filament
 bullet3: https://github.com/bulletphysics/bullet3
 
 OCCT: https://github.com/Open-Cascade-SAS/OCCT
+
+tensorflow: https://github.com/tensorflow/tensorflow
