@@ -6,10 +6,6 @@
 	path = third_party/bullet3
 	url = https://gitee.com/tengge1/bullet3.git
 	branch = master
-	branch = main
-[submodule "third_party/glog"]
-	path = third_party/glog
-	url = https://gitee.com/tengge1/glog.git
 [submodule "third_party/OCCT"]
 	path = third_party/OCCT
 	url = https://gitee.com/tengge1/OCCT.git
@@ -17,3 +13,4 @@
 [submodule "third_party/rapidjson"]
 	path = third_party/rapidjson
 	url = https://gitee.com/tengge1/rapidjson.git
+	branch = master
