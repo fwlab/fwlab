@@ -75,9 +75,11 @@ git submodule update --init
 
 Visual Studio 2019, 安装时选中使用C++的桌面开发。
 
-3. 编译`third_party/filament`项目。
+3. 配置filament和fwlab项目。
 
-将`config/filament/debug/CMakeSettings.json`或`config/filament/release/CMakeSettings.json`拷贝到`third_party/filament`目录。
+根据需要，双击`config/debug.cmd`或`config/release.cmd`，将项目配置成调试版或发行版。
+
+4. 编译filament项目。
 
 使用Visual Studio 2019打开目录`third_party/filament`。
 
@@ -87,11 +89,9 @@ Visual Studio 2019, 安装时选中使用C++的桌面开发。
 
 将目录`third_party/filament/out/install/bin`添加到环境变量，保证`cmgen`、`matc`、`resgen`能在命令行运行。
 
-4. 编译`fwlab`项目。
+5. 编译fwlab项目。
 
-将`config/fwlab/debug/CMakeSettings.json`或`config/fwlab/release/CMakeSettings.json`拷贝到项目根目录。
-
-使用Visual Studio 2019打开目录`fwlab`。
+使用Visual Studio 2019打开项目根目录`fwlab`。
 
 右键`CMakeLists.txt`，选择生成，生成的文件是`out/build/fwlab.exe`。
 
