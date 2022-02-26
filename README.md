@@ -2,7 +2,7 @@
 
 fwlab是一个人工智能实验室。
 
-技术栈：C/C++、OpenGL、Vulkan、filament、bullet3、OCCT
+技术栈：C/C++、OpenGL、Vulkan、filament、bullet3、OCCT、Tensorflow。
 
 ![image](image/screenshot.png)
 
