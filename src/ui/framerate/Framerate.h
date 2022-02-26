@@ -13,8 +13,13 @@ namespace fwlab::ui::framerate
 
 	private:
 		void handleRender(void* data);
-		float width = 240;
+		float width = 200;
 		float height = 40;
+
+		double lastTime = 0;
+		double frameCount = 0;
+		double fps = 0;
+
 		float* rates = nullptr;
 		int current = 0;
 	};

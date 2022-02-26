@@ -1,4 +1,7 @@
 #include <algorithm>
+#include <cmath>
+#include <cstring>
+#include <iostream>
 #include <imgui.h>
 #include "Framerate.h"
 #include "../../context/context.h"
@@ -14,7 +17,7 @@ namespace fwlab::ui::framerate
 
 	Framerate::~Framerate()
 	{
-		delete rates;
+		// delete rates;
 	}
 
 	void Framerate::render()
@@ -28,14 +31,34 @@ namespace fwlab::ui::framerate
 		if (ImGui::Begin("Framerate", nullptr,
 			ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoDecoration))
 		{
-			ImGui::PlotLines("60fps", rates, 60, 0);
+			char buf[10];
+			itoa(std::floor(fps), buf, 10);
+			std::strcat(buf, "fps");
+			ImGui::PlotLines(buf, rates, 60, current, nullptr, 0, 60);
 			ImGui::End();
 		}
 	}
 
 	void Framerate::handleRender(void* data)
 	{
+		frameCount++;
 		auto time = reinterpret_cast<event::Time*>(data);
-		rates[0] = 1 / time->deltaTime;
+		if (time->time - lastTime < 1)
+		{
+			return;
+		}
+
+		double deltaTime = time->time - lastTime;
+		lastTime = time->time;
+		fps = deltaTime > 0 ? frameCount / deltaTime : 60;
+		frameCount = 0;
+
+		rates[current] = fps;
+		rates[current + 60] = fps;
+		current++;
+		if (current >= 60)
+		{
+			current = 0;
+		}
 	}
 }

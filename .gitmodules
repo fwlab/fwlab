@@ -14,3 +14,6 @@
 	path = third_party/OCCT
 	url = https://gitee.com/tengge1/OCCT.git
 	branch = master
+[submodule "third_party/rapidjson"]
+	path = third_party/rapidjson
+	url = https://gitee.com/tengge1/rapidjson.git

@@ -81,6 +81,8 @@ namespace fwlab
 
 		while (isRunning)
 		{
+			clock->update();
+
 			time->time = clock->getElapsedTime();
 			time->deltaTime = clock->getDelta();
 
@@ -98,8 +100,6 @@ namespace fwlab
 			myScene->animate(engine, view, time->time);
 
 			event->dispatchEvent(event::ANIMATE, time);
-
-			clock->update();
 
 			// 保持帧率稳定在60fps
 			int sleepTime = 1000.0 / 60 - clock->getDelta() * 1000;
