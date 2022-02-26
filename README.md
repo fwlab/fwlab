@@ -2,9 +2,13 @@
 
 fwlab是一个人工智能实验室。
 
+技术栈：C/C++、OpenGL、Vulkan、filament、bullet3、OCCT
+
 ![image](image/screenshot.png)
 
 ## 使用Ubuntu编译项目
+
+**编译调试版项目大约需要25分钟，需要21G磁盘空间。**
 
 1. 下载项目。
 
@@ -61,7 +65,11 @@ cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_INSTALL_PREFIX=../install ../..
 make
 ```
 
+生成的项目位于`out/build`目录下。
+
 ## 使用Windows编译项目
+
+**编译项目大约需要25分钟，需要21G磁盘空间。**
 
 1. 下载项目。
 
@@ -96,3 +104,13 @@ Visual Studio 2019, 安装时选中使用C++的桌面开发。
 右键`CMakeLists.txt`，选择生成，生成的文件是`out/build/fwlab.exe`。
 
 工具栏设置启动项为`out/build/fwlab.exe`，点击`fwlab.exe`启动程序。
+
+## 开源项目
+
+感谢以下开源项目：
+
+filament: https://github.com/google/filament
+
+bullet3: https://github.com/bulletphysics/bullet3
+
+OCCT: https://github.com/Open-Cascade-SAS/OCCT
