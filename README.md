@@ -56,7 +56,16 @@ source filament.sh
 echo $PATH
 ```
 
-6. 在`fwlab`根目录执行以下代码。
+6. 在`third_party/rapidjson`目录执行以下代码。
+
+```sh
+mkdir -p out/build
+cd out/build
+cmake -G Ninja -DCMAKE_BUILD_TYPE=Debug -DRAPIDJSON_BUILD_DOC=OFF -DRAPIDJSON_BUILD_EXAMPLES=OFF -DRAPIDJSON_BUILD_TESTS=OFF -DCMAKE_INSTALL_PREFIX=../install ../..
+ninja install
+```
+
+7. 在`fwlab`根目录执行以下代码。
 
 ```
 mkdir -p out/build
