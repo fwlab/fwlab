@@ -11,6 +11,7 @@ add_subdirectory(ui/sidebar)
 add_subdirectory(ui/framerate)
 add_subdirectory(controller)
 add_subdirectory(object)
+add_subdirectory(helper)
 add_subdirectory(scene)
 
 if (WIN32)
