@@ -2,7 +2,7 @@
 
 fwlab是一个人工智能实验室。
 
-技术栈：C/C++、OpenGL、Vulkan、imgui、filament、bullet3、OCCT、Tensorflow。
+技术栈：C/C++、OpenGL、Vulkan、imgui、SDL2、filament、bullet3、OCCT、Tensorflow。
 
 ![image](image/screenshot.png)
 
@@ -97,7 +97,15 @@ Visual Studio 2019, 安装时选中使用C++的桌面开发。
 
 将目录`third_party/filament/out/install/bin`添加到环境变量，保证`cmgen`、`matc`、`resgen`能在命令行运行。
 
-5. 编译fwlab项目。
+5. 编译`rapidjson`项目。
+
+使用Visual Studio 2019打开目录`third_party/rapidjson`。
+
+右键`CMakeLists.txt`，选择生成。
+
+右键`CMakeLists.txt`，选择安装。
+
+6. 编译fwlab项目。
 
 使用Visual Studio 2019打开项目根目录`fwlab`。
 
@@ -111,6 +119,8 @@ fwlab: MIT License
 
 imgui: MIT License
 
+SDL2: Zlib License
+
 filament: Apache-2.0 License
 
 bullet3: Zlib License
@@ -119,11 +129,15 @@ OCCT: LGPL-2.1 License
 
 tensorflow: Apache-2.0 License
 
+rapidjson: MIT License
+
 ## 开源项目
 
 感谢以下开源项目：
 
 imgui: https://github.com/ocornut/imgui
+
+SDL2: http://www.libsdl.org/
 
 filament: https://github.com/google/filament
 
@@ -132,3 +146,5 @@ bullet3: https://github.com/bulletphysics/bullet3
 OCCT: https://github.com/Open-Cascade-SAS/OCCT
 
 tensorflow: https://github.com/tensorflow/tensorflow
+
+rapidjson: https://github.com/Tencent/rapidjson
