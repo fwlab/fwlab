@@ -8,6 +8,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(FILAMENT_DIR ${CMAKE_SOURCE_DIR}/third_party/filament)
 set(RELEASE_DIR ${FILAMENT_DIR}/out/build)
 set(INSTALL_DIR ${FILAMENT_DIR}/out/install)
+set(RAPID_JSON_DIR ${CMAKE_SOURCE_DIR}/third_party/rapidjson)
 
 if (WIN32)
 	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /utf-8")
@@ -64,6 +65,9 @@ include_directories(
 	${FILAMENT_DIR}/libs/iblprefilter/include
 	${FILAMENT_DIR}/libs/imageio/include
 	${FILAMENT_DIR}/libs/matdbg/include
+
+	# rapidjson
+	${RAPID_JSON_DIR}/out/install/include
 
 	# asserts
 	${CMAKE_BINARY_DIR}/assets

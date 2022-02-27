@@ -9,15 +9,16 @@
 
 namespace fwlab::ui::framerate
 {
+	float Framerate::rates[120] = { 0 };
+
 	Framerate::Framerate()
 	{
-		rates = new float[120]();
 		app->addEventListener(event::RENDER, id, std::bind(&Framerate::handleRender, this, std::placeholders::_1));
 	}
 
 	Framerate::~Framerate()
 	{
-		// delete rates;
+
 	}
 
 	void Framerate::render()

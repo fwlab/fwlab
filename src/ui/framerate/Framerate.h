@@ -20,7 +20,7 @@ namespace fwlab::ui::framerate
 		double frameCount = 0;
 		double fps = 0;
 
-		float* rates = nullptr;
+		static float rates[120];
 		int current = 0;
 	};
 }
