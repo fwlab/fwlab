@@ -14,3 +14,7 @@
 	path = third_party/rapidjson
 	url = https://gitee.com/tengge1/rapidjson.git
 	branch = master
+[submodule "third_party/tcl"]
+	path = third_party/tcl
+	url = https://gitee.com/tengge1/tcl.git
+	branch = master

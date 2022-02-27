@@ -1,0 +1,49 @@
+﻿{
+  "configurations": [
+    {
+      "name": "Build",
+      "generator": "Ninja",
+      "configurationType": "Release",
+      "inheritEnvironments": [
+        "msvc_x64_x64"
+      ],
+      "buildRoot": "${projectDir}\\out\\build",
+      "installRoot": "${projectDir}\\out\\install",
+      "cmakeCommandArgs": "",
+      "buildCommandArgs": "",
+      "ctestCommandArgs": "",
+      "variables": [
+        {
+          "name": "USE_FREETYPE",
+          "value": "False",
+          "type": "BOOL"
+        },
+        {
+          "name": "USE_OPENGL",
+          "value": "False",
+          "type": "BOOL"
+        },
+        {
+          "name": "USE_TK",
+          "value": "False",
+          "type": "BOOL"
+        },
+        {
+          "name": "BUILD_MODULE_Visualization",
+          "value": "False",
+          "type": "BOOL"
+        },
+        {
+          "name": "BUILD_MODULE_Draw",
+          "value": "False",
+          "type": "BOOL"
+        },
+        {
+          "name": "BUILD_DOC_Overview",
+          "value": "False",
+          "type": "BOOL"
+        }
+      ]
+    }
+  ]
+}

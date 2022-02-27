@@ -67,7 +67,7 @@ include_directories(
 	${FILAMENT_DIR}/libs/matdbg/include
 
 	# rapidjson
-	${RAPID_JSON_DIR}/out/install/include
+	${RAPID_JSON_DIR}/include
 
 	# asserts
 	${CMAKE_BINARY_DIR}/assets

@@ -2,83 +2,15 @@
 
 fwlab是一个人工智能实验室。
 
-技术栈：C/C++、OpenGL、Vulkan、imgui、SDL2、filament、bullet3、OCCT、Tensorflow。
+技术栈：C/C++、OpenGL、imgui、SDL2、filament、bullet3、OCCT、Tensorflow。
 
 ![image](image/screenshot.png)
 
-## 使用Ubuntu编译项目
-
-**编译调试版项目大约需要25分钟，需要21G磁盘空间。**
-
-1. 下载项目。
-
-```sh
-git clone https://gitee.com/fwlab/fwlab.git
-cd fwlab
-git submodule update --init
-```
-
-2. 安装以下软件：
-
-```sh
-sudo apt install build-essential clang libglu1-mesa-dev libc++-dev libc++abi-dev ninja-build libxi-dev cmake
-
-sudo apt install libsdl2-2.0-0 libsdl2-dev
-```
-
-* ninja下载地址：https://github.com/ninja-build/ninja/releases
-* cmake下载地址：https://github.com/Kitware/CMake/releases
-
-3. 使用`clang`作为默认编译器。
-
-```sh
-sudo update-alternatives --install /usr/bin/cc cc /usr/bin/clang 100
-sudo update-alternatives --install /usr/bin/c++ c++ /usr/bin/clang++ 100
-```
-
-4. 在`third_party/filament`目录执行以下代码。
-
-```sh
-mkdir -p out/build
-cd out/build
-cmake -G Ninja -DCMAKE_BUILD_TYPE=Debug -DFILAMENT_SUPPORTS_VULKAN=OFF -DCMAKE_INSTALL_PREFIX=../install ../..
-ninja
-ninja install
-```
-
-5. 将`third_party/filament/out/install/bin`目录添加到环境变量。
-
-```sh
-cd /etc/profile.d
-sudo sh -c 'echo export PATH=/home/{username}/fwlab/third_party/filament/out/release/filament/bin:\$PATH > filament.sh'
-sudo chmod +x filament.sh
-source filament.sh
-echo $PATH
-```
-
-6. 在`third_party/rapidjson`目录执行以下代码。
-
-```sh
-mkdir -p out/build
-cd out/build
-cmake -G Ninja -DCMAKE_BUILD_TYPE=Debug -DRAPIDJSON_BUILD_DOC=OFF -DRAPIDJSON_BUILD_EXAMPLES=OFF -DRAPIDJSON_BUILD_TESTS=OFF -DCMAKE_INSTALL_PREFIX=../install ../..
-ninja install
-```
-
-7. 在`fwlab`根目录执行以下代码。
-
-```
-mkdir -p out/build
-cd out/build
-cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_INSTALL_PREFIX=../install ../..
-make
-```
-
-生成的项目位于`out/build`目录下。
-
 ## 使用Windows编译项目
 
-**编译项目大约需要25分钟，需要21G磁盘空间。**
+推荐使用Windows编译项目，使用Ubuntu编译参考`docs/BUILD.md`。
+
+编译调试版项目大约需要25分钟，需要21G磁盘空间。
 
 1. 下载项目。
 
@@ -92,7 +24,7 @@ git submodule update --init
 
 Visual Studio 2019, 安装时选中使用C++的桌面开发。
 
-3. 配置filament和fwlab项目。
+3. 配置`filament`、`OCCT`、`fwlab`项目。
 
 根据需要，双击`config/debug.cmd`或`config/release.cmd`，将项目配置成调试版或发行版。
 
@@ -106,15 +38,23 @@ Visual Studio 2019, 安装时选中使用C++的桌面开发。
 
 将目录`third_party/filament/out/install/bin`添加到环境变量，保证`cmgen`、`matc`、`resgen`能在命令行运行。
 
-5. 编译`rapidjson`项目。
+5. 编译`tcl`项目。
 
-使用Visual Studio 2019打开目录`third_party/rapidjson`。
+在开始菜单中，打开`Developer Command Prompt for VS 2019`工具，切换到目录`third_party/tcl/win`，执行以下代码。
+
+```sh
+nmake -f makefile.vc
+```
+
+6. 编译`OCCT`项目。
+
+使用Visual Studio 2019打开目录`third_party/OCCT`。
 
 右键`CMakeLists.txt`，选择生成。
 
 右键`CMakeLists.txt`，选择安装。
 
-6. 编译fwlab项目。
+7. 编译fwlab项目。
 
 使用Visual Studio 2019打开项目根目录`fwlab`。
 
