@@ -8,9 +8,7 @@ fwlab是一个人工智能实验室。
 
 ## 使用Windows编译项目
 
-推荐使用Windows编译项目，使用Ubuntu编译参考`docs/BUILD.md`。
-
-编译调试版项目大约需要25分钟，需要21G磁盘空间。
+推荐在Windows上编译项目，使用Ubuntu编译参考`docs/BUILD.md`。编译调试版大约需要25G磁盘空间。
 
 1. 下载项目。
 

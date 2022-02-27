@@ -80,5 +80,6 @@
         "variant": "cpp",
         "csetjmp": "cpp",
         "slist": "cpp"
-    }
+    },
+    "git.ignoreLimitWarning": true
 }
