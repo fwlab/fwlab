@@ -1,20 +1,20 @@
 [submodule "third_party/filament"]
 	path = third_party/filament
-	url = https://gitee.com/tengge1/Filament0.git
+	url = https://gitee.com/fwlab/Filament0.git
 	branch = main
 [submodule "third_party/bullet3"]
 	path = third_party/bullet3
-	url = https://gitee.com/tengge1/bullet3.git
+	url = https://gitee.com/fwlab/bullet3.git
 	branch = master
 [submodule "third_party/OCCT"]
 	path = third_party/OCCT
-	url = https://gitee.com/tengge1/OCCT.git
+	url = https://gitee.com/fwlab/OCCT.git
 	branch = master
 [submodule "third_party/rapidjson"]
 	path = third_party/rapidjson
-	url = https://gitee.com/tengge1/rapidjson.git
+	url = https://gitee.com/fwlab/rapidjson.git
 	branch = master
 [submodule "third_party/tcl"]
 	path = third_party/tcl
-	url = https://gitee.com/tengge1/tcl.git
+	url = https://gitee.com/fwlab/tcl.git
 	branch = master
