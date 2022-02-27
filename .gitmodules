@@ -14,3 +14,15 @@
 	path = third_party/rapidjson
 	url = https://gitee.com/tengge1/rapidjson.git
 	branch = master
+[submodule "third_party/tcl"]
+	path = third_party/tcl
+	url = https://gitee.com/tengge1/tcl.git
+	branch = master
+[submodule "third_party/freetype2"]
+	path = third_party/freetype2
+	url = https://gitee.com/mirrors/freetype2.git
+	branch = master
+[submodule "third_party/tk"]
+	path = third_party/tk
+	url = https://gitee.com/tengge1/tk.git
+	branch = master
