@@ -2,7 +2,23 @@ cmake_minimum_required(VERSION 3.19)
 
 project(fwlab VERSION 0.0.1)
 
-set(CMAKE_CXX_STANDARD 20)
+if (CMAKE_VERSION VERSION_GREATER_EQUAL "3.12")
+    cmake_policy(SET CMP0074 NEW)
+endif()
+
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
+set(CXX_STANDARD "-std=c++17")
+if (WIN32)
+    set(CXX_STANDARD "/std:c++17")
+endif()
+
+if (MSVC)
+    set(CXX_STANDARD "/std:c++latest")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${CXX_STANDARD} /W0 /Zc:__cplusplus")
+else()
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${CXX_STANDARD} -fstrict-aliasing -Wno-unknown-pragmas -Wno-unused-function")
+endif()
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(FILAMENT_DIR ${CMAKE_SOURCE_DIR}/third_party/filament)
@@ -13,16 +29,33 @@ set(RAPID_JSON_DIR ${CMAKE_SOURCE_DIR}/third_party/rapidjson)
 if (WIN32)
 	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /utf-8")
 	set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
+	
 	add_compile_options(
 		$<$<CONFIG:>:/MT>
 		$<$<CONFIG:Debug>:/MTd>
 		$<$<CONFIG:Release>:/MT>
 	)
+	
+	set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "${CMAKE_CXX_FLAGS_RELWITHDEBINFO} /Z7")
+    set(CMAKE_C_FLAGS_RELWITHDEBINFO "${CMAKE_C_FLAGS_RELWITHDEBINFO} /Z7")
+
+	set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /Zi")
+    set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} /Zi")
+
 	set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /Z7")
 	set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} /Z7")
 else ()
 	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC -stdlib=libc++")
 endif()
+
+if (MSVC)
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D_CRT_SECURE_NO_WARNINGS -D_CRT_NONSTDC_NO_DEPRECATE")
+	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -D_CRT_SECURE_NO_WARNINGS -D_CRT_NONSTDC_NO_DEPRECATE")
+endif()
+
+set(B_SYMBOLIC_FUNCTIONS "-Wl,-Bsymbolic-functions")
+set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${GC_SECTIONS}")
+set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} ${GC_SECTIONS} ${B_SYMBOLIC_FUNCTIONS}")
 
 if (WIN32)
 	add_definitions(

@@ -105,9 +105,10 @@ namespace fwlab
 			int sleepTime = 1000.0 / 60 - clock->getDelta() * 1000;
 			if (sleepTime > 0)
 			{
-				std::this_thread::sleep_for(std::chrono::milliseconds(sleepTime));
+				SDL_Delay(sleepTime);
 			}
 		}
+		this->clean();
 	}
 
 	void Application::stop()
@@ -117,29 +118,32 @@ namespace fwlab
 
 	void Application::clean() noexcept
 	{
+		auto& manager = utils::EntityManager::get();
+
 		event->dispatchEvent(event::BEFORE_APP_STOP);
 
 		myScene->cleanup(engine, view, scene);
 		delete myScene;
 
-		engine->destroyCameraComponent(cameraEntity);
-		engine->destroy(scene);
-		engine->destroy(view);
-		engine->destroy(renderer);
-		engine->destroy(swapChain);
-		filament::Engine::destroy(engine);
-		delete viewport;
-
 		delete editor;
 		delete ui;
 		delete controller;
+		delete viewport;
+
+		engine->destroy(view);
+		engine->destroyCameraComponent(cameraEntity);
+		manager.destroy(cameraEntity);
+		engine->destroy(renderer);
+		engine->destroy(swapChain);
+		engine->destroy(scene);
+		filament::Engine::destroy(engine);
+		engine = nullptr;
+		SDL_DestroyWindow(window);
 
 		event->dispatchEvent(event::APP_STOPPED);
 		delete event;
 
 		::app = nullptr;
-
-		SDL_DestroyWindow(window);
 	}
 
 	bool Application::getIsRunning() const noexcept
