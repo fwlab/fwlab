@@ -17,7 +17,7 @@ namespace fwlab::ui::sidebar::scene
 		HirarchyPanel* hirarchyPanel = nullptr;
 		HistoryPanel* historyPanel = nullptr;
 		bool isSceneTabShow = true;
-		bool isHistoryTabShow = true;
+		bool isHistoryTabShow = false;
 	};
 }
 
