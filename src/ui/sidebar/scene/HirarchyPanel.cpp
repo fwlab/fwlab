@@ -23,29 +23,15 @@ namespace fwlab::ui::sidebar::scene
 			this->createTree(app->getScene());
 		}
 
-		if (ImGui::TreeNode("Basic"))
+		ImGui::TreeNodeEx("透视相机", ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen);
+		ImGui::TreeNodeEx("渲染器", ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen);
+		ImGui::SetNextTreeNodeOpen(true);
+		if (ImGui::TreeNodeEx("场景", ImGuiTreeNodeFlags_Selected))
 		{
-			ImGuiTabBarFlags tab_bar_flags = ImGuiTabBarFlags_None;
-			if (ImGui::BeginTabBar("MyTabBar", tab_bar_flags))
-			{
-				if (ImGui::BeginTabItem("Avocado"))
-				{
-					ImGui::Text("This is the Avocado tab!\nblah blah blah blah blah");
-					ImGui::EndTabItem();
-				}
-				if (ImGui::BeginTabItem("Broccoli"))
-				{
-					ImGui::Text("This is the Broccoli tab!\nblah blah blah blah blah");
-					ImGui::EndTabItem();
-				}
-				if (ImGui::BeginTabItem("Cucumber"))
-				{
-					ImGui::Text("This is the Cucumber tab!\nblah blah blah blah blah");
-					ImGui::EndTabItem();
-				}
-				ImGui::EndTabBar();
-			}
-			ImGui::Separator();
+			ImGui::TreeNodeEx("环境光", ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen);
+			ImGui::TreeNodeEx("平行光", ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen);
+			ImGui::TreeNodeEx("平面", ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen);
+			ImGui::TreeNodeEx("机器狗", ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen);
 			ImGui::TreePop();
 		}
 	}
