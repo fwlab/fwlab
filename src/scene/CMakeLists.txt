@@ -7,11 +7,9 @@ include_directories(
 
 add_library(${MODULE_NAME} STATIC
 	"Scene.cpp"
-	"BoxScene.cpp"
-	"RobotDogScene.cpp"
 )
 
 target_link_libraries(${MODULE_NAME}
-	filament viewer gltfio gltfio_core smol-v
+	filament viewer gltfio gltfio_core smol-v SPIRVd
 	fwlab_gl fwlab_object_sky
 )

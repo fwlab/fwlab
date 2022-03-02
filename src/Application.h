@@ -3,6 +3,7 @@
 #include <SDL.h>
 #include <filament/Camera.h>
 #include <filament/Engine.h>
+#include <filament/Renderer.h>
 #include <filament/Scene.h>
 #include <filament/SwapChain.h>
 #include <filament/View.h>
@@ -74,7 +75,7 @@ namespace fwlab
 
 		controller::OrbitController* controller = nullptr;
 
-		Scene* myScene = nullptr;
+		scene::Scene* myScene = nullptr;
 	};
 }
 

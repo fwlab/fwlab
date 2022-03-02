@@ -259,7 +259,7 @@ if (WIN32)
 			OSDependentd
 			OGLCompilerd
 			SPIRVd
-			#SPVRemapperd
+			SPVRemapperd
 			
 			# libs
 			#matdbg_combined
@@ -271,7 +271,7 @@ if (WIN32)
 			OSDependent
 			OGLCompiler
 			SPIRV
-			#SPVRemapper
+			SPVRemapper
 			
 			# libs
 			#matdbg_combined

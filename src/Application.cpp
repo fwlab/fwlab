@@ -5,7 +5,6 @@
 #include <utils/EntityManager.h>
 #include "utils/SDLUtils.h"
 #include "gl/gl.h"
-#include "scene/BoxScene.h"
 #include "Application.h"
 #include "context/context.h"
 #include "event/EventList.h"
@@ -65,8 +64,8 @@ namespace fwlab
 		view->setScene(scene);
 
 		gl::init(engine, view, scene);
-		myScene = new BoxScene();
-		myScene->setup(engine, view, scene);
+		myScene = new scene::Scene();
+		myScene->create();
 
 		isRunning = true;
 
@@ -97,7 +96,7 @@ namespace fwlab
 				renderer->endFrame();
 			}
 
-			myScene->animate(engine, view, time->time);
+			myScene->animate();
 
 			event->dispatchEvent(event::ANIMATE, time);
 
@@ -122,7 +121,7 @@ namespace fwlab
 
 		event->dispatchEvent(event::BEFORE_APP_STOP);
 
-		myScene->cleanup(engine, view, scene);
+		myScene->cleanup();
 		delete myScene;
 
 		delete editor;
