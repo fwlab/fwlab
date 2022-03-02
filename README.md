@@ -4,6 +4,23 @@ fwlab是一个人工智能实验室。
 
 技术栈：C/C++、OpenGL、imgui、SDL2、filament、bullet3、OCCT、Tensorflow。
 
+## 主要功能
+
+- [ ] 三维编辑
+  - [ ] 三维建模
+  - [ ] 场景搭建
+- [ ] 机器狗训练
+  - [ ] 动作训练
+  - [ ] 视觉训练
+  - [ ] 听觉训练
+- [ ] 人形机器人训练
+  - [ ] 语言训练
+- [ ] 模拟生物进化
+  - [ ] 基因编码
+  - [ ] 外形进化
+
+## 软件截图
+
 ![image](image/screenshot.png)
 
 ## 使用Windows编译项目
@@ -60,7 +77,7 @@ nmake -f makefile.vc
 
 工具栏设置启动项为`out/build/fwlab.exe`，点击`fwlab.exe`启动程序。
 
-## License
+## 授权
 
 fwlab: MIT License
 
