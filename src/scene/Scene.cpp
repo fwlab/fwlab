@@ -5,6 +5,7 @@
 #include <utils/Path.h>
 #include "Scene.h"
 #include "../context/context.h"
+#include "../geometry/PlaneGeometry.h"
 
 namespace fwlab::scene
 {
@@ -22,7 +23,6 @@ namespace fwlab::scene
 		scene->setSkybox(skybox);
 
 		// light
-
 		lightEntity = entityManager.create();
 		filament::LightManager::Builder(filament::LightManager::Type::SUN)
 			.color(filament::Color::toLinear<filament::ColorConversion::ACCURATE>(filament::sRGBColor(0.98f, 0.92f, 0.89f)))
