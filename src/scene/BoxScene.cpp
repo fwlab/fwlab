@@ -1,7 +1,6 @@
 #include "imgui.h"
 #include <filament/Viewport.h>
 #include <viewer/SimpleViewer.h>
-#include "../gl/gl.h"
 #include "resources/resources.h"
 #include "BoxScene.h"
 #include "../object/sky/SkyBox.h"

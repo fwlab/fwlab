@@ -4,7 +4,6 @@
 #include <thread>
 #include <utils/EntityManager.h>
 #include "utils/SDLUtils.h"
-#include "gl/gl.h"
 #include "Application.h"
 #include "context/context.h"
 #include "event/EventList.h"
@@ -63,7 +62,6 @@ namespace fwlab
 		scene = engine->createScene();
 		view->setScene(scene);
 
-		gl::init(engine, view, scene);
 		myScene = new scene::Scene();
 		myScene->create();
 
