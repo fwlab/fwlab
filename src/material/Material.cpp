@@ -3,391 +3,392 @@
 #include "Material.h"
 #include "../context/context.h"
 
-using namespace filament::math;
-using namespace gl::context;
-using namespace gl::material;
-
-static std::unordered_map<const void *, filament::Material *> materials;
-static std::vector<filament::MaterialInstance *> instances;
-
-Material::Material() : Material(GL_MATERIALS_UNLIT_DATA, GL_MATERIALS_UNLIT_SIZE)
+namespace fwlab::material
 {
-	setParameter<float4>("baseColor", {1, 1, 1, 1});
-}
+	static std::unordered_map<const void*, filament::Material*> materials;
+	static std::vector<filament::MaterialInstance*> instances;
 
-Material::Material(const void *payload, size_t size)
-{
-	create(payload, size);
-}
-
-Material::Material(filament::MaterialInstance *instance)
-{
-	this->material = const_cast<filament::Material *>(instance->getMaterial());
-	this->instance = instance;
-	instances.push_back(instance);
-}
-
-Material::~Material()
-{
-	dispose();
-}
-
-filament::MaterialInstance *Material::getInstance() const
-{
-	return instance;
-}
-
-void Material::setInstance(filament::MaterialInstance *instance)
-{
-	if (instance == this->instance)
+	Material::Material() : Material(GL_MATERIALS_UNLIT_DATA, GL_MATERIALS_UNLIT_SIZE)
 	{
-		return;
-	}
-	if (instances.size() > 0 && this->instance)
-	{
-		instances.erase(std::remove(instances.begin(), instances.end(), this->instance));
-		engine->destroy(this->instance);
-	}
-	this->instance = instance;
-	instances.push_back(instance);
-}
-
-filament::RenderableManager::PrimitiveType Material::getPrimitiveType() const
-{
-	return primitiveType;
-}
-
-void Material::setPrimitiveType(filament::RenderableManager::PrimitiveType primitiveType)
-{
-	this->primitiveType = primitiveType;
-}
-
-void Material::dispose()
-{
-	if (instances.size() > 0 && instance)
-	{
-		instances.erase(std::remove(instances.begin(), instances.end(), instance));
-		engine->destroy(instance);
-		instance = nullptr;
-	}
-	if (material && instances.size() == 0)
-	{
-		engine->destroy(material);
-		material = nullptr;
-	}
-}
-
-void Material::create(const void *payload, size_t size)
-{
-	if (materials.find(payload) != materials.end())
-	{
-		material = materials.at(payload);
-	}
-	else
-	{
-		material = filament::Material::Builder()
-					   .package(payload, size)
-					   .build(*engine);
-		materials.insert({payload, material});
+		setParameter<filament::math::float4>("baseColor", { 1, 1, 1, 1 });
 	}
 
-	instance = material->createInstance();
-	instances.push_back(instance);
-}
+	Material::Material(const void* payload, size_t size)
+	{
+		create(payload, size);
+	}
 
-// material method
+	Material::Material(filament::MaterialInstance* instance)
+	{
+		this->material = const_cast<filament::Material*>(instance->getMaterial());
+		this->instance = instance;
+		instances.push_back(instance);
+	}
 
-filament::Material::BlendingMode Material::getBlendingMode() const noexcept
-{
-	return material->getBlendingMode();
-}
+	Material::~Material()
+	{
+		dispose();
+	}
 
-filament::Material::CullingMode Material::getCullingMode() const noexcept
-{
-	return material->getCullingMode();
-}
+	filament::MaterialInstance* Material::getInstance() const
+	{
+		return instance;
+	}
 
-filament::MaterialInstance const *Material::getDefaultInstance() const noexcept
-{
-	return material->getDefaultInstance();
-}
+	void Material::setInstance(filament::MaterialInstance* instance)
+	{
+		if (instance == this->instance)
+		{
+			return;
+		}
+		if (instances.size() > 0 && this->instance)
+		{
+			instances.erase(std::remove(instances.begin(), instances.end(), this->instance));
+			app->getEngine()->destroy(this->instance);
+		}
+		this->instance = instance;
+		instances.push_back(instance);
+	}
 
-filament::Material::Interpolation Material::getInterpolation() const noexcept
-{
-	return material->getInterpolation();
-}
+	filament::RenderableManager::PrimitiveType Material::getPrimitiveType() const
+	{
+		return primitiveType;
+	}
 
-float Material::getMaskThreshold() const noexcept
-{
-	return material->getMaskThreshold();
-}
+	void Material::setPrimitiveType(filament::RenderableManager::PrimitiveType primitiveType)
+	{
+		this->primitiveType = primitiveType;
+	}
 
-filament::MaterialDomain Material::getMaterialDomain() const noexcept
-{
-	return material->getMaterialDomain();
-}
+	void Material::dispose()
+	{
+		auto engine = app->getEngine();
 
-char const *Material::getName() const noexcept
-{
-	return material->getName();
-}
+		if (instances.size() > 0 && instance)
+		{
+			instances.erase(std::remove(instances.begin(), instances.end(), instance));
+			engine->destroy(instance);
+			instance = nullptr;
+		}
+		if (material && instances.size() == 0)
+		{
+			engine->destroy(material);
+			material = nullptr;
+		}
+	}
 
-uint8_t Material::getParameterCount() const noexcept
-{
-	return material->getParameterCount();
-}
+	void Material::create(const void* payload, size_t size)
+	{
+		if (materials.find(payload) != materials.end())
+		{
+			material = materials.at(payload);
+		}
+		else
+		{
+			material = filament::Material::Builder()
+				.package(payload, size)
+				.build(*app->getEngine());
+			materials.insert({ payload, material });
+		}
 
-size_t Material::getParameters(filament::Material::ParameterInfo *parameters, size_t count) const noexcept
-{
-	return material->getParameters(parameters, count);
-}
+		instance = material->createInstance();
+		instances.push_back(instance);
+	}
 
-filament::RefractionMode Material::getRefractionMode() const noexcept
-{
-	return material->getRefractionMode();
-}
+	// material method
 
-filament::RefractionType Material::getRefractionType() const noexcept
-{
-	return material->getRefractionType();
-}
+	filament::Material::BlendingMode Material::getBlendingMode() const noexcept
+	{
+		return material->getBlendingMode();
+	}
 
-filament::AttributeBitset Material::getRequiredAttributes() const noexcept
-{
-	return material->getRequiredAttributes();
-}
+	filament::Material::CullingMode Material::getCullingMode() const noexcept
+	{
+		return material->getCullingMode();
+	}
 
-filament::Shading Material::getShading() const noexcept
-{
-	return material->getShading();
-}
+	filament::MaterialInstance const* Material::getDefaultInstance() const noexcept
+	{
+		return material->getDefaultInstance();
+	}
 
-float Material::getSpecularAntiAliasingThreshold() const noexcept
-{
-	return material->getSpecularAntiAliasingThreshold();
-}
+	filament::Material::Interpolation Material::getInterpolation() const noexcept
+	{
+		return material->getInterpolation();
+	}
 
-float Material::getSpecularAntiAliasingVariance() const noexcept
-{
-	return material->getSpecularAntiAliasingVariance();
-}
+	float Material::getMaskThreshold() const noexcept
+	{
+		return material->getMaskThreshold();
+	}
 
-filament::TransparencyMode Material::getTransparencyMode() const noexcept
-{
-	return material->getTransparencyMode();
-}
+	filament::MaterialDomain Material::getMaterialDomain() const noexcept
+	{
+		return material->getMaterialDomain();
+	}
 
-filament::VertexDomain Material::getVertexDomain() const noexcept
-{
-	return material->getVertexDomain();
-}
+	char const* Material::getName() const noexcept
+	{
+		return material->getName();
+	}
 
-bool Material::hasParameter(const char *name) const noexcept
-{
-	return material->hasParameter(name);
-}
+	uint8_t Material::getParameterCount() const noexcept
+	{
+		return material->getParameterCount();
+	}
 
-bool Material::hasShadowMultiplier()
-{
-	return material->hasShadowMultiplier();
-}
+	size_t Material::getParameters(filament::Material::ParameterInfo* parameters, size_t count) const noexcept
+	{
+		return material->getParameters(parameters, count);
+	}
 
-bool Material::hasSpecularAntiAliasing() const noexcept
-{
-	return material->hasSpecularAntiAliasing();
-}
+	filament::RefractionMode Material::getRefractionMode() const noexcept
+	{
+		return material->getRefractionMode();
+	}
 
-bool Material::isColorWriteEnabled() const noexcept
-{
-	return material->isColorWriteEnabled();
-}
+	filament::RefractionType Material::getRefractionType() const noexcept
+	{
+		return material->getRefractionType();
+	}
 
-bool Material::isDepthCullingEnabled()
-{
-	return material->isDepthCullingEnabled();
-}
+	filament::AttributeBitset Material::getRequiredAttributes() const noexcept
+	{
+		return material->getRequiredAttributes();
+	}
 
-bool Material::isDepthWriteEnabled() const noexcept
-{
-	return material->isDepthWriteEnabled();
-}
+	filament::Shading Material::getShading() const noexcept
+	{
+		return material->getShading();
+	}
 
-bool Material::isDoubleSided() const noexcept
-{
-	return material->isDoubleSided();
-}
+	float Material::getSpecularAntiAliasingThreshold() const noexcept
+	{
+		return material->getSpecularAntiAliasingThreshold();
+	}
 
-bool Material::isSampler(const char *name) const noexcept
-{
-	return material->isSampler(name);
-}
+	float Material::getSpecularAntiAliasingVariance() const noexcept
+	{
+		return material->getSpecularAntiAliasingVariance();
+	}
 
-template <typename T>
-void Material::setDefaultParameter(const char *name, T value) noexcept
-{
-	return material->setDefaultParameter(name, value);
-}
+	filament::TransparencyMode Material::getTransparencyMode() const noexcept
+	{
+		return material->getTransparencyMode();
+	}
 
-template void Material::setDefaultParameter<float>(const char *name, float value) noexcept;
-template void Material::setDefaultParameter<int32_t>(const char *name, int32_t value) noexcept;
-template void Material::setDefaultParameter<uint32_t>(const char *name, uint32_t value) noexcept;
-template void Material::setDefaultParameter<int2>(const char *name, int2 value) noexcept;
-template void Material::setDefaultParameter<int3>(const char *name, int3 value) noexcept;
-template void Material::setDefaultParameter<int4>(const char *name, int4 value) noexcept;
-template void Material::setDefaultParameter<uint2>(const char *name, uint2 value) noexcept;
-template void Material::setDefaultParameter<uint3>(const char *name, uint3 value) noexcept;
-template void Material::setDefaultParameter<uint4>(const char *name, uint4 value) noexcept;
-template void Material::setDefaultParameter<float2>(const char *name, float2 value) noexcept;
-template void Material::setDefaultParameter<float3>(const char *name, float3 value) noexcept;
-template void Material::setDefaultParameter<float4>(const char *name, float4 value) noexcept;
-template void Material::setDefaultParameter<mat3f>(const char *name, mat3f value) noexcept;
-template void Material::setDefaultParameter<mat4f>(const char *name, mat4f value) noexcept;
+	filament::VertexDomain Material::getVertexDomain() const noexcept
+	{
+		return material->getVertexDomain();
+	}
 
-void Material::setDefaultParameter(const char *name, filament::Texture const *texture,
-								   filament::TextureSampler const &sampler) noexcept
-{
-	return material->setDefaultParameter(name, texture, sampler);
-}
+	bool Material::hasParameter(const char* name) const noexcept
+	{
+		return material->hasParameter(name);
+	}
 
-void Material::setDefaultParameter(const char *name, filament::RgbType type, float3 color) noexcept
-{
-	return material->setDefaultParameter(name, type, color);
-}
+	bool Material::hasShadowMultiplier()
+	{
+		return material->hasShadowMultiplier();
+	}
 
-void Material::setDefaultParameter(const char *name, filament::RgbaType type, float4 color) noexcept
-{
-	return material->setDefaultParameter(name, type, color);
-}
+	bool Material::hasSpecularAntiAliasing() const noexcept
+	{
+		return material->hasSpecularAntiAliasing();
+	}
 
-// instance
+	bool Material::isColorWriteEnabled() const noexcept
+	{
+		return material->isColorWriteEnabled();
+	}
 
-void Material::setColorWrite(bool enable) noexcept
-{
-	return instance->setColorWrite(enable);
-}
+	bool Material::isDepthCullingEnabled()
+	{
+		return material->isDepthCullingEnabled();
+	}
 
-void Material::setCullingMode(filament::MaterialInstance::CullingMode culling) noexcept
-{
-	return instance->setCullingMode(culling);
-}
+	bool Material::isDepthWriteEnabled() const noexcept
+	{
+		return material->isDepthWriteEnabled();
+	}
 
-void Material::setDepthCulling(bool enable) noexcept
-{
-	return instance->setDepthCulling(enable);
-}
+	bool Material::isDoubleSided() const noexcept
+	{
+		return material->isDoubleSided();
+	}
 
-void Material::setDepthWrite(bool enable) noexcept
-{
-	return instance->setDepthWrite(enable);
-}
+	bool Material::isSampler(const char* name) const noexcept
+	{
+		return material->isSampler(name);
+	}
 
-void Material::setDoubleSided(bool doubleSided) noexcept
-{
-	return instance->setDoubleSided(doubleSided);
-}
+	template <typename T>
+	void Material::setDefaultParameter(const char* name, T value) noexcept
+	{
+		return material->setDefaultParameter(name, value);
+	}
 
-void Material::setMaskThreshold(float threshold) noexcept
-{
-	return instance->setMaskThreshold(threshold);
-}
+	template void Material::setDefaultParameter<float>(const char* name, float value) noexcept;
+	template void Material::setDefaultParameter<int32_t>(const char* name, int32_t value) noexcept;
+	template void Material::setDefaultParameter<uint32_t>(const char* name, uint32_t value) noexcept;
+	template void Material::setDefaultParameter<filament::math::int2>(const char* name, filament::math::int2 value) noexcept;
+	template void Material::setDefaultParameter<filament::math::int3>(const char* name, filament::math::int3 value) noexcept;
+	template void Material::setDefaultParameter<filament::math::int4>(const char* name, filament::math::int4 value) noexcept;
+	template void Material::setDefaultParameter<filament::math::uint2>(const char* name, filament::math::uint2 value) noexcept;
+	template void Material::setDefaultParameter<filament::math::uint3>(const char* name, filament::math::uint3 value) noexcept;
+	template void Material::setDefaultParameter<filament::math::uint4>(const char* name, filament::math::uint4 value) noexcept;
+	template void Material::setDefaultParameter<filament::math::float2>(const char* name, filament::math::float2 value) noexcept;
+	template void Material::setDefaultParameter<filament::math::float3>(const char* name, filament::math::float3 value) noexcept;
+	template void Material::setDefaultParameter<filament::math::float4>(const char* name, filament::math::float4 value) noexcept;
+	template void Material::setDefaultParameter<filament::math::mat3f>(const char* name, filament::math::mat3f value) noexcept;
+	template void Material::setDefaultParameter<filament::math::mat4f>(const char* name, filament::math::mat4f value) noexcept;
 
-template <typename T>
-void Material::setParameter(const char *name, T value) noexcept
-{
-	return instance->setParameter(name, value);
-}
+	void Material::setDefaultParameter(const char* name, filament::Texture const* texture,
+		filament::TextureSampler const& sampler) noexcept
+	{
+		return material->setDefaultParameter(name, texture, sampler);
+	}
 
-template void Material::setParameter<float>(const char *name, float value) noexcept;
-template void Material::setParameter<int32_t>(const char *name, int32_t value) noexcept;
-template void Material::setParameter<uint32_t>(const char *name, uint32_t value) noexcept;
-template void Material::setParameter<bool>(const char *name, bool value) noexcept;
-template void Material::setParameter<bool2>(const char *name, bool2 value) noexcept;
-template void Material::setParameter<bool3>(const char *name, bool3 value) noexcept;
-template void Material::setParameter<bool4>(const char *name, bool4 value) noexcept;
-template void Material::setParameter<int2>(const char *name, int2 value) noexcept;
-template void Material::setParameter<int3>(const char *name, int3 value) noexcept;
-template void Material::setParameter<int4>(const char *name, int4 value) noexcept;
-template void Material::setParameter<uint2>(const char *name, uint2 value) noexcept;
-template void Material::setParameter<uint3>(const char *name, uint3 value) noexcept;
-template void Material::setParameter<uint4>(const char *name, uint4 value) noexcept;
-template void Material::setParameter<float2>(const char *name, float2 value) noexcept;
-template void Material::setParameter<float3>(const char *name, float3 value) noexcept;
-template void Material::setParameter<float4>(const char *name, float4 value) noexcept;
-template void Material::setParameter<mat3f>(const char *name, mat3f value) noexcept;
-template void Material::setParameter<mat4f>(const char *name, mat4f value) noexcept;
+	void Material::setDefaultParameter(const char* name, filament::RgbType type, filament::math::float3 color) noexcept
+	{
+		return material->setDefaultParameter(name, type, color);
+	}
 
-template <typename T>
-void Material::setParameter(const char *name, T *value, size_t count) noexcept
-{
-	return instance->setParameter(name, value, count);
-}
+	void Material::setDefaultParameter(const char* name, filament::RgbaType type, filament::math::float4 color) noexcept
+	{
+		return material->setDefaultParameter(name, type, color);
+	}
 
-template void Material::setParameter<float>(const char *name, float *value, size_t count) noexcept;
-template void Material::setParameter<int32_t>(const char *name, int32_t *value, size_t count) noexcept;
-template void Material::setParameter<uint32_t>(const char *name, uint32_t *value, size_t count) noexcept;
-template void Material::setParameter<bool>(const char *name, bool *value, size_t count) noexcept;
-template void Material::setParameter<bool2>(const char *name, bool2 *value, size_t count) noexcept;
-template void Material::setParameter<bool3>(const char *name, bool3 *value, size_t count) noexcept;
-template void Material::setParameter<bool4>(const char *name, bool4 *value, size_t count) noexcept;
-template void Material::setParameter<int2>(const char *name, int2 *value, size_t count) noexcept;
-template void Material::setParameter<int3>(const char *name, int3 *value, size_t count) noexcept;
-template void Material::setParameter<int4>(const char *name, int4 *value, size_t count) noexcept;
-template void Material::setParameter<uint2>(const char *name, uint2 *value, size_t count) noexcept;
-template void Material::setParameter<uint3>(const char *name, uint3 *value, size_t count) noexcept;
-template void Material::setParameter<uint4>(const char *name, uint4 *value, size_t count) noexcept;
-template void Material::setParameter<float2>(const char *name, float2 *value, size_t count) noexcept;
-template void Material::setParameter<float3>(const char *name, float3 *value, size_t count) noexcept;
-template void Material::setParameter<float4>(const char *name, float4 *value, size_t count) noexcept;
-template void Material::setParameter<mat4f>(const char *name, mat4f *value, size_t count) noexcept;
+	// instance
 
-template <>
-void Material::setParameter<mat3f>(const char *name, mat3f *value, size_t count) noexcept
-{
-	return instance->setParameter(name, value, count);
-}
+	void Material::setColorWrite(bool enable) noexcept
+	{
+		return instance->setColorWrite(enable);
+	}
 
-void Material::setParameter(const char *name, filament::Texture const *texture,
-							filament::TextureSampler const &sampler) noexcept
-{
-	return instance->setParameter(name, texture, sampler);
-}
+	void Material::setCullingMode(filament::MaterialInstance::CullingMode culling) noexcept
+	{
+		return instance->setCullingMode(culling);
+	}
 
-void Material::setParameter(const char *name, filament::RgbType type, filament::math::float3 color) noexcept
-{
-	return instance->setParameter(name, type, color);
-}
+	void Material::setDepthCulling(bool enable) noexcept
+	{
+		return instance->setDepthCulling(enable);
+	}
 
-void Material::setParameter(const char *name, filament::RgbaType type, filament::math::float4 color) noexcept
-{
-	return instance->setParameter(name, type, color);
-}
+	void Material::setDepthWrite(bool enable) noexcept
+	{
+		return instance->setDepthWrite(enable);
+	}
 
-void Material::setPolygonOffset(float scale, float constant) noexcept
-{
-	return instance->setPolygonOffset(scale, constant);
-}
+	void Material::setDoubleSided(bool doubleSided) noexcept
+	{
+		return instance->setDoubleSided(doubleSided);
+	}
 
-void Material::setScissor(uint32_t left, uint32_t bottom, uint32_t width, uint32_t height) noexcept
-{
-	return instance->setScissor(left, bottom, width, height);
-}
+	void Material::setMaskThreshold(float threshold) noexcept
+	{
+		return instance->setMaskThreshold(threshold);
+	}
 
-void Material::setSpecularAntiAliasingThreshold(float threshold) noexcept
-{
-	return instance->setSpecularAntiAliasingThreshold(threshold);
-}
+	template <typename T>
+	void Material::setParameter(const char* name, T value) noexcept
+	{
+		return instance->setParameter(name, value);
+	}
 
-void Material::setSpecularAntiAliasingVariance(float variance) noexcept
-{
-	return instance->setSpecularAntiAliasingVariance(variance);
-}
+	template void Material::setParameter<float>(const char* name, float value) noexcept;
+	template void Material::setParameter<int32_t>(const char* name, int32_t value) noexcept;
+	template void Material::setParameter<uint32_t>(const char* name, uint32_t value) noexcept;
+	template void Material::setParameter<bool>(const char* name, bool value) noexcept;
+	template void Material::setParameter<filament::math::bool2>(const char* name, filament::math::bool2 value) noexcept;
+	template void Material::setParameter<filament::math::bool3>(const char* name, filament::math::bool3 value) noexcept;
+	template void Material::setParameter<filament::math::bool4>(const char* name, filament::math::bool4 value) noexcept;
+	template void Material::setParameter<filament::math::int2>(const char* name, filament::math::int2 value) noexcept;
+	template void Material::setParameter<filament::math::int3>(const char* name, filament::math::int3 value) noexcept;
+	template void Material::setParameter<filament::math::int4>(const char* name, filament::math::int4 value) noexcept;
+	template void Material::setParameter<filament::math::uint2>(const char* name, filament::math::uint2 value) noexcept;
+	template void Material::setParameter<filament::math::uint3>(const char* name, filament::math::uint3 value) noexcept;
+	template void Material::setParameter<filament::math::uint4>(const char* name, filament::math::uint4 value) noexcept;
+	template void Material::setParameter<filament::math::float2>(const char* name, filament::math::float2 value) noexcept;
+	template void Material::setParameter<filament::math::float3>(const char* name, filament::math::float3 value) noexcept;
+	template void Material::setParameter<filament::math::float4>(const char* name, filament::math::float4 value) noexcept;
+	template void Material::setParameter<filament::math::mat3f>(const char* name, filament::math::mat3f value) noexcept;
+	template void Material::setParameter<filament::math::mat4f>(const char* name, filament::math::mat4f value) noexcept;
 
-void Material::setTransparencyMode(filament::MaterialInstance::TransparencyMode mode) noexcept
-{
-	return instance->setTransparencyMode(mode);
-}
+	template <typename T>
+	void Material::setParameter(const char* name, T* value, size_t count) noexcept
+	{
+		return instance->setParameter(name, value, count);
+	}
 
-void Material::unsetScissor()
-{
-	return instance->unsetScissor();
+	template void Material::setParameter<float>(const char* name, float* value, size_t count) noexcept;
+	template void Material::setParameter<int32_t>(const char* name, int32_t* value, size_t count) noexcept;
+	template void Material::setParameter<uint32_t>(const char* name, uint32_t* value, size_t count) noexcept;
+	template void Material::setParameter<bool>(const char* name, bool* value, size_t count) noexcept;
+	template void Material::setParameter<filament::math::bool2>(const char* name, filament::math::bool2* value, size_t count) noexcept;
+	template void Material::setParameter<filament::math::bool3>(const char* name, filament::math::bool3* value, size_t count) noexcept;
+	template void Material::setParameter<filament::math::bool4>(const char* name, filament::math::bool4* value, size_t count) noexcept;
+	template void Material::setParameter<filament::math::int2>(const char* name, filament::math::int2* value, size_t count) noexcept;
+	template void Material::setParameter<filament::math::int3>(const char* name, filament::math::int3* value, size_t count) noexcept;
+	template void Material::setParameter<filament::math::int4>(const char* name, filament::math::int4* value, size_t count) noexcept;
+	template void Material::setParameter<filament::math::uint2>(const char* name, filament::math::uint2* value, size_t count) noexcept;
+	template void Material::setParameter<filament::math::uint3>(const char* name, filament::math::uint3* value, size_t count) noexcept;
+	template void Material::setParameter<filament::math::uint4>(const char* name, filament::math::uint4* value, size_t count) noexcept;
+	template void Material::setParameter<filament::math::float2>(const char* name, filament::math::float2* value, size_t count) noexcept;
+	template void Material::setParameter<filament::math::float3>(const char* name, filament::math::float3* value, size_t count) noexcept;
+	template void Material::setParameter<filament::math::float4>(const char* name, filament::math::float4* value, size_t count) noexcept;
+	template void Material::setParameter<filament::math::mat4f>(const char* name, filament::math::mat4f* value, size_t count) noexcept;
+
+	template <>
+	void Material::setParameter<filament::math::mat3f>(const char* name, filament::math::mat3f* value, size_t count) noexcept
+	{
+		return instance->setParameter(name, value, count);
+	}
+
+	void Material::setParameter(const char* name, filament::Texture const* texture,
+		filament::TextureSampler const& sampler) noexcept
+	{
+		return instance->setParameter(name, texture, sampler);
+	}
+
+	void Material::setParameter(const char* name, filament::RgbType type, filament::math::float3 color) noexcept
+	{
+		return instance->setParameter(name, type, color);
+	}
+
+	void Material::setParameter(const char* name, filament::RgbaType type, filament::math::float4 color) noexcept
+	{
+		return instance->setParameter(name, type, color);
+	}
+
+	void Material::setPolygonOffset(float scale, float constant) noexcept
+	{
+		return instance->setPolygonOffset(scale, constant);
+	}
+
+	void Material::setScissor(uint32_t left, uint32_t bottom, uint32_t width, uint32_t height) noexcept
+	{
+		return instance->setScissor(left, bottom, width, height);
+	}
+
+	void Material::setSpecularAntiAliasingThreshold(float threshold) noexcept
+	{
+		return instance->setSpecularAntiAliasingThreshold(threshold);
+	}
+
+	void Material::setSpecularAntiAliasingVariance(float variance) noexcept
+	{
+		return instance->setSpecularAntiAliasingVariance(variance);
+	}
+
+	void Material::setTransparencyMode(filament::MaterialInstance::TransparencyMode mode) noexcept
+	{
+		return instance->setTransparencyMode(mode);
+	}
+
+	void Material::unsetScissor()
+	{
+		return instance->unsetScissor();
+	}
 }

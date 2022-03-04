@@ -1,11 +1,11 @@
-#ifndef GL_MATERIAL_SUBSURFACE_MATERIAL_H
-#define GL_MATERIAL_SUBSURFACE_MATERIAL_H
+#ifndef FWLAB_MATERIAL_SUBSURFACE_MATERIAL_H
+#define FWLAB_MATERIAL_SUBSURFACE_MATERIAL_H
 #include <math/vec3.h>
 #include <math/vec4.h>
 #include "../texture/Texture.h"
 #include "Material.h"
 
-namespace gl::material
+namespace fwlab::material
 {
 	class SubsurfaceMaterial : public Material
 	{
@@ -55,34 +55,34 @@ namespace gl::material
 		float getSubsurfacePower() const noexcept;
 		void setSubsurfacePower(float subsurfacePower) noexcept;
 
-		gl::texture::Texture *getMap() const noexcept;
-		void setMap(gl::texture::Texture *texture) noexcept;
+		gl::texture::Texture* getMap() const noexcept;
+		void setMap(gl::texture::Texture* texture) noexcept;
 
 	private:
-		filament::math::float4 baseColor = {1, 1, 1, 1};
+		filament::math::float4 baseColor = { 1, 1, 1, 1 };
 		float metallic = 1;
 		float roughness = 0.5;
 		float reflectance = 0.5;
 		float clearCoat = 0;
 		float clearCoatRoughness = 0.5;
 		float anisotropy = 0;
-		filament::math::float3 anisotropyDirection = {0, 1, 0};
+		filament::math::float3 anisotropyDirection = { 0, 1, 0 };
 		float ambientOcclusion = 0;
 		filament::math::float3 normal;
 		filament::math::float3 bentNormal;
 		filament::math::float3 clearCoatNormal;
-		filament::math::float4 emissive = {0, 0, 0, 0};
+		filament::math::float4 emissive = { 0, 0, 0, 0 };
 		filament::math::float4 postLightingColor;
 		float ior = 0.3;
 		float transmission = 0;
 		float absorption = 0;
 		float microThickness = 0;
 		float thickness = 0;
-		filament::math::float3 subsurfaceColor = {1, 1, 1};
+		filament::math::float3 subsurfaceColor = { 1, 1, 1 };
 		float subsurfacePower = 0;
 
 		bool enableMap = false;
-		gl::texture::Texture *map = nullptr;
+		gl::texture::Texture* map = nullptr;
 	};
 }
 

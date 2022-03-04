@@ -1,9 +1,9 @@
-set(MODULE_NAME fwlab_gl_material)
+set(MODULE_NAME fwlab_material)
 
 set(ASSETS_DIR "${CMAKE_CURRENT_BINARY_DIR}/generated")
 set(RESOURCE_BINS)
 
-# 材质文件
+# materials: mat -> filamat
 set(MATERIAL_SRCS
 	"mat/lit.mat"
 	"mat/subsurface.mat"
@@ -12,7 +12,6 @@ set(MATERIAL_SRCS
 	"mat/specular_glossiness.mat"
 )
 
-# 处理材质
 foreach (mat_src ${MATERIAL_SRCS})
 	get_filename_component(filename "${mat_src}" NAME_WE)
 	file(MAKE_DIRECTORY "${ASSETS_DIR}/material")
@@ -26,7 +25,6 @@ foreach (mat_src ${MATERIAL_SRCS})
 	list(APPEND RESOURCE_BINS ${output_path})
 endforeach()
 
-# 打包资源
 add_custom_command(
 	OUTPUT ${ASSETS_DIR}/resources/gl_materials.c
 	COMMAND resgen -c --package=gl_materials --deploy=${ASSETS_DIR}/resources ${RESOURCE_BINS}
@@ -34,7 +32,6 @@ add_custom_command(
 	COMMENT "Aggregating resources"
 )
 
-# 使用BEFORE避免引入其他目录下的resources/resources.h
 include_directories(
 	BEFORE "${ASSETS_DIR}"
 )
