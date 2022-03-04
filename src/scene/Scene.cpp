@@ -7,6 +7,7 @@
 #include "../context/context.h"
 #include "../geometry/PlaneGeometry.h"
 #include "../material/UnlitMaterial.h"
+#include "../math/mat4.h"
 
 namespace fwlab::scene
 {
@@ -34,98 +35,66 @@ namespace fwlab::scene
 		scene->addEntity(lightEntity);
 
 		// plane
+		textureLoader = new loader::TextureLoader();
+		auto texture = textureLoader->load("assets/images/girl.png", filament::Texture::Format::RGBA);
+
 		auto geometry = new geometry::PlaneGeometry();
 		geometry->create(10, 10);
+
 		auto material = new material::UnlitMaterial();
+		material->setMap(texture);
+
 		plane = new object::Mesh(geometry, material);
 		plane->setRotation({ 1, 0, 0 }, -M_PI / 2);
+
 		scene->addEntity(plane->getEntity());
 
-		// load asset
-		::utils::Path filename = "assets/models/RobotDog/scene.gltf";
-		if (!filename.exists())
+		// gltf
+		gltfLoader = new loader::GltfLoader();
+		asset = gltfLoader->load("assets/models/RobotDog/scene.gltf");
+		if (asset)
 		{
-			std::cerr << filename << " is not existed." << std::endl;
-			return;
+			scene->addEntities(asset->getEntities(), asset->getEntityCount());
 		}
-
-		std::ifstream in(filename.c_str(), std::ifstream::ate | std::ifstream::binary);
-		in.seekg(0, std::ios::end);
-		auto fileSize = static_cast<long>(in.tellg());
-		std::vector<uint8_t> buffer(fileSize);
-		in.seekg(0, std::ios::beg);
-		if (!in.read((char*)buffer.data(), fileSize))
-		{
-			std::cerr << "unable to read " << filename << "." << std::endl;
-			return;
-		}
-
-		auto materials = gltfio::createMaterialGenerator(engine);
-		names = new ::utils::NameComponentManager(::utils::EntityManager::get());
-
-		auto loader = gltfio::AssetLoader::create({ engine, materials, names });
-		asset = loader->createAssetFromJson(buffer.data(), buffer.size());
-		buffer.clear();
-		buffer.shrink_to_fit();
-
-		// load resource
-		std::string gltfPath = filename.getAbsolutePath();
-		gltfio::ResourceConfiguration configuration = {};
-		configuration.engine = engine;
-		configuration.gltfPath = gltfPath.c_str();
-		configuration.recomputeBoundingBoxes = false;
-		configuration.normalizeSkinningWeights = true;
-		resourceLoader = new gltfio::ResourceLoader(configuration);
-		if (!resourceLoader->asyncBeginLoad(asset))
-		{
-			std::cerr << "cannot load resources" << std::endl;
-			return;
-		}
-
-		asset->getAnimator();
-		asset->releaseSourceData();
-
-		scene->addEntities(asset->getEntities(), asset->getEntityCount());
 	}
 
 	void Scene::cleanup()
 	{
 		auto engine = app->getEngine();
-
-		resourceLoader->asyncCancelLoad();
-		loader->destroyAsset(asset);
-		gltfio::AssetLoader::destroy(&loader);
-		delete names;
-
+		engine->destroy(skybox);
 		engine->destroy(lightEntity);
+		delete plane;
+		delete textureLoader;
+
+		gltfLoader->destroyAsset(asset);
+		gltfLoader->destroy();
+		delete gltfLoader;
 	}
 
 	void Scene::animate()
 	{
 		auto engine = app->getEngine();
 
-		resourceLoader->asyncUpdateLoad();
+		if (gltfLoader)
+		{
+			gltfLoader->update();
+		}
 
-		auto& manager = engine->getTransformManager();
-		auto root = manager.getInstance(asset->getRoot());
+		if (asset)
+		{
+			auto& manager = engine->getTransformManager();
+			auto root = manager.getInstance(asset->getRoot());
 
-		filament::math::float3 scale = { 0.001, 0.001, 0.001 };
-		auto transform = filament::math::mat4f::scaling(scale);
+			filament::math::double3 position = { 0, 0, 0 };
 
-		manager.setTransform(root, transform);
-	}
+			filament::math::double3 axis = { 1, 0, 0 };
+			double angle = M_PI / 2;
+			filament::math::quat rotation = filament::math::quat::fromAxisAngle(axis, angle);
 
-	filament::math::mat4f Scene::fitIntoUnitCube(const filament::Aabb& bounds, float zoffset)
-	{
-		using namespace filament::math;
-		auto minpt = bounds.min;
-		auto maxpt = bounds.max;
-		float maxExtent;
-		maxExtent = std::max(maxpt.x - minpt.x, maxpt.y - minpt.y);
-		maxExtent = std::max(maxExtent, maxpt.z - minpt.z);
-		float scaleFactor = 2.0f / maxExtent;
-		float3 center = (minpt + maxpt) / 2.0f;
-		center.z += zoffset / scaleFactor;
-		return mat4f::scaling(float3(scaleFactor)) * mat4f::translation(-center);
+			filament::math::float3 scale = { 0.0002, 0.0002, 0.0002 };
+
+			auto transform = math::compose(position, rotation, scale);
+			manager.setTransform(root, transform);
+		}
 	}
 }

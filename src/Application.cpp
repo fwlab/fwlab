@@ -50,7 +50,7 @@ namespace fwlab
 		camera = engine->createCamera(cameraEntity);
 		camera->setProjection(60, float(width) / height, 0.1, 2000, filament::Camera::Fov::VERTICAL);
 		camera->setExposure(16.0f, 1 / 125.0f, 100.0f);
-		camera->lookAt({ 7, 8, 9 }, { 0, 0, 0 });
+		camera->lookAt({ 4, 5, 6 }, { 0, 0, 0 });
 
 		view = engine->createView();
 		viewport = new filament::Viewport(0, 0, width, height);

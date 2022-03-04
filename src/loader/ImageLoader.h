@@ -1,11 +1,10 @@
 #ifndef FWLAB_LOADER_IMAGE_LOADER_H
 #define FWLAB_LOADER_IMAGE_LOADER_H
 #include <stdint.h>
-#include "Loader.h"
 
 namespace fwlab::loader
 {
-	class ImageLoader : public Loader
+	class ImageLoader
 	{
 	public:
 		ImageLoader() = default;

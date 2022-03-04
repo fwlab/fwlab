@@ -1,12 +1,11 @@
 #ifndef FWLAB_LOADER_TEXTURE_LOADER_H
 #define FWLAB_LOADER_TEXTURE_LOADER_H
 #include <filament/Texture.h>
-#include "Loader.h"
 #include "../texture/Texture.h"
 
 namespace fwlab::loader
 {
-	class TextureLoader : public Loader
+	class TextureLoader
 	{
 	public:
 		TextureLoader() = default;

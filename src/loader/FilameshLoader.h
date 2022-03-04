@@ -2,11 +2,11 @@
 #define FWLAB_LOADER_FILAMESH_LOADER_H
 #include <filament/MaterialInstance.h>
 #include <filameshio/MeshReader.h>
-#include "MeshLoader.h"
+#include "../object/Mesh.h"
 
 namespace fwlab::loader
 {
-	class FilameshLoader : public MeshLoader
+	class FilameshLoader
 	{
 	public:
 		FilameshLoader() = default;
