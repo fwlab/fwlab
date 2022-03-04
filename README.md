@@ -4,6 +4,8 @@ fwlab是一个人工智能实验室。
 
 技术栈：C/C++、OpenGL、imgui、SDL2、filament、bullet3、OCCT、Tensorflow。
 
+![image](image/screenshot.jpg)
+
 ## 主要功能
 
 - [ ] 三维编辑
@@ -18,10 +20,6 @@ fwlab是一个人工智能实验室。
 - [ ] 模拟生物进化
   - [ ] 基因编码
   - [ ] 外形进化
-
-## 软件截图
-
-![image](image/screenshot.png)
 
 ## 使用Windows编译项目
 
