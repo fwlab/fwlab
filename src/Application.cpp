@@ -1,4 +1,5 @@
 #include <chrono>
+#include <cmath>
 #include <functional>
 #include <iostream>
 #include <thread>
@@ -106,7 +107,7 @@ namespace fwlab
 			event->dispatchEvent(event::ANIMATE, time);
 
 			// 保持帧率稳定在60fps
-			int sleepTime = 1000.0 / 60 - clock->getDelta() * 1000;
+			int sleepTime = std::ceil(1000.0 / 60 - clock->getDelta() * 1000);
 			if (sleepTime > 0)
 			{
 				SDL_Delay(sleepTime);

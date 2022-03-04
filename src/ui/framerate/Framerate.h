@@ -12,6 +12,7 @@ namespace fwlab::ui::framerate
 		void render() override;
 
 	private:
+		void renderPlots();
 		void handleRender(void* data);
 		float width = 200;
 		float height = 40;
