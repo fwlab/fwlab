@@ -1,5 +1,5 @@
-#ifndef GL_UTILS_H
-#define GL_UTILS_H
+#ifndef FWLAB_UTILS_UTILS_H
+#define FWLAB_UTILS_UTILS_H
 #include <stdint.h>
 #include <filament/VertexBuffer.h>
 #include <filament/IndexBuffer.h>

@@ -1,9 +1,9 @@
-#ifndef GL_UTILS_IMAGE_UTILS_H
-#define GL_UTILS_IMAGE_UTILS_H
+#ifndef FWLAB_UTILS_IMAGE_UTILS_H
+#define FWLAB_UTILS_IMAGE_UTILS_H
 #include <stdint.h>
 #include <filament/Texture.h>
 
-namespace gl::utils
+namespace fwlab::utils
 {
 	class ImageUtils
 	{
