@@ -22,6 +22,7 @@ namespace fwlab
 
 		clock = new utils::Clock(false);
 		time = new event::Time;
+		logger = new utils::Logger();
 	}
 
 	Application::~Application()
@@ -30,6 +31,7 @@ namespace fwlab
 
 		delete clock;
 		delete time;
+		delete logger;
 	}
 
 	void Application::start()
@@ -47,16 +49,15 @@ namespace fwlab
 		swapChain = engine->createSwapChain(utils::SDLUtils::getNativeWindow(window));
 		renderer = engine->createRenderer();
 		filament::Renderer::ClearOptions options =
-		{
-			.clearColor = { 0, 0, 0, 1 }
-		};
+			{
+				.clearColor = {0, 0, 0, 1}};
 		renderer->setClearOptions(options);
 
 		cameraEntity = ::utils::EntityManager::get().create();
 		camera = engine->createCamera(cameraEntity);
 		camera->setProjection(60, float(width) / height, 0.1, 2000, filament::Camera::Fov::VERTICAL);
 		camera->setExposure(16.0f, 1 / 125.0f, 100.0f);
-		camera->lookAt({ 4, 5, 6 }, { 0, 0, 0 });
+		camera->lookAt({4, 5, 6}, {0, 0, 0});
 
 		view = engine->createView();
 		viewport = new filament::Viewport(0, 0, width, height);
@@ -80,7 +81,7 @@ namespace fwlab
 		ui = new ui::UIHelper();
 		editor = new Editor();
 		ui->setCallback([&]()
-			{ editor->render(); });
+						{ editor->render(); });
 
 		while (isRunning)
 		{
@@ -119,9 +120,9 @@ namespace fwlab
 		isRunning = false;
 	}
 
-	void Application::clean() noexcept
+	void Application::clean()
 	{
-		auto& manager = ::utils::EntityManager::get();
+		auto &manager = ::utils::EntityManager::get();
 
 		event->dispatchEvent(event::BEFORE_APP_STOP);
 
@@ -149,102 +150,102 @@ namespace fwlab
 		::app = nullptr;
 	}
 
-	bool Application::getIsRunning() const noexcept
+	bool Application::getIsRunning() const
 	{
 		return isRunning;
 	}
 
-	utils::Clock* Application::getClock() const noexcept
+	utils::Clock *Application::getClock() const
 	{
 		return clock;
 	}
 
-	event::Time* Application::getTime() const noexcept
+	event::Time *Application::getTime() const
 	{
 		return time;
 	}
 
-	EventDispatcher* Application::getEventDispatcher() const noexcept
+	EventDispatcher *Application::getEventDispatcher() const
 	{
 		return event;
 	}
 
-	ui::UIHelper* Application::getUIHelper() const noexcept
+	ui::UIHelper *Application::getUIHelper() const
 	{
 		return ui;
 	}
 
-	SDL_Window* Application::getSDLWindow() const noexcept
+	SDL_Window *Application::getSDLWindow() const
 	{
 		return window;
 	}
 
-	filament::Engine* Application::getEngine() const noexcept
+	filament::Engine *Application::getEngine() const
 	{
 		return engine;
 	}
 
-	filament::Engine::Backend Application::getBackend() const noexcept
+	filament::Engine::Backend Application::getBackend() const
 	{
 		return engine->getBackend();
 	}
 
-	filament::SwapChain* Application::getSwapChain() const noexcept
+	filament::SwapChain *Application::getSwapChain() const
 	{
 		return swapChain;
 	}
 
-	filament::Renderer* Application::getRenderer() const noexcept
+	filament::Renderer *Application::getRenderer() const
 	{
 		return renderer;
 	}
 
-	::utils::Entity Application::getCameraEntity() const noexcept
+	::utils::Entity Application::getCameraEntity() const
 	{
 		return cameraEntity;
 	}
 
-	filament::Camera* Application::getCamera() const noexcept
+	filament::Camera *Application::getCamera() const
 	{
 		return camera;
 	}
 
-	filament::View* Application::getView() const noexcept
+	filament::View *Application::getView() const
 	{
 		return view;
 	}
 
-	filament::Viewport* Application::getViewport() const noexcept
+	filament::Viewport *Application::getViewport() const
 	{
 		return viewport;
 	}
 
-	filament::Scene* Application::getScene() const noexcept
+	filament::Scene *Application::getScene() const
 	{
 		return scene;
 	}
 
-	controller::OrbitController* Application::getController() const noexcept
+	controller::OrbitController *Application::getController() const
 	{
 		return controller;
 	}
 
-	void Application::addEventListener(const std::string eventName, std::string id, std::function<void(void*)> listener) noexcept
+	void Application::addEventListener(const std::string eventName, std::string id, std::function<void(void *)> listener)
 	{
 		event->addEventListener(eventName, id, listener);
 	}
 
-	void Application::removeEventListener(const std::string eventName, std::string id) noexcept
+	void Application::removeEventListener(const std::string eventName, std::string id)
 	{
 		event->removeEventListener(eventName, id);
 	}
 
-	bool Application::hasEventListener(const std::string eventName, std::string id) const noexcept
+	bool Application::hasEventListener(const std::string eventName, std::string id) const
 	{
 		return event->hasEventListener(eventName, id);
 	}
 
-	void Application::dispatchEvent(const std::string eventName, void* params) const noexcept
+	void Application::dispatchEvent(const std::string eventName, void *params) const
 	{
 		event->dispatchEvent(eventName, params);
 	}

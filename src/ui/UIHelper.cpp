@@ -16,7 +16,7 @@ namespace fwlab::ui
 		helper = new filagui::ImGuiHelper(app->getEngine(), view, fontPath);
 		helper->setDisplaySize(viewport->width, viewport->height);
 
-		ImGuiIO& io = ImGui::GetIO();
+		ImGuiIO &io = ImGui::GetIO();
 		io.KeyMap[ImGuiKey_Tab] = SDL_SCANCODE_TAB;
 		io.KeyMap[ImGuiKey_LeftArrow] = SDL_SCANCODE_LEFT;
 		io.KeyMap[ImGuiKey_RightArrow] = SDL_SCANCODE_RIGHT;
@@ -38,18 +38,18 @@ namespace fwlab::ui
 		io.KeyMap[ImGuiKey_X] = SDL_SCANCODE_X;
 		io.KeyMap[ImGuiKey_Y] = SDL_SCANCODE_Y;
 		io.KeyMap[ImGuiKey_Z] = SDL_SCANCODE_Z;
-		io.SetClipboardTextFn = [](void*, const char* text)
+		io.SetClipboardTextFn = [](void *, const char *text)
 		{
 			SDL_SetClipboardText(text);
 		};
-		io.GetClipboardTextFn = [](void*) -> const char*
+		io.GetClipboardTextFn = [](void *) -> const char *
 		{
 			return SDL_GetClipboardText();
 		};
 		io.ClipboardUserData = nullptr;
 
-		app->addEventListener(event::SDL_EVENT, id, [&](void* params)
-			{ handleSDLEvent(reinterpret_cast<SDL_Event*>(params)); });
+		app->addEventListener(event::SDL_EVENT, id, [&](void *params)
+							  { handleSDLEvent(reinterpret_cast<SDL_Event *>(params)); });
 
 		app->addEventListener(event::RENDER, id, std::bind(&UIHelper::handleRender, this, std::placeholders::_1));
 		app->addEventListener(event::SIZE_CHANGED, id, std::bind(&UIHelper::handleSizeChanged, this, std::placeholders::_1));
@@ -63,12 +63,12 @@ namespace fwlab::ui
 		delete helper;
 	}
 
-	filament::View* UIHelper::getView() const noexcept
+	filament::View *UIHelper::getView() const
 	{
 		return helper->getView();
 	}
 
-	filagui::ImGuiHelper* UIHelper::getImGuiHelper()
+	filagui::ImGuiHelper *UIHelper::getImGuiHelper()
 	{
 		return helper;
 	}
@@ -83,11 +83,11 @@ namespace fwlab::ui
 		this->callback = callback;
 	}
 
-	void UIHelper::handleSDLEvent(SDL_Event* event) const noexcept
+	void UIHelper::handleSDLEvent(SDL_Event *event) const
 	{
-		ImGuiIO& io = ImGui::GetIO();
+		ImGuiIO &io = ImGui::GetIO();
 
-		bool mousePressed[3] = { false };
+		bool mousePressed[3] = {false};
 
 		switch (event->type)
 		{
@@ -148,12 +148,12 @@ namespace fwlab::ui
 		}
 	}
 
-	void UIHelper::handleRender(void* data)
+	void UIHelper::handleRender(void *data)
 	{
-		event::Time* time = reinterpret_cast<event::Time*>(data);
+		event::Time *time = reinterpret_cast<event::Time *>(data);
 
-		helper->render(time->deltaTime, [&](filament::Engine* engine, filament::View* view)
-			{
+		helper->render(time->deltaTime, [&](filament::Engine *engine, filament::View *view)
+					   {
 				if (callback)
 				{
 					callback();
@@ -163,7 +163,7 @@ namespace fwlab::ui
 		renderer->render(view);
 	}
 
-	void UIHelper::handleSizeChanged(void* data)
+	void UIHelper::handleSizeChanged(void *data)
 	{
 		auto viewport = app->getViewport();
 		view->setViewport(*viewport);

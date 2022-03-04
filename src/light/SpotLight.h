@@ -15,9 +15,9 @@ namespace fwlab::light
 		virtual ~SpotLight();
 
 		// Light Manager
-		float getSpotLightInnerCone() const noexcept;
-		float getSpotLightOuterCone() const noexcept;
-		void setSpotLightCone(float inner, float outer) noexcept;
+		float getSpotLightInnerCone() const;
+		float getSpotLightOuterCone() const;
+		void setSpotLightCone(float inner, float outer);
 	};
 }
 

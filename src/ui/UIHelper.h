@@ -13,19 +13,19 @@ namespace fwlab::ui
 	public:
 		UIHelper();
 		virtual ~UIHelper();
-		filament::View* getView() const noexcept;
-		filagui::ImGuiHelper* getImGuiHelper();
+		filament::View *getView() const;
+		filagui::ImGuiHelper *getImGuiHelper();
 		std::function<void()> getCallback();
 		void setCallback(std::function<void()> callback);
 
 	private:
-		void handleSDLEvent(SDL_Event* event) const noexcept;
-		void handleRender(void* data);
-		void handleSizeChanged(void* data);
+		void handleSDLEvent(SDL_Event *event) const;
+		void handleRender(void *data);
+		void handleSizeChanged(void *data);
 		const std::string id = "UIHelper";
-		filament::View* view;
+		filament::View *view;
 		::utils::Path fontPath = "assets/fonts/Alibaba-PuHuiTi-Bold.ttf";
-		filagui::ImGuiHelper* helper;
+		filagui::ImGuiHelper *helper;
 		std::function<void()> callback = nullptr;
 	};
 }

@@ -11,27 +11,27 @@ namespace fwlab::controller
 		auto cameraPosition = app->getCamera()->getPosition();
 
 		manipulator = CameraManipulator::Builder()
-			.viewport(viewport->width, viewport->height)
-			.targetPosition(0, 0, 0)
-			.zoomSpeed(0.1)
-			.orbitHomePosition(cameraPosition.x, cameraPosition.y, cameraPosition.z)
-			.orbitSpeed(0.04, 0.04)
-			.build(filament::camutils::Mode::ORBIT);
+						  .viewport(viewport->width, viewport->height)
+						  .targetPosition(0, 0, 0)
+						  .zoomSpeed(0.1)
+						  .orbitHomePosition(cameraPosition.x, cameraPosition.y, cameraPosition.z)
+						  .orbitSpeed(0.04, 0.04)
+						  .build(filament::camutils::Mode::ORBIT);
 
-		app->addEventListener(event::MOUSE_DOWN, id, [&](void* event)
-			{ handleMouseDown(reinterpret_cast<event::MouseEvent*>(event)); });
-		app->addEventListener(event::MOUSE_MOVE, id, [&](void* event)
-			{ handleMouseMove(reinterpret_cast<event::MouseEvent*>(event)); });
-		app->addEventListener(event::MOUSE_UP, id, [&](void* event)
-			{ handleMouseUp(reinterpret_cast<event::MouseEvent*>(event)); });
-		app->addEventListener(event::WHEEL, id, [&](void* event)
-			{ handleWheel(reinterpret_cast<event::WheelEvent*>(event)); });
-		app->addEventListener(event::KEY_DOWN, id, [&](void* event)
-			{ handleKeyDown(reinterpret_cast<event::KeyboardEvent*>(event)); });
-		app->addEventListener(event::KEY_UP, id, [&](void* event)
-			{ handleKeyUp(reinterpret_cast<event::KeyboardEvent*>(event)); });
-		app->addEventListener(event::RENDER, id, [&](void* event)
-			{ handleRender(); });
+		app->addEventListener(event::MOUSE_DOWN, id, [&](void *event)
+							  { handleMouseDown(reinterpret_cast<event::MouseEvent *>(event)); });
+		app->addEventListener(event::MOUSE_MOVE, id, [&](void *event)
+							  { handleMouseMove(reinterpret_cast<event::MouseEvent *>(event)); });
+		app->addEventListener(event::MOUSE_UP, id, [&](void *event)
+							  { handleMouseUp(reinterpret_cast<event::MouseEvent *>(event)); });
+		app->addEventListener(event::WHEEL, id, [&](void *event)
+							  { handleWheel(reinterpret_cast<event::WheelEvent *>(event)); });
+		app->addEventListener(event::KEY_DOWN, id, [&](void *event)
+							  { handleKeyDown(reinterpret_cast<event::KeyboardEvent *>(event)); });
+		app->addEventListener(event::KEY_UP, id, [&](void *event)
+							  { handleKeyUp(reinterpret_cast<event::KeyboardEvent *>(event)); });
+		app->addEventListener(event::RENDER, id, [&](void *event)
+							  { handleRender(); });
 	}
 
 	OrbitController::~OrbitController()
@@ -39,32 +39,32 @@ namespace fwlab::controller
 		delete manipulator;
 	}
 
-	filament::camutils::Manipulator<float>* OrbitController::getManipulator() const noexcept
+	filament::camutils::Manipulator<float> *OrbitController::getManipulator() const
 	{
 		return manipulator;
 	}
 
-	void OrbitController::handleMouseDown(event::MouseEvent* event) const noexcept
+	void OrbitController::handleMouseDown(event::MouseEvent *event) const
 	{
 		manipulator->grabBegin(event->x, event->y, event->button == 3);
 	}
 
-	void OrbitController::handleMouseMove(event::MouseEvent* event) const noexcept
+	void OrbitController::handleMouseMove(event::MouseEvent *event) const
 	{
 		manipulator->grabUpdate(event->x, event->y);
 	}
 
-	void OrbitController::handleMouseUp(event::MouseEvent* event) const noexcept
+	void OrbitController::handleMouseUp(event::MouseEvent *event) const
 	{
 		manipulator->grabEnd();
 	}
 
-	void OrbitController::handleWheel(event::WheelEvent* event) const noexcept
+	void OrbitController::handleWheel(event::WheelEvent *event) const
 	{
 		manipulator->scroll(0, 0, event->deltaY);
 	}
 
-	void OrbitController::handleKeyDown(event::KeyboardEvent* event) const noexcept
+	void OrbitController::handleKeyDown(event::KeyboardEvent *event) const
 	{
 		CameraManipulator::Key key;
 		if (manipulatorKeyFromKeycode(event->scancode, key))
@@ -73,7 +73,7 @@ namespace fwlab::controller
 		}
 	}
 
-	void OrbitController::handleKeyUp(event::KeyboardEvent* event) const noexcept
+	void OrbitController::handleKeyUp(event::KeyboardEvent *event) const
 	{
 		CameraManipulator::Key key;
 		if (manipulatorKeyFromKeycode(event->scancode, key))
@@ -82,14 +82,14 @@ namespace fwlab::controller
 		}
 	}
 
-	void OrbitController::handleRender() const noexcept
+	void OrbitController::handleRender() const
 	{
 		filament::math::float3 eye, center, up;
 		manipulator->getLookAt(&eye, &center, &up);
 		app->getCamera()->lookAt(eye, center, up);
 	}
 
-	bool OrbitController::manipulatorKeyFromKeycode(SDL_Scancode scancode, CameraManipulator::Key& key) const noexcept
+	bool OrbitController::manipulatorKeyFromKeycode(SDL_Scancode scancode, CameraManipulator::Key &key) const
 	{
 		switch (scancode)
 		{

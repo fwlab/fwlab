@@ -12,19 +12,19 @@ namespace fwlab::controller
 		using CameraManipulator = filament::camutils::Manipulator<float>;
 		OrbitController();
 		virtual ~OrbitController();
-		CameraManipulator* getManipulator() const noexcept;
+		CameraManipulator *getManipulator() const;
 
 	private:
-		void handleMouseDown(event::MouseEvent* event) const noexcept;
-		void handleMouseMove(event::MouseEvent* event) const noexcept;
-		void handleMouseUp(event::MouseEvent* event) const noexcept;
-		void handleWheel(event::WheelEvent* event) const noexcept;
-		void handleKeyDown(event::KeyboardEvent* event) const noexcept;
-		void handleKeyUp(event::KeyboardEvent* event) const noexcept;
-		void handleRender() const noexcept;
-		bool manipulatorKeyFromKeycode(SDL_Scancode scancode, CameraManipulator::Key& key) const noexcept;
+		void handleMouseDown(event::MouseEvent *event) const;
+		void handleMouseMove(event::MouseEvent *event) const;
+		void handleMouseUp(event::MouseEvent *event) const;
+		void handleWheel(event::WheelEvent *event) const;
+		void handleKeyDown(event::KeyboardEvent *event) const;
+		void handleKeyUp(event::KeyboardEvent *event) const;
+		void handleRender() const;
+		bool manipulatorKeyFromKeycode(SDL_Scancode scancode, CameraManipulator::Key &key) const;
 		const std::string id = "controller";
-		CameraManipulator* manipulator = nullptr;
+		CameraManipulator *manipulator = nullptr;
 	};
 }
 

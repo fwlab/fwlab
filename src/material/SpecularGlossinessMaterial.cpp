@@ -30,221 +30,221 @@ namespace fwlab::material
 		}
 	}
 
-	filament::math::float4 SpecularGlossinessMaterial::getBaseColor() const noexcept
+	filament::math::float4 SpecularGlossinessMaterial::getBaseColor() const
 	{
 		return baseColor;
 	}
 
-	void SpecularGlossinessMaterial::setBaseColor(filament::math::float4 baseColor) noexcept
+	void SpecularGlossinessMaterial::setBaseColor(filament::math::float4 baseColor)
 	{
 		this->baseColor = baseColor;
 		instance->setParameter("baseColor", filament::RgbaType::LINEAR, baseColor);
 	}
 
-	filament::math::float3 SpecularGlossinessMaterial::getSpecularColor() const noexcept
+	filament::math::float3 SpecularGlossinessMaterial::getSpecularColor() const
 	{
 		return specularColor;
 	}
 
-	void SpecularGlossinessMaterial::setSpecularColor(filament::math::float3 specularColor) noexcept
+	void SpecularGlossinessMaterial::setSpecularColor(filament::math::float3 specularColor)
 	{
 		this->specularColor = specularColor;
 		instance->setParameter("specularColor", specularColor);
 	}
 
-	float SpecularGlossinessMaterial::getGlossiness() const noexcept
+	float SpecularGlossinessMaterial::getGlossiness() const
 	{
 		return glossiness;
 	}
 
-	void SpecularGlossinessMaterial::setGlossiness(float glossiness) noexcept
+	void SpecularGlossinessMaterial::setGlossiness(float glossiness)
 	{
 		this->glossiness = glossiness;
 		instance->setParameter("glossiness", glossiness);
 	}
 
-	filament::math::float3 SpecularGlossinessMaterial::getSheenColor() const noexcept
+	filament::math::float3 SpecularGlossinessMaterial::getSheenColor() const
 	{
 		return sheenColor;
 	}
 
-	void SpecularGlossinessMaterial::setSheenColor(filament::math::float3 sheenColor) noexcept
+	void SpecularGlossinessMaterial::setSheenColor(filament::math::float3 sheenColor)
 	{
 		this->sheenColor = sheenColor;
 		instance->setParameter("sheenColor", sheenColor);
 	}
 
-	float SpecularGlossinessMaterial::getSheenRoughness() const noexcept
+	float SpecularGlossinessMaterial::getSheenRoughness() const
 	{
 		return sheenRoughness;
 	}
 
-	void SpecularGlossinessMaterial::setSheenRoughness(float sheenRoughness) noexcept
+	void SpecularGlossinessMaterial::setSheenRoughness(float sheenRoughness)
 	{
 		this->sheenRoughness = sheenRoughness;
 		instance->setParameter("sheenRoughness", sheenRoughness);
 	}
 
-	float SpecularGlossinessMaterial::getClearCoat() const noexcept
+	float SpecularGlossinessMaterial::getClearCoat() const
 	{
 		return clearCoat;
 	}
 
-	void SpecularGlossinessMaterial::setClearCoat(float clearCoat) noexcept
+	void SpecularGlossinessMaterial::setClearCoat(float clearCoat)
 	{
 		this->clearCoat = clearCoat;
 		instance->setParameter("clearCoat", clearCoat);
 	}
 
-	float SpecularGlossinessMaterial::getClearCoatRoughness() const noexcept
+	float SpecularGlossinessMaterial::getClearCoatRoughness() const
 	{
 		return clearCoatRoughness;
 	}
 
-	void SpecularGlossinessMaterial::setClearCoatRoughness(float clearCoatRoughness) noexcept
+	void SpecularGlossinessMaterial::setClearCoatRoughness(float clearCoatRoughness)
 	{
 		this->clearCoatRoughness = clearCoatRoughness;
 		instance->setParameter("clearCoatRoughness", clearCoatRoughness);
 	}
 
-	float SpecularGlossinessMaterial::getAnisotropy() const noexcept
+	float SpecularGlossinessMaterial::getAnisotropy() const
 	{
 		return anisotropy;
 	}
 
-	void SpecularGlossinessMaterial::setAnisotropy(float anisotropy) noexcept
+	void SpecularGlossinessMaterial::setAnisotropy(float anisotropy)
 	{
 		this->anisotropy = anisotropy;
 		instance->setParameter("anisotropy", anisotropy);
 	}
 
-	filament::math::float3 SpecularGlossinessMaterial::getAnisotropyDirection() const noexcept
+	filament::math::float3 SpecularGlossinessMaterial::getAnisotropyDirection() const
 	{
 		return anisotropyDirection;
 	}
 
-	void SpecularGlossinessMaterial::setAnisotropyDirection(filament::math::float3 anisotropyDirection) noexcept
+	void SpecularGlossinessMaterial::setAnisotropyDirection(filament::math::float3 anisotropyDirection)
 	{
 		this->anisotropyDirection = anisotropyDirection;
 		instance->setParameter("anisotropyDirection", anisotropyDirection);
 	}
 
-	float SpecularGlossinessMaterial::getAmbientOcclusion() const noexcept
+	float SpecularGlossinessMaterial::getAmbientOcclusion() const
 	{
 		return ambientOcclusion;
 	}
 
-	void SpecularGlossinessMaterial::setAmbientOcclusion(float ambientOcclusion) noexcept
+	void SpecularGlossinessMaterial::setAmbientOcclusion(float ambientOcclusion)
 	{
 		this->ambientOcclusion = ambientOcclusion;
 		instance->setParameter("ambientOcclusion", ambientOcclusion);
 	}
 
-	filament::math::float3 SpecularGlossinessMaterial::getNormal() const noexcept
+	filament::math::float3 SpecularGlossinessMaterial::getNormal() const
 	{
 		return normal;
 	}
 
-	void SpecularGlossinessMaterial::setNormal(filament::math::float3 normal) noexcept
+	void SpecularGlossinessMaterial::setNormal(filament::math::float3 normal)
 	{
 		this->normal = normal;
 		instance->setParameter("normal", normal);
 	}
 
-	filament::math::float3 SpecularGlossinessMaterial::getBentNormal() const noexcept
+	filament::math::float3 SpecularGlossinessMaterial::getBentNormal() const
 	{
 		return bentNormal;
 	}
 
-	void SpecularGlossinessMaterial::setBentNormal(filament::math::float3 bentNormal) noexcept
+	void SpecularGlossinessMaterial::setBentNormal(filament::math::float3 bentNormal)
 	{
 		this->bentNormal = bentNormal;
 		instance->setParameter("bentNormal", bentNormal);
 	}
 
-	filament::math::float3 SpecularGlossinessMaterial::getClearCoatNormal() const noexcept
+	filament::math::float3 SpecularGlossinessMaterial::getClearCoatNormal() const
 	{
 		return clearCoatNormal;
 	}
 
-	void SpecularGlossinessMaterial::setClearCoatNormal(filament::math::float3 clearCoatNormal) noexcept
+	void SpecularGlossinessMaterial::setClearCoatNormal(filament::math::float3 clearCoatNormal)
 	{
 		this->clearCoatNormal = clearCoatNormal;
 		instance->setParameter("clearCoatNormal", clearCoatNormal);
 	}
 
-	filament::math::float4 SpecularGlossinessMaterial::getEmissive() const noexcept
+	filament::math::float4 SpecularGlossinessMaterial::getEmissive() const
 	{
 		return emissive;
 	}
 
-	void SpecularGlossinessMaterial::setEmissive(filament::math::float4 emissive) noexcept
+	void SpecularGlossinessMaterial::setEmissive(filament::math::float4 emissive)
 	{
 		this->emissive = emissive;
 		instance->setParameter("emissive", emissive);
 	}
 
-	filament::math::float4 SpecularGlossinessMaterial::getPostLightingColor() const noexcept
+	filament::math::float4 SpecularGlossinessMaterial::getPostLightingColor() const
 	{
 		return postLightingColor;
 	}
 
-	void SpecularGlossinessMaterial::setPostLightingColor(filament::math::float4 postLightingColor) noexcept
+	void SpecularGlossinessMaterial::setPostLightingColor(filament::math::float4 postLightingColor)
 	{
 		this->postLightingColor = postLightingColor;
 		instance->setParameter("postLightingColor", postLightingColor);
 	}
 
-	float SpecularGlossinessMaterial::getTransmission() const noexcept
+	float SpecularGlossinessMaterial::getTransmission() const
 	{
 		return transmission;
 	}
 
-	void SpecularGlossinessMaterial::setTransmission(float transmission) noexcept
+	void SpecularGlossinessMaterial::setTransmission(float transmission)
 	{
 		this->transmission = transmission;
 		instance->setParameter("transmission", transmission);
 	}
 
-	float SpecularGlossinessMaterial::getAbsorption() const noexcept
+	float SpecularGlossinessMaterial::getAbsorption() const
 	{
 		return absorption;
 	}
 
-	void SpecularGlossinessMaterial::setAbsorption(float absorption) noexcept
+	void SpecularGlossinessMaterial::setAbsorption(float absorption)
 	{
 		this->absorption = absorption;
 		instance->setParameter("absorption", absorption);
 	}
 
-	float SpecularGlossinessMaterial::getMicroThickness() const noexcept
+	float SpecularGlossinessMaterial::getMicroThickness() const
 	{
 		return microThickness;
 	}
 
-	void SpecularGlossinessMaterial::setMicroThickness(float microThickness) noexcept
+	void SpecularGlossinessMaterial::setMicroThickness(float microThickness)
 	{
 		this->microThickness = microThickness;
 		instance->setParameter("microThickness", microThickness);
 	}
 
-	float SpecularGlossinessMaterial::getThickness() const noexcept
+	float SpecularGlossinessMaterial::getThickness() const
 	{
 		return thickness;
 	}
 
-	void SpecularGlossinessMaterial::setThickness(float thickness) noexcept
+	void SpecularGlossinessMaterial::setThickness(float thickness)
 	{
 		this->thickness = thickness;
 		instance->setParameter("thickness", thickness);
 	}
 
-	texture::Texture* SpecularGlossinessMaterial::getMap() const noexcept
+	texture::Texture *SpecularGlossinessMaterial::getMap() const
 	{
 		return map;
 	}
 
-	void SpecularGlossinessMaterial::setMap(texture::Texture* texture) noexcept
+	void SpecularGlossinessMaterial::setMap(texture::Texture *texture)
 	{
 		if (map)
 		{

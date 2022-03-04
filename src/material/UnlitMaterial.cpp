@@ -22,45 +22,45 @@ namespace fwlab::material
 		}
 	}
 
-	filament::math::float4 UnlitMaterial::getBaseColor() const noexcept
+	filament::math::float4 UnlitMaterial::getBaseColor() const
 	{
 		return baseColor;
 	}
 
-	void UnlitMaterial::setBaseColor(filament::math::float4 baseColor) noexcept
+	void UnlitMaterial::setBaseColor(filament::math::float4 baseColor)
 	{
 		this->baseColor = baseColor;
 		setParameter("baseColor", baseColor);
 	}
 
-	filament::math::float4 UnlitMaterial::getEmissive() const noexcept
+	filament::math::float4 UnlitMaterial::getEmissive() const
 	{
 		return emissive;
 	}
 
-	void UnlitMaterial::setEmissive(filament::math::float4 emissive) noexcept
+	void UnlitMaterial::setEmissive(filament::math::float4 emissive)
 	{
 		this->emissive = emissive;
 		setParameter("emissive", emissive);
 	}
 
-	filament::math::float4 UnlitMaterial::getPostLightingColor() const noexcept
+	filament::math::float4 UnlitMaterial::getPostLightingColor() const
 	{
 		return postLightingColor;
 	}
 
-	void UnlitMaterial::setPostLightingColor(filament::math::float4 postLightingColor) noexcept
+	void UnlitMaterial::setPostLightingColor(filament::math::float4 postLightingColor)
 	{
 		this->postLightingColor = postLightingColor;
 		setParameter("postLightingColor", postLightingColor);
 	}
 
-	texture::Texture* UnlitMaterial::getMap() const noexcept
+	texture::Texture* UnlitMaterial::getMap() const
 	{
 		return map;
 	}
 
-	void UnlitMaterial::setMap(texture::Texture* texture) noexcept
+	void UnlitMaterial::setMap(texture::Texture* texture)
 	{
 		if (map)
 		{

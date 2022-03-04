@@ -32,45 +32,45 @@ namespace fwlab::material
 		}
 	}
 
-	filament::math::float4 LitMaterial::getBaseColor() const noexcept
+	filament::math::float4 LitMaterial::getBaseColor() const
 	{
 		return baseColor;
 	}
 
-	void LitMaterial::setBaseColor(filament::math::float4 baseColor) noexcept
+	void LitMaterial::setBaseColor(filament::math::float4 baseColor)
 	{
 		this->baseColor = baseColor;
 		instance->setParameter("baseColor", filament::RgbaType::LINEAR, baseColor);
 	}
 
-	float LitMaterial::getMetallic() const noexcept
+	float LitMaterial::getMetallic() const
 	{
 		return metallic;
 	}
 
-	void LitMaterial::setMetallic(float metallic) noexcept
+	void LitMaterial::setMetallic(float metallic)
 	{
 		this->metallic = metallic;
 		instance->setParameter("metallic", metallic);
 	}
 
-	float LitMaterial::getRoughness() const noexcept
+	float LitMaterial::getRoughness() const
 	{
 		return roughness;
 	}
 
-	void LitMaterial::setRoughness(float roughness) noexcept
+	void LitMaterial::setRoughness(float roughness)
 	{
 		this->roughness = roughness;
 		instance->setParameter("roughness", roughness);
 	}
 
-	float LitMaterial::getReflectance() const noexcept
+	float LitMaterial::getReflectance() const
 	{
 		return reflectance;
 	}
 
-	void LitMaterial::setReflectance(float reflectance) noexcept
+	void LitMaterial::setReflectance(float reflectance)
 	{
 		this->reflectance = reflectance;
 		ior = utils::Utils::reflectanceToIOR(reflectance);
@@ -78,144 +78,144 @@ namespace fwlab::material
 		instance->setParameter("ior", ior);
 	}
 
-	filament::math::float3 LitMaterial::getSheenColor() const noexcept
+	filament::math::float3 LitMaterial::getSheenColor() const
 	{
 		return sheenColor;
 	}
 
-	void LitMaterial::setSheenColor(filament::math::float3 sheenColor) noexcept
+	void LitMaterial::setSheenColor(filament::math::float3 sheenColor)
 	{
 		this->sheenColor = sheenColor;
 		instance->setParameter("sheenColor", sheenColor);
 	}
 
-	float LitMaterial::getSheenRoughness() const noexcept
+	float LitMaterial::getSheenRoughness() const
 	{
 		return sheenRoughness;
 	}
 
-	void LitMaterial::setSheenRoughness(float sheenRoughness) noexcept
+	void LitMaterial::setSheenRoughness(float sheenRoughness)
 	{
 		this->sheenRoughness = sheenRoughness;
 		instance->setParameter("sheenRoughness", sheenRoughness);
 	}
 
-	float LitMaterial::getClearCoat() const noexcept
+	float LitMaterial::getClearCoat() const
 	{
 		return clearCoat;
 	}
 
-	void LitMaterial::setClearCoat(float clearCoat) noexcept
+	void LitMaterial::setClearCoat(float clearCoat)
 	{
 		this->clearCoat = clearCoat;
 		instance->setParameter("clearCoat", clearCoat);
 	}
 
-	float LitMaterial::getClearCoatRoughness() const noexcept
+	float LitMaterial::getClearCoatRoughness() const
 	{
 		return clearCoatRoughness;
 	}
 
-	void LitMaterial::setClearCoatRoughness(float clearCoatRoughness) noexcept
+	void LitMaterial::setClearCoatRoughness(float clearCoatRoughness)
 	{
 		this->clearCoatRoughness = clearCoatRoughness;
 		instance->setParameter("clearCoatRoughness", clearCoatRoughness);
 	}
 
-	float LitMaterial::getAnisotropy() const noexcept
+	float LitMaterial::getAnisotropy() const
 	{
 		return anisotropy;
 	}
 
-	void LitMaterial::setAnisotropy(float anisotropy) noexcept
+	void LitMaterial::setAnisotropy(float anisotropy)
 	{
 		this->anisotropy = anisotropy;
 		instance->setParameter("anisotropy", anisotropy);
 	}
 
-	filament::math::float3 LitMaterial::getAnisotropyDirection() const noexcept
+	filament::math::float3 LitMaterial::getAnisotropyDirection() const
 	{
 		return anisotropyDirection;
 	}
 
-	void LitMaterial::setAnisotropyDirection(filament::math::float3 anisotropyDirection) noexcept
+	void LitMaterial::setAnisotropyDirection(filament::math::float3 anisotropyDirection)
 	{
 		this->anisotropyDirection = anisotropyDirection;
 		instance->setParameter("anisotropyDirection", anisotropyDirection);
 	}
 
-	float LitMaterial::getAmbientOcclusion() const noexcept
+	float LitMaterial::getAmbientOcclusion() const
 	{
 		return ambientOcclusion;
 	}
 
-	void LitMaterial::setAmbientOcclusion(float ambientOcclusion) noexcept
+	void LitMaterial::setAmbientOcclusion(float ambientOcclusion)
 	{
 		this->ambientOcclusion = ambientOcclusion;
 		instance->setParameter("ambientOcclusion", ambientOcclusion);
 	}
 
-	filament::math::float3 LitMaterial::getNormal() const noexcept
+	filament::math::float3 LitMaterial::getNormal() const
 	{
 		return normal;
 	}
 
-	void LitMaterial::setNormal(filament::math::float3 normal) noexcept
+	void LitMaterial::setNormal(filament::math::float3 normal)
 	{
 		this->normal = normal;
 		instance->setParameter("normal", normal);
 	}
 
-	filament::math::float3 LitMaterial::getBentNormal() const noexcept
+	filament::math::float3 LitMaterial::getBentNormal() const
 	{
 		return bentNormal;
 	}
 
-	void LitMaterial::setBentNormal(filament::math::float3 bentNormal) noexcept
+	void LitMaterial::setBentNormal(filament::math::float3 bentNormal)
 	{
 		this->bentNormal = bentNormal;
 		instance->setParameter("bentNormal", bentNormal);
 	}
 
-	filament::math::float3 LitMaterial::getClearCoatNormal() const noexcept
+	filament::math::float3 LitMaterial::getClearCoatNormal() const
 	{
 		return clearCoatNormal;
 	}
 
-	void LitMaterial::setClearCoatNormal(filament::math::float3 clearCoatNormal) noexcept
+	void LitMaterial::setClearCoatNormal(filament::math::float3 clearCoatNormal)
 	{
 		this->clearCoatNormal = clearCoatNormal;
 		instance->setParameter("clearCoatNormal", clearCoatNormal);
 	}
 
-	filament::math::float4 LitMaterial::getEmissive() const noexcept
+	filament::math::float4 LitMaterial::getEmissive() const
 	{
 		return emissive;
 	}
 
-	void LitMaterial::setEmissive(filament::math::float4 emissive) noexcept
+	void LitMaterial::setEmissive(filament::math::float4 emissive)
 	{
 		this->emissive = emissive;
 		instance->setParameter("emissive", emissive);
 	}
 
-	filament::math::float4 LitMaterial::getPostLightingColor() const noexcept
+	filament::math::float4 LitMaterial::getPostLightingColor() const
 	{
 		return postLightingColor;
 	}
 
-	void LitMaterial::setPostLightingColor(filament::math::float4 postLightingColor) noexcept
+	void LitMaterial::setPostLightingColor(filament::math::float4 postLightingColor)
 	{
 		this->postLightingColor = postLightingColor;
 		instance->setParameter("postLightingColor", postLightingColor);
 	}
 
-	float LitMaterial::getIOR() const noexcept
+	float LitMaterial::getIOR() const
 	{
 		return ior;
 	}
 
-	void LitMaterial::setIOR(float ior) noexcept
+	void LitMaterial::setIOR(float ior)
 	{
 		this->ior = ior;
 		reflectance = utils::Utils::iorToReflectance(ior);
@@ -223,56 +223,56 @@ namespace fwlab::material
 		instance->setParameter("reflectance", reflectance);
 	}
 
-	float LitMaterial::getTransmission() const noexcept
+	float LitMaterial::getTransmission() const
 	{
 		return transmission;
 	}
 
-	void LitMaterial::setTransmission(float transmission) noexcept
+	void LitMaterial::setTransmission(float transmission)
 	{
 		this->transmission = transmission;
 		instance->setParameter("transmission", transmission);
 	}
 
-	float LitMaterial::getAbsorption() const noexcept
+	float LitMaterial::getAbsorption() const
 	{
 		return absorption;
 	}
 
-	void LitMaterial::setAbsorption(float absorption) noexcept
+	void LitMaterial::setAbsorption(float absorption)
 	{
 		this->absorption = absorption;
 		instance->setParameter("absorption", absorption);
 	}
 
-	float LitMaterial::getMicroThickness() const noexcept
+	float LitMaterial::getMicroThickness() const
 	{
 		return microThickness;
 	}
 
-	void LitMaterial::setMicroThickness(float microThickness) noexcept
+	void LitMaterial::setMicroThickness(float microThickness)
 	{
 		this->microThickness = microThickness;
 		instance->setParameter("microThickness", microThickness);
 	}
 
-	float LitMaterial::getThickness() const noexcept
+	float LitMaterial::getThickness() const
 	{
 		return thickness;
 	}
 
-	void LitMaterial::setThickness(float thickness) noexcept
+	void LitMaterial::setThickness(float thickness)
 	{
 		this->thickness = thickness;
 		instance->setParameter("thickness", thickness);
 	}
 
-	texture::Texture* LitMaterial::getMap() const noexcept
+	texture::Texture *LitMaterial::getMap() const
 	{
 		return map;
 	}
 
-	void LitMaterial::setMap(texture::Texture* texture) noexcept
+	void LitMaterial::setMap(texture::Texture *texture)
 	{
 		if (map)
 		{

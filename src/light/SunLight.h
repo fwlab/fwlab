@@ -14,12 +14,12 @@ namespace fwlab::light
 		virtual ~SunLight();
 
 		// Light Manager
-		float getSunAngularRadius() const noexcept;
-		float getSunHaloFalloff() const noexcept;
-		float getSunHaloSize() const noexcept;
-		void setSunAngularRadius(float angularRadius) noexcept;
-		void setSunHaloFalloff(float haloFalloff) noexcept;
-		void setSunHaloSize(float haloSize) noexcept;
+		float getSunAngularRadius() const;
+		float getSunHaloFalloff() const;
+		float getSunHaloSize() const;
+		void setSunAngularRadius(float angularRadius);
+		void setSunHaloFalloff(float haloFalloff);
+		void setSunHaloSize(float haloSize);
 	};
 }
 

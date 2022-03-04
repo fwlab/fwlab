@@ -7,12 +7,12 @@ namespace fwlab::core
 {
 	BufferGeometry::BufferGeometry()
 	{
-		this->groups = new std::vector<Group*>();
+		this->groups = new std::vector<Group *>();
 	}
 
 	BufferGeometry::~BufferGeometry()
 	{
-		for (auto& pair : attributes)
+		for (auto &pair : attributes)
 		{
 			delete pair.second;
 			pair.second = nullptr;
@@ -34,7 +34,7 @@ namespace fwlab::core
 		}
 		if (groups)
 		{
-			for (auto& group : *groups)
+			for (auto &group : *groups)
 			{
 				delete group;
 				group = nullptr;
@@ -50,24 +50,24 @@ namespace fwlab::core
 		}
 	}
 
-	void BufferGeometry::create() noexcept
+	void BufferGeometry::create()
 	{
 		createVertexBuffer();
 		createIndexBuffer();
 		computeBoundingBox();
 	}
 
-	Attributes BufferGeometry::getAttributes() const noexcept
+	Attributes BufferGeometry::getAttributes() const
 	{
 		return attributes;
 	}
 
-	bool BufferGeometry::hasAttribute(filament::VertexAttribute attrType) const noexcept
+	bool BufferGeometry::hasAttribute(filament::VertexAttribute attrType) const
 	{
 		return attributes.count(attrType) > 0;
 	}
 
-	VertexBufferAttribute* BufferGeometry::getAttribute(filament::VertexAttribute attrType) const noexcept
+	VertexBufferAttribute *BufferGeometry::getAttribute(filament::VertexAttribute attrType) const
 	{
 		if (!hasAttribute(attrType))
 		{
@@ -76,26 +76,26 @@ namespace fwlab::core
 		return attributes.at(attrType);
 	}
 
-	void BufferGeometry::setAttribute(filament::VertexAttribute attrType, VertexBufferAttribute* attribute) noexcept
+	void BufferGeometry::setAttribute(filament::VertexAttribute attrType, VertexBufferAttribute *attribute)
 	{
 		if (attributes.count(attrType) > 0)
 		{
-			auto& oldAttribute = attributes.at(attrType);
+			auto &oldAttribute = attributes.at(attrType);
 			delete oldAttribute;
 			attributes.erase(attrType);
 		}
 		if (attribute)
 		{
-			attributes.insert({ attrType, attribute });
+			attributes.insert({attrType, attribute});
 		}
 	}
 
-	IndexBufferAttribute* BufferGeometry::getIndex() const noexcept
+	IndexBufferAttribute *BufferGeometry::getIndex() const
 	{
 		return index;
 	}
 
-	void BufferGeometry::setIndex(IndexBufferAttribute* index) noexcept
+	void BufferGeometry::setIndex(IndexBufferAttribute *index)
 	{
 		if (this->index)
 		{
@@ -104,12 +104,12 @@ namespace fwlab::core
 		this->index = index;
 	}
 
-	filament::VertexBuffer* BufferGeometry::getVertexBuffer() const noexcept
+	filament::VertexBuffer *BufferGeometry::getVertexBuffer() const
 	{
 		return vertexBuffer;
 	}
 
-	void BufferGeometry::setVertexBuffer(filament::VertexBuffer* buffer) noexcept
+	void BufferGeometry::setVertexBuffer(filament::VertexBuffer *buffer)
 	{
 		auto engine = app->getEngine();
 
@@ -120,12 +120,12 @@ namespace fwlab::core
 		vertexBuffer = buffer;
 	}
 
-	filament::IndexBuffer* BufferGeometry::getIndexBuffer() const noexcept
+	filament::IndexBuffer *BufferGeometry::getIndexBuffer() const
 	{
 		return indexBuffer;
 	}
 
-	void BufferGeometry::setIndexBuffer(filament::IndexBuffer* buffer) noexcept
+	void BufferGeometry::setIndexBuffer(filament::IndexBuffer *buffer)
 	{
 		auto engine = app->getEngine();
 
@@ -136,12 +136,12 @@ namespace fwlab::core
 		indexBuffer = buffer;
 	}
 
-	filament::Box* BufferGeometry::getBoundingBox() const noexcept
+	filament::Box *BufferGeometry::getBoundingBox() const
 	{
 		return boundingBox;
 	}
 
-	void BufferGeometry::computeBoundingBox() noexcept
+	void BufferGeometry::computeBoundingBox()
 	{
 		if (min)
 		{
@@ -157,13 +157,13 @@ namespace fwlab::core
 		}
 		min = new filament::math::float3(FLT_MAX, FLT_MAX, FLT_MAX);
 		max = new filament::math::float3(-FLT_MAX, -FLT_MAX, -FLT_MAX);
-		float* vertices = nullptr;
+		float *vertices = nullptr;
 		uint32_t vertexCount = 0;
 
 		auto attribute = attributes.at(filament::VertexAttribute::POSITION);
 		if (attribute)
 		{
-			vertices = static_cast<float*>(attribute->getArray());
+			vertices = static_cast<float *>(attribute->getArray());
 			vertexCount = attribute->getCount();
 		}
 
@@ -233,19 +233,19 @@ namespace fwlab::core
 		boundingBox->set(*min, *max);
 	}
 
-	void BufferGeometry::addGroup(int start, int count, int materialIndex) noexcept
+	void BufferGeometry::addGroup(int start, int count, int materialIndex)
 	{
-		Group* group = new Group{
+		Group *group = new Group{
 			.start = start,
 			.count = count,
-			.materialIndex = materialIndex };
+			.materialIndex = materialIndex};
 
 		groups->push_back(group);
 	}
 
-	void BufferGeometry::clearGroups() noexcept
+	void BufferGeometry::clearGroups()
 	{
-		for (auto& group : *groups)
+		for (auto &group : *groups)
 		{
 			delete group;
 			group = nullptr;
@@ -253,12 +253,12 @@ namespace fwlab::core
 		groups->clear();
 	}
 
-	void BufferGeometry::createVertexBuffer() noexcept
+	void BufferGeometry::createVertexBuffer()
 	{
 		auto engine = app->getEngine();
 
 		assert(attributes.count(filament::VertexAttribute::POSITION) == 1);
-		auto& vertices = attributes.at(filament::VertexAttribute::POSITION);
+		auto &vertices = attributes.at(filament::VertexAttribute::POSITION);
 
 		auto builder = filament::VertexBuffer::Builder();
 		builder.vertexCount(vertices->getCount());
@@ -290,7 +290,7 @@ namespace fwlab::core
 		}
 	}
 
-	void BufferGeometry::createIndexBuffer() noexcept
+	void BufferGeometry::createIndexBuffer()
 	{
 		auto engine = app->getEngine();
 

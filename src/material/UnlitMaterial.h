@@ -11,21 +11,21 @@ namespace fwlab::material
 	public:
 		UnlitMaterial();
 		virtual ~UnlitMaterial();
-		filament::math::float4 getBaseColor() const noexcept;
-		void setBaseColor(filament::math::float4 baseColor) noexcept;
-		filament::math::float4 getEmissive() const noexcept;
-		void setEmissive(filament::math::float4 emissive) noexcept;
-		filament::math::float4 getPostLightingColor() const noexcept;				  // not implemented
-		void setPostLightingColor(filament::math::float4 postLightingColor) noexcept; // not implemented
-		texture::Texture* getMap() const noexcept;
-		void setMap(texture::Texture* texture) noexcept;
+		filament::math::float4 getBaseColor() const;
+		void setBaseColor(filament::math::float4 baseColor);
+		filament::math::float4 getEmissive() const;
+		void setEmissive(filament::math::float4 emissive);
+		filament::math::float4 getPostLightingColor() const;				 // not implemented
+		void setPostLightingColor(filament::math::float4 postLightingColor); // not implemented
+		texture::Texture *getMap() const;
+		void setMap(texture::Texture *texture);
 
 	protected:
-		filament::math::float4 baseColor = { 1, 1, 1, 1 };
-		filament::math::float4 emissive = { 0, 0, 0, 0 };
-		filament::math::float4 postLightingColor = { 0, 0, 0, 0 };
+		filament::math::float4 baseColor = {1, 1, 1, 1};
+		filament::math::float4 emissive = {0, 0, 0, 0};
+		filament::math::float4 postLightingColor = {0, 0, 0, 0};
 		bool enableMap = false;
-		texture::Texture* map = nullptr;
+		texture::Texture *map = nullptr;
 	};
 }
 

@@ -1,27 +1,30 @@
+#include <iostream>
 #include "AmbientLight.h"
+#include "../context/context.h"
 
-using namespace gl::light;
-
-AmbientLight::AmbientLight(utils::Path iblPath)
+namespace gl::light
 {
-    //mIBL = std::make_unique<IBL>(*mEngine);
+	AmbientLight::AmbientLight(utils::Path iblPath)
+	{
+		auto engine = app->getEngine();
+		ibl = new IBL(*engine);
 
-    //if (!iblPath.isDirectory()) {
-    //    if (!mIBL->loadFromEquirect(iblPath)) {
-    //        std::cerr << "Could not load the specified IBL: " << iblPath << std::endl;
-    //        mIBL.reset(nullptr);
-    //        return;
-    //    }
-    //}
-    //else {
-    //    if (!mIBL->loadFromDirectory(iblPath)) {
-    //        std::cerr << "Could not load the specified IBL: " << iblPath << std::endl;
-    //        mIBL.reset(nullptr);
-    //        return;
-    //    }
-    //}
-}
+		if (!iblPath.isDirectory()) {
+			if (!ibl->loadFromEquirect(iblPath)) {
+				std::cerr << "Could not load the specified IBL: " << iblPath << std::endl;
+				return;
+			}
+		}
+		else {
+			if (!ibl->loadFromDirectory(iblPath)) {
+				std::cerr << "Could not load the specified IBL: " << iblPath << std::endl;
+				return;
+			}
+		}
+	}
 
-AmbientLight::~AmbientLight()
-{
+	AmbientLight::~AmbientLight()
+	{
+		delete ibl;
+	}
 }

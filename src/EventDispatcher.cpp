@@ -15,10 +15,10 @@ namespace fwlab
 {
 	EventDispatcher::EventDispatcher()
 	{
-		BaseEvent* list[] = {
-			new event::core::ResizeEvent() };
+		BaseEvent *list[] = {
+			new event::core::ResizeEvent()};
 
-		constexpr auto size = sizeof(list) / sizeof(BaseEvent*);
+		constexpr auto size = sizeof(list) / sizeof(BaseEvent *);
 
 		for (auto i = 0; i < size; i++)
 		{
@@ -28,7 +28,7 @@ namespace fwlab
 
 	EventDispatcher::~EventDispatcher()
 	{
-		for (auto& event : events)
+		for (auto &event : events)
 		{
 			delete event;
 		}
@@ -37,7 +37,7 @@ namespace fwlab
 
 	void EventDispatcher::start()
 	{
-		for (auto& event : events)
+		for (auto &event : events)
 		{
 			event->start();
 		}
@@ -45,17 +45,17 @@ namespace fwlab
 
 	void EventDispatcher::stop()
 	{
-		for (auto& event : events)
+		for (auto &event : events)
 		{
 			event->stop();
 		}
 	}
 
-	void EventDispatcher::pollEvent() const noexcept
+	void EventDispatcher::pollEvent() const
 	{
 		SDL_Event event;
 
-		ImGuiIO& io = ImGui::GetIO();
+		ImGuiIO &io = ImGui::GetIO();
 
 		if (SDL_PollEvent(&event) > 0)
 		{
@@ -72,7 +72,7 @@ namespace fwlab
 			{
 				if (!io.WantCaptureKeyboard)
 				{
-					event::KeyboardEvent evt = { .scancode = event.key.keysym.scancode, .event = &event };
+					event::KeyboardEvent evt = {.scancode = event.key.keysym.scancode, .event = &event};
 					app->dispatchEvent(event::KEY_DOWN, &evt);
 				}
 				break;
@@ -81,7 +81,7 @@ namespace fwlab
 			{
 				if (!io.WantCaptureKeyboard)
 				{
-					event::KeyboardEvent evt = { .scancode = event.key.keysym.scancode, .event = &event };
+					event::KeyboardEvent evt = {.scancode = event.key.keysym.scancode, .event = &event};
 					app->dispatchEvent(event::KEY_UP, &evt);
 				}
 				break;
@@ -90,7 +90,7 @@ namespace fwlab
 			{
 				if (!io.WantCaptureMouse)
 				{
-					event::MouseEvent evt = { .button = event.button.button, .x = event.button.x, .y = event.button.y, .event = &event };
+					event::MouseEvent evt = {.button = event.button.button, .x = event.button.x, .y = event.button.y, .event = &event};
 					app->dispatchEvent(event::MOUSE_DOWN, &evt);
 				}
 				break;
@@ -99,7 +99,7 @@ namespace fwlab
 			{
 				if (!io.WantCaptureMouse)
 				{
-					event::MouseEvent evt = { .button = event.button.button, .x = event.motion.x, .y = event.motion.y, .event = &event };
+					event::MouseEvent evt = {.button = event.button.button, .x = event.motion.x, .y = event.motion.y, .event = &event};
 					app->dispatchEvent(event::MOUSE_MOVE, &evt);
 				}
 				break;
@@ -108,7 +108,7 @@ namespace fwlab
 			{
 				if (!io.WantCaptureMouse)
 				{
-					event::MouseEvent evt = { .button = event.button.button, .x = event.button.x, .y = event.button.y, .event = &event };
+					event::MouseEvent evt = {.button = event.button.button, .x = event.button.x, .y = event.button.y, .event = &event};
 					app->dispatchEvent(event::MOUSE_UP, &evt);
 				}
 				break;
@@ -117,7 +117,7 @@ namespace fwlab
 			{
 				if (!io.WantCaptureMouse)
 				{
-					event::WheelEvent evt = { .deltaX = event.wheel.x, .deltaY = event.wheel.y, .event = &event };
+					event::WheelEvent evt = {.deltaX = event.wheel.x, .deltaY = event.wheel.y, .event = &event};
 					app->dispatchEvent(event::WHEEL, &evt);
 				}
 				break;
@@ -129,7 +129,7 @@ namespace fwlab
 				{
 				case SDL_WINDOWEVENT_RESIZED:
 				{
-					event::SizeEvent evt = { .width = event.window.data1, .height = event.window.data2, .event = &event };
+					event::SizeEvent evt = {.width = event.window.data1, .height = event.window.data2, .event = &event};
 					app->dispatchEvent(event::RESIZE, &evt);
 					break;
 				}
@@ -140,7 +140,7 @@ namespace fwlab
 			}
 			case SDL_DROPFILE:
 			{
-				event::DropFileEvent evt = { .file = event.drop.file, .event = &event };
+				event::DropFileEvent evt = {.file = event.drop.file, .event = &event};
 				app->dispatchEvent(event::DROP_FILE);
 				SDL_free(event.drop.file);
 				break;
@@ -149,18 +149,18 @@ namespace fwlab
 		}
 	}
 
-	void EventDispatcher::addEventListener(const std::string eventName, std::string id, std::function<void(void*)> listener) noexcept
+	void EventDispatcher::addEventListener(const std::string eventName, std::string id, std::function<void(void *)> listener)
 	{
 		if (eventMap.find(eventName) == eventMap.end())
 		{
-			eventMap.insert({ eventName, std::vector<EventData>() });
+			eventMap.insert({eventName, std::vector<EventData>()});
 		}
-		auto& list = eventMap.at(eventName);
-		auto pred = [&](EventData& data)
+		auto &list = eventMap.at(eventName);
+		auto pred = [&](EventData &data)
 		{ return data.id == id; };
 		if (std::find_if(list.begin(), list.end(), pred) == list.end())
 		{
-			list.push_back({ id, listener });
+			list.push_back({id, listener});
 		}
 		else
 		{
@@ -168,7 +168,7 @@ namespace fwlab
 		}
 	}
 
-	void EventDispatcher::removeEventListener(const std::string eventName, std::string id) noexcept
+	void EventDispatcher::removeEventListener(const std::string eventName, std::string id)
 	{
 		if (eventMap.find(eventName) == eventMap.end())
 		{
@@ -176,31 +176,31 @@ namespace fwlab
 			return;
 		}
 		auto list = eventMap.at(eventName);
-		auto pred = [&](EventData& data)
+		auto pred = [&](EventData &data)
 		{ return data.id == id; };
 		list.erase(std::find_if(list.begin(), list.end(), pred));
 	}
 
-	bool EventDispatcher::hasEventListener(const std::string eventName, std::string id) const noexcept
+	bool EventDispatcher::hasEventListener(const std::string eventName, std::string id) const
 	{
 		if (eventMap.find(eventName) == eventMap.end())
 		{
 			return false;
 		}
 		auto list = eventMap.at(eventName);
-		auto pred = [&](EventData& data)
+		auto pred = [&](EventData &data)
 		{ return data.id == id; };
 		return std::find_if(list.begin(), list.end(), pred) != list.end();
 	}
 
-	void EventDispatcher::dispatchEvent(const std::string eventName, void* params) const noexcept
+	void EventDispatcher::dispatchEvent(const std::string eventName, void *params) const
 	{
 		if (eventMap.find(eventName) == eventMap.end())
 		{
 			return;
 		}
 		auto list = eventMap.at(eventName);
-		for (auto& event : list)
+		for (auto &event : list)
 		{
 			event.listener(params);
 		}

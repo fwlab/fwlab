@@ -12,27 +12,27 @@ namespace fwlab::light
 	}
 
 	// Light Manager
-	float SpotLight::getSpotLightInnerCone() const noexcept
+	float SpotLight::getSpotLightInnerCone() const
 	{
 		auto engine = app->getEngine();
 
-		auto& manager = engine->getLightManager();
+		auto &manager = engine->getLightManager();
 		return manager.getSpotLightInnerCone(manager.getInstance(entity));
 	}
 
-	float SpotLight::getSpotLightOuterCone() const noexcept
+	float SpotLight::getSpotLightOuterCone() const
 	{
 		auto engine = app->getEngine();
 
-		auto& manager = engine->getLightManager();
+		auto &manager = engine->getLightManager();
 		return manager.getSpotLightOuterCone(manager.getInstance(entity));
 	}
 
-	void SpotLight::setSpotLightCone(float inner, float outer) noexcept
+	void SpotLight::setSpotLightCone(float inner, float outer)
 	{
 		auto engine = app->getEngine();
 
-		auto& manager = engine->getLightManager();
+		auto &manager = engine->getLightManager();
 		return manager.setSpotLightCone(manager.getInstance(entity), inner, outer);
 	}
 }
