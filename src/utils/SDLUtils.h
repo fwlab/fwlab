@@ -2,13 +2,13 @@
 #define FWLAB_UTILS_SDL_UTILS_H
 #include <SDL.h>
 
-namespace utils
+namespace fwlab::utils
 {
-    class SDLUtils
-    {
-    public:
-        static void *getNativeWindow(SDL_Window *sdlWindow);
-    };
+	class SDLUtils
+	{
+	public:
+		static void* getNativeWindow(SDL_Window* sdlWindow);
+	};
 }
 
 #endif

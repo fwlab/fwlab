@@ -19,9 +19,9 @@ namespace fwlab::scene
 	private:
 		filament::math::mat4f fitIntoUnitCube(const filament::Aabb& bounds, float zoffset);
 		filament::Skybox* skybox;
-		utils::Entity lightEntity;
+		::utils::Entity lightEntity;
 
-		utils::NameComponentManager* names;
+		::utils::NameComponentManager* names;
 		gltfio::AssetLoader* loader;
 		gltfio::FilamentAsset* asset;
 		gltfio::ResourceLoader* resourceLoader;

@@ -1,4 +1,4 @@
-set(MODULE_NAME fwlab_gl_core)
+set(MODULE_NAME fwlab_core)
 
 add_library(${MODULE_NAME} STATIC
 	"IDisposable.h"
@@ -9,5 +9,5 @@ add_library(${MODULE_NAME} STATIC
 
 target_link_libraries(${MODULE_NAME}
 	filament
-	fwlab_gl_math fwlab_gl_utils
+	fwlab_math fwlab_utils
 )

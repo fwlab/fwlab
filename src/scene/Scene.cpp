@@ -13,7 +13,7 @@ namespace fwlab::scene
 	{
 		auto engine = app->getEngine();
 		auto scene = app->getScene();
-		auto& entityManager = utils::EntityManager::get();
+		auto& entityManager = ::utils::EntityManager::get();
 
 		// skybox
 		skybox = filament::Skybox::Builder()
@@ -33,7 +33,7 @@ namespace fwlab::scene
 		scene->addEntity(lightEntity);
 
 		// load asset
-		utils::Path filename = "assets/models/RobotDog/scene.gltf";
+		::utils::Path filename = "assets/models/RobotDog/scene.gltf";
 		if (!filename.exists())
 		{
 			std::cerr << filename << " is not existed." << std::endl;
@@ -52,7 +52,7 @@ namespace fwlab::scene
 		}
 
 		auto materials = gltfio::createMaterialGenerator(engine);
-		names = new utils::NameComponentManager(utils::EntityManager::get());
+		names = new ::utils::NameComponentManager(::utils::EntityManager::get());
 
 		auto loader = gltfio::AssetLoader::create({ engine, materials, names });
 		asset = loader->createAssetFromJson(buffer.data(), buffer.size());

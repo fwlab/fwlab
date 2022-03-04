@@ -2,6 +2,8 @@ set(MODULE_NAME fwlab)
 
 add_subdirectory(utils)
 add_subdirectory(context)
+add_subdirectory(math)
+add_subdirectory(core)
 add_subdirectory(geometry)
 add_subdirectory(event)
 add_subdirectory(event/core)

@@ -1,8 +1,8 @@
-#ifndef UTILS_CLOCK_UTILS_H
-#define UTILS_CLOCK_UTILS_H
+#ifndef FWLAB_UTILS_CLOCK_H
+#define FWLAB_UTILS_CLOCK_H
 #include <stdint.h>
 
-namespace utils
+namespace fwlab::utils
 {
 	class Clock
 	{

@@ -1,10 +1,10 @@
-#ifndef UTILS_LOG_UTILS_H
-#define UTILS_LOG_UTILS_H
+#ifndef FWLAB_UTILS_LOGGER_H
+#define FWLAB_UTILS_LOGGER_H
 #include <fstream>
 #include <string>
 #include <vector>
 
-namespace utils
+namespace fwlab::utils
 {
 	class Logger
 	{
@@ -21,9 +21,9 @@ namespace utils
 		void warn(std::string content);
 		void error(std::string content);
 		void log(Level level, std::string content);
-		Logger &operator<<(std::string content);
+		Logger& operator<<(std::string content);
 		template <typename T>
-		Logger &operator<<(std::vector<T> vector);
+		Logger& operator<<(std::vector<T> vector);
 
 	private:
 		std::ofstream out;

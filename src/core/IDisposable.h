@@ -1,7 +1,7 @@
-#ifndef GL_CORE_IDISPOSABLE_H
-#define GL_CORE_IDISPOSABLE_H
+#ifndef FWLAB_CORE_IDISPOSABLE_H
+#define FWLAB_CORE_IDISPOSABLE_H
 
-namespace gl::core
+namespace fwlab::core
 {
 	class IDisposable
 	{

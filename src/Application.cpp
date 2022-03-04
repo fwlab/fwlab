@@ -46,7 +46,7 @@ namespace fwlab
 		swapChain = engine->createSwapChain(utils::SDLUtils::getNativeWindow(window));
 		renderer = engine->createRenderer();
 
-		cameraEntity = utils::EntityManager::get().create();
+		cameraEntity = ::utils::EntityManager::get().create();
 		camera = engine->createCamera(cameraEntity);
 		camera->setProjection(60, float(width) / height, 0.1, 2000, filament::Camera::Fov::VERTICAL);
 		camera->setExposure(16.0f, 1 / 125.0f, 100.0f);
@@ -115,7 +115,7 @@ namespace fwlab
 
 	void Application::clean() noexcept
 	{
-		auto& manager = utils::EntityManager::get();
+		auto& manager = ::utils::EntityManager::get();
 
 		event->dispatchEvent(event::BEFORE_APP_STOP);
 
@@ -193,7 +193,7 @@ namespace fwlab
 		return renderer;
 	}
 
-	utils::Entity Application::getCameraEntity() const noexcept
+	::utils::Entity Application::getCameraEntity() const noexcept
 	{
 		return cameraEntity;
 	}

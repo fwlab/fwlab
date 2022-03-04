@@ -39,7 +39,7 @@ namespace fwlab
 		filament::SwapChain* getSwapChain() const noexcept;
 		filament::Renderer* getRenderer() const noexcept;
 
-		utils::Entity getCameraEntity() const noexcept;
+		::utils::Entity getCameraEntity() const noexcept;
 		filament::Camera* getCamera() const noexcept;
 		filament::View* getView() const noexcept;
 		filament::Viewport* getViewport() const noexcept;
@@ -67,7 +67,7 @@ namespace fwlab
 		filament::SwapChain* swapChain = nullptr;
 		filament::Renderer* renderer = nullptr;
 
-		utils::Entity cameraEntity;
+		::utils::Entity cameraEntity;
 		filament::Camera* camera = nullptr;
 		filament::View* view = nullptr;
 		filament::Viewport* viewport = nullptr;

@@ -24,7 +24,7 @@ namespace fwlab::ui
 		void handleSizeChanged(void* data);
 		const std::string id = "UIHelper";
 		filament::View* view;
-		utils::Path fontPath = "assets/fonts/Alibaba-PuHuiTi-Bold.ttf";
+		::utils::Path fontPath = "assets/fonts/Alibaba-PuHuiTi-Bold.ttf";
 		filagui::ImGuiHelper* helper;
 		std::function<void()> callback = nullptr;
 	};

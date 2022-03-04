@@ -1,19 +1,19 @@
-#ifndef GL_CORE_BUFFER_ATTRIBUTE_H
-#define GL_CORE_BUFFER_ATTRIBUTE_H
+#ifndef FWLAB_CORE_BUFFER_ATTRIBUTE_H
+#define FWLAB_CORE_BUFFER_ATTRIBUTE_H
 #include <stdint.h>
 #include <vector>
 #include <filament/VertexBuffer.h>
 #include <filament/IndexBuffer.h>
 #include <math/vec3.h>
 
-namespace gl::core
+namespace fwlab::core
 {
 	class BufferAttribute
 	{
 	public:
 		virtual ~BufferAttribute();
-		void *getArray() const noexcept;
-		void setArray(void *array) noexcept;
+		void* getArray() const noexcept;
+		void setArray(void* array) noexcept;
 		uint8_t getItemSize() const noexcept;
 		void setItemSize(uint8_t itemSize) noexcept;
 		uint32_t getCount() const noexcept;
@@ -22,10 +22,10 @@ namespace gl::core
 	protected:
 		BufferAttribute() = default;
 		template <typename T>
-		BufferAttribute(T *array, uint8_t itemSize = 3, uint32_t count = 0);
+		BufferAttribute(T* array, uint8_t itemSize = 3, uint32_t count = 0);
 		BufferAttribute(std::vector<filament::math::float2> vertices);
 		BufferAttribute(std::vector<filament::math::float3> vertices);
-		void *array = nullptr;
+		void* array = nullptr;
 		uint8_t itemSize = 3;
 		uint32_t count = 0;
 	};
@@ -35,7 +35,7 @@ namespace gl::core
 	public:
 		template <typename T>
 		VertexBufferAttribute(
-			T *array,
+			T* array,
 			uint8_t itemSize = 3,
 			uint32_t count = 0,
 			filament::VertexBuffer::AttributeType attributeType = filament::VertexBuffer::AttributeType::FLOAT3,
@@ -62,7 +62,7 @@ namespace gl::core
 	public:
 		template <typename T>
 		IndexBufferAttribute(
-			T *array,
+			T* array,
 			uint32_t count = 0,
 			filament::IndexBuffer::IndexType indexType = filament::IndexBuffer::IndexType::UINT);
 		IndexBufferAttribute(std::vector<uint16_t> vertices);

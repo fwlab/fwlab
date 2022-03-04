@@ -4,7 +4,7 @@
 #include <filament/VertexBuffer.h>
 #include <filament/IndexBuffer.h>
 
-namespace gl::utils
+namespace fwlab::utils
 {
 	class Utils
 	{

@@ -3,302 +3,311 @@
 #include "BufferGeometry.h"
 #include "../context/context.h"
 
-using namespace gl::context;
-using namespace gl::core;
-
-BufferGeometry::BufferGeometry()
+namespace fwlab::core
 {
-	this->groups = new std::vector<Group *>();
-}
+	BufferGeometry::BufferGeometry()
+	{
+		this->groups = new std::vector<Group*>();
+	}
 
-BufferGeometry::~BufferGeometry()
-{
-	for (auto &pair : attributes)
+	BufferGeometry::~BufferGeometry()
 	{
-		delete pair.second;
-		pair.second = nullptr;
+		for (auto& pair : attributes)
+		{
+			delete pair.second;
+			pair.second = nullptr;
+		}
+		attributes.clear();
+		if (index)
+		{
+			delete index;
+			index = nullptr;
+		}
+		if (boundingBox)
+		{
+			delete min;
+			delete max;
+			delete boundingBox;
+			min = nullptr;
+			max = nullptr;
+			boundingBox = nullptr;
+		}
+		if (groups)
+		{
+			for (auto& group : *groups)
+			{
+				delete group;
+				group = nullptr;
+			}
+			groups->clear();
+			delete groups;
+			groups = nullptr;
+		}
+		if (indices)
+		{
+			delete[] indices;
+			indices = nullptr;
+		}
 	}
-	attributes.clear();
-	if (index)
+
+	void BufferGeometry::create() noexcept
 	{
-		delete index;
-		index = nullptr;
+		createVertexBuffer();
+		createIndexBuffer();
+		computeBoundingBox();
 	}
-	if (boundingBox)
+
+	Attributes BufferGeometry::getAttributes() const noexcept
 	{
-		delete min;
-		delete max;
-		delete boundingBox;
-		min = nullptr;
-		max = nullptr;
-		boundingBox = nullptr;
+		return attributes;
 	}
-	if (groups)
+
+	bool BufferGeometry::hasAttribute(filament::VertexAttribute attrType) const noexcept
 	{
-		for (auto &group : *groups)
+		return attributes.count(attrType) > 0;
+	}
+
+	VertexBufferAttribute* BufferGeometry::getAttribute(filament::VertexAttribute attrType) const noexcept
+	{
+		if (!hasAttribute(attrType))
+		{
+			return nullptr;
+		}
+		return attributes.at(attrType);
+	}
+
+	void BufferGeometry::setAttribute(filament::VertexAttribute attrType, VertexBufferAttribute* attribute) noexcept
+	{
+		if (attributes.count(attrType) > 0)
+		{
+			auto& oldAttribute = attributes.at(attrType);
+			delete oldAttribute;
+			attributes.erase(attrType);
+		}
+		if (attribute)
+		{
+			attributes.insert({ attrType, attribute });
+		}
+	}
+
+	IndexBufferAttribute* BufferGeometry::getIndex() const noexcept
+	{
+		return index;
+	}
+
+	void BufferGeometry::setIndex(IndexBufferAttribute* index) noexcept
+	{
+		if (this->index)
+		{
+			delete this->index;
+		}
+		this->index = index;
+	}
+
+	filament::VertexBuffer* BufferGeometry::getVertexBuffer() const noexcept
+	{
+		return vertexBuffer;
+	}
+
+	void BufferGeometry::setVertexBuffer(filament::VertexBuffer* buffer) noexcept
+	{
+		auto engine = app->getEngine();
+
+		if (vertexBuffer)
+		{
+			engine->destroy(vertexBuffer);
+		}
+		vertexBuffer = buffer;
+	}
+
+	filament::IndexBuffer* BufferGeometry::getIndexBuffer() const noexcept
+	{
+		return indexBuffer;
+	}
+
+	void BufferGeometry::setIndexBuffer(filament::IndexBuffer* buffer) noexcept
+	{
+		auto engine = app->getEngine();
+
+		if (indexBuffer)
+		{
+			engine->destroy(indexBuffer);
+		}
+		indexBuffer = buffer;
+	}
+
+	filament::Box* BufferGeometry::getBoundingBox() const noexcept
+	{
+		return boundingBox;
+	}
+
+	void BufferGeometry::computeBoundingBox() noexcept
+	{
+		if (min)
+		{
+			delete min;
+		}
+		if (max)
+		{
+			delete max;
+		}
+		if (boundingBox)
+		{
+			delete boundingBox;
+		}
+		min = new filament::math::float3(FLT_MAX, FLT_MAX, FLT_MAX);
+		max = new filament::math::float3(-FLT_MAX, -FLT_MAX, -FLT_MAX);
+		float* vertices = nullptr;
+		uint32_t vertexCount = 0;
+
+		auto attribute = attributes.at(filament::VertexAttribute::POSITION);
+		if (attribute)
+		{
+			vertices = static_cast<float*>(attribute->getArray());
+			vertexCount = attribute->getCount();
+		}
+
+		for (uint32_t i = 0, len = vertexCount; i < len; i++)
+		{
+			auto x = vertices[i * 3];
+			auto y = vertices[i * 3 + 1];
+			auto z = vertices[i * 3 + 2];
+			if (x < min->x)
+			{
+				min->x = x;
+			}
+			if (y < min->y)
+			{
+				min->y = y;
+			}
+			if (z < min->z)
+			{
+				min->z = z;
+			}
+			if (x > max->x)
+			{
+				max->x = x;
+			}
+			if (y > max->y)
+			{
+				max->y = y;
+			}
+			if (z > max->z)
+			{
+				max->z = z;
+			}
+		}
+
+		// no vertices
+		if (min->x > max->x)
+		{
+			min->x = max->x = 0;
+		}
+		if (min->y > max->y)
+		{
+			min->y = max->y = 0;
+		}
+		if (min->z > max->z)
+		{
+			min->z = max->z = 0;
+		}
+
+		// only one vertex
+		if (min->x == max->x)
+		{
+			min->x -= 1;
+			max->x += 1;
+		}
+		if (min->y == max->y)
+		{
+			min->y -= 1;
+			max->y += 1;
+		}
+		if (min->z == max->z)
+		{
+			min->z -= 1;
+			max->z += 1;
+		}
+
+		boundingBox = new filament::Box();
+		boundingBox->set(*min, *max);
+	}
+
+	void BufferGeometry::addGroup(int start, int count, int materialIndex) noexcept
+	{
+		Group* group = new Group{
+			.start = start,
+			.count = count,
+			.materialIndex = materialIndex };
+
+		groups->push_back(group);
+	}
+
+	void BufferGeometry::clearGroups() noexcept
+	{
+		for (auto& group : *groups)
 		{
 			delete group;
 			group = nullptr;
 		}
 		groups->clear();
-		delete groups;
-		groups = nullptr;
-	}
-	if (indices)
-	{
-		delete[] indices;
-		indices = nullptr;
-	}
-}
-
-void BufferGeometry::create() noexcept
-{
-	createVertexBuffer();
-	createIndexBuffer();
-	computeBoundingBox();
-}
-
-Attributes BufferGeometry::getAttributes() const noexcept
-{
-	return attributes;
-}
-
-bool BufferGeometry::hasAttribute(filament::VertexAttribute attrType) const noexcept
-{
-	return attributes.count(attrType) > 0;
-}
-
-VertexBufferAttribute *BufferGeometry::getAttribute(filament::VertexAttribute attrType) const noexcept
-{
-	if (!hasAttribute(attrType))
-	{
-		return nullptr;
-	}
-	return attributes.at(attrType);
-}
-
-void BufferGeometry::setAttribute(filament::VertexAttribute attrType, VertexBufferAttribute *attribute) noexcept
-{
-	if (attributes.count(attrType) > 0)
-	{
-		auto &oldAttribute = attributes.at(attrType);
-		delete oldAttribute;
-		attributes.erase(attrType);
-	}
-	if (attribute)
-	{
-		attributes.insert({attrType, attribute});
-	}
-}
-
-IndexBufferAttribute *BufferGeometry::getIndex() const noexcept
-{
-	return index;
-}
-
-void BufferGeometry::setIndex(IndexBufferAttribute *index) noexcept
-{
-	if (this->index)
-	{
-		delete this->index;
-	}
-	this->index = index;
-}
-
-filament::VertexBuffer *BufferGeometry::getVertexBuffer() const noexcept
-{
-	return vertexBuffer;
-}
-
-void BufferGeometry::setVertexBuffer(filament::VertexBuffer *buffer) noexcept
-{
-	if (vertexBuffer)
-	{
-		engine->destroy(vertexBuffer);
-	}
-	vertexBuffer = buffer;
-}
-
-filament::IndexBuffer *BufferGeometry::getIndexBuffer() const noexcept
-{
-	return indexBuffer;
-}
-
-void BufferGeometry::setIndexBuffer(filament::IndexBuffer *buffer) noexcept
-{
-	if (indexBuffer)
-	{
-		engine->destroy(indexBuffer);
-	}
-	indexBuffer = buffer;
-}
-
-filament::Box *BufferGeometry::getBoundingBox() const noexcept
-{
-	return boundingBox;
-}
-
-void BufferGeometry::computeBoundingBox() noexcept
-{
-	if (min)
-	{
-		delete min;
-	}
-	if (max)
-	{
-		delete max;
-	}
-	if (boundingBox)
-	{
-		delete boundingBox;
-	}
-	min = new filament::math::float3(FLT_MAX, FLT_MAX, FLT_MAX);
-	max = new filament::math::float3(-FLT_MAX, -FLT_MAX, -FLT_MAX);
-	float *vertices = nullptr;
-	uint32_t vertexCount = 0;
-
-	auto attribute = attributes.at(filament::VertexAttribute::POSITION);
-	if (attribute)
-	{
-		vertices = static_cast<float *>(attribute->getArray());
-		vertexCount = attribute->getCount();
 	}
 
-	for (uint32_t i = 0, len = vertexCount; i < len; i++)
+	void BufferGeometry::createVertexBuffer() noexcept
 	{
-		auto x = vertices[i * 3];
-		auto y = vertices[i * 3 + 1];
-		auto z = vertices[i * 3 + 2];
-		if (x < min->x)
+		auto engine = app->getEngine();
+
+		assert(attributes.count(filament::VertexAttribute::POSITION) == 1);
+		auto& vertices = attributes.at(filament::VertexAttribute::POSITION);
+
+		auto builder = filament::VertexBuffer::Builder();
+		builder.vertexCount(vertices->getCount());
+		builder.bufferCount(attributes.size());
+
+		uint16_t i = 0;
+		for (auto pair : attributes)
 		{
-			min->x = x;
+			builder.attribute(pair.first, i, pair.second->getAttributeType());
+			if (pair.second->isNormalized())
+			{
+				builder.normalized(pair.first, true);
+			}
+			i++;
 		}
-		if (y < min->y)
+
+		vertexBuffer = builder.build(*engine);
+
+		i = 0;
+		for (auto pair : attributes)
 		{
-			min->y = y;
-		}
-		if (z < min->z)
-		{
-			min->z = z;
-		}
-		if (x > max->x)
-		{
-			max->x = x;
-		}
-		if (y > max->y)
-		{
-			max->y = y;
-		}
-		if (z > max->z)
-		{
-			max->z = z;
+			vertexBuffer->setBufferAt(
+				*engine,
+				i,
+				filament::VertexBuffer::BufferDescriptor(
+					pair.second->getArray(),
+					pair.second->getCount() * utils::Utils::getSize(pair.second->getAttributeType())));
+			i++;
 		}
 	}
 
-	// no vertices
-	if (min->x > max->x)
+	void BufferGeometry::createIndexBuffer() noexcept
 	{
-		min->x = max->x = 0;
-	}
-	if (min->y > max->y)
-	{
-		min->y = max->y = 0;
-	}
-	if (min->z > max->z)
-	{
-		min->z = max->z = 0;
-	}
+		auto engine = app->getEngine();
 
-	// only one vertex
-	if (min->x == max->x)
-	{
-		min->x -= 1;
-		max->x += 1;
-	}
-	if (min->y == max->y)
-	{
-		min->y -= 1;
-		max->y += 1;
-	}
-	if (min->z == max->z)
-	{
-		min->z -= 1;
-		max->z += 1;
-	}
-
-	boundingBox = new filament::Box();
-	boundingBox->set(*min, *max);
-}
-
-void BufferGeometry::addGroup(int start, int count, int materialIndex) noexcept
-{
-	Group *group = new Group{
-		.start = start,
-		.count = count,
-		.materialIndex = materialIndex};
-
-	groups->push_back(group);
-}
-
-void BufferGeometry::clearGroups() noexcept
-{
-	for (auto &group : *groups)
-	{
-		delete group;
-		group = nullptr;
-	}
-	groups->clear();
-}
-
-void BufferGeometry::createVertexBuffer() noexcept
-{
-	assert(attributes.count(filament::VertexAttribute::POSITION) == 1);
-	auto &vertices = attributes.at(filament::VertexAttribute::POSITION);
-
-	auto builder = filament::VertexBuffer::Builder();
-	builder.vertexCount(vertices->getCount());
-	builder.bufferCount(attributes.size());
-
-	uint16_t i = 0;
-	for (auto pair : attributes)
-	{
-		builder.attribute(pair.first, i, pair.second->getAttributeType());
-		if (pair.second->isNormalized())
+		if (index == nullptr)
 		{
-			builder.normalized(pair.first, true);
+			return;
 		}
-		i++;
-	}
 
-	vertexBuffer = builder.build(*engine);
+		auto builder = filament::IndexBuffer::Builder();
+		builder.indexCount(index->getCount());
+		builder.bufferType(index->getIndexType());
+		indexBuffer = builder.build(*engine);
 
-	i = 0;
-	for (auto pair : attributes)
-	{
-		vertexBuffer->setBufferAt(
+		indexBuffer->setBuffer(
 			*engine,
-			i,
-			filament::VertexBuffer::BufferDescriptor(
-				pair.second->getArray(),
-				pair.second->getCount() * utils::Utils::getSize(pair.second->getAttributeType())));
-		i++;
+			filament::IndexBuffer::BufferDescriptor(
+				index->getArray(),
+				index->getCount() * utils::Utils::getSize(index->getIndexType())));
 	}
-}
-
-void BufferGeometry::createIndexBuffer() noexcept
-{
-	if (index == nullptr)
-	{
-		return;
-	}
-	auto builder = filament::IndexBuffer::Builder();
-	builder.indexCount(index->getCount());
-	builder.bufferType(index->getIndexType());
-	indexBuffer = builder.build(*engine);
-
-	indexBuffer->setBuffer(
-		*engine,
-		filament::IndexBuffer::BufferDescriptor(
-			index->getArray(),
-			index->getCount() * utils::Utils::getSize(index->getIndexType())));
 }

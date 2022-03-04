@@ -1,7 +1,7 @@
 #include <cmath>
 #include "Utils.h"
 
-namespace gl::utils
+namespace fwlab::utils
 {
 	float Utils::reflectanceToIOR(float reflectance)
 	{

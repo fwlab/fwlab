@@ -1,8 +1,8 @@
-#ifndef UTILS_TIMEUTILS_H
-#define UTILS_TIMEUTILS_H
+#ifndef FWLAB_UTILS_TIME_UTILS_H
+#define FWLAB_UTILS_TIME_UTILS_H
 #include <string>
 
-namespace utils
+namespace fwlab::utils
 {
 	class TimeUtils
 	{
