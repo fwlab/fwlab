@@ -49,15 +49,15 @@ namespace fwlab
 		swapChain = engine->createSwapChain(utils::SDLUtils::getNativeWindow(window));
 		renderer = engine->createRenderer();
 		filament::Renderer::ClearOptions options =
-			{
-				.clearColor = {0, 0, 0, 1}};
+		{
+			.clearColor = {0, 0, 0, 1} };
 		renderer->setClearOptions(options);
 
 		cameraEntity = ::utils::EntityManager::get().create();
 		camera = engine->createCamera(cameraEntity);
 		camera->setProjection(60, float(width) / height, 0.1, 2000, filament::Camera::Fov::VERTICAL);
 		camera->setExposure(16.0f, 1 / 125.0f, 100.0f);
-		camera->lookAt({4, 5, 6}, {0, 0, 0});
+		camera->lookAt({ 4, 5, 6 }, { 0, 0, 0 });
 
 		view = engine->createView();
 		viewport = new filament::Viewport(0, 0, width, height);
@@ -81,7 +81,7 @@ namespace fwlab
 		ui = new ui::UIHelper();
 		editor = new Editor();
 		ui->setCallback([&]()
-						{ editor->render(); });
+			{ editor->render(); });
 
 		while (isRunning)
 		{
@@ -120,9 +120,24 @@ namespace fwlab
 		isRunning = false;
 	}
 
+	void Application::info(std::string content)
+	{
+		logger->info(content);
+	}
+
+	void Application::warn(std::string content)
+	{
+		logger->warn(content);
+	}
+
+	void Application::error(std::string content)
+	{
+		logger->error(content);
+	}
+
 	void Application::clean()
 	{
-		auto &manager = ::utils::EntityManager::get();
+		auto& manager = ::utils::EntityManager::get();
 
 		event->dispatchEvent(event::BEFORE_APP_STOP);
 
@@ -155,32 +170,32 @@ namespace fwlab
 		return isRunning;
 	}
 
-	utils::Clock *Application::getClock() const
+	utils::Clock* Application::getClock() const
 	{
 		return clock;
 	}
 
-	event::Time *Application::getTime() const
+	event::Time* Application::getTime() const
 	{
 		return time;
 	}
 
-	EventDispatcher *Application::getEventDispatcher() const
+	EventDispatcher* Application::getEventDispatcher() const
 	{
 		return event;
 	}
 
-	ui::UIHelper *Application::getUIHelper() const
+	ui::UIHelper* Application::getUIHelper() const
 	{
 		return ui;
 	}
 
-	SDL_Window *Application::getSDLWindow() const
+	SDL_Window* Application::getSDLWindow() const
 	{
 		return window;
 	}
 
-	filament::Engine *Application::getEngine() const
+	filament::Engine* Application::getEngine() const
 	{
 		return engine;
 	}
@@ -190,12 +205,12 @@ namespace fwlab
 		return engine->getBackend();
 	}
 
-	filament::SwapChain *Application::getSwapChain() const
+	filament::SwapChain* Application::getSwapChain() const
 	{
 		return swapChain;
 	}
 
-	filament::Renderer *Application::getRenderer() const
+	filament::Renderer* Application::getRenderer() const
 	{
 		return renderer;
 	}
@@ -205,32 +220,32 @@ namespace fwlab
 		return cameraEntity;
 	}
 
-	filament::Camera *Application::getCamera() const
+	filament::Camera* Application::getCamera() const
 	{
 		return camera;
 	}
 
-	filament::View *Application::getView() const
+	filament::View* Application::getView() const
 	{
 		return view;
 	}
 
-	filament::Viewport *Application::getViewport() const
+	filament::Viewport* Application::getViewport() const
 	{
 		return viewport;
 	}
 
-	filament::Scene *Application::getScene() const
+	filament::Scene* Application::getScene() const
 	{
 		return scene;
 	}
 
-	controller::OrbitController *Application::getController() const
+	controller::OrbitController* Application::getController() const
 	{
 		return controller;
 	}
 
-	void Application::addEventListener(const std::string eventName, std::string id, std::function<void(void *)> listener)
+	void Application::addEventListener(const std::string eventName, std::string id, std::function<void(void*)> listener)
 	{
 		event->addEventListener(eventName, id, listener);
 	}
@@ -245,7 +260,7 @@ namespace fwlab
 		return event->hasEventListener(eventName, id);
 	}
 
-	void Application::dispatchEvent(const std::string eventName, void *params) const
+	void Application::dispatchEvent(const std::string eventName, void* params) const
 	{
 		event->dispatchEvent(eventName, params);
 	}

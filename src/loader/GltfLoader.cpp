@@ -18,8 +18,6 @@ namespace fwlab::loader
 		configuration.gltfPath = "";
 		configuration.recomputeBoundingBoxes = false;
 		configuration.normalizeSkinningWeights = true;
-
-		log = new utils::Logger();
 	}
 
 	GltfLoader::~GltfLoader()
@@ -27,7 +25,6 @@ namespace fwlab::loader
 		gltfio::AssetLoader::destroy(&assetLoader);
 		delete names;
 		delete materialProvider;
-		delete log;
 	}
 
 	gltfio::FilamentAsset* GltfLoader::load(::utils::Path path)
@@ -40,7 +37,7 @@ namespace fwlab::loader
 		in.seekg(0, std::ios::beg);
 		if (!in.read((char*)buffer.data(), fileSize))
 		{
-			log->error(std::string("unable to read: ") + path.c_str());
+			app->error(std::string("unable to read: ") + path.c_str());
 			return nullptr;
 		}
 
@@ -55,7 +52,7 @@ namespace fwlab::loader
 		resourceLoader = new gltfio::ResourceLoader(configuration);
 		if (!resourceLoader->asyncBeginLoad(asset))
 		{
-			log->error(std::string("cannot load resources"));
+			app->error(std::string("cannot load resources"));
 			return nullptr;
 		}
 

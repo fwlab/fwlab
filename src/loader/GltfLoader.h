@@ -6,7 +6,6 @@
 #include <gltfio/ResourceLoader.h>
 #include <utils/NameComponentManager.h>
 #include <utils/Path.h>
-#include "../utils/Logger.h"
 
 namespace fwlab::loader
 {
@@ -28,7 +27,6 @@ namespace fwlab::loader
 		gltfio::ResourceConfiguration configuration;
 		gltfio::FilamentAsset* asset = nullptr;
 		gltfio::ResourceLoader* resourceLoader = nullptr;
-		utils::Logger* log = nullptr;
 	};
 }
 

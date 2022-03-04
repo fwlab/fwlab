@@ -1,9 +1,8 @@
 #ifndef FWLAB_SCENE_SCENE_H
 #define FWLAB_SCENE_SCENE_H
-#include <filament/Skybox.h>
 #include <gltfio/FilamentAsset.h>
 #include <math/mat4.h>
-#include <utils/Entity.h>
+#include "../light/AmbientLight.h"
 #include "../object/Mesh.h"
 #include "../loader/TextureLoader.h"
 #include "../loader/GltfLoader.h"
@@ -17,9 +16,7 @@ namespace fwlab::scene
 		void animate();
 
 	private:
-		filament::Skybox* skybox = nullptr;
-
-		::utils::Entity lightEntity;
+		light::AmbientLight* amlight = nullptr;
 
 		loader::TextureLoader* textureLoader = nullptr;
 		object::Mesh* plane = nullptr;

@@ -1,4 +1,3 @@
-#include <iostream>
 #include <fstream>
 #include <filament/LightManager.h>
 #include <filament/TransformManager.h>
@@ -17,22 +16,10 @@ namespace fwlab::scene
 		auto scene = app->getScene();
 		auto& entityManager = ::utils::EntityManager::get();
 
-		// skybox
-		skybox = filament::Skybox::Builder()
-			.color({ 0.1, 0.125, 0.25, 1.0 })
-			.showSun(true)
-			.build(*engine);
-		scene->setSkybox(skybox);
-
 		// light
-		lightEntity = entityManager.create();
-		filament::LightManager::Builder(filament::LightManager::Type::SUN)
-			.color(filament::Color::toLinear<filament::ColorConversion::ACCURATE>(filament::sRGBColor(0.98f, 0.92f, 0.89f)))
-			.intensity(110000)
-			.sunAngularRadius(1.9f)
-			.castShadows(true)
-			.build(*engine, lightEntity);
-		scene->addEntity(lightEntity);
+		amlight = new light::AmbientLight("assets/ibl/lightroom_14b");
+		scene->setSkybox(amlight->getSkybox());
+		scene->setIndirectLight(amlight->getIndirectLight());
 
 		// plane
 		textureLoader = new loader::TextureLoader();
@@ -60,11 +47,9 @@ namespace fwlab::scene
 
 	void Scene::cleanup()
 	{
-		auto engine = app->getEngine();
-		engine->destroy(skybox);
-		engine->destroy(lightEntity);
 		delete plane;
 		delete textureLoader;
+		delete amlight;
 
 		gltfLoader->destroyAsset(asset);
 		gltfLoader->destroy();
