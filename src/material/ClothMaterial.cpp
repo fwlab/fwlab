@@ -231,12 +231,12 @@ namespace fwlab::material
 		instance->setParameter("thickness", thickness);
 	}
 
-	gl::texture::Texture* ClothMaterial::getMap() const noexcept
+	texture::Texture* ClothMaterial::getMap() const noexcept
 	{
 		return map;
 	}
 
-	void ClothMaterial::setMap(gl::texture::Texture* texture) noexcept
+	void ClothMaterial::setMap(texture::Texture* texture) noexcept
 	{
 		if (map)
 		{

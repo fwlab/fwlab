@@ -267,12 +267,12 @@ namespace fwlab::material
 		instance->setParameter("thickness", thickness);
 	}
 
-	gl::texture::Texture* LitMaterial::getMap() const noexcept
+	texture::Texture* LitMaterial::getMap() const noexcept
 	{
 		return map;
 	}
 
-	void LitMaterial::setMap(gl::texture::Texture* texture) noexcept
+	void LitMaterial::setMap(texture::Texture* texture) noexcept
 	{
 		if (map)
 		{

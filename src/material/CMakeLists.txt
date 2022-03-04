@@ -48,5 +48,5 @@ add_library(${MODULE_NAME} STATIC
 
 target_link_libraries(${MODULE_NAME}
 	filament filamat smol-v
-	fwlab_assets
+	fwlab_assets fwlab_texture
 )

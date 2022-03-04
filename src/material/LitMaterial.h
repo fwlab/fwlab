@@ -55,8 +55,8 @@ namespace fwlab::material
 		float getThickness() const noexcept;										  // not implemented
 		void setThickness(float thickness) noexcept;								  // not implemented
 
-		gl::texture::Texture* getMap() const noexcept;
-		void setMap(gl::texture::Texture* texture) noexcept;
+		texture::Texture* getMap() const noexcept;
+		void setMap(texture::Texture* texture) noexcept;
 
 	private:
 		filament::math::float4 baseColor = { 1, 1, 1, 1 };
@@ -82,7 +82,7 @@ namespace fwlab::material
 		float thickness = 0;
 
 		bool enableMap = false;
-		gl::texture::Texture* map = nullptr;
+		texture::Texture* map = nullptr;
 	};
 }
 

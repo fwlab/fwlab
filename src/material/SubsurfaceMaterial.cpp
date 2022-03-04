@@ -265,12 +265,12 @@ namespace fwlab::material
 		instance->setParameter("subsurfacePower", subsurfacePower);
 	}
 
-	gl::texture::Texture* SubsurfaceMaterial::getMap() const noexcept
+	texture::Texture* SubsurfaceMaterial::getMap() const noexcept
 	{
 		return map;
 	}
 
-	void SubsurfaceMaterial::setMap(gl::texture::Texture* texture) noexcept
+	void SubsurfaceMaterial::setMap(texture::Texture* texture) noexcept
 	{
 		if (map)
 		{

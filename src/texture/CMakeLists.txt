@@ -1,4 +1,4 @@
-set(MODULE_NAME fwlab_gl_texture)
+set(MODULE_NAME fwlab_texture)
 
 add_library(${MODULE_NAME} STATIC
 	"Texture.cpp"
@@ -6,5 +6,5 @@ add_library(${MODULE_NAME} STATIC
 
 target_link_libraries(${MODULE_NAME}
 	filament
-	fwlab_gl_core
+	fwlab_core
 )

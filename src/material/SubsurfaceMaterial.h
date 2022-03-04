@@ -55,8 +55,8 @@ namespace fwlab::material
 		float getSubsurfacePower() const noexcept;
 		void setSubsurfacePower(float subsurfacePower) noexcept;
 
-		gl::texture::Texture* getMap() const noexcept;
-		void setMap(gl::texture::Texture* texture) noexcept;
+		texture::Texture* getMap() const noexcept;
+		void setMap(texture::Texture* texture) noexcept;
 
 	private:
 		filament::math::float4 baseColor = { 1, 1, 1, 1 };
@@ -82,7 +82,7 @@ namespace fwlab::material
 		float subsurfacePower = 0;
 
 		bool enableMap = false;
-		gl::texture::Texture* map = nullptr;
+		texture::Texture* map = nullptr;
 	};
 }
 
