@@ -8,6 +8,7 @@ namespace fwlab::ui::menubar
 		fileMenu = new FileMenu();
 		editMenu = new EditMenu();
 		objectMenu = new ObjectMenu();
+		lightMenu = new LightMenu();
 		helpMenu = new HelpMenu();
 	}
 
@@ -16,6 +17,7 @@ namespace fwlab::ui::menubar
 		delete fileMenu;
 		delete editMenu;
 		delete objectMenu;
+		delete lightMenu;
 		delete helpMenu;
 	}
 
@@ -26,6 +28,7 @@ namespace fwlab::ui::menubar
 			fileMenu->render();
 			editMenu->render();
 			objectMenu->render();
+			lightMenu->render();
 			helpMenu->render();
 
 			ImGui::EndMainMenuBar();

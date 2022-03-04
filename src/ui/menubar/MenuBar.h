@@ -4,6 +4,7 @@
 #include "FileMenu.h"
 #include "EditMenu.h"
 #include "ObjectMenu.h"
+#include "LightMenu.h"
 #include "HelpMenu.h"
 
 namespace fwlab::ui::menubar
@@ -16,10 +17,11 @@ namespace fwlab::ui::menubar
 		void render() override;
 
 	private:
-		FileMenu* fileMenu;
-		EditMenu* editMenu;
-		ObjectMenu* objectMenu;
-		HelpMenu* helpMenu;
+		FileMenu* fileMenu = nullptr;
+		EditMenu* editMenu = nullptr;
+		ObjectMenu* objectMenu = nullptr;
+		LightMenu* lightMenu = nullptr;
+		HelpMenu* helpMenu = nullptr;
 	};
 }
 

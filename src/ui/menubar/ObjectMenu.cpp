@@ -27,24 +27,47 @@ namespace fwlab::ui::menubar
 				ImGui::EndMenu();
 			}
 
-			if (ImGui::BeginMenu("光源", true))
+			if (ImGui::BeginMenu("文字", true))
 			{
-				if (ImGui::MenuItem("环境光", nullptr, false, true))
+				if (ImGui::MenuItem("不缩放文字", nullptr, false, true))
 				{
 				}
-				if (ImGui::MenuItem("点光源", nullptr, false, true))
-				{
-				}
-				if (ImGui::MenuItem("平行光", nullptr, false, true))
-				{
-				}
-				if (ImGui::MenuItem("聚光灯", nullptr, false, true))
-				{
-				}
-				if (ImGui::MenuItem("半球光", nullptr, false, true))
+				if (ImGui::MenuItem("三维文字", nullptr, false, true))
 				{
 				}
 				ImGui::EndMenu();
+			}
+
+			if (ImGui::BeginMenu("曲线", true))
+			{
+				if (ImGui::MenuItem("线段", nullptr, false, true))
+				{
+				}
+				if (ImGui::MenuItem("贝塞尔曲线", nullptr, false, true))
+				{
+				}
+				if (ImGui::MenuItem("椭圆曲线", nullptr, false, true))
+				{
+				}
+				ImGui::EndMenu();
+			}
+
+			if (ImGui::BeginMenu("帮助器", true))
+			{
+				if (ImGui::MenuItem("箭头帮助器", nullptr, false, true))
+				{
+				}
+				if (ImGui::MenuItem("坐标轴帮助器", nullptr, false, true))
+				{
+				}
+				ImGui::EndMenu();
+			}
+
+			ImGui::Separator();
+
+			if (ImGui::MenuItem("精灵"))
+			{
+
 			}
 
 			ImGui::EndMenu();
