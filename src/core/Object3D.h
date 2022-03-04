@@ -14,8 +14,8 @@ namespace fwlab::core
 	public:
 		Object3D();
 		virtual ~Object3D();
-		utils::Entity getEntity() const noexcept;
-		void setEntity(utils::Entity entity) noexcept;
+		::utils::Entity getEntity() const noexcept;
+		void setEntity(::utils::Entity entity) noexcept;
 		filament::math::double3 getPosition() const noexcept;
 		void setPosition(filament::math::double3 position) noexcept;
 		filament::math::quat getRotation() const noexcept;
@@ -38,12 +38,12 @@ namespace fwlab::core
 		// Entity Manager
 		uint8_t getGenerationForIndex(size_t index) const noexcept;
 		bool isAlive() const noexcept;
-		void registerListener(utils::EntityManager::Listener* l) noexcept;
-		void unregisterListener(utils::EntityManager::Listener* l) noexcept;
+		void registerListener(::utils::EntityManager::Listener* l) noexcept;
+		void unregisterListener(::utils::EntityManager::Listener* l) noexcept;
 
 	protected:
 		void updateMatrix();
-		utils::Entity entity;
+		::utils::Entity entity;
 		filament::math::double3 position = { 0, 0, 0 };
 		filament::math::quat rotation = { 1, 0, 0, 0 };
 		filament::math::double3 scale = { 1, 1, 1 };
@@ -51,7 +51,7 @@ namespace fwlab::core
 
 		Object3D* parent = nullptr;
 		std::vector<Object3D*> children;
-		static utils::Entity defaultParent;
+		static ::utils::Entity defaultParent;
 	};
 }
 

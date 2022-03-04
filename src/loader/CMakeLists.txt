@@ -1,4 +1,4 @@
-set(MODULE_NAME fwlab_gl_loader)
+set(MODULE_NAME fwlab_loader)
 
 add_library(${MODULE_NAME} STATIC
 	"Loader.h"
@@ -10,5 +10,5 @@ add_library(${MODULE_NAME} STATIC
 
 target_link_libraries(${MODULE_NAME}
 	filament
-	fwlab_gl_utils fwlab_gl_core fwlab_gl_texture fwlab_gl_material
+	fwlab_utils fwlab_core fwlab_texture fwlab_material
 )

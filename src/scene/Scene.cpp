@@ -6,6 +6,7 @@
 #include "Scene.h"
 #include "../context/context.h"
 #include "../geometry/PlaneGeometry.h"
+#include "../material/UnlitMaterial.h"
 
 namespace fwlab::scene
 {
@@ -31,6 +32,14 @@ namespace fwlab::scene
 			.castShadows(true)
 			.build(*engine, lightEntity);
 		scene->addEntity(lightEntity);
+
+		// plane
+		auto geometry = new geometry::PlaneGeometry();
+		geometry->create(10, 10);
+		auto material = new material::UnlitMaterial();
+		plane = new object::Mesh(geometry, material);
+		plane->setRotation({ 1, 0, 0 }, -M_PI / 2);
+		scene->addEntity(plane->getEntity());
 
 		// load asset
 		::utils::Path filename = "assets/models/RobotDog/scene.gltf";

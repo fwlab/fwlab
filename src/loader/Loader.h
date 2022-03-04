@@ -1,8 +1,8 @@
-#ifndef GL_LOADER_LOADER_H
-#define GL_LOADER_LOADER_H
+#ifndef FWLAB_LOADER_LOADER_H
+#define FWLAB_LOADER_LOADER_H
 #include "../object/Mesh.h"
 
-namespace gl::loader
+namespace fwlab::loader
 {
 	class Loader
 	{

@@ -7,6 +7,7 @@
 #include <gltfio/ResourceLoader.h>
 #include <utils/NameComponentManager.h>
 #include <utils/EntityManager.h>
+#include "../object/Mesh.h"
 
 namespace fwlab::scene
 {
@@ -20,6 +21,7 @@ namespace fwlab::scene
 		filament::math::mat4f fitIntoUnitCube(const filament::Aabb& bounds, float zoffset);
 		filament::Skybox* skybox;
 		::utils::Entity lightEntity;
+		object::Mesh* plane = nullptr;
 
 		::utils::NameComponentManager* names;
 		gltfio::AssetLoader* loader;
