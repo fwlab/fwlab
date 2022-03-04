@@ -1,7 +1,8 @@
-set(MODULE_NAME fwlab_gl_light)
+set(MODULE_NAME fwlab_light)
 
 add_library(${MODULE_NAME} STATIC
 	"Light.cpp"
+	"AmbientLight.cpp"
 	"SunLight.cpp"
 	"DirectionalLight.cpp"
 	"PointLight.cpp"
@@ -11,5 +12,5 @@ add_library(${MODULE_NAME} STATIC
 
 target_link_libraries(${MODULE_NAME}
 	filament
-	fwlab_gl_core
+	fwlab_core fwlab_loader
 )

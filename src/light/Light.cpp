@@ -1,172 +1,223 @@
-
 #include "Light.h"
 #include "../context/context.h"
 
-using namespace gl::context;
-using namespace gl::light;
-
-Light::Light(filament::LightManager::Type type, filament::sRGBColor color, float intensity)
+namespace fwlab::light
 {
-	auto &manager = utils::EntityManager::get();
-	entity = manager.create();
-
-	filament::LightManager::Builder(type)
-		.color(filament::Color::toLinear<filament::ColorConversion::ACCURATE>(color))
-		.intensity(intensity)
-		.sunAngularRadius(1.9f)
-		.castShadows(true)
-		.build(*engine, entity);
-}
-
-Light::~Light()
-{
-	if (entity)
+	Light::Light(filament::LightManager::Type type, filament::sRGBColor color, float intensity)
 	{
-		engine->destroy(entity);
+		auto engine = app->getEngine();
+
+		auto& manager = ::utils::EntityManager::get();
+		entity = manager.create();
+
+		filament::LightManager::Builder(type)
+			.color(filament::Color::toLinear<filament::ColorConversion::ACCURATE>(color))
+			.intensity(intensity)
+			.sunAngularRadius(1.9f)
+			.castShadows(true)
+			.build(*engine, entity);
 	}
-}
 
-template <typename F>
-void Light::forEachComponent(F func) noexcept
-{
-	auto &manager = engine->getLightManager();
-	manager.forEachComponent(func);
-}
+	Light::~Light()
+	{
+		auto engine = app->getEngine();
 
-const filament::math::float3 Light::getColor() const noexcept
-{
-	auto &manager = engine->getLightManager();
-	return manager.getColor(manager.getInstance(entity));
-}
+		if (entity)
+		{
+			engine->destroy(entity);
+		}
+	}
 
-size_t Light::getComponentCount() const noexcept
-{
-	auto &manager = engine->getLightManager();
-	return manager.getComponentCount();
-}
+	template <typename F>
+	void Light::forEachComponent(F func) noexcept
+	{
+		auto engine = app->getEngine();
 
-const filament::math::float3 Light::getDirection() const noexcept
-{
-	auto &manager = engine->getLightManager();
-	return manager.getDirection(manager.getInstance(entity));
-}
+		auto& manager = engine->getLightManager();
+		manager.forEachComponent(func);
+	}
 
-const utils::Entity *Light::getEntities() const noexcept
-{
-	auto &manager = engine->getLightManager();
-	return manager.getEntities();
-}
+	const filament::math::float3 Light::getColor() const noexcept
+	{
+		auto engine = app->getEngine();
 
-float Light::getFalloff() const noexcept
-{
-	auto &manager = engine->getLightManager();
-	return manager.getFalloff(manager.getInstance(entity));
-}
+		auto& manager = engine->getLightManager();
+		return manager.getColor(manager.getInstance(entity));
+	}
 
-float Light::getIntensity() const noexcept
-{
-	auto &manager = engine->getLightManager();
-	return manager.getIntensity(manager.getInstance(entity));
-}
+	size_t Light::getComponentCount() const noexcept
+	{
+		auto engine = app->getEngine();
 
-bool Light::getLightChannel(unsigned int channel) const noexcept
-{
-	auto &manager = engine->getLightManager();
-	return manager.getLightChannel(manager.getInstance(entity), channel);
-}
+		auto& manager = engine->getLightManager();
+		return manager.getComponentCount();
+	}
 
-filament::math::float3 Light::getPosition() const noexcept
-{
-	auto &manager = engine->getLightManager();
-	return manager.getPosition(manager.getInstance(entity));
-}
+	const filament::math::float3 Light::getDirection() const noexcept
+	{
+		auto engine = app->getEngine();
 
-filament::LightManager::ShadowOptions Light::getShadowOptions() const noexcept
-{
-	auto &manager = engine->getLightManager();
-	return manager.getShadowOptions(manager.getInstance(entity));
-}
+		auto& manager = engine->getLightManager();
+		return manager.getDirection(manager.getInstance(entity));
+	}
 
-filament::LightManager::Type Light::getType() const noexcept
-{
-	auto &manager = engine->getLightManager();
-	return manager.getType(manager.getInstance(entity));
-}
+	const ::utils::Entity* Light::getEntities() const noexcept
+	{
+		auto engine = app->getEngine();
 
-inline bool Light::isDirectional() const noexcept
-{
-	auto &manager = engine->getLightManager();
-	return manager.isDirectional(manager.getInstance(entity));
-}
+		auto& manager = engine->getLightManager();
+		return manager.getEntities();
+	}
 
-inline bool Light::isPointLight() const noexcept
-{
-	auto &manager = engine->getLightManager();
-	return manager.isPointLight(manager.getInstance(entity));
-}
+	float Light::getFalloff() const noexcept
+	{
+		auto engine = app->getEngine();
 
-bool Light::isShadowCaster() const noexcept
-{
-	auto &manager = engine->getLightManager();
-	return manager.isShadowCaster(manager.getInstance(entity));
-}
+		auto& manager = engine->getLightManager();
+		return manager.getFalloff(manager.getInstance(entity));
+	}
 
-inline bool Light::isSpotLight() const noexcept
-{
-	auto &manager = engine->getLightManager();
-	return manager.isSpotLight(manager.getInstance(entity));
-}
+	float Light::getIntensity() const noexcept
+	{
+		auto engine = app->getEngine();
 
-void Light::setColor(const filament::LinearColor color) noexcept
-{
-	auto &manager = engine->getLightManager();
-	return manager.setColor(manager.getInstance(entity), color);
-}
+		auto& manager = engine->getLightManager();
+		return manager.getIntensity(manager.getInstance(entity));
+	}
 
-void Light::setDirection(const filament::math::float3 direction) noexcept
-{
-	auto &manager = engine->getLightManager();
-	return manager.setDirection(manager.getInstance(entity), direction);
-}
+	bool Light::getLightChannel(unsigned int channel) const noexcept
+	{
+		auto engine = app->getEngine();
 
-void Light::setFalloff(float radius) noexcept
-{
-	auto &manager = engine->getLightManager();
-	return manager.setFalloff(manager.getInstance(entity), radius);
-}
+		auto& manager = engine->getLightManager();
+		return manager.getLightChannel(manager.getInstance(entity), channel);
+	}
 
-void Light::setIntensity(float watts, float efficiency) noexcept
-{
-	auto &manager = engine->getLightManager();
-	return manager.setIntensity(manager.getInstance(entity), watts, efficiency);
-}
+	filament::math::float3 Light::getPosition() const noexcept
+	{
+		auto engine = app->getEngine();
 
-void Light::setIntensityCandela(float intensity) noexcept
-{
-	auto &manager = engine->getLightManager();
-	return manager.setIntensityCandela(manager.getInstance(entity), intensity);
-}
+		auto& manager = engine->getLightManager();
+		return manager.getPosition(manager.getInstance(entity));
+	}
 
-void Light::setLightChannel(unsigned int channel, bool enable) noexcept
-{
-	auto &manager = engine->getLightManager();
-	return manager.setLightChannel(manager.getInstance(entity), channel, enable);
-}
+	filament::LightManager::ShadowOptions Light::getShadowOptions() const noexcept
+	{
+		auto engine = app->getEngine();
 
-void Light::setPosition(const filament::math::float3 position) noexcept
-{
-	auto &manager = engine->getLightManager();
-	return manager.setPosition(manager.getInstance(entity), position);
-}
+		auto& manager = engine->getLightManager();
+		return manager.getShadowOptions(manager.getInstance(entity));
+	}
 
-void Light::setShadowCaster(bool castShadows) noexcept
-{
-	auto &manager = engine->getLightManager();
-	return manager.setShadowCaster(manager.getInstance(entity), castShadows);
-}
+	filament::LightManager::Type Light::getType() const noexcept
+	{
+		auto engine = app->getEngine();
 
-void Light::setShadowOptions(filament::LightManager::ShadowOptions const &options) noexcept
-{
-	auto &manager = engine->getLightManager();
-	return manager.setShadowOptions(manager.getInstance(entity), options);
+		auto& manager = engine->getLightManager();
+		return manager.getType(manager.getInstance(entity));
+	}
+
+	inline bool Light::isDirectional() const noexcept
+	{
+		auto engine = app->getEngine();
+
+		auto& manager = engine->getLightManager();
+		return manager.isDirectional(manager.getInstance(entity));
+	}
+
+	inline bool Light::isPointLight() const noexcept
+	{
+		auto engine = app->getEngine();
+
+		auto& manager = engine->getLightManager();
+		return manager.isPointLight(manager.getInstance(entity));
+	}
+
+	bool Light::isShadowCaster() const noexcept
+	{
+		auto engine = app->getEngine();
+
+		auto& manager = engine->getLightManager();
+		return manager.isShadowCaster(manager.getInstance(entity));
+	}
+
+	inline bool Light::isSpotLight() const noexcept
+	{
+		auto engine = app->getEngine();
+
+		auto& manager = engine->getLightManager();
+		return manager.isSpotLight(manager.getInstance(entity));
+	}
+
+	void Light::setColor(const filament::LinearColor color) noexcept
+	{
+		auto engine = app->getEngine();
+
+		auto& manager = engine->getLightManager();
+		return manager.setColor(manager.getInstance(entity), color);
+	}
+
+	void Light::setDirection(const filament::math::float3 direction) noexcept
+	{
+		auto engine = app->getEngine();
+
+		auto& manager = engine->getLightManager();
+		return manager.setDirection(manager.getInstance(entity), direction);
+	}
+
+	void Light::setFalloff(float radius) noexcept
+	{
+		auto engine = app->getEngine();
+
+		auto& manager = engine->getLightManager();
+		return manager.setFalloff(manager.getInstance(entity), radius);
+	}
+
+	void Light::setIntensity(float watts, float efficiency) noexcept
+	{
+		auto engine = app->getEngine();
+
+		auto& manager = engine->getLightManager();
+		return manager.setIntensity(manager.getInstance(entity), watts, efficiency);
+	}
+
+	void Light::setIntensityCandela(float intensity) noexcept
+	{
+		auto engine = app->getEngine();
+
+		auto& manager = engine->getLightManager();
+		return manager.setIntensityCandela(manager.getInstance(entity), intensity);
+	}
+
+	void Light::setLightChannel(unsigned int channel, bool enable) noexcept
+	{
+		auto engine = app->getEngine();
+
+		auto& manager = engine->getLightManager();
+		return manager.setLightChannel(manager.getInstance(entity), channel, enable);
+	}
+
+	void Light::setPosition(const filament::math::float3 position) noexcept
+	{
+		auto engine = app->getEngine();
+
+		auto& manager = engine->getLightManager();
+		return manager.setPosition(manager.getInstance(entity), position);
+	}
+
+	void Light::setShadowCaster(bool castShadows) noexcept
+	{
+		auto engine = app->getEngine();
+
+		auto& manager = engine->getLightManager();
+		return manager.setShadowCaster(manager.getInstance(entity), castShadows);
+	}
+
+	void Light::setShadowOptions(filament::LightManager::ShadowOptions const& options) noexcept
+	{
+		auto engine = app->getEngine();
+
+		auto& manager = engine->getLightManager();
+		return manager.setShadowOptions(manager.getInstance(entity), options);
+	}
 }

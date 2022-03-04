@@ -1,6 +1,7 @@
 set(MODULE_NAME fwlab_loader)
 
 add_library(${MODULE_NAME} STATIC
+	"IBL.cpp"
 	"FilameshLoader.cpp"
 	"GltfLoader.cpp"
 	"ImageLoader.cpp"

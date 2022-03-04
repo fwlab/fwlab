@@ -7,6 +7,7 @@
 #include "Application.h"
 #include "context/context.h"
 #include "event/EventList.h"
+#include "scene/Scene.h"
 
 namespace fwlab
 {
@@ -45,6 +46,11 @@ namespace fwlab
 		engine = filament::Engine::create();
 		swapChain = engine->createSwapChain(utils::SDLUtils::getNativeWindow(window));
 		renderer = engine->createRenderer();
+		filament::Renderer::ClearOptions options =
+		{
+			.clearColor = { 0, 0, 0, 1 }
+		};
+		renderer->setClearOptions(options);
 
 		cameraEntity = ::utils::EntityManager::get().create();
 		camera = engine->createCamera(cameraEntity);
@@ -62,7 +68,7 @@ namespace fwlab
 		scene = engine->createScene();
 		view->setScene(scene);
 
-		myScene = new scene::Scene();
+		myScene = new fwlab::scene::Scene();
 		myScene->create();
 
 		isRunning = true;

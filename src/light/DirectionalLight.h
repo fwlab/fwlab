@@ -1,11 +1,11 @@
-#ifndef GL_LIGHT_DIRECTIONAL_LIGHT_H
-#define GL_LIGHT_DIRECTIONAL_LIGHT_H
+#ifndef FWLAB_LIGHT_DIRECTIONAL_LIGHT_H
+#define FWLAB_LIGHT_DIRECTIONAL_LIGHT_H
 #include <filament/Color.h>
 #include "Light.h"
 
-namespace gl::light
+namespace fwlab::light
 {
-	class DirectionalLight : public gl::light::Light
+	class DirectionalLight : public light::Light
 	{
 	public:
 		DirectionalLight(

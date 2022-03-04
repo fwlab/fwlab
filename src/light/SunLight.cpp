@@ -1,50 +1,62 @@
 #include "SunLight.h"
 #include "../context/context.h"
 
-using namespace gl::context;
-using namespace gl::light;
-
-SunLight::SunLight(filament::sRGBColor color, float intensity) : Light(filament::LightManager::Type::SUN, color, intensity)
+namespace fwlab::light
 {
-}
+	SunLight::SunLight(filament::sRGBColor color, float intensity) : Light(filament::LightManager::Type::SUN, color, intensity)
+	{
+	}
 
-SunLight::~SunLight()
-{
-}
+	SunLight::~SunLight()
+	{
+	}
 
-// Light Manager
-float SunLight::getSunAngularRadius() const noexcept
-{
-	auto &manager = engine->getLightManager();
-	return manager.getSunAngularRadius(manager.getInstance(entity));
-}
+	// Light Manager
+	float SunLight::getSunAngularRadius() const noexcept
+	{
+		auto engine = app->getEngine();
 
-float SunLight::getSunHaloFalloff() const noexcept
-{
-	auto &manager = engine->getLightManager();
-	return manager.getSunHaloFalloff(manager.getInstance(entity));
-}
+		auto& manager = engine->getLightManager();
+		return manager.getSunAngularRadius(manager.getInstance(entity));
+	}
 
-float SunLight::getSunHaloSize() const noexcept
-{
-	auto &manager = engine->getLightManager();
-	return manager.getSunHaloSize(manager.getInstance(entity));
-}
+	float SunLight::getSunHaloFalloff() const noexcept
+	{
+		auto engine = app->getEngine();
 
-void SunLight::setSunAngularRadius(float angularRadius) noexcept
-{
-	auto &manager = engine->getLightManager();
-	return manager.setSunAngularRadius(manager.getInstance(entity), angularRadius);
-}
+		auto& manager = engine->getLightManager();
+		return manager.getSunHaloFalloff(manager.getInstance(entity));
+	}
 
-void SunLight::setSunHaloFalloff(float haloFalloff) noexcept
-{
-	auto &manager = engine->getLightManager();
-	return manager.setSunHaloFalloff(manager.getInstance(entity), haloFalloff);
-}
+	float SunLight::getSunHaloSize() const noexcept
+	{
+		auto engine = app->getEngine();
 
-void SunLight::setSunHaloSize(float haloSize) noexcept
-{
-	auto &manager = engine->getLightManager();
-	return manager.setSunHaloSize(manager.getInstance(entity), haloSize);
+		auto& manager = engine->getLightManager();
+		return manager.getSunHaloSize(manager.getInstance(entity));
+	}
+
+	void SunLight::setSunAngularRadius(float angularRadius) noexcept
+	{
+		auto engine = app->getEngine();
+
+		auto& manager = engine->getLightManager();
+		return manager.setSunAngularRadius(manager.getInstance(entity), angularRadius);
+	}
+
+	void SunLight::setSunHaloFalloff(float haloFalloff) noexcept
+	{
+		auto engine = app->getEngine();
+
+		auto& manager = engine->getLightManager();
+		return manager.setSunHaloFalloff(manager.getInstance(entity), haloFalloff);
+	}
+
+	void SunLight::setSunHaloSize(float haloSize) noexcept
+	{
+		auto engine = app->getEngine();
+
+		auto& manager = engine->getLightManager();
+		return manager.setSunHaloSize(manager.getInstance(entity), haloSize);
+	}
 }

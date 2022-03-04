@@ -1,11 +1,11 @@
-#ifndef GL_LIGHT_FOCUSED_SPOT_LIGHT_H
-#define GL_LIGHT_FOCUSED_SPOT_LIGHT_H
+#ifndef FWLAB_LIGHT_FOCUSED_SPOT_LIGHT_H
+#define FWLAB_LIGHT_FOCUSED_SPOT_LIGHT_H
 #include <filament/Color.h>
 #include "SpotLight.h"
 
-namespace gl::light
+namespace fwlab::light
 {
-	class FocusedSpotLight : public gl::light::SpotLight
+	class FocusedSpotLight : public light::SpotLight
 	{
 	public:
 		FocusedSpotLight(

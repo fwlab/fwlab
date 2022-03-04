@@ -1,14 +1,14 @@
-#ifndef GL_LIGHT_LIGHT_H
-#define GL_LIGHT_LIGHT_H
+#ifndef FWLAB_LIGHT_LIGHT_H
+#define FWLAB_LIGHT_LIGHT_H
 #include <filament/LightManager.h>
 #include <math/vec3.h>
 #include <utils/Entity.h>
 #include <utils/EntityManager.h>
 #include "../core/Object3D.h"
 
-namespace gl::light
+namespace fwlab::light
 {
-	class Light : public gl::core::Object3D
+	class Light : public core::Object3D
 	{
 	public:
 		Light(
@@ -27,7 +27,7 @@ namespace gl::light
 		const filament::math::float3 getColor() const noexcept;
 		size_t getComponentCount() const noexcept;
 		const filament::math::float3 getDirection() const noexcept;
-		const utils::Entity *getEntities() const noexcept;
+		const ::utils::Entity* getEntities() const noexcept;
 		float getFalloff() const noexcept;
 		float getIntensity() const noexcept;
 		bool getLightChannel(unsigned int channel) const noexcept;
@@ -46,7 +46,7 @@ namespace gl::light
 		void setLightChannel(unsigned int channel, bool enable) noexcept;
 		void setPosition(const filament::math::float3 position) noexcept;
 		void setShadowCaster(bool castShadows) noexcept;
-		void setShadowOptions(filament::LightManager::ShadowOptions const &options) noexcept;
+		void setShadowOptions(filament::LightManager::ShadowOptions const& options) noexcept;
 	};
 }
 

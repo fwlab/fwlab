@@ -1,11 +1,11 @@
-#ifndef GL_LIGHT_POINT_LIGHT_H
-#define GL_LIGHT_POINT_LIGHT_H
+#ifndef FWLAB_LIGHT_POINT_LIGHT_H
+#define FWLAB_LIGHT_POINT_LIGHT_H
 #include <filament/Color.h>
 #include "Light.h"
 
-namespace gl::light
+namespace fwlab::light
 {
-	class PointLight : public gl::light::Light
+	class PointLight : public light::Light
 	{
 	public:
 		PointLight(
