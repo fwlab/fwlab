@@ -7,6 +7,7 @@ add_library(${MODULE_NAME} STATIC
 	"ObjectMenu.cpp"
 	"LightMenu.cpp"
 	"TrainMenu.cpp"
+	"ExperimentMenu.cpp"
 	"OptionsMenu.cpp"
 	"HelpMenu.cpp"
 )

@@ -10,6 +10,7 @@ namespace fwlab::ui::menubar
 		objectMenu = new ObjectMenu();
 		lightMenu = new LightMenu();
 		trainMenu = new TrainMenu();
+		experimentMenu = new ExperimentMenu();
 		optionsMenu = new OptionsMenu();
 		helpMenu = new HelpMenu();
 	}
@@ -21,6 +22,7 @@ namespace fwlab::ui::menubar
 		delete objectMenu;
 		delete lightMenu;
 		delete trainMenu;
+		delete experimentMenu;
 		delete optionsMenu;
 		delete helpMenu;
 	}
@@ -34,6 +36,7 @@ namespace fwlab::ui::menubar
 			objectMenu->render();
 			lightMenu->render();
 			trainMenu->render();
+			experimentMenu->render();
 			optionsMenu->render();
 			helpMenu->render();
 

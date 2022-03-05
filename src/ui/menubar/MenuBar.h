@@ -6,6 +6,7 @@
 #include "ObjectMenu.h"
 #include "LightMenu.h"
 #include "TrainMenu.h"
+#include "ExperimentMenu.h"
 #include "OptionsMenu.h"
 #include "HelpMenu.h"
 
@@ -24,6 +25,7 @@ namespace fwlab::ui::menubar
 		ObjectMenu* objectMenu = nullptr;
 		LightMenu* lightMenu = nullptr;
 		TrainMenu* trainMenu = nullptr;
+		ExperimentMenu* experimentMenu = nullptr;
 		OptionsMenu* optionsMenu = nullptr;
 		HelpMenu* helpMenu = nullptr;
 	};
