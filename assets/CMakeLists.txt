@@ -20,7 +20,7 @@ foreach (mat_src ${MATERIAL_SRCS})
 	set(output_path "${ASSETS_DIR}/material/${filename}.filamat")
 	add_custom_command(
 		OUTPUT ${output_path}
-		COMMAND matc -o ${output_path} ${input_path}
+		COMMAND matc -a opengl -p desktop -gd -o ${output_path} ${input_path}
 	)
 	list(APPEND RESOURCE_BINS ${output_path})
 endforeach()
@@ -30,7 +30,7 @@ set(MAP_SRCS
 	"environments/lightroom_14b.hdr"
 )
 
-set(CMGEN_ARGS --format=ktx --size=256 --extract-blur=0.1)
+set(CMGEN_ARGS --quiet --format=ktx --size=256 --extract-blur=0.1)
 
 foreach(env_src ${MAP_SRCS})
 	get_filename_component(filename "${env_src}" NAME_WE)
