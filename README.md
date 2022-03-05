@@ -67,6 +67,8 @@ nmake -f makefile.vc
 
 右键`CMakeLists.txt`，选择安装。
 
+将目录`third_party/OCCT/out/install/win64/vc14/bind`添加到环境变量。
+
 7. 编译fwlab项目。
 
 使用Visual Studio 2019打开项目根目录`fwlab`。
@@ -76,6 +78,26 @@ nmake -f makefile.vc
 工具栏设置启动项为`out/build/fwlab.exe`，点击`fwlab.exe`启动程序。
 
 右键`CMakeLists.txt`，选择安装，可以将所需文件安装到目录`out/install`。
+
+## 参考文档
+
+C/C++: https://www.cplusplus.com/reference/
+
+OpenGL: https://www.khronos.org/registry/OpenGL-Refpages/
+
+imgui: https://imgui-test.readthedocs.io/en/latest/
+
+SDL2: https://wiki.libsdl.org/
+
+filament: https://google.github.io/filament/
+
+bullet3: https://github.com/bulletphysics/bullet3/raw/master/docs/Bullet_User_Manual.pdf
+
+OCCT: https://documentation.help/Open-Cascade/occt__tutorial.html
+
+OCCT: https://dev.opencascade.org/doc/overview/html/index.html
+
+Tensorflow: https://tensorflow.google.cn/api_docs/cc
 
 ## 授权
 

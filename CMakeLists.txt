@@ -21,10 +21,11 @@ else()
 endif()
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-set(FILAMENT_DIR ${CMAKE_SOURCE_DIR}/third_party/filament)
-set(RELEASE_DIR ${FILAMENT_DIR}/out/build)
-set(INSTALL_DIR ${FILAMENT_DIR}/out/install)
-set(RAPID_JSON_DIR ${CMAKE_SOURCE_DIR}/third_party/rapidjson)
+set(FILAMENT_DIR "${CMAKE_SOURCE_DIR}/third_party/filament")
+set(RELEASE_DIR "${FILAMENT_DIR}/out/build")
+set(INSTALL_DIR "${FILAMENT_DIR}/out/install")
+set(RAPID_JSON_DIR "${CMAKE_SOURCE_DIR}/third_party/rapidjson")
+set(OCCT_DIR "${CMAKE_SOURCE_DIR}/third_party/OCCT/out/install")
 
 if (WIN32)
 	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /utf-8")
@@ -102,6 +103,9 @@ include_directories(
 	# rapidjson
 	${RAPID_JSON_DIR}/include
 
+	# OCCT
+	${OCCT_DIR}/inc
+
 	# asserts
 	${CMAKE_BINARY_DIR}/assets
 )
@@ -165,6 +169,8 @@ if (WIN32)
 	link_directories(
 		# third_party
 		${RELEASE_DIR}/third_party/glslang/tnt/glslang/OSDependent/Windows
+		# OCCT
+		${OCCT_DIR}/win64/vc14/libd
 	)
 	link_libraries(
 		IMM32.lib
