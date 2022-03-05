@@ -299,3 +299,6 @@ link_libraries(
 )
 
 add_subdirectory(src)
+
+# install
+install(FILES "${CMAKE_BINARY_DIR}/fwlab.exe" DESTINATION "${CMAKE_INSTALL_PREFIX}")

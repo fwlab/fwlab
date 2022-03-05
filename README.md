@@ -75,6 +75,8 @@ nmake -f makefile.vc
 
 工具栏设置启动项为`out/build/fwlab.exe`，点击`fwlab.exe`启动程序。
 
+右键`CMakeLists.txt`，选择安装，可以将所需文件安装到目录`out/install`。
+
 ## 授权
 
 fwlab: MIT License

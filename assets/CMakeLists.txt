@@ -77,3 +77,19 @@ add_library(${MODULE_NAME} STATIC
 	"${ASSETS_DIR}/resources/resources.c"
 	"${font_target_path}"
 )
+
+# 安装
+set(INSTALL_FILES
+	"/fonts/"
+	"/ibl/"
+	"/images/"
+	"/models/"
+)
+
+foreach(file ${INSTALL_FILES})
+	if ("${file}" MATCHES "/$")
+		install(DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}${file}" DESTINATION "${CMAKE_INSTALL_PREFIX}/assets${file}")
+	else()
+		install(FILES "${CMAKE_CURRENT_BINARY_DIR}${file}" DESTINATION "${CMAKE_INSTALL_PREFIX}/assets${file}")
+	endif()
+endforeach()
