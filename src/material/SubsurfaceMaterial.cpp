@@ -1,10 +1,10 @@
-#include "resources/gl_materials.h"
+#include <resources/resources.h>
 #include "../utils/Utils.h"
 #include "SubsurfaceMaterial.h"
 
 namespace fwlab::material
 {
-	SubsurfaceMaterial::SubsurfaceMaterial() : Material(GL_MATERIALS_SUBSURFACE_DATA, GL_MATERIALS_SUBSURFACE_SIZE)
+	SubsurfaceMaterial::SubsurfaceMaterial() : Material(RESOURCES_SUBSURFACE_DATA, RESOURCES_SUBSURFACE_SIZE)
 	{
 		instance->setParameter("baseColor", filament::RgbaType::LINEAR, baseColor);
 		instance->setParameter("metallic", metallic);
@@ -265,12 +265,12 @@ namespace fwlab::material
 		instance->setParameter("subsurfacePower", subsurfacePower);
 	}
 
-	texture::Texture *SubsurfaceMaterial::getMap() const
+	texture::Texture* SubsurfaceMaterial::getMap() const
 	{
 		return map;
 	}
 
-	void SubsurfaceMaterial::setMap(texture::Texture *texture)
+	void SubsurfaceMaterial::setMap(texture::Texture* texture)
 	{
 		if (map)
 		{

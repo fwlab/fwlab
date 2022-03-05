@@ -1,10 +1,10 @@
-#include <resources/gl_materials.h>
+#include <resources/resources.h>
 #include "UnlitMaterial.h"
 #include "../context/context.h"
 
 namespace fwlab::material
 {
-	UnlitMaterial::UnlitMaterial() : Material(GL_MATERIALS_UNLIT_DATA, GL_MATERIALS_UNLIT_SIZE)
+	UnlitMaterial::UnlitMaterial() : Material(RESOURCES_UNLIT_DATA, RESOURCES_UNLIT_SIZE)
 	{
 		instance->setParameter("baseColor", baseColor);
 		instance->setParameter("emissive", emissive);

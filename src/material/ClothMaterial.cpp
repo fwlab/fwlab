@@ -1,11 +1,11 @@
 #include <cmath>
-#include "resources/gl_materials.h"
+#include <resources/resources.h>
 #include "../utils/Utils.h"
 #include "ClothMaterial.h"
 
 namespace fwlab::material
 {
-	ClothMaterial::ClothMaterial() : Material(GL_MATERIALS_LIT_DATA, GL_MATERIALS_LIT_SIZE)
+	ClothMaterial::ClothMaterial() : Material(RESOURCES_CLOTH_DATA, RESOURCES_CLOTH_SIZE)
 	{
 		instance->setParameter("baseColor", filament::RgbaType::LINEAR, baseColor);
 		instance->setParameter("roughness", roughness);
@@ -231,12 +231,12 @@ namespace fwlab::material
 		instance->setParameter("thickness", thickness);
 	}
 
-	texture::Texture *ClothMaterial::getMap() const
+	texture::Texture* ClothMaterial::getMap() const
 	{
 		return map;
 	}
 
-	void ClothMaterial::setMap(texture::Texture *texture)
+	void ClothMaterial::setMap(texture::Texture* texture)
 	{
 		if (map)
 		{

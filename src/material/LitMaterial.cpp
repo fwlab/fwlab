@@ -1,10 +1,10 @@
-#include "resources/gl_materials.h"
+#include <resources/resources.h>
 #include "../utils/Utils.h"
 #include "LitMaterial.h"
 
 namespace fwlab::material
 {
-	LitMaterial::LitMaterial() : Material(GL_MATERIALS_LIT_DATA, GL_MATERIALS_LIT_SIZE)
+	LitMaterial::LitMaterial() : Material(RESOURCES_LIT_DATA, RESOURCES_LIT_SIZE)
 	{
 		instance->setParameter("baseColor", filament::RgbaType::LINEAR, baseColor);
 		instance->setParameter("metallic", metallic);
@@ -267,12 +267,12 @@ namespace fwlab::material
 		instance->setParameter("thickness", thickness);
 	}
 
-	texture::Texture *LitMaterial::getMap() const
+	texture::Texture* LitMaterial::getMap() const
 	{
 		return map;
 	}
 
-	void LitMaterial::setMap(texture::Texture *texture)
+	void LitMaterial::setMap(texture::Texture* texture)
 	{
 		if (map)
 		{

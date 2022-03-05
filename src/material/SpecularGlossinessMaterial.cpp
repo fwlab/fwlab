@@ -1,10 +1,10 @@
-#include "resources/gl_materials.h"
+#include <resources/resources.h>
 #include "../utils/Utils.h"
 #include "SpecularGlossinessMaterial.h"
 
 namespace fwlab::material
 {
-	SpecularGlossinessMaterial::SpecularGlossinessMaterial() : Material(GL_MATERIALS_SPECULAR_GLOSSINESS_DATA, GL_MATERIALS_SPECULAR_GLOSSINESS_SIZE)
+	SpecularGlossinessMaterial::SpecularGlossinessMaterial() : Material(RESOURCES_SPECULAR_GLOSSINESS_DATA, RESOURCES_SPECULAR_GLOSSINESS_SIZE)
 	{
 		instance->setParameter("baseColor", filament::RgbaType::LINEAR, baseColor);
 		instance->setParameter("specularColor", specularColor);
@@ -239,12 +239,12 @@ namespace fwlab::material
 		instance->setParameter("thickness", thickness);
 	}
 
-	texture::Texture *SpecularGlossinessMaterial::getMap() const
+	texture::Texture* SpecularGlossinessMaterial::getMap() const
 	{
 		return map;
 	}
 
-	void SpecularGlossinessMaterial::setMap(texture::Texture *texture)
+	void SpecularGlossinessMaterial::setMap(texture::Texture* texture)
 	{
 		if (map)
 		{

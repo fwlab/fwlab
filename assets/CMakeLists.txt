@@ -3,19 +3,16 @@ set(MODULE_NAME fwlab_assets)
 set(ASSETS_DIR "${CMAKE_CURRENT_BINARY_DIR}")
 set(RESOURCE_BINS)
 
-# 资源文件
+# 处理材质
 set(MATERIAL_SRCS
 	"materials/uiBlit.mat"
-	"materials/defaultMaterial.mat"
-	"materials/aiDefaultMat.mat"
-	"materials/textured.mat"
-	"materials/bakedColor.mat"
-)
-set(MAP_SRCS
-	"environments/lightroom_14b.hdr"
+	"materials/lit.mat"
+	"materials/subsurface.mat"
+	"materials/cloth.mat"
+	"materials/unlit.mat"
+	"materials/specular_glossiness.mat"
 )
 
-# 处理材质
 foreach (mat_src ${MATERIAL_SRCS})
 	get_filename_component(filename "${mat_src}" NAME_WE)
 	file(MAKE_DIRECTORY "${ASSETS_DIR}/material")
@@ -29,6 +26,10 @@ foreach (mat_src ${MATERIAL_SRCS})
 endforeach()
 
 # 处理环境贴图
+set(MAP_SRCS
+	"environments/lightroom_14b.hdr"
+)
+
 set(CMGEN_ARGS --format=ktx --size=256 --extract-blur=0.1)
 
 foreach(env_src ${MAP_SRCS})
@@ -45,54 +46,6 @@ foreach(env_src ${MAP_SRCS})
 
 	list(APPEND RESOURCE_BINS ${target_skybox} ${target_envmap})
 endforeach()
-
-# 处理OBJ模型
-set(OBJ_PATH
-	"models/monkey/monkey.obj"
-)
-get_filename_component(meshname "${OBJ_PATH}" NAME_WE)
-set(source_mesh "${CMAKE_CURRENT_SOURCE_DIR}/${OBJ_PATH}")
-set(target_mesh "${ASSETS_DIR}/models/${meshname}/${meshname}.filamesh")
-    add_custom_command(
-		OUTPUT ${target_mesh}
-        COMMAND filamesh --compress ${source_mesh} ${target_mesh}
-)
-list(APPEND RESOURCE_BINS ${target_mesh})
-
-# 处理模型贴图
-set(TEXTURE_SRCS
-	"models/monkey/albedo.png"
-	"models/monkey/roughness.png"
-	"models/monkey/metallic.png"
-	"models/monkey/ao.png"
-)
-
-set (COMPRESSION "--compression=s3tc_rgba_dxt5")
-foreach(tex_src ${TEXTURE_SRCS})
-	get_filename_component(filename "${tex_src}" NAME_WE)
-	set(EXTRA_ARGS)
-	if (NOT ${filaname} STREQUAL "albedo")
-		set(EXTRA_ARGS ";--grayscale")
-	endif()
-	set(source_path "${CMAKE_CURRENT_SOURCE_DIR}/${tex_src}")
-    set(target_path "${ASSETS_DIR}/models/${meshname}/${filename}.ktx")
-    add_custom_command(
-        OUTPUT ${target_path}
-        COMMAND mipgen --quiet ${source_path} ${target_path} ${COMPRESSION}${EXTRA_ARGS}
-	)
-	list(APPEND RESOURCE_BINS ${target_path})
-endforeach()
-
-# 复制法线贴图
-set(NORMAL_SRC "models/monkey/normal.png")
-get_filename_component(filename "${NORMAL_SRC}" NAME_WE)
-set(source_path "${CMAKE_CURRENT_SOURCE_DIR}/${NORMAL_SRC}")
-set(target_path "${ASSETS_DIR}/models/${meshname}/${filename}.png")
-add_custom_command(
-	OUTPUT ${target_path}
-	COMMAND ${CMAKE_COMMAND} -E copy ${source_path} ${target_path}
-)
-list(APPEND RESOURCE_BINS ${target_path})
 
 # 复制字体文件
 file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/fonts/Roboto-Medium.ttf" DESTINATION "${ASSETS_DIR}/fonts")

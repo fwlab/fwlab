@@ -1,26 +1,26 @@
 #include <algorithm>
-#include "resources/gl_materials.h"
+#include <resources/resources.h>
 #include "Material.h"
 #include "../context/context.h"
 
 namespace fwlab::material
 {
-	static std::unordered_map<const void *, filament::Material *> materials;
-	static std::vector<filament::MaterialInstance *> instances;
+	static std::unordered_map<const void*, filament::Material*> materials;
+	static std::vector<filament::MaterialInstance*> instances;
 
-	Material::Material() : Material(GL_MATERIALS_UNLIT_DATA, GL_MATERIALS_UNLIT_SIZE)
+	Material::Material() : Material(RESOURCES_UNLIT_DATA, RESOURCES_UNLIT_SIZE)
 	{
-		setParameter<filament::math::float4>("baseColor", {1, 1, 1, 1});
+		setParameter<filament::math::float4>("baseColor", { 1, 1, 1, 1 });
 	}
 
-	Material::Material(const void *payload, size_t size)
+	Material::Material(const void* payload, size_t size)
 	{
 		create(payload, size);
 	}
 
-	Material::Material(filament::MaterialInstance *instance)
+	Material::Material(filament::MaterialInstance* instance)
 	{
-		this->material = const_cast<filament::Material *>(instance->getMaterial());
+		this->material = const_cast<filament::Material*>(instance->getMaterial());
 		this->instance = instance;
 		instances.push_back(instance);
 	}
@@ -30,12 +30,12 @@ namespace fwlab::material
 		dispose();
 	}
 
-	filament::MaterialInstance *Material::getInstance() const
+	filament::MaterialInstance* Material::getInstance() const
 	{
 		return instance;
 	}
 
-	void Material::setInstance(filament::MaterialInstance *instance)
+	void Material::setInstance(filament::MaterialInstance* instance)
 	{
 		if (instance == this->instance)
 		{
@@ -77,7 +77,7 @@ namespace fwlab::material
 		}
 	}
 
-	void Material::create(const void *payload, size_t size)
+	void Material::create(const void* payload, size_t size)
 	{
 		if (materials.find(payload) != materials.end())
 		{
@@ -86,9 +86,9 @@ namespace fwlab::material
 		else
 		{
 			material = filament::Material::Builder()
-						   .package(payload, size)
-						   .build(*app->getEngine());
-			materials.insert({payload, material});
+				.package(payload, size)
+				.build(*app->getEngine());
+			materials.insert({ payload, material });
 		}
 
 		instance = material->createInstance();
@@ -107,7 +107,7 @@ namespace fwlab::material
 		return material->getCullingMode();
 	}
 
-	filament::MaterialInstance const *Material::getDefaultInstance() const
+	filament::MaterialInstance const* Material::getDefaultInstance() const
 	{
 		return material->getDefaultInstance();
 	}
@@ -127,7 +127,7 @@ namespace fwlab::material
 		return material->getMaterialDomain();
 	}
 
-	char const *Material::getName() const
+	char const* Material::getName() const
 	{
 		return material->getName();
 	}
@@ -137,7 +137,7 @@ namespace fwlab::material
 		return material->getParameterCount();
 	}
 
-	size_t Material::getParameters(filament::Material::ParameterInfo *parameters, size_t count) const
+	size_t Material::getParameters(filament::Material::ParameterInfo* parameters, size_t count) const
 	{
 		return material->getParameters(parameters, count);
 	}
@@ -182,7 +182,7 @@ namespace fwlab::material
 		return material->getVertexDomain();
 	}
 
-	bool Material::hasParameter(const char *name) const
+	bool Material::hasParameter(const char* name) const
 	{
 		return material->hasParameter(name);
 	}
@@ -217,44 +217,44 @@ namespace fwlab::material
 		return material->isDoubleSided();
 	}
 
-	bool Material::isSampler(const char *name) const
+	bool Material::isSampler(const char* name) const
 	{
 		return material->isSampler(name);
 	}
 
 	template <typename T>
-	void Material::setDefaultParameter(const char *name, T value)
+	void Material::setDefaultParameter(const char* name, T value)
 	{
 		return material->setDefaultParameter(name, value);
 	}
 
-	template void Material::setDefaultParameter<float>(const char *name, float value);
-	template void Material::setDefaultParameter<int32_t>(const char *name, int32_t value);
-	template void Material::setDefaultParameter<uint32_t>(const char *name, uint32_t value);
-	template void Material::setDefaultParameter<filament::math::int2>(const char *name, filament::math::int2 value);
-	template void Material::setDefaultParameter<filament::math::int3>(const char *name, filament::math::int3 value);
-	template void Material::setDefaultParameter<filament::math::int4>(const char *name, filament::math::int4 value);
-	template void Material::setDefaultParameter<filament::math::uint2>(const char *name, filament::math::uint2 value);
-	template void Material::setDefaultParameter<filament::math::uint3>(const char *name, filament::math::uint3 value);
-	template void Material::setDefaultParameter<filament::math::uint4>(const char *name, filament::math::uint4 value);
-	template void Material::setDefaultParameter<filament::math::float2>(const char *name, filament::math::float2 value);
-	template void Material::setDefaultParameter<filament::math::float3>(const char *name, filament::math::float3 value);
-	template void Material::setDefaultParameter<filament::math::float4>(const char *name, filament::math::float4 value);
-	template void Material::setDefaultParameter<filament::math::mat3f>(const char *name, filament::math::mat3f value);
-	template void Material::setDefaultParameter<filament::math::mat4f>(const char *name, filament::math::mat4f value);
+	template void Material::setDefaultParameter<float>(const char* name, float value);
+	template void Material::setDefaultParameter<int32_t>(const char* name, int32_t value);
+	template void Material::setDefaultParameter<uint32_t>(const char* name, uint32_t value);
+	template void Material::setDefaultParameter<filament::math::int2>(const char* name, filament::math::int2 value);
+	template void Material::setDefaultParameter<filament::math::int3>(const char* name, filament::math::int3 value);
+	template void Material::setDefaultParameter<filament::math::int4>(const char* name, filament::math::int4 value);
+	template void Material::setDefaultParameter<filament::math::uint2>(const char* name, filament::math::uint2 value);
+	template void Material::setDefaultParameter<filament::math::uint3>(const char* name, filament::math::uint3 value);
+	template void Material::setDefaultParameter<filament::math::uint4>(const char* name, filament::math::uint4 value);
+	template void Material::setDefaultParameter<filament::math::float2>(const char* name, filament::math::float2 value);
+	template void Material::setDefaultParameter<filament::math::float3>(const char* name, filament::math::float3 value);
+	template void Material::setDefaultParameter<filament::math::float4>(const char* name, filament::math::float4 value);
+	template void Material::setDefaultParameter<filament::math::mat3f>(const char* name, filament::math::mat3f value);
+	template void Material::setDefaultParameter<filament::math::mat4f>(const char* name, filament::math::mat4f value);
 
-	void Material::setDefaultParameter(const char *name, filament::Texture const *texture,
-									   filament::TextureSampler const &sampler)
+	void Material::setDefaultParameter(const char* name, filament::Texture const* texture,
+		filament::TextureSampler const& sampler)
 	{
 		return material->setDefaultParameter(name, texture, sampler);
 	}
 
-	void Material::setDefaultParameter(const char *name, filament::RgbType type, filament::math::float3 color)
+	void Material::setDefaultParameter(const char* name, filament::RgbType type, filament::math::float3 color)
 	{
 		return material->setDefaultParameter(name, type, color);
 	}
 
-	void Material::setDefaultParameter(const char *name, filament::RgbaType type, filament::math::float4 color)
+	void Material::setDefaultParameter(const char* name, filament::RgbaType type, filament::math::float4 color)
 	{
 		return material->setDefaultParameter(name, type, color);
 	}
@@ -292,72 +292,72 @@ namespace fwlab::material
 	}
 
 	template <typename T>
-	void Material::setParameter(const char *name, T value)
+	void Material::setParameter(const char* name, T value)
 	{
 		return instance->setParameter(name, value);
 	}
 
-	template void Material::setParameter<float>(const char *name, float value);
-	template void Material::setParameter<int32_t>(const char *name, int32_t value);
-	template void Material::setParameter<uint32_t>(const char *name, uint32_t value);
-	template void Material::setParameter<bool>(const char *name, bool value);
-	template void Material::setParameter<filament::math::bool2>(const char *name, filament::math::bool2 value);
-	template void Material::setParameter<filament::math::bool3>(const char *name, filament::math::bool3 value);
-	template void Material::setParameter<filament::math::bool4>(const char *name, filament::math::bool4 value);
-	template void Material::setParameter<filament::math::int2>(const char *name, filament::math::int2 value);
-	template void Material::setParameter<filament::math::int3>(const char *name, filament::math::int3 value);
-	template void Material::setParameter<filament::math::int4>(const char *name, filament::math::int4 value);
-	template void Material::setParameter<filament::math::uint2>(const char *name, filament::math::uint2 value);
-	template void Material::setParameter<filament::math::uint3>(const char *name, filament::math::uint3 value);
-	template void Material::setParameter<filament::math::uint4>(const char *name, filament::math::uint4 value);
-	template void Material::setParameter<filament::math::float2>(const char *name, filament::math::float2 value);
-	template void Material::setParameter<filament::math::float3>(const char *name, filament::math::float3 value);
-	template void Material::setParameter<filament::math::float4>(const char *name, filament::math::float4 value);
-	template void Material::setParameter<filament::math::mat3f>(const char *name, filament::math::mat3f value);
-	template void Material::setParameter<filament::math::mat4f>(const char *name, filament::math::mat4f value);
+	template void Material::setParameter<float>(const char* name, float value);
+	template void Material::setParameter<int32_t>(const char* name, int32_t value);
+	template void Material::setParameter<uint32_t>(const char* name, uint32_t value);
+	template void Material::setParameter<bool>(const char* name, bool value);
+	template void Material::setParameter<filament::math::bool2>(const char* name, filament::math::bool2 value);
+	template void Material::setParameter<filament::math::bool3>(const char* name, filament::math::bool3 value);
+	template void Material::setParameter<filament::math::bool4>(const char* name, filament::math::bool4 value);
+	template void Material::setParameter<filament::math::int2>(const char* name, filament::math::int2 value);
+	template void Material::setParameter<filament::math::int3>(const char* name, filament::math::int3 value);
+	template void Material::setParameter<filament::math::int4>(const char* name, filament::math::int4 value);
+	template void Material::setParameter<filament::math::uint2>(const char* name, filament::math::uint2 value);
+	template void Material::setParameter<filament::math::uint3>(const char* name, filament::math::uint3 value);
+	template void Material::setParameter<filament::math::uint4>(const char* name, filament::math::uint4 value);
+	template void Material::setParameter<filament::math::float2>(const char* name, filament::math::float2 value);
+	template void Material::setParameter<filament::math::float3>(const char* name, filament::math::float3 value);
+	template void Material::setParameter<filament::math::float4>(const char* name, filament::math::float4 value);
+	template void Material::setParameter<filament::math::mat3f>(const char* name, filament::math::mat3f value);
+	template void Material::setParameter<filament::math::mat4f>(const char* name, filament::math::mat4f value);
 
 	template <typename T>
-	void Material::setParameter(const char *name, T *value, size_t count)
+	void Material::setParameter(const char* name, T* value, size_t count)
 	{
 		return instance->setParameter(name, value, count);
 	}
 
-	template void Material::setParameter<float>(const char *name, float *value, size_t count);
-	template void Material::setParameter<int32_t>(const char *name, int32_t *value, size_t count);
-	template void Material::setParameter<uint32_t>(const char *name, uint32_t *value, size_t count);
-	template void Material::setParameter<bool>(const char *name, bool *value, size_t count);
-	template void Material::setParameter<filament::math::bool2>(const char *name, filament::math::bool2 *value, size_t count);
-	template void Material::setParameter<filament::math::bool3>(const char *name, filament::math::bool3 *value, size_t count);
-	template void Material::setParameter<filament::math::bool4>(const char *name, filament::math::bool4 *value, size_t count);
-	template void Material::setParameter<filament::math::int2>(const char *name, filament::math::int2 *value, size_t count);
-	template void Material::setParameter<filament::math::int3>(const char *name, filament::math::int3 *value, size_t count);
-	template void Material::setParameter<filament::math::int4>(const char *name, filament::math::int4 *value, size_t count);
-	template void Material::setParameter<filament::math::uint2>(const char *name, filament::math::uint2 *value, size_t count);
-	template void Material::setParameter<filament::math::uint3>(const char *name, filament::math::uint3 *value, size_t count);
-	template void Material::setParameter<filament::math::uint4>(const char *name, filament::math::uint4 *value, size_t count);
-	template void Material::setParameter<filament::math::float2>(const char *name, filament::math::float2 *value, size_t count);
-	template void Material::setParameter<filament::math::float3>(const char *name, filament::math::float3 *value, size_t count);
-	template void Material::setParameter<filament::math::float4>(const char *name, filament::math::float4 *value, size_t count);
-	template void Material::setParameter<filament::math::mat4f>(const char *name, filament::math::mat4f *value, size_t count);
+	template void Material::setParameter<float>(const char* name, float* value, size_t count);
+	template void Material::setParameter<int32_t>(const char* name, int32_t* value, size_t count);
+	template void Material::setParameter<uint32_t>(const char* name, uint32_t* value, size_t count);
+	template void Material::setParameter<bool>(const char* name, bool* value, size_t count);
+	template void Material::setParameter<filament::math::bool2>(const char* name, filament::math::bool2* value, size_t count);
+	template void Material::setParameter<filament::math::bool3>(const char* name, filament::math::bool3* value, size_t count);
+	template void Material::setParameter<filament::math::bool4>(const char* name, filament::math::bool4* value, size_t count);
+	template void Material::setParameter<filament::math::int2>(const char* name, filament::math::int2* value, size_t count);
+	template void Material::setParameter<filament::math::int3>(const char* name, filament::math::int3* value, size_t count);
+	template void Material::setParameter<filament::math::int4>(const char* name, filament::math::int4* value, size_t count);
+	template void Material::setParameter<filament::math::uint2>(const char* name, filament::math::uint2* value, size_t count);
+	template void Material::setParameter<filament::math::uint3>(const char* name, filament::math::uint3* value, size_t count);
+	template void Material::setParameter<filament::math::uint4>(const char* name, filament::math::uint4* value, size_t count);
+	template void Material::setParameter<filament::math::float2>(const char* name, filament::math::float2* value, size_t count);
+	template void Material::setParameter<filament::math::float3>(const char* name, filament::math::float3* value, size_t count);
+	template void Material::setParameter<filament::math::float4>(const char* name, filament::math::float4* value, size_t count);
+	template void Material::setParameter<filament::math::mat4f>(const char* name, filament::math::mat4f* value, size_t count);
 
 	template <>
-	void Material::setParameter<filament::math::mat3f>(const char *name, filament::math::mat3f *value, size_t count)
+	void Material::setParameter<filament::math::mat3f>(const char* name, filament::math::mat3f* value, size_t count)
 	{
 		return instance->setParameter(name, value, count);
 	}
 
-	void Material::setParameter(const char *name, filament::Texture const *texture,
-								filament::TextureSampler const &sampler)
+	void Material::setParameter(const char* name, filament::Texture const* texture,
+		filament::TextureSampler const& sampler)
 	{
 		return instance->setParameter(name, texture, sampler);
 	}
 
-	void Material::setParameter(const char *name, filament::RgbType type, filament::math::float3 color)
+	void Material::setParameter(const char* name, filament::RgbType type, filament::math::float3 color)
 	{
 		return instance->setParameter(name, type, color);
 	}
 
-	void Material::setParameter(const char *name, filament::RgbaType type, filament::math::float4 color)
+	void Material::setParameter(const char* name, filament::RgbaType type, filament::math::float4 color)
 	{
 		return instance->setParameter(name, type, color);
 	}
