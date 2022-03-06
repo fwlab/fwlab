@@ -1,5 +1,6 @@
 #ifndef FWLAB_APPLICATION_H
 #define FWLAB_APPLICATION_H
+#include <functional>
 #include <string>
 #include <SDL.h>
 #include <filament/Camera.h>
@@ -12,7 +13,6 @@
 #include <utils/Entity.h>
 #include "utils/Clock.h"
 #include "EventDispatcher.h"
-#include "ui/UIHelper.h"
 #include "Editor.h"
 #include "controller/OrbitController.h"
 #include "utils/Logger.h"
@@ -27,15 +27,17 @@ namespace fwlab
 		virtual ~Application();
 		void start();
 		void stop();
-		void info(std::string content);
-		void warn(std::string content);
-		void error(std::string content);
+		void info(std::string content, std::string title = "消息");
+		void success(std::string content, std::string title = "成功");
+		void warn(std::string content, std::string title = "警告");
+		void error(std::string content, std::string title = "错误");
+		void confirm(std::string content, std::function<void(bool)> callback, std::string title = "询问");
+		void prompt(std::string content, std::function<void(std::string)> callback, std::string value = "", std::string title = "请输入");
 
 		bool getIsRunning() const;
 		utils::Clock* getClock() const;
 		event::Time* getTime() const;
 		EventDispatcher* getEventDispatcher() const;
-		ui::UIHelper* getUIHelper() const;
 
 		SDL_Window* getSDLWindow() const;
 
@@ -63,7 +65,6 @@ namespace fwlab
 		utils::Clock* clock = nullptr;
 		event::Time* time = nullptr;
 		EventDispatcher* event = nullptr;
-		ui::UIHelper* ui = nullptr;
 		Editor* editor = nullptr;
 		utils::Logger* logger = nullptr;
 

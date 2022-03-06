@@ -1,3 +1,4 @@
+#include <fstream>
 #ifdef WIN32
 #include <Windows.h>
 #endif
@@ -14,8 +15,17 @@ int WINAPI WinMain(
 int main()
 #endif
 {
-	fwlab::Application app;
-	app.start();
+	try
+	{
+		fwlab::Application app;
+		app.start();
+	}
+	catch (std::exception ex)
+	{
+		std::ofstream out("error.txt");
+		out << ex.what() << std::endl;
+		out.close();
+	}
 
 	return 0;
 }

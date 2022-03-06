@@ -78,10 +78,7 @@ namespace fwlab
 
 		event->dispatchEvent(event::APP_STARTED);
 
-		ui = new ui::UIHelper();
 		editor = new Editor();
-		ui->setCallback([&]()
-			{ editor->render(); });
 
 		while (isRunning)
 		{
@@ -120,19 +117,52 @@ namespace fwlab
 		isRunning = false;
 	}
 
-	void Application::info(std::string content)
+	void Application::info(std::string content, std::string title)
 	{
-		logger->info(content);
+		if (editor)
+		{
+			editor->info(content, title);
+		}
 	}
 
-	void Application::warn(std::string content)
+	void Application::success(std::string content, std::string title)
 	{
-		logger->warn(content);
+		if (editor)
+		{
+			editor->success(content, title);
+		}
 	}
 
-	void Application::error(std::string content)
+	void Application::warn(std::string content, std::string title)
 	{
-		logger->error(content);
+		if (editor)
+		{
+			editor->warn(content, title);
+		}
+	}
+
+	void Application::error(std::string content, std::string title)
+	{
+		if (editor)
+		{
+			editor->error(content, title);
+		}
+	}
+
+	void Application::confirm(std::string content, std::function<void(bool)> callback, std::string title)
+	{
+		if (editor)
+		{
+			editor->confirm(content, callback, title);
+		}
+	}
+
+	void Application::prompt(std::string content, std::function<void(std::string)> callback, std::string value, std::string title)
+	{
+		if (editor)
+		{
+			editor->prompt(content, callback, value, title);
+		}
 	}
 
 	void Application::clean()
@@ -145,7 +175,6 @@ namespace fwlab
 		delete myScene;
 
 		delete editor;
-		delete ui;
 		delete controller;
 		delete viewport;
 
@@ -183,11 +212,6 @@ namespace fwlab
 	EventDispatcher* Application::getEventDispatcher() const
 	{
 		return event;
-	}
-
-	ui::UIHelper* Application::getUIHelper() const
-	{
-		return ui;
 	}
 
 	SDL_Window* Application::getSDLWindow() const
