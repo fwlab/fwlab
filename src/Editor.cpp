@@ -31,11 +31,34 @@ namespace fwlab
 		menubar->render();
 		sidebar->render();
 		framerate->render();
+
+		for (auto& message : messages)
+		{
+			message->render();
+		}
+		for (auto& confirm : confirms)
+		{
+			confirm->render();
+		}
+		for (auto& prompt : prompts)
+		{
+			prompt->render();
+		}
 	}
 
 	void Editor::info(std::string content, std::string title)
 	{
-
+		auto message = new ui::window::Message(content, ui::window::Message::MessageType::INFO, title);
+		message->setCloseCallback([&](ui::window::Message* view) {
+			auto index = std::find_if(messages.begin(), messages.end(), [&](auto& message) {
+				return message.get() == view;
+				});
+			if (index != messages.end())
+			{
+				messages.erase(index);
+			}
+			});
+		messages.push_back(std::make_unique<ui::window::Message>(*message));
 	}
 
 	void Editor::success(std::string content, std::string title)

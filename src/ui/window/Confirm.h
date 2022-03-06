@@ -1,5 +1,5 @@
-#ifndef FWLAB_UI_WINDOW_MESSAGE_H
-#define FWLAB_UI_WINDOW_MESSAGE_H
+#ifndef FWLAB_UI_WINDOW_CONFIRM_H
+#define FWLAB_UI_WINDOW_CONFIRM_H
 #include "../Component.h"
 
 namespace fwlab::ui::window
