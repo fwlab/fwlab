@@ -8,6 +8,12 @@ namespace fwlab::ui::menubar
 	{
 	public:
 		void render() override;
+		void handleNew();
+		void handleOpen();
+		void handleSave();
+		void handleSaveAs();
+		void handleClose();
+		void handleExit();
 	};
 }
 
