@@ -50,7 +50,9 @@ namespace fwlab
 		renderer = engine->createRenderer();
 		filament::Renderer::ClearOptions options =
 		{
-			.clearColor = {0, 0, 0, 1} };
+			.clearColor = {0, 0, 0, 1},
+			.clear = true
+		};
 		renderer->setClearOptions(options);
 
 		cameraEntity = ::utils::EntityManager::get().create();
