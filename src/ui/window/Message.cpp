@@ -22,11 +22,46 @@ namespace fwlab::ui::window
 		ImGui::SetNextWindowPos(ImVec2((size.x - width) / 2.0, (size.y - height) / 2.0));
 		ImGui::SetNextWindowSize(ImVec2(width, height));
 
+		if (type == MessageType::SUCCESS)
+		{
+			ImGui::PushStyleColor(ImGuiCol_TitleBg, ImVec4(103.0 / 255, 194.0 / 255, 58.0 / 255, 1));
+			ImGui::PushStyleColor(ImGuiCol_TitleBgActive, ImVec4(103.0 / 255, 194.0 / 255, 58.0 / 255, 1));
+		}
+		else if (type == MessageType::WARN)
+		{
+			ImGui::PushStyleColor(ImGuiCol_TitleBg, ImVec4(230.0 / 255, 162.0 / 255, 60.0 / 255, 1));
+			ImGui::PushStyleColor(ImGuiCol_TitleBgActive, ImVec4(230.0 / 255, 162.0 / 255, 60.0 / 255, 1));
+		}
+		else if (type == MessageType::ERROR)
+		{
+			ImGui::PushStyleColor(ImGuiCol_TitleBg, ImVec4(245.0 / 255, 108.0 / 255, 108.0 / 255, 1));
+			ImGui::PushStyleColor(ImGuiCol_TitleBgActive, ImVec4(245.0 / 255, 108.0 / 255, 108.0 / 255, 1));
+		}
+		else
+		{
+			ImGui::PushStyleColor(ImGuiCol_TitleBg, ImVec4(64.0 / 255, 158.0 / 255, 255.0 / 255, 1));
+			ImGui::PushStyleColor(ImGuiCol_TitleBgActive, ImVec4(64.0 / 255, 158.0 / 255, 255.0 / 255, 1));
+		}
+
 		if (ImGui::Begin(title.c_str(), &isOpen, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize))
 		{
-			ImGui::Text(content.c_str());
-			ImGui::End();
+			if (ImGui::BeginChild("Message Content", ImVec2(width, 48)), true)
+			{
+				ImGui::Text(content.c_str());
+			}
+			ImGui::EndChild();
+
+			ImGui::Spacing();
+			ImGui::SameLine(width - 120);
+			if (ImGui::Button("关闭", ImVec2(80, 32)))
+			{
+				isOpen = false;
+			}
 		}
+		ImGui::End();
+
+		ImGui::PopStyleColor();
+		ImGui::PopStyleColor();
 
 		if (!isOpen && callback)
 		{

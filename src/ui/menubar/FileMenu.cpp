@@ -45,7 +45,7 @@ namespace fwlab::ui::menubar
 
 	void FileMenu::handleNew()
 	{
-		app->info("这是一条消息", "标题");
+		app->error("这是一条消息", "标题");
 	}
 
 	void FileMenu::handleOpen()

@@ -8,9 +8,9 @@ endif()
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-set(CXX_STANDARD "-std=c++17")
+set(CXX_STANDARD "-std=c++20")
 if (WIN32)
-    set(CXX_STANDARD "/std:c++17")
+    set(CXX_STANDARD "/std:c++20")
 endif()
 
 if (MSVC)

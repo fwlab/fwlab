@@ -48,7 +48,27 @@ namespace fwlab
 
 	void Editor::info(std::string content, std::string title)
 	{
-		auto message = new ui::window::Message(content, ui::window::Message::MessageType::INFO, title);
+		showMessage(content, title, ui::window::Message::MessageType::INFO);
+	}
+
+	void Editor::success(std::string content, std::string title)
+	{
+		showMessage(content, title, ui::window::Message::MessageType::SUCCESS);
+	}
+
+	void Editor::warn(std::string content, std::string title)
+	{
+		showMessage(content, title, ui::window::Message::MessageType::WARN);
+	}
+
+	void Editor::error(std::string content, std::string title)
+	{
+		showMessage(content, title, ui::window::Message::MessageType::ERROR);
+	}
+
+	void Editor::showMessage(std::string content, std::string title, ui::window::Message::MessageType type)
+	{
+		auto message = new ui::window::Message(content, type, title);
 		message->setCloseCallback([&](ui::window::Message* view) {
 			auto index = std::find_if(messages.begin(), messages.end(), [&](auto& message) {
 				return message.get() == view;
@@ -59,21 +79,6 @@ namespace fwlab
 			}
 			});
 		messages.push_back(std::make_unique<ui::window::Message>(*message));
-	}
-
-	void Editor::success(std::string content, std::string title)
-	{
-
-	}
-
-	void Editor::warn(std::string content, std::string title)
-	{
-
-	}
-
-	void Editor::error(std::string content, std::string title)
-	{
-
 	}
 
 	void Editor::confirm(std::string content, std::function<void(bool)> callback, std::string title)

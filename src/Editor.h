@@ -29,6 +29,7 @@ namespace fwlab
 		void prompt(std::string content, std::function<void(std::string)> callback, std::string value = "", std::string title = "请输入");
 
 	private:
+		void showMessage(std::string content, std::string title, ui::window::Message::MessageType type);
 		ui::UIHelper* ui = nullptr;
 		std::vector<std::unique_ptr<ui::window::Message>> messages;
 		std::vector<std::unique_ptr<ui::window::Confirm>> confirms;
