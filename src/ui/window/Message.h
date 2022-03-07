@@ -25,8 +25,8 @@ namespace fwlab::ui::window
 		std::string content;
 		MessageType type;
 		std::string title;
-		float width = 400;
-		float height = 240;
+		float width = 320;
+		float height = 160;
 		std::function<void(Message* view)> callback = nullptr;
 		bool isOpen = true;
 	};

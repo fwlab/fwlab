@@ -19,7 +19,7 @@ namespace fwlab::ui::window
 	{
 		ImVec2 size = ImGui::GetIO().DisplaySize;
 
-		ImGui::SetNextWindowPos(ImVec2((size.x - width) / 2.0, (size.y - height) / 2.0));
+		ImGui::SetNextWindowPos(ImVec2((size.x - width) / 2.0, (size.y - height) / 2.0), ImGuiCond_Once);
 		ImGui::SetNextWindowSize(ImVec2(width, height));
 
 		if (type == MessageType::SUCCESS)
@@ -45,15 +45,15 @@ namespace fwlab::ui::window
 
 		if (ImGui::Begin(title.c_str(), &isOpen, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize))
 		{
-			if (ImGui::BeginChild("Message Content", ImVec2(width, 48)), true)
+			if (ImGui::BeginChild("Message Content", ImVec2(width, 80)), true)
 			{
 				ImGui::Text(content.c_str());
 			}
 			ImGui::EndChild();
 
 			ImGui::Spacing();
-			ImGui::SameLine(width - 120);
-			if (ImGui::Button("关闭", ImVec2(80, 32)))
+			ImGui::SameLine(width - 80);
+			if (ImGui::Button("关闭", ImVec2(64, 28)))
 			{
 				isOpen = false;
 			}
