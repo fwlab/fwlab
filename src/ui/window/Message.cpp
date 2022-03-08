@@ -58,6 +58,7 @@ namespace fwlab::ui::window
 				isOpen = false;
 			}
 		}
+
 		ImGui::End();
 
 		ImGui::PopStyleColor();

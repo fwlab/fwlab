@@ -1,3 +1,4 @@
+#include <algorithm>
 #include <imgui.h>
 #include "Editor.h"
 
@@ -83,7 +84,34 @@ namespace fwlab
 
 	void Editor::confirm(std::string content, std::function<void(bool)> callback, std::string title)
 	{
-
+		auto confirm = new ui::window::Confirm(content, title);
+		confirm->setOKCallback([&](ui::window::Confirm* view) {
+			auto index = std::find_if(confirms.begin(), confirms.end(), [&](auto& confirm) {
+				return confirm.get() == view;
+				});
+			if (index != confirms.end())
+			{
+				confirms.erase(index);
+			}
+			if (callback)
+			{
+				callback(true);
+			}
+			});
+		confirm->setCancelCallback([&](ui::window::Confirm* view) {
+			auto index = std::find_if(confirms.begin(), confirms.end(), [&](auto& confirm) {
+				return confirm.get() == view;
+				});
+			if (index != confirms.end())
+			{
+				confirms.erase(index);
+			}
+			if (callback)
+			{
+				callback(false);
+			}
+			});
+		confirms.push_back(std::make_unique<ui::window::Confirm>(*confirm));
 	}
 
 	void Editor::prompt(std::string content, std::function<void(std::string)> callback, std::string value, std::string title)
