@@ -11,7 +11,7 @@ namespace fwlab::core
 	{
 		auto engine = app->getEngine();
 
-		auto &manager = engine->getTransformManager();
+		auto& manager = engine->getTransformManager();
 		manager.setAccurateTranslationsEnabled(true);
 	}
 
@@ -81,7 +81,7 @@ namespace fwlab::core
 	{
 		auto engine = app->getEngine();
 
-		auto &manager = engine->getTransformManager();
+		auto& manager = engine->getTransformManager();
 		return manager.getTransformAccurate(manager.getInstance(entity));
 	}
 
@@ -90,7 +90,7 @@ namespace fwlab::core
 		auto engine = app->getEngine();
 
 		this->matrix = matrix;
-		auto &manager = engine->getTransformManager();
+		auto& manager = engine->getTransformManager();
 		manager.setTransform(manager.getInstance(entity), matrix);
 	}
 
@@ -98,7 +98,7 @@ namespace fwlab::core
 	{
 		auto engine = app->getEngine();
 
-		filament::TransformManager &manager = engine->getTransformManager();
+		filament::TransformManager& manager = engine->getTransformManager();
 		return manager.getWorldTransformAccurate(manager.getInstance(entity));
 	}
 
@@ -107,65 +107,74 @@ namespace fwlab::core
 		auto engine = app->getEngine();
 
 		matrix = math::compose(position, rotation, scale);
-		auto &manager = engine->getTransformManager();
+		auto& manager = engine->getTransformManager();
 		manager.setTransform(manager.getInstance(entity), matrix);
 	}
 
-	// Transform Manager
-
-	Object3D *Object3D::getParent() const
+	bool Object3D::add(Object3D* child)
 	{
-		return parent;
-	}
-
-	void Object3D::setParent(Object3D *parent)
-	{
-		auto engine = app->getEngine();
-
-		assert(parent != this);
-		this->parent = parent;
-
-		auto &manager = engine->getTransformManager();
-		manager.setParent(manager.getInstance(entity), manager.getInstance(parent->entity));
-	}
-
-	std::vector<Object3D *> Object3D::getChildren() const
-	{
-		return children;
-	}
-
-	bool Object3D::hasChild(Object3D *child) const
-	{
-		return std::find(children.begin(), children.end(), child) != children.end();
-	}
-
-	void Object3D::addChild(Object3D *child)
-	{
-		if (hasChild(child))
+		if (has(child))
 		{
-			return;
+			return false;
 		}
 		auto engine = app->getEngine();
 
 		children.push_back(child);
 
-		auto &manager = engine->getTransformManager();
+		auto& manager = engine->getTransformManager();
 		manager.setParent(manager.getInstance(child->entity), manager.getInstance(entity));
+
+		return true;
 	}
 
-	void Object3D::removeChild(Object3D *child)
+	bool Object3D::remove(Object3D* child)
 	{
 		auto iter = std::find(children.begin(), children.end(), child);
 		if (iter == children.end())
 		{
-			return;
+			return false;
 		}
 		children.erase(iter);
 
 		auto engine = app->getEngine();
+		child->parent = nullptr;
 
-		auto &manager = engine->getTransformManager();
+		auto& manager = engine->getTransformManager();
 		manager.setParent(manager.getInstance(child->entity), manager.getInstance(Object3D::defaultParent));
+
+		return true;
+	}
+
+	bool Object3D::has(Object3D* child) const
+	{
+		return std::find(children.begin(), children.end(), child) != children.end();
+	}
+
+	std::vector<Object3D*> Object3D::getChildren() const
+	{
+		return children;
+	}
+
+	Object3D* Object3D::getParent() const
+	{
+		return parent;
+	}
+
+	void Object3D::setParent(Object3D* parent)
+	{
+		if (this->parent)
+		{
+			this->parent->remove(this);
+		}
+
+		auto engine = app->getEngine();
+
+		assert(parent != this);
+
+		this->parent = parent;
+
+		auto& manager = engine->getTransformManager();
+		manager.setParent(manager.getInstance(entity), manager.getInstance(parent->entity));
 	}
 
 	// Entity Manager
@@ -173,7 +182,7 @@ namespace fwlab::core
 	{
 		auto engine = app->getEngine();
 
-		auto &manager = engine->getEntityManager();
+		auto& manager = engine->getEntityManager();
 		return manager.getGenerationForIndex(index);
 	}
 
@@ -181,23 +190,23 @@ namespace fwlab::core
 	{
 		auto engine = app->getEngine();
 
-		auto &manager = engine->getEntityManager();
+		auto& manager = engine->getEntityManager();
 		return manager.isAlive(entity);
 	}
 
-	void Object3D::registerListener(::utils::EntityManager::Listener *l)
+	void Object3D::registerListener(::utils::EntityManager::Listener* l)
 	{
 		auto engine = app->getEngine();
 
-		auto &manager = engine->getEntityManager();
+		auto& manager = engine->getEntityManager();
 		manager.registerListener(l);
 	}
 
-	void Object3D::unregisterListener(::utils::EntityManager::Listener *l)
+	void Object3D::unregisterListener(::utils::EntityManager::Listener* l)
 	{
 		auto engine = app->getEngine();
 
-		auto &manager = engine->getEntityManager();
+		auto& manager = engine->getEntityManager();
 		manager.unregisterListener(l);
 	}
 }

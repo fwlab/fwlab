@@ -6,6 +6,7 @@ include_directories(
 )
 
 add_library(${MODULE_NAME} STATIC
+	"SceneGraph.cpp"
 	"Scene.cpp"
 )
 
