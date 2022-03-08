@@ -87,7 +87,7 @@ namespace fwlab
 		confirmCallback = callback;
 
 		auto confirm = new ui::window::Confirm(content, title);
-		confirm->setOKCallback([&](ui::window::Confirm* view) {
+		confirm->setCallback([&](bool isOK, ui::window::Confirm* view) {
 			auto index = std::find_if(confirms.begin(), confirms.end(), [&](auto& confirm) {
 				return confirm.get() == view;
 				});
@@ -95,22 +95,8 @@ namespace fwlab
 			{
 				if (confirmCallback)
 				{
-					confirmCallback(true);
-					confirmCallback = nullptr;
-				}
-				confirms.erase(index);
-			}
-			});
-		confirm->setCancelCallback([&](ui::window::Confirm* view) {
-			auto index = std::find_if(confirms.begin(), confirms.end(), [&](auto& confirm) {
-				return confirm.get() == view;
-				});
-			if (index != confirms.end())
-			{
-				if (confirmCallback)
-				{
-					confirmCallback(false);
-					confirmCallback = nullptr;
+					confirmCallback(isOK);
+
 				}
 				confirms.erase(index);
 			}
@@ -118,8 +104,24 @@ namespace fwlab
 		confirms.push_back(std::make_unique<ui::window::Confirm>(*confirm));
 	}
 
-	void Editor::prompt(std::string content, std::function<void(std::string)> callback, std::string value, std::string title)
+	void Editor::prompt(std::string name, std::function<void(std::string)> callback, std::string value, std::string title)
 	{
+		promptCallback = callback;
 
+		auto prompt = new ui::window::Prompt(name, value, title);
+		prompt->setCallback([&](std::string value, ui::window::Prompt* view) {
+			auto index = std::find_if(prompts.begin(), prompts.end(), [&](auto& prompt) {
+				return prompt.get() == view;
+				});
+			if (index != prompts.end())
+			{
+				if (promptCallback)
+				{
+					promptCallback(value);
+				}
+				prompts.erase(index);
+			}
+			});
+		prompts.push_back(std::make_unique<ui::window::Prompt>(*prompt));
 	}
 }

@@ -12,16 +12,14 @@ namespace fwlab::ui::window
 		Confirm(std::string content, std::string title = "Ñ¯ÎÊ");
 		virtual ~Confirm();
 		void render() override;
-		void setOKCallback(std::function<void(Confirm* view)> callback);
-		void setCancelCallback(std::function<void(Confirm* view)> callback);
+		void setCallback(std::function<void(bool, Confirm* view)> callback);
 
 	private:
 		std::string content;
 		std::string title;
 		float width = 320;
 		float height = 160;
-		std::function<void(Confirm* view)> okCallback = nullptr;
-		std::function<void(Confirm* view)> cancelCallback = nullptr;
+		std::function<void(bool, Confirm* view)> callback = nullptr;
 		bool isOpen = true;
 		bool isOK = false;
 	};

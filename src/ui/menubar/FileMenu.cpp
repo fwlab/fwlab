@@ -45,17 +45,9 @@ namespace fwlab::ui::menubar
 
 	void FileMenu::handleNew()
 	{
-		// app->error("这是一条消息", "标题");
-		app->confirm("吃了没？", [&](bool ok) {
-			if (ok)
-			{
-				app->success("吃了");
-			}
-			else
-			{
-				app->warn("没吃");
-			}
-			}, "是否吃饭");
+		app->prompt("姓名", [&](std::string name) {
+			app->info(std::string("你叫") + name);
+			}, "小明");
 	}
 
 	void FileMenu::handleOpen()

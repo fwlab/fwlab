@@ -33,7 +33,7 @@ namespace fwlab::ui::window
 
 			ImGui::Spacing();
 			ImGui::SameLine(width - 152);
-			if (ImGui::Button("确定", ImVec2(64, 28)))
+			if (ImGui::Button("确认", ImVec2(64, 28)))
 			{
 				isOpen = false;
 				isOK = true;
@@ -47,26 +47,14 @@ namespace fwlab::ui::window
 
 		ImGui::End();
 
-		if (!isOpen)
+		if (!isOpen && callback)
 		{
-			if (isOK && okCallback)
-			{
-				okCallback(this);
-			}
-			if (!isOK && cancelCallback)
-			{
-				cancelCallback(this);
-			}
+			callback(isOK, this);
 		}
 	}
 
-	void Confirm::setOKCallback(std::function<void(Confirm* view)> callback)
+	void Confirm::setCallback(std::function<void(bool, Confirm* view)> callback)
 	{
-		this->okCallback = callback;
-	}
-
-	void Confirm::setCancelCallback(std::function<void(Confirm* view)> callback)
-	{
-		this->cancelCallback = callback;
+		this->callback = callback;
 	}
 }

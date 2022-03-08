@@ -159,11 +159,11 @@ namespace fwlab
 		}
 	}
 
-	void Application::prompt(std::string content, std::function<void(std::string)> callback, std::string value, std::string title)
+	void Application::prompt(std::string name, std::function<void(std::string)> callback, std::string value, std::string title)
 	{
 		if (editor)
 		{
-			editor->prompt(content, callback, value, title);
+			editor->prompt(name, callback, value, title);
 		}
 	}
 

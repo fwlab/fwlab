@@ -26,7 +26,7 @@ namespace fwlab
 		void warn(std::string content, std::string title = "警告");
 		void error(std::string content, std::string title = "错误");
 		void confirm(std::string content, std::function<void(bool)> callback, std::string title = "询问");
-		void prompt(std::string content, std::function<void(std::string)> callback, std::string value = "", std::string title = "请输入");
+		void prompt(std::string name, std::function<void(std::string)> callback, std::string value = "", std::string title = "请输入");
 
 	private:
 		void showMessage(std::string content, std::string title, ui::window::Message::MessageType type);
@@ -35,6 +35,7 @@ namespace fwlab
 		std::vector<std::unique_ptr<ui::window::Confirm>> confirms;
 		std::function<void(bool)> confirmCallback = nullptr;
 		std::vector<std::unique_ptr<ui::window::Prompt>> prompts;
+		std::function<void(std::string)> promptCallback = nullptr;
 		ui::menubar::MenuBar* menubar;
 		ui::sidebar::SideBar* sidebar;
 		ui::framerate::Framerate* framerate;
