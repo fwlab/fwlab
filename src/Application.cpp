@@ -71,6 +71,8 @@ namespace fwlab
 		scene = engine->createScene();
 		view->setScene(scene);
 
+		graph = new scene::SceneGraph(scene);
+
 		myScene = new fwlab::scene::Scene();
 		myScene->create();
 
@@ -179,6 +181,7 @@ namespace fwlab
 		delete editor;
 		delete controller;
 		delete viewport;
+		delete graph;
 
 		engine->destroy(view);
 		engine->destroyCameraComponent(cameraEntity);
@@ -261,9 +264,9 @@ namespace fwlab
 		return viewport;
 	}
 
-	filament::Scene* Application::getScene() const
+	scene::SceneGraph* Application::getScene() const
 	{
-		return scene;
+		return graph;
 	}
 
 	controller::OrbitController* Application::getController() const

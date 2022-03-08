@@ -32,10 +32,11 @@ namespace fwlab::scene
 		material->setMap(texture);
 
 		plane = new object::Mesh(geometry, material);
+
 		plane->setReceiveShadows(true);
 		plane->setRotation({ 1, 0, 0 }, -M_PI / 2);
 
-		scene->addEntity(plane->getEntity());
+		scene->add(plane);
 
 		// gltf
 		gltfLoader = new loader::GltfLoader();

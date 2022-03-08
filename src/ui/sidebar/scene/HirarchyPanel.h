@@ -2,8 +2,8 @@
 #define FWLAB_UI_SIDEBAR_SCENE_HIRARCHY_PANEL_H
 #include <string>
 #include <vector>
-#include <filament/Scene.h>
 #include "../../Component.h"
+#include "../../../scene/SceneGraph.h"
 
 namespace fwlab::ui::sidebar::scene
 {
@@ -21,7 +21,7 @@ namespace fwlab::ui::sidebar::scene
 		void render() override;
 
 	private:
-		void createTree(filament::Scene* scene);
+		void createTree(fwlab::scene::SceneGraph* graph);
 		bool isInit = false;
 		TreeNode* tree = nullptr;
 	};

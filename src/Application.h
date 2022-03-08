@@ -16,6 +16,7 @@
 #include "Editor.h"
 #include "controller/OrbitController.h"
 #include "utils/Logger.h"
+#include "scene/SceneGraph.h"
 #include "scene/Scene.h"
 
 namespace fwlab
@@ -50,7 +51,7 @@ namespace fwlab
 		filament::Camera* getCamera() const;
 		filament::View* getView() const;
 		filament::Viewport* getViewport() const;
-		filament::Scene* getScene() const;
+		scene::SceneGraph* getScene() const;
 
 		controller::OrbitController* getController() const;
 
@@ -79,6 +80,7 @@ namespace fwlab
 		filament::View* view = nullptr;
 		filament::Viewport* viewport = nullptr;
 		filament::Scene* scene = nullptr;
+		scene::SceneGraph* graph = nullptr;
 
 		controller::OrbitController* controller = nullptr;
 

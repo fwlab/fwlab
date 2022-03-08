@@ -36,7 +36,7 @@ namespace fwlab::ui::sidebar::scene
 		}
 	}
 
-	void HirarchyPanel::createTree(filament::Scene* scene)
+	void HirarchyPanel::createTree(fwlab::scene::SceneGraph* graph)
 	{
 		this->isInit = true;
 
