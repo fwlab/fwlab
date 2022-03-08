@@ -84,6 +84,8 @@ namespace fwlab
 
 	void Editor::confirm(std::string content, std::function<void(bool)> callback, std::string title)
 	{
+		confirmCallback = callback;
+
 		auto confirm = new ui::window::Confirm(content, title);
 		confirm->setOKCallback([&](ui::window::Confirm* view) {
 			auto index = std::find_if(confirms.begin(), confirms.end(), [&](auto& confirm) {
@@ -91,11 +93,12 @@ namespace fwlab
 				});
 			if (index != confirms.end())
 			{
+				if (confirmCallback)
+				{
+					confirmCallback(true);
+					confirmCallback = nullptr;
+				}
 				confirms.erase(index);
-			}
-			if (callback)
-			{
-				callback(true);
 			}
 			});
 		confirm->setCancelCallback([&](ui::window::Confirm* view) {
@@ -104,11 +107,12 @@ namespace fwlab
 				});
 			if (index != confirms.end())
 			{
+				if (confirmCallback)
+				{
+					confirmCallback(false);
+					confirmCallback = nullptr;
+				}
 				confirms.erase(index);
-			}
-			if (callback)
-			{
-				callback(false);
 			}
 			});
 		confirms.push_back(std::make_unique<ui::window::Confirm>(*confirm));

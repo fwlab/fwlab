@@ -33,6 +33,7 @@ namespace fwlab
 		ui::UIHelper* ui = nullptr;
 		std::vector<std::unique_ptr<ui::window::Message>> messages;
 		std::vector<std::unique_ptr<ui::window::Confirm>> confirms;
+		std::function<void(bool)> confirmCallback = nullptr;
 		std::vector<std::unique_ptr<ui::window::Prompt>> prompts;
 		ui::menubar::MenuBar* menubar;
 		ui::sidebar::SideBar* sidebar;
