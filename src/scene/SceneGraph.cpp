@@ -1,4 +1,6 @@
+#include <filament/TransformManager.h>
 #include "SceneGraph.h"
+#include "../context/context.h"
 
 namespace fwlab::scene
 {
@@ -64,6 +66,29 @@ namespace fwlab::scene
 	light::AmbientLight* SceneGraph::getAmbientLight() const
 	{
 		return ambientLight;
+	}
+
+	bool SceneGraph::addFilamentAsset(gltfio::FilamentAsset* asset)
+	{
+		return addFilamentAssetNode(asset->getRoot());
+	}
+
+	bool SceneGraph::addFilamentAssetNode(::utils::Entity entity)
+	{
+		auto& manager = app->getEngine()->getTransformManager();
+		
+		auto obj = new core::Object3D();
+		obj->setEntity(entity);
+		add(obj);
+
+		auto begin = manager.getChildrenBegin(manager.getInstance(entity));
+		auto end = manager.getChildrenEnd(manager.getInstance(entity));
+		for (auto p = begin; p < end; p++)
+		{
+
+		}
+
+		return true;
 	}
 
 	filament::Scene* SceneGraph::getScene() const

@@ -4,6 +4,7 @@
 #include <filament/IndirectLight.h>
 #include <filament/Scene.h>
 #include <filament/Skybox.h>
+#include <gltfio/FilamentAsset.h>
 #include <utils/Entity.h>
 #include "../core/Object3D.h"
 #include "../light/Light.h"
@@ -21,6 +22,7 @@ namespace fwlab::scene
 		bool addAmbientLight(light::AmbientLight* light);
 		bool removeAmbientLight();
 		light::AmbientLight* getAmbientLight() const;
+		bool addFilamentAsset(gltfio::FilamentAsset* asset);
 		filament::Scene* getScene() const;
 		void setScene(filament::Scene* scene);
 
@@ -31,6 +33,7 @@ namespace fwlab::scene
 		void addEntities(const ::utils::Entity* entities, size_t count);
 
 	private:
+		bool addFilamentAssetNode(::utils::Entity entity);
 		filament::Scene* scene = nullptr;
 		light::AmbientLight* ambientLight = nullptr;
 	};
