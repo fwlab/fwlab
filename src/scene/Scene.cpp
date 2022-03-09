@@ -40,31 +40,23 @@ namespace fwlab::scene
 
 		// gltf
 		gltfLoader = new loader::GltfLoader();
-		asset = gltfLoader->load("assets/models/RobotDog/scene.gltf");
-		if (asset)
-		{
-			scene->addEntities(asset->getEntities(), asset->getEntityCount());
-		}
+		gltfLoader->load("assets/models/RobotDog/scene.gltf", [&](gltfio::FilamentAsset* result) {
+			asset = result;
+			animator = asset->getAnimator();
+			app->getScene()->addEntities(asset->getEntities(), asset->getEntityCount());
+			});
 	}
 
 	void Scene::cleanup()
 	{
 		delete plane;
 		delete textureLoader;
-
-		gltfLoader->destroyAsset(asset);
-		gltfLoader->destroy();
 		delete gltfLoader;
 	}
 
 	void Scene::animate()
 	{
 		auto engine = app->getEngine();
-
-		if (gltfLoader)
-		{
-			gltfLoader->update();
-		}
 
 		if (asset)
 		{
