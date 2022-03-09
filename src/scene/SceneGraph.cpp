@@ -83,7 +83,7 @@ namespace fwlab::scene
 
 		auto begin = manager.getChildrenBegin(manager.getInstance(entity));
 		auto end = manager.getChildrenEnd(manager.getInstance(entity));
-		for (auto p = begin; p < end; p++)
+		for (auto p = begin; p != end; p++)
 		{
 
 		}
