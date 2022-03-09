@@ -1,5 +1,6 @@
 #ifndef FWLAB_CORE_OBJECT3D_H
 #define FWLAB_CORE_OBJECT3D_H
+#include <string>
 #include <vector>
 #include <math/mat4.h>
 #include <math/quat.h>
@@ -34,6 +35,9 @@ namespace fwlab::core
 		Object3D* getParent() const;
 		void setParent(Object3D* parent);
 
+		std::string getName() const;
+		void setName(std::string name);
+
 		// Entity Manager
 		uint8_t getGenerationForIndex(size_t index) const;
 		bool isAlive() const;
@@ -42,14 +46,18 @@ namespace fwlab::core
 
 	protected:
 		void updateMatrix();
-		::utils::Entity entity;
 		filament::math::double3 position = { 0, 0, 0 };
 		filament::math::quat rotation = { 1, 0, 0, 0 };
 		filament::math::double3 scale = { 1, 1, 1 };
 		filament::math::mat4 matrix;
 
+		::utils::Entity entity;
 		Object3D* parent = nullptr;
 		std::vector<Object3D*> children;
+
+		std::string name;
+
+	private:
 		static ::utils::Entity defaultParent;
 	};
 }

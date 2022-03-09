@@ -177,6 +177,16 @@ namespace fwlab::core
 		manager.setParent(manager.getInstance(entity), manager.getInstance(parent->entity));
 	}
 
+	std::string Object3D::getName() const
+	{
+		return name;
+	}
+
+	void Object3D::setName(std::string name)
+	{
+		this->name = name;
+	}
+
 	// Entity Manager
 	uint8_t Object3D::getGenerationForIndex(size_t index) const
 	{

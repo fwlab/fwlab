@@ -1,5 +1,6 @@
 #ifndef FWLAB_LIGHT_AMBIENT_LIGHT_H
 #define FWLAB_LIGHT_AMBIENT_LIGHT_H
+#include <string>
 #include <filament/IndirectLight.h>
 #include <filament/Skybox.h>
 #include <utils/Path.h>
@@ -15,9 +16,12 @@ namespace fwlab::light
 		virtual ~AmbientLight();
 		filament::IndirectLight* getIndirectLight();
 		filament::Skybox* getSkybox();
+		std::string getName();
+		void setName(std::string name);
 
 	private:
 		IBL* ibl = nullptr;
+		std::string name;
 	};
 }
 

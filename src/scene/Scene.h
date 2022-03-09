@@ -16,8 +16,6 @@ namespace fwlab::scene
 		void animate();
 
 	private:
-		light::AmbientLight* amlight = nullptr;
-
 		loader::TextureLoader* textureLoader = nullptr;
 		object::Mesh* plane = nullptr;
 

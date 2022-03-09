@@ -7,7 +7,7 @@ namespace fwlab::light
 	{
 		auto engine = app->getEngine();
 
-		auto &manager = ::utils::EntityManager::get();
+		auto& manager = ::utils::EntityManager::get();
 		entity = manager.create();
 
 		filament::LightManager::Builder(type)
@@ -33,7 +33,7 @@ namespace fwlab::light
 	{
 		auto engine = app->getEngine();
 
-		auto &manager = engine->getLightManager();
+		auto& manager = engine->getLightManager();
 		manager.forEachComponent(func);
 	}
 
@@ -41,7 +41,7 @@ namespace fwlab::light
 	{
 		auto engine = app->getEngine();
 
-		auto &manager = engine->getLightManager();
+		auto& manager = engine->getLightManager();
 		return manager.getColor(manager.getInstance(entity));
 	}
 
@@ -49,7 +49,7 @@ namespace fwlab::light
 	{
 		auto engine = app->getEngine();
 
-		auto &manager = engine->getLightManager();
+		auto& manager = engine->getLightManager();
 		return manager.getComponentCount();
 	}
 
@@ -57,15 +57,15 @@ namespace fwlab::light
 	{
 		auto engine = app->getEngine();
 
-		auto &manager = engine->getLightManager();
+		auto& manager = engine->getLightManager();
 		return manager.getDirection(manager.getInstance(entity));
 	}
 
-	const ::utils::Entity *Light::getEntities() const
+	const ::utils::Entity* Light::getEntities() const
 	{
 		auto engine = app->getEngine();
 
-		auto &manager = engine->getLightManager();
+		auto& manager = engine->getLightManager();
 		return manager.getEntities();
 	}
 
@@ -73,7 +73,7 @@ namespace fwlab::light
 	{
 		auto engine = app->getEngine();
 
-		auto &manager = engine->getLightManager();
+		auto& manager = engine->getLightManager();
 		return manager.getFalloff(manager.getInstance(entity));
 	}
 
@@ -81,7 +81,7 @@ namespace fwlab::light
 	{
 		auto engine = app->getEngine();
 
-		auto &manager = engine->getLightManager();
+		auto& manager = engine->getLightManager();
 		return manager.getIntensity(manager.getInstance(entity));
 	}
 
@@ -89,7 +89,7 @@ namespace fwlab::light
 	{
 		auto engine = app->getEngine();
 
-		auto &manager = engine->getLightManager();
+		auto& manager = engine->getLightManager();
 		return manager.getLightChannel(manager.getInstance(entity), channel);
 	}
 
@@ -97,7 +97,7 @@ namespace fwlab::light
 	{
 		auto engine = app->getEngine();
 
-		auto &manager = engine->getLightManager();
+		auto& manager = engine->getLightManager();
 		return manager.getPosition(manager.getInstance(entity));
 	}
 
@@ -105,7 +105,7 @@ namespace fwlab::light
 	{
 		auto engine = app->getEngine();
 
-		auto &manager = engine->getLightManager();
+		auto& manager = engine->getLightManager();
 		return manager.getShadowOptions(manager.getInstance(entity));
 	}
 
@@ -113,7 +113,7 @@ namespace fwlab::light
 	{
 		auto engine = app->getEngine();
 
-		auto &manager = engine->getLightManager();
+		auto& manager = engine->getLightManager();
 		return manager.getType(manager.getInstance(entity));
 	}
 
@@ -121,7 +121,7 @@ namespace fwlab::light
 	{
 		auto engine = app->getEngine();
 
-		auto &manager = engine->getLightManager();
+		auto& manager = engine->getLightManager();
 		return manager.isDirectional(manager.getInstance(entity));
 	}
 
@@ -129,7 +129,7 @@ namespace fwlab::light
 	{
 		auto engine = app->getEngine();
 
-		auto &manager = engine->getLightManager();
+		auto& manager = engine->getLightManager();
 		return manager.isPointLight(manager.getInstance(entity));
 	}
 
@@ -137,7 +137,7 @@ namespace fwlab::light
 	{
 		auto engine = app->getEngine();
 
-		auto &manager = engine->getLightManager();
+		auto& manager = engine->getLightManager();
 		return manager.isShadowCaster(manager.getInstance(entity));
 	}
 
@@ -145,7 +145,7 @@ namespace fwlab::light
 	{
 		auto engine = app->getEngine();
 
-		auto &manager = engine->getLightManager();
+		auto& manager = engine->getLightManager();
 		return manager.isSpotLight(manager.getInstance(entity));
 	}
 
@@ -153,7 +153,7 @@ namespace fwlab::light
 	{
 		auto engine = app->getEngine();
 
-		auto &manager = engine->getLightManager();
+		auto& manager = engine->getLightManager();
 		return manager.setColor(manager.getInstance(entity), color);
 	}
 
@@ -161,7 +161,7 @@ namespace fwlab::light
 	{
 		auto engine = app->getEngine();
 
-		auto &manager = engine->getLightManager();
+		auto& manager = engine->getLightManager();
 		return manager.setDirection(manager.getInstance(entity), direction);
 	}
 
@@ -169,7 +169,7 @@ namespace fwlab::light
 	{
 		auto engine = app->getEngine();
 
-		auto &manager = engine->getLightManager();
+		auto& manager = engine->getLightManager();
 		return manager.setFalloff(manager.getInstance(entity), radius);
 	}
 
@@ -177,7 +177,7 @@ namespace fwlab::light
 	{
 		auto engine = app->getEngine();
 
-		auto &manager = engine->getLightManager();
+		auto& manager = engine->getLightManager();
 		return manager.setIntensity(manager.getInstance(entity), watts, efficiency);
 	}
 
@@ -185,7 +185,7 @@ namespace fwlab::light
 	{
 		auto engine = app->getEngine();
 
-		auto &manager = engine->getLightManager();
+		auto& manager = engine->getLightManager();
 		return manager.setIntensityCandela(manager.getInstance(entity), intensity);
 	}
 
@@ -193,7 +193,7 @@ namespace fwlab::light
 	{
 		auto engine = app->getEngine();
 
-		auto &manager = engine->getLightManager();
+		auto& manager = engine->getLightManager();
 		return manager.setLightChannel(manager.getInstance(entity), channel, enable);
 	}
 
@@ -201,7 +201,7 @@ namespace fwlab::light
 	{
 		auto engine = app->getEngine();
 
-		auto &manager = engine->getLightManager();
+		auto& manager = engine->getLightManager();
 		return manager.setPosition(manager.getInstance(entity), position);
 	}
 
@@ -209,15 +209,15 @@ namespace fwlab::light
 	{
 		auto engine = app->getEngine();
 
-		auto &manager = engine->getLightManager();
+		auto& manager = engine->getLightManager();
 		return manager.setShadowCaster(manager.getInstance(entity), castShadows);
 	}
 
-	void Light::setShadowOptions(filament::LightManager::ShadowOptions const &options)
+	void Light::setShadowOptions(filament::LightManager::ShadowOptions const& options)
 	{
 		auto engine = app->getEngine();
 
-		auto &manager = engine->getLightManager();
+		auto& manager = engine->getLightManager();
 		return manager.setShadowOptions(manager.getInstance(entity), options);
 	}
 }

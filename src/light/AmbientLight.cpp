@@ -9,6 +9,8 @@ namespace fwlab::light
 		auto engine = app->getEngine();
 		ibl = new IBL(*engine);
 
+		this->name = "环境光";
+
 		if (!iblPath.isDirectory()) {
 			if (!ibl->loadFromEquirect(iblPath)) {
 				app->error(std::string("Could not load the specified IBL: ") + iblPath.c_str());
@@ -44,5 +46,15 @@ namespace fwlab::light
 			return ibl->getSkybox();
 		}
 		return nullptr;
+	}
+
+	std::string AmbientLight::getName()
+	{
+		return name;
+	}
+
+	void AmbientLight::setName(std::string name)
+	{
+		this->name = name;
 	}
 }

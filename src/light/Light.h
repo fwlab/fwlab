@@ -27,7 +27,7 @@ namespace fwlab::light
 		const filament::math::float3 getColor() const;
 		size_t getComponentCount() const;
 		const filament::math::float3 getDirection() const;
-		const ::utils::Entity *getEntities() const;
+		const ::utils::Entity* getEntities() const;
 		float getFalloff() const;
 		float getIntensity() const;
 		bool getLightChannel(unsigned int channel) const;
@@ -46,7 +46,7 @@ namespace fwlab::light
 		void setLightChannel(unsigned int channel, bool enable);
 		void setPosition(const filament::math::float3 position);
 		void setShadowCaster(bool castShadows);
-		void setShadowOptions(filament::LightManager::ShadowOptions const &options);
+		void setShadowOptions(filament::LightManager::ShadowOptions const& options);
 	};
 }
 

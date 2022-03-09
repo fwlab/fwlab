@@ -17,9 +17,8 @@ namespace fwlab::scene
 		auto& entityManager = ::utils::EntityManager::get();
 
 		// light
-		amlight = new light::AmbientLight("assets/ibl/lightroom_14b");
-		scene->setSkybox(amlight->getSkybox());
-		scene->setIndirectLight(amlight->getIndirectLight());
+		auto amlight = new light::AmbientLight("assets/ibl/lightroom_14b");
+		scene->addLight(amlight);
 
 		// plane
 		textureLoader = new loader::TextureLoader();
@@ -51,7 +50,6 @@ namespace fwlab::scene
 	{
 		delete plane;
 		delete textureLoader;
-		delete amlight;
 
 		gltfLoader->destroyAsset(asset);
 		gltfLoader->destroy();
