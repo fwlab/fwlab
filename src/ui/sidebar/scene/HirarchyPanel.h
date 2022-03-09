@@ -3,16 +3,10 @@
 #include <string>
 #include <vector>
 #include "../../Component.h"
-#include "../../../scene/SceneGraph.h"
+#include "../../../core/Object3D.h"
 
 namespace fwlab::ui::sidebar::scene
 {
-	struct TreeNode
-	{
-		std::string text;
-		std::vector<TreeNode*> children;
-	};
-
 	class HirarchyPanel : public Component
 	{
 	public:
@@ -21,9 +15,7 @@ namespace fwlab::ui::sidebar::scene
 		void render() override;
 
 	private:
-		void createTree(fwlab::scene::SceneGraph* graph);
-		bool isInit = false;
-		TreeNode* tree = nullptr;
+		void createTree(fwlab::core::Object3D* graph);
 	};
 }
 

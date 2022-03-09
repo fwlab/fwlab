@@ -2,6 +2,7 @@
 #include <filament/LightManager.h>
 #include <filament/TransformManager.h>
 #include <utils/Path.h>
+#include "SceneGraph.h"
 #include "Scene.h"
 #include "../context/context.h"
 #include "../geometry/PlaneGeometry.h"
@@ -18,7 +19,7 @@ namespace fwlab::scene
 
 		// light
 		auto amlight = new light::AmbientLight("assets/ibl/lightroom_14b");
-		scene->addLight(amlight);
+		scene->addAmbientLight(amlight);
 
 		// plane
 		textureLoader = new loader::TextureLoader();
@@ -31,7 +32,7 @@ namespace fwlab::scene
 		material->setMap(texture);
 
 		plane = new object::Mesh(geometry, material);
-
+		plane->setName("正方体");
 		plane->setReceiveShadows(true);
 		plane->setRotation({ 1, 0, 0 }, -M_PI / 2);
 

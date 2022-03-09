@@ -5,6 +5,8 @@
 #include "HirarchyPanel.h"
 #include "../../../context/context.h"
 
+constexpr auto TreeLeafFlags = ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen;
+
 namespace fwlab::ui::sidebar::scene
 {
 
@@ -18,32 +20,37 @@ namespace fwlab::ui::sidebar::scene
 
 	void HirarchyPanel::render()
 	{
-		if (!this->isInit)
-		{
-			this->createTree(app->getScene());
-		}
-
-		ImGui::TreeNodeEx("透视相机", ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen);
-		ImGui::TreeNodeEx("渲染器", ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen);
+		ImGui::TreeNodeEx("透视相机", TreeLeafFlags);
+		ImGui::TreeNodeEx("渲染器", TreeLeafFlags);
+		ImGui::TreeNodeEx("环境光", TreeLeafFlags);
 		ImGui::SetNextTreeNodeOpen(true);
-		if (ImGui::TreeNodeEx("场景", ImGuiTreeNodeFlags_Selected))
-		{
-			ImGui::TreeNodeEx("环境光", ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen);
-			ImGui::TreeNodeEx("平行光", ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen);
-			ImGui::TreeNodeEx("平面", ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen);
-			ImGui::TreeNodeEx("机器狗", ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen);
-			ImGui::TreePop();
-		}
+		createTree(app->getScene());
 	}
 
-	void HirarchyPanel::createTree(fwlab::scene::SceneGraph* graph)
+	void HirarchyPanel::createTree(fwlab::core::Object3D* node)
 	{
-		this->isInit = true;
+		auto children = node->getChildren();
+		auto name = node->getName();
+		if (name.empty())
+		{
+			name = "未命名";
+		}
 
-		auto& entityManager = app->getEngine()->getEntityManager();
+		if (children.size() > 0)
+		{
+			if (ImGui::TreeNode(name.c_str()))
+			{
+				for (auto child : children)
+				{
+					createTree(child);
+				}
 
-		// auto &manager = app->getEngine()->getTransformManager();
-
-		// manager.getInstance()
+				ImGui::TreePop();
+			}
+		}
+		else
+		{
+			ImGui::TreeNodeEx(name.c_str(), TreeLeafFlags);
+		}
 	}
 }

@@ -6,6 +6,7 @@
 #include <filament/Skybox.h>
 #include <utils/Entity.h>
 #include "../core/Object3D.h"
+#include "../light/Light.h"
 #include "../light/AmbientLight.h"
 
 namespace fwlab::scene
@@ -16,9 +17,10 @@ namespace fwlab::scene
 		SceneGraph(filament::Scene* scene);
 		virtual ~SceneGraph();
 		bool add(Object3D* child) override;
-		bool addLight(light::AmbientLight* light);
 		bool remove(Object3D* child) override;
-		bool removeLight(light::AmbientLight* light);
+		bool addAmbientLight(light::AmbientLight* light);
+		bool removeAmbientLight();
+		light::AmbientLight* getAmbientLight() const;
 		filament::Scene* getScene() const;
 		void setScene(filament::Scene* scene);
 
@@ -30,7 +32,7 @@ namespace fwlab::scene
 
 	private:
 		filament::Scene* scene = nullptr;
-		light::AmbientLight* light = nullptr;
+		light::AmbientLight* ambientLight = nullptr;
 	};
 }
 

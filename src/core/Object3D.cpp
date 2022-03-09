@@ -169,7 +169,9 @@ namespace fwlab::core
 
 		auto engine = app->getEngine();
 
+#ifdef _DEBUG
 		assert(parent != this);
+#endif
 
 		this->parent = parent;
 

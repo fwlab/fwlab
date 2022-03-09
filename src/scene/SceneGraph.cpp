@@ -5,13 +5,14 @@ namespace fwlab::scene
 	SceneGraph::SceneGraph(filament::Scene* scene)
 	{
 		this->scene = scene;
+		this->name = "场景";
 	}
 
 	SceneGraph::~SceneGraph()
 	{
-		if (light)
+		if (ambientLight)
 		{
-			delete light;
+			delete ambientLight;
 		}
 	}
 
@@ -25,19 +26,6 @@ namespace fwlab::scene
 		return false;
 	}
 
-	bool SceneGraph::addLight(light::AmbientLight* light)
-	{
-		if (this->light)
-		{
-			delete this->light;
-		}
-
-		this->light = light;
-		scene->setSkybox(light->getSkybox());
-		scene->setIndirectLight(light->getIndirectLight());
-		return true;
-	}
-
 	bool SceneGraph::remove(Object3D* child)
 	{
 		if (core::Object3D::remove(child))
@@ -48,16 +36,34 @@ namespace fwlab::scene
 		return false;
 	}
 
-	bool SceneGraph::removeLight(light::AmbientLight* light)
+	bool SceneGraph::addAmbientLight(light::AmbientLight* light)
 	{
-		if (this->light)
+		if (ambientLight)
 		{
-			delete this->light;
-			this->light = nullptr;
+			delete ambientLight;
+		}
+
+		ambientLight = light;
+		scene->setSkybox(light->getSkybox());
+		scene->setIndirectLight(light->getIndirectLight());
+		return true;
+	}
+
+	bool SceneGraph::removeAmbientLight()
+	{
+		if (ambientLight)
+		{
+			delete ambientLight;
+			ambientLight = nullptr;
 		}
 		scene->setSkybox(nullptr);
 		scene->setIndirectLight(nullptr);
 		return true;
+	}
+
+	light::AmbientLight* SceneGraph::getAmbientLight() const
+	{
+		return ambientLight;
 	}
 
 	filament::Scene* SceneGraph::getScene() const
