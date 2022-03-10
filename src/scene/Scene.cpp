@@ -43,7 +43,7 @@ namespace fwlab::scene
 		gltfLoader->load("assets/models/RobotDog/scene.gltf", [&](gltfio::FilamentAsset* result) {
 			asset = result;
 			animator = asset->getAnimator();
-			app->getScene()->addEntities(asset->getEntities(), asset->getEntityCount());
+			app->getScene()->addFilamentAsset(asset);
 			});
 	}
 

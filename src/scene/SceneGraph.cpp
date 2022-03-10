@@ -70,22 +70,32 @@ namespace fwlab::scene
 
 	bool SceneGraph::addFilamentAsset(gltfio::FilamentAsset* asset)
 	{
-		return addFilamentAssetNode(asset->getRoot());
+		auto entity = asset->getRoot();
+		if (!addFilamentAssetNode(&entity, this))
+		{
+			return false;
+		}
+		return true;
 	}
 
-	bool SceneGraph::addFilamentAssetNode(::utils::Entity entity)
+	bool SceneGraph::addFilamentAssetNode(::utils::Entity* entity, core::Object3D* parent)
 	{
 		auto& manager = app->getEngine()->getTransformManager();
-		
+		auto instance = manager.getInstance(*entity);
+
 		auto obj = new core::Object3D();
-		obj->setEntity(entity);
-		add(obj);
+		obj->setEntity(*entity);
+		auto matrix = manager.getTransformAccurate(instance);
+		obj->setMatrix(matrix);
+		parent->add(obj);
 
-		auto begin = manager.getChildrenBegin(manager.getInstance(entity));
-		auto end = manager.getChildrenEnd(manager.getInstance(entity));
-		for (auto p = begin; p != end; p++)
+		auto count = manager.getChildCount(instance);
+		::utils::Entity* entities = new ::utils::Entity[count];
+		manager.getChildren(instance, entities, count);
+
+		for (auto p = entities; p < entities + count; p++)
 		{
-
+			addFilamentAssetNode(p, obj);
 		}
 
 		return true;

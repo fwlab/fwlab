@@ -33,7 +33,7 @@ namespace fwlab::scene
 		void addEntities(const ::utils::Entity* entities, size_t count);
 
 	private:
-		bool addFilamentAssetNode(::utils::Entity entity);
+		bool addFilamentAssetNode(::utils::Entity* entity, core::Object3D* obj);
 		filament::Scene* scene = nullptr;
 		light::AmbientLight* ambientLight = nullptr;
 	};
