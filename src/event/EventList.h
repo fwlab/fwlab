@@ -25,6 +25,10 @@ namespace fwlab::event
 	extern const char* MOUSE_UP;   // 参数：MouseEvent
 	extern const char* WHEEL;	   // 参数：WheelEvent
 
+	// 场景事件
+	extern const char* SELECT;				// 参数：SelectEvent
+	extern const char* SELECT_CHANGED;		// 参数：无
+
 	// 其他事件
 	extern const char* RESIZE;		 // 参数：SizeEvent
 	extern const char* SIZE_CHANGED; // 参数：SizeEvent

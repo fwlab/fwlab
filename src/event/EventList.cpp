@@ -23,6 +23,10 @@ namespace fwlab::event
 	const char* MOUSE_UP = "mouseUp";
 	const char* WHEEL = "mouseWheel";
 
+	// 场景事件
+	const char* SELECT = "select";
+	extern const char* SELECT_CHANGED = "selectChanged";
+
 	// 其他事件
 	const char* RESIZE = "resize";
 	const char* SIZE_CHANGED = "sizeChanged";
