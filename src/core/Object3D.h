@@ -1,5 +1,6 @@
 #ifndef FWLAB_CORE_OBJECT3D_H
 #define FWLAB_CORE_OBJECT3D_H
+#include <stdint.h>
 #include <string>
 #include <vector>
 #include <math/mat4.h>
@@ -17,6 +18,7 @@ namespace fwlab::core
 		virtual ~Object3D();
 		::utils::Entity getEntity() const;
 		void setEntity(::utils::Entity entity);
+		std::vector<::utils::Entity*> getEntities();
 		filament::math::double3 getPosition() const;
 		void setPosition(filament::math::double3 position);
 		filament::math::quat getRotation() const;

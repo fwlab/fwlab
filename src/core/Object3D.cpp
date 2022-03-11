@@ -1,3 +1,4 @@
+#include <queue>
 #include <filament/TransformManager.h>
 #include "../math/mat4.h"
 #include "Object3D.h"
@@ -39,6 +40,34 @@ namespace fwlab::core
 			engine->destroy(this->entity);
 		}
 		this->entity = entity;
+	}
+
+	std::vector<::utils::Entity*> Object3D::getEntities()
+	{
+		std::queue<Object3D*> queue;
+		queue.push(this);
+
+		std::vector<::utils::Entity*> result;
+		if (!entity.isNull())
+		{
+			result.push_back(&entity);
+		}
+
+		while (queue.size())
+		{
+			auto obj = queue.front();
+			queue.pop();
+			for (auto child : obj->children)
+			{
+				queue.push(child);
+				if (!child->entity.isNull())
+				{
+					result.push_back(&child->entity);
+				}
+			}
+		}
+
+		return result;
 	}
 
 	filament::math::double3 Object3D::getPosition() const

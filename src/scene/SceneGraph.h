@@ -22,7 +22,6 @@ namespace fwlab::scene
 		bool addAmbientLight(light::AmbientLight* light);
 		bool removeAmbientLight();
 		light::AmbientLight* getAmbientLight() const;
-		bool addFilamentAsset(gltfio::FilamentAsset* asset);
 		filament::Scene* getScene() const;
 		void setScene(filament::Scene* scene);
 
@@ -30,10 +29,8 @@ namespace fwlab::scene
 		filament::Skybox* getSkybox() const;
 		void setSkybox(filament::Skybox* skybox);
 		void setIndirectLight(filament::IndirectLight* ibl);
-		void addEntities(const ::utils::Entity* entities, size_t count);
 
 	private:
-		bool addFilamentAssetNode(::utils::Entity* entity, core::Object3D* obj);
 		filament::Scene* scene = nullptr;
 		light::AmbientLight* ambientLight = nullptr;
 	};
