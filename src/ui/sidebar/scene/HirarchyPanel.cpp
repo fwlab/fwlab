@@ -46,7 +46,7 @@ namespace fwlab::ui::sidebar::scene
 
 		if (children.size() > 0)
 		{
-			if (ImGui::TreeNode(name.c_str()))
+			if (ImGui::TreeNodeEx(node->getId().c_str(), ImGuiTreeNodeFlags_None, name.c_str()))
 			{
 				for (auto child : children)
 				{

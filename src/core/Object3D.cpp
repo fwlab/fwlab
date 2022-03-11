@@ -11,6 +11,9 @@ namespace fwlab::core
 	{
 		auto engine = app->getEngine();
 
+		static int _id = 1;
+		id = std::to_string(_id++);
+
 		auto& manager = engine->getTransformManager();
 		manager.setAccurateTranslationsEnabled(true);
 	}
@@ -177,6 +180,11 @@ namespace fwlab::core
 
 		auto& manager = engine->getTransformManager();
 		manager.setParent(manager.getInstance(entity), manager.getInstance(parent->entity));
+	}
+
+	std::string Object3D::getId() const
+	{
+		return id;
 	}
 
 	std::string Object3D::getName() const

@@ -35,6 +35,7 @@ namespace fwlab::core
 		Object3D* getParent() const;
 		void setParent(Object3D* parent);
 
+		std::string getId() const;
 		std::string getName() const;
 		void setName(std::string name);
 
@@ -54,7 +55,7 @@ namespace fwlab::core
 		::utils::Entity entity;
 		Object3D* parent = nullptr;
 		std::vector<Object3D*> children;
-
+		std::string id;
 		std::string name;
 
 	private:
