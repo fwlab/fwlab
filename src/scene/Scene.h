@@ -1,7 +1,5 @@
 #ifndef FWLAB_SCENE_SCENE_H
 #define FWLAB_SCENE_SCENE_H
-#include <gltfio/Animator.h>
-#include <gltfio/FilamentAsset.h>
 #include <math/mat4.h>
 #include "../light/AmbientLight.h"
 #include "../object/Mesh.h"
@@ -19,10 +17,9 @@ namespace fwlab::scene
 	private:
 		loader::TextureLoader* textureLoader = nullptr;
 		object::Mesh* plane = nullptr;
+		core::Object3D* dog = nullptr;
 
 		loader::GltfLoader* gltfLoader = nullptr;
-		gltfio::FilamentAsset* asset = nullptr;
-		gltfio::Animator* animator = nullptr;
 	};
 }
 

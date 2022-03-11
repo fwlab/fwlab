@@ -1,4 +1,5 @@
 #include <fstream>
+#include <filament/TransformManager.h>
 #include "../event/EventList.h"
 #include "../core/BufferGeometry.h"
 #include "../material/Material.h"
@@ -26,7 +27,7 @@ namespace fwlab::loader
 
 	void GltfLoader::load(
 		::utils::Path path,
-		std::function<void(gltfio::FilamentAsset*)> onLoad,
+		std::function<void(core::Object3D*)> onLoad,
 		std::function<void(float)> onProgress,
 		std::function<void(std::string)> onError
 	)
@@ -65,6 +66,37 @@ namespace fwlab::loader
 		return false;
 	}
 
+	void GltfLoader::createObject3D(::utils::Entity* entity, core::Object3D* parent, LoadData* data)
+	{
+		auto& transformManager = app->getEngine()->getTransformManager();
+		auto transformInstance = transformManager.getInstance(*entity);
+
+		auto nameComponentManager = data->getNameComponentManager();
+		auto nameComponentInstance = nameComponentManager->getInstance(*entity);
+
+		std::string name;
+		if (nameComponentInstance.isValid())
+		{
+			name = nameComponentManager->getName(nameComponentInstance);
+		}
+
+		parent->setName(name);
+		parent->setEntity(*entity);
+		auto matrix = transformManager.getTransformAccurate(transformInstance);
+		parent->setMatrix(matrix);
+
+		auto count = transformManager.getChildCount(transformInstance);
+		::utils::Entity* entities = new ::utils::Entity[count];
+		transformManager.getChildren(transformInstance, entities, count);
+
+		for (auto p = entities; p < entities + count; p++)
+		{
+			auto child = new core::Object3D();
+			createObject3D(p, child, data);
+			parent->add(child);
+		}
+	}
+
 	void  GltfLoader::handleAnimate(void* data)
 	{
 		auto iter = loading.begin();
@@ -82,7 +114,10 @@ namespace fwlab::loader
 				}
 				if (onLoad)
 				{
-					onLoad(data->getAsset());
+					auto entity = data->getAsset()->getRoot();
+					auto obj = new core::Object3D();
+					createObject3D(&entity, obj, data);
+					onLoad(obj);
 					loaded.push_back(data);
 					iter = loading.erase(iter);
 				}
@@ -229,12 +264,12 @@ namespace fwlab::loader
 		return resourceLoader;
 	}
 
-	std::function<void(gltfio::FilamentAsset*)> GltfLoader::LoadData::getOnLoad() const
+	std::function<void(core::Object3D*)> GltfLoader::LoadData::getOnLoad() const
 	{
 		return onLoad;
 	}
 
-	void GltfLoader::LoadData::setOnLoad(std::function<void(gltfio::FilamentAsset*)> callback)
+	void GltfLoader::LoadData::setOnLoad(std::function<void(core::Object3D*)> callback)
 	{
 		onLoad = callback;
 	}

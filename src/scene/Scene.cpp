@@ -40,39 +40,27 @@ namespace fwlab::scene
 
 		// gltf
 		gltfLoader = new loader::GltfLoader();
-		gltfLoader->load("assets/models/RobotDog/scene.gltf", [&](gltfio::FilamentAsset* result) {
-			asset = result;
-			animator = asset->getAnimator();
-			app->getScene()->addFilamentAsset(asset);
+		gltfLoader->load("assets/models/RobotDog/scene.gltf", [&](core::Object3D* obj) {
+			dog = obj;
+			dog->setName("机器狗");
+			app->getScene()->add(dog);
 			});
 	}
 
 	void Scene::cleanup()
 	{
 		delete plane;
+		delete dog;
 		delete textureLoader;
 		delete gltfLoader;
 	}
 
 	void Scene::animate()
 	{
-		auto engine = app->getEngine();
-
-		if (asset)
+		if (dog)
 		{
-			auto& manager = engine->getTransformManager();
-			auto root = manager.getInstance(asset->getRoot());
-
-			filament::math::double3 position = { 0, 0, 0 };
-
-			filament::math::double3 axis = { 1, 0, 0 };
-			double angle = M_PI / 2;
-			filament::math::quat rotation = filament::math::quat::fromAxisAngle(axis, angle);
-
-			filament::math::float3 scale = { 0.0002, 0.0002, 0.0002 };
-
-			auto transform = math::compose(position, rotation, scale);
-			manager.setTransform(root, transform);
+			dog->setRotation({ 1, 0, 0 }, M_PI / 2);
+			dog->setScale({ 0.0002, 0.0002, 0.0002 });
 		}
 	}
 }

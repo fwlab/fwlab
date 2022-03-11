@@ -10,6 +10,7 @@
 #include <gltfio/ResourceLoader.h>
 #include <utils/NameComponentManager.h>
 #include <utils/Path.h>
+#include "../core/Object3D.h"
 
 namespace fwlab::loader
 {
@@ -20,7 +21,7 @@ namespace fwlab::loader
 		virtual ~GltfLoader();
 		void load(
 			::utils::Path path,
-			std::function<void(gltfio::FilamentAsset*)> onLoad,
+			std::function<void(core::Object3D*)> onLoad,
 			std::function<void(float)> onProgress = nullptr,
 			std::function<void(std::string)> onError = nullptr
 		);
@@ -46,8 +47,8 @@ namespace fwlab::loader
 			gltfio::AssetLoader* getAssetLoader() const;
 			gltfio::FilamentAsset* getAsset() const;
 			gltfio::ResourceLoader* getResourceLoader() const;
-			std::function<void(gltfio::FilamentAsset*)> getOnLoad() const;
-			void setOnLoad(std::function<void(gltfio::FilamentAsset*)> callback);
+			std::function<void(core::Object3D*)> getOnLoad() const;
+			void setOnLoad(std::function<void(core::Object3D*)> callback);
 			std::function<void(float)> getOnProgress() const;
 			void setOnProgress(std::function<void(float)> callback);
 			std::function<void(std::string)> getOnError() const;
@@ -64,16 +65,17 @@ namespace fwlab::loader
 			gltfio::AssetLoader* assetLoader = nullptr;
 			gltfio::FilamentAsset* asset = nullptr;
 			gltfio::ResourceLoader* resourceLoader = nullptr;
-			std::function<void(gltfio::FilamentAsset*)> onLoad = nullptr;
+			std::function<void(core::Object3D*)> onLoad = nullptr;
 			std::function<void(float)> onProgress = nullptr;
 			std::function<void(std::string)> onError = nullptr;
 			std::ostringstream error;
 		};
 
+		void createObject3D(::utils::Entity* entity, core::Object3D* parent, LoadData* data);
 		void handleAnimate(void* data);
 		std::vector<LoadData*> loading;
 		std::vector<LoadData*> loaded;
 	};
 }
 
-#endif 
+#endif
