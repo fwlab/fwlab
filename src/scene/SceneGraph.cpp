@@ -84,6 +84,7 @@ namespace fwlab::scene
 		auto instance = manager.getInstance(*entity);
 
 		auto obj = new core::Object3D();
+		obj->setName(std::to_string(entity->getId()));
 		obj->setEntity(*entity);
 		auto matrix = manager.getTransformAccurate(instance);
 		obj->setMatrix(matrix);
