@@ -20,20 +20,19 @@ namespace fwlab::ui::sidebar::scene
 
 	void HirarchyPanel::render()
 	{
-		// ImGui::SetNextWindowContentSize(ImVec2(1000, 500));
-		if (ImGui::BeginChild(
+		ImGui::BeginChild(
 			"Hirarchy Panel",
 			ImVec2(ImGui::GetWindowContentRegionWidth() - 16, ImGui::GetWindowHeight() - 48),
-			ImGuiWindowFlags_HorizontalScrollbar | ImGuiWindowFlags_AlwaysHorizontalScrollbar))
-		{
-			ImGui::TreeNodeEx("透视相机", TreeLeafFlags);
-			ImGui::TreeNodeEx("渲染器", TreeLeafFlags);
-			ImGui::TreeNodeEx("环境光", TreeLeafFlags);
-			ImGui::SetNextTreeNodeOpen(true);
-			createTree(app->getScene());
+			true,
+			ImGuiWindowFlags_HorizontalScrollbar);
 
-			ImGui::EndChild();
-		}
+		ImGui::TreeNodeEx("透视相机", TreeLeafFlags);
+		ImGui::TreeNodeEx("渲染器", TreeLeafFlags);
+		ImGui::TreeNodeEx("环境光", TreeLeafFlags);
+		ImGui::SetNextTreeNodeOpen(true);
+		createTree(app->getScene());
+
+		ImGui::EndChild();
 	}
 
 	void HirarchyPanel::createTree(fwlab::core::Object3D* node)
