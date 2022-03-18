@@ -8,6 +8,9 @@ namespace fwlab::ui::menubar
 	{
 	public:
 		void render() override;
+
+	private:
+		void addPlane();
 	};
 }
 

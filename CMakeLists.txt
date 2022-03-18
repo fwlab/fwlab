@@ -255,6 +255,55 @@ link_libraries(
 	mathio
 	utils
 	viewer
+
+	# OCCT
+	TKBin
+	TKBinL
+	TKBinTObj
+	TKBinXCAF
+	TKBO
+	TKBool
+	TKBRep
+	TKCAF
+	TKCDF
+	TKernel
+	TKFeat
+	TKFillet
+	TKG2d
+	TKG3d
+	TKGeomAlgo
+	TKGeomBase
+	TKHLR
+	TKIGES
+	TKLCAF
+	TKMath
+	TKMesh
+	TKOffset
+	TKPrim
+	TKRWMesh
+	TKService
+	TKShHealing
+	TKStd
+	TKStdL
+	TKSTEP
+	TKSTEP209
+	TKSTEPAttr
+	TKSTEPBase
+	TKSTL
+	TKTObj
+	TKTopAlgo
+	TKV3d
+	TKVCAF
+	TKVRML
+	TKXCAF
+	TKXDEIGES
+	TKXDESTEP
+	TKXMesh
+	TKXml
+	TKXmlL
+	TKXmlTObj
+	TKXmlXCAF
+	TKXSBase
 )
 
 if (WIN32)
