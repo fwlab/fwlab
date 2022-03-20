@@ -1,6 +1,6 @@
 #include <imgui.h>
-#include <AIS_Shape.hxx>
-#include <BRepPrimAPI_MakeBox.hxx>
+//#include <AIS_Shape.hxx>
+//#include <BRepPrimAPI_MakeBox.hxx>
 #include "ObjectMenu.h"
 
 namespace fwlab::ui::menubar
@@ -79,9 +79,9 @@ namespace fwlab::ui::menubar
 
 	void ObjectMenu::addPlane()
 	{
-		BRepPrimAPI_MakeBox box(10., 20., 30.);
-		box.Build();
-		TopoDS_Solid solid = box.Solid();
-		Handle(TopoDS_TShape) shape = solid.TShape();
+		//BRepPrimAPI_MakeBox box(10., 20., 30.);
+		//box.Build();
+		//TopoDS_Solid solid = box.Solid();
+		//Handle(TopoDS_TShape) shape = solid.TShape();
 	}
 }

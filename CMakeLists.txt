@@ -25,7 +25,7 @@ set(FILAMENT_DIR "${CMAKE_SOURCE_DIR}/third_party/filament")
 set(RELEASE_DIR "${FILAMENT_DIR}/out/build")
 set(INSTALL_DIR "${FILAMENT_DIR}/out/install")
 set(RAPID_JSON_DIR "${CMAKE_SOURCE_DIR}/third_party/rapidjson")
-set(OCCT_DIR "${CMAKE_SOURCE_DIR}/third_party/OCCT/out/install")
+#set(OCCT_DIR "${CMAKE_SOURCE_DIR}/third_party/OCCT/out/install")
 
 if (WIN32)
 	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /utf-8")
@@ -104,7 +104,7 @@ include_directories(
 	${RAPID_JSON_DIR}/include
 
 	# OCCT
-	${OCCT_DIR}/inc
+	#${OCCT_DIR}/inc
 
 	# asserts
 	${CMAKE_BINARY_DIR}/assets
@@ -170,7 +170,7 @@ if (WIN32)
 		# third_party
 		${RELEASE_DIR}/third_party/glslang/tnt/glslang/OSDependent/Windows
 		# OCCT
-		${OCCT_DIR}/win64/vc14/libd
+		#${OCCT_DIR}/win64/vc14/libd
 	)
 	link_libraries(
 		IMM32.lib
@@ -257,53 +257,53 @@ link_libraries(
 	viewer
 
 	# OCCT
-	TKBin
-	TKBinL
-	TKBinTObj
-	TKBinXCAF
-	TKBO
-	TKBool
-	TKBRep
-	TKCAF
-	TKCDF
-	TKernel
-	TKFeat
-	TKFillet
-	TKG2d
-	TKG3d
-	TKGeomAlgo
-	TKGeomBase
-	TKHLR
-	TKIGES
-	TKLCAF
-	TKMath
-	TKMesh
-	TKOffset
-	TKPrim
-	TKRWMesh
-	TKService
-	TKShHealing
-	TKStd
-	TKStdL
-	TKSTEP
-	TKSTEP209
-	TKSTEPAttr
-	TKSTEPBase
-	TKSTL
-	TKTObj
-	TKTopAlgo
-	TKV3d
-	TKVCAF
-	TKVRML
-	TKXCAF
-	TKXDEIGES
-	TKXDESTEP
-	TKXMesh
-	TKXml
-	TKXmlL
-	TKXmlTObj
-	TKXmlXCAF
-	TKXSBase
+	#TKBin
+	#TKBinL
+	#TKBinTObj
+	#TKBinXCAF
+	#TKBO
+	#TKBool
+	#TKBRep
+	#TKCAF
+	#TKCDF
+	#TKernel
+	#TKFeat
+	#TKFillet
+	#TKG2d
+	#TKG3d
+	#TKGeomAlgo
+	#TKGeomBase
+	#TKHLR
+	#TKIGES
+	#TKLCAF
+	#TKMath
+	#TKMesh
+	#TKOffset
+	#TKPrim
+	#TKRWMesh
+	#TKService
+	#TKShHealing
+	#TKStd
+	#TKStdL
+	#TKSTEP
+	#TKSTEP209
+	#TKSTEPAttr
+	#TKSTEPBase
+	#TKSTL
+	#TKTObj
+	#TKTopAlgo
+	#TKV3d
+	#TKVCAF
+	#TKVRML
+	#TKXCAF
+	#TKXDEIGES
+	#TKXDESTEP
+	#TKXMesh
+	#TKXml
+	#TKXmlL
+	#TKXmlTObj
+	#TKXmlXCAF
+	#TKXSBase
 )
 
 if (WIN32)
