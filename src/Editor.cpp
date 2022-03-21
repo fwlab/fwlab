@@ -8,8 +8,8 @@ namespace fwlab
 	{
 		ui = new ui::UIHelper();
 
-		ImGui::GetStyle().WindowRounding = 0;
-		ImGui::GetStyle().WindowBorderSize = 0;
+		//ImGui::GetStyle().WindowRounding = 0;
+		//ImGui::GetStyle().WindowBorderSize = 0;
 
 		ui->setCallback([&]()
 			{ render(); });

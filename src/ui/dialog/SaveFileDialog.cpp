@@ -39,12 +39,34 @@ namespace fwlab::ui::dialog
 
 			ImVec2 size = ImGui::GetIO().DisplaySize;
 			ImGui::SetNextWindowPos(ImVec2((size.x - width) / 2.0, (size.y - height) / 2.0));
-			ImGui::SetNextWindowSize(ImVec2(width, height));
+			ImGui::SetNextWindowSize(ImVec2(width, height), ImGuiCond_Once);
 		}
 
-		ImGui::Begin("保存文件", &isOpen, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_Modal);
+		ImGui::Begin("保存文件", &isOpen, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize);
 
-		ImGui::Text("你好");
+		ImGui::AlignTextToFramePadding();
+		ImGui::Text("路径"); ImGui::SameLine();
+		ImGui::LabelText("", "C:\\Window\\");
+
+		float winWidth = ImGui::GetWindowContentRegionWidth();
+
+		ImGui::BeginChildFrame(ImGui::GetID("SaveFileDialog_frame"), ImVec2(winWidth, height - 105), ImGuiWindowFlags_NoMove);
+
+		ImGui::Text("文件列表");
+
+		ImGui::EndChildFrame();
+
+		ImGui::Spacing();
+		ImGui::SameLine(winWidth - 148);
+		if (ImGui::Button("确认", ImVec2(64, 28)))
+		{
+
+		}
+		ImGui::SameLine();
+		if (ImGui::Button("取消", ImVec2(64, 28)))
+		{
+
+		}
 
 		ImGui::End();
 	}
