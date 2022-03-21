@@ -27,6 +27,11 @@ namespace fwlab::ui::dialog
 
 	void OpenFileDialog::render()
 	{
+		if (!isOpen)
+		{
+			return;
+		}
+
 		ImVec2 size = ImGui::GetIO().DisplaySize;
 
 		ImGui::SetNextWindowPos(ImVec2((size.x - width) / 2.0, (size.y - height) / 2.0), ImGuiCond_Appearing);

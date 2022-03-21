@@ -17,20 +17,30 @@ namespace fwlab::ui::dialog
 
 	void SaveFileDialog::open()
 	{
-
+		isOpen = true;
+		shouldSetWindow = true;
 	}
 
 	void SaveFileDialog::close()
 	{
-
+		isOpen = false;
 	}
 
 	void SaveFileDialog::render()
 	{
-		ImVec2 size = ImGui::GetIO().DisplaySize;
+		if (!isOpen)
+		{
+			return;
+		}
 
-		ImGui::SetNextWindowPos(ImVec2((size.x - width) / 2.0, (size.y - height) / 2.0), ImGuiCond_Appearing);
-		ImGui::SetNextWindowSize(ImVec2(width, height));
+		if (shouldSetWindow)
+		{
+			shouldSetWindow = false;
+
+			ImVec2 size = ImGui::GetIO().DisplaySize;
+			ImGui::SetNextWindowPos(ImVec2((size.x - width) / 2.0, (size.y - height) / 2.0));
+			ImGui::SetNextWindowSize(ImVec2(width, height));
+		}
 
 		ImGui::Begin("保存文件", &isOpen, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_Modal);
 
