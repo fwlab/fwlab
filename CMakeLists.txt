@@ -25,6 +25,7 @@ set(FILAMENT_DIR "${CMAKE_SOURCE_DIR}/third_party/filament")
 set(RELEASE_DIR "${FILAMENT_DIR}/out/build")
 set(INSTALL_DIR "${FILAMENT_DIR}/out/install")
 set(RAPID_JSON_DIR "${CMAKE_SOURCE_DIR}/third_party/rapidjson")
+set(BULLET3_DIR "${CMAKE_SOURCE_DIR}/third_party/bullet3")
 #set(OCCT_DIR "${CMAKE_SOURCE_DIR}/third_party/OCCT/out/install")
 
 if (WIN32)
@@ -103,6 +104,9 @@ include_directories(
 	# rapidjson
 	${RAPID_JSON_DIR}/include
 
+	# bullet3
+	${BULLET3_DIR}/out/install/include
+
 	# OCCT
 	#${OCCT_DIR}/inc
 
@@ -163,6 +167,9 @@ link_directories(
 	${RELEASE_DIR}/libs/mathio
 	${RELEASE_DIR}/libs/utils
 	${RELEASE_DIR}/libs/viewer
+
+	# bullet3
+	${BULLET3_DIR}/out/install/lib
 )
 
 if (WIN32)
@@ -318,6 +325,12 @@ if (WIN32)
 			
 			# libs
 			#matdbg_combined
+
+			# bullet3
+			BulletRobotics_Debug
+			BussIK_Debug
+			clsocket_Debug
+			gwen_Debug
 		)
 	else()
 		link_libraries(

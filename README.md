@@ -38,11 +38,11 @@ git submodule update --init
 
 Visual Studio 2019, 安装时选中使用C++的桌面开发。
 
-3. 配置`filament`、`OCCT`、`fwlab`项目。
+3. 配置`filament`、`bullet3`、`OCCT`、`fwlab`项目。
 
 根据需要，双击`config/debug.cmd`或`config/release.cmd`，将项目配置成调试版或发行版。
 
-4. 编译filament项目。
+4. 编译`filament`项目。
 
 使用Visual Studio 2019打开目录`third_party/filament`。
 
@@ -52,7 +52,15 @@ Visual Studio 2019, 安装时选中使用C++的桌面开发。
 
 将目录`third_party/filament/out/install/bin`添加到环境变量，保证`cmgen`、`matc`、`resgen`能在命令行运行。
 
-5. 编译`tcl`项目。
+5. 编译`bullet3`项目。
+
+使用Visual Studio 2019打开目录`third_party/bullet3`。
+
+右键`CMakeLists.txt`，选择生成。
+
+右键`CMakeLists.txt`，选择安装。
+
+6. 编译`tcl`项目。(暂时不需要)
 
 在开始菜单中，打开`Developer Command Prompt for VS 2019`工具，切换到目录`third_party/tcl/win`，执行以下代码。
 
@@ -60,7 +68,7 @@ Visual Studio 2019, 安装时选中使用C++的桌面开发。
 nmake -f makefile.vc
 ```
 
-6. 编译`OCCT`项目。
+7. 编译`OCCT`项目。(暂时不需要)
 
 使用Visual Studio 2019打开目录`third_party/OCCT`。
 
@@ -70,7 +78,7 @@ nmake -f makefile.vc
 
 将目录`third_party/OCCT/out/install/win64/vc14/bind`添加到环境变量。
 
-7. 编译fwlab项目。
+8. 编译fwlab项目。
 
 使用Visual Studio 2019打开项目根目录`fwlab`。
 
