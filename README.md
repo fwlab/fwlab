@@ -78,7 +78,7 @@ nmake -f makefile.vc
 
 将目录`third_party/OCCT/out/install/win64/vc14/bind`添加到环境变量。
 
-8. 编译fwlab项目。
+8. 编译`fwlab`项目。
 
 使用Visual Studio 2019打开项目根目录`fwlab`。
 
