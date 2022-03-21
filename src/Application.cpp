@@ -169,6 +169,22 @@ namespace fwlab
 		}
 	}
 
+	void Application::openFile(std::function<void(std::string)> callback)
+	{
+		if (editor)
+		{
+			editor->openFile(callback);
+		}
+	}
+
+	void Application::saveFile(std::function<void(std::string)> callback)
+	{
+		if (editor)
+		{
+			editor->saveFile(callback);
+		}
+	}
+
 	void Application::clean()
 	{
 		auto& manager = ::utils::EntityManager::get();

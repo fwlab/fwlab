@@ -17,6 +17,8 @@ namespace fwlab
 		menubar = new ui::menubar::MenuBar();
 		sidebar = new ui::sidebar::SideBar();
 		framerate = new ui::framerate::Framerate();
+		openDialog = new ui::dialog::OpenFileDialog();
+		saveDialog = new ui::dialog::SaveFileDialog();
 	}
 
 	Editor::~Editor()
@@ -24,6 +26,8 @@ namespace fwlab
 		delete menubar;
 		delete sidebar;
 		delete framerate;
+		delete openDialog;
+		delete saveDialog;
 		delete ui;
 	}
 
@@ -45,6 +49,9 @@ namespace fwlab
 		{
 			prompt->render();
 		}
+
+		openDialog->render();
+		saveDialog->render();
 	}
 
 	void Editor::info(std::string content, std::string title)
@@ -123,5 +130,17 @@ namespace fwlab
 			}
 			});
 		prompts.push_back(std::make_unique<ui::window::Prompt>(*prompt));
+	}
+
+	void Editor::openFile(std::function<void(std::string)> callback)
+	{
+		openDialog->setSaveCallback(callback);
+		openDialog->open();
+	}
+
+	void Editor::saveFile(std::function<void(std::string)> callback)
+	{
+		saveDialog->setSaveCallback(callback);
+		saveDialog->open();
 	}
 }

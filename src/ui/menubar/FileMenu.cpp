@@ -10,6 +10,14 @@ using namespace rapidjson;
 
 namespace fwlab::ui::menubar
 {
+	FileMenu::FileMenu()
+	{
+	}
+
+	FileMenu::~FileMenu()
+	{
+	}
+
 	void FileMenu::render()
 	{
 		if (ImGui::BeginMenu("文件", true))
@@ -52,7 +60,9 @@ namespace fwlab::ui::menubar
 
 	void FileMenu::handleOpen()
 	{
-
+		app->openFile([&](std::string path) {
+			app->success("打开成功");
+			});
 	}
 
 	void FileMenu::handleSave()
@@ -75,6 +85,10 @@ namespace fwlab::ui::menubar
 		std::ofstream out("test.txt");
 		out << buffer.GetString() << std::endl;
 		out.close();
+
+		app->saveFile([&](std::string path) {
+			app->success("保存成功");
+			});
 	}
 
 	void FileMenu::handleSaveAs()

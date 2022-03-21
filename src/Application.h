@@ -34,6 +34,8 @@ namespace fwlab
 		void error(std::string content, std::string title = "错误");
 		void confirm(std::string content, std::function<void(bool)> callback, std::string title = "询问");
 		void prompt(std::string name, std::function<void(std::string)> callback, std::string value = "", std::string title = "请输入");
+		void openFile(std::function<void(std::string)> callback);
+		void saveFile(std::function<void(std::string)> callback);
 
 		bool getIsRunning() const;
 		utils::Clock* getClock() const;

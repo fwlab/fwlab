@@ -12,6 +12,8 @@
 #include "ui/menubar/MenuBar.h"
 #include "ui/sidebar/SideBar.h"
 #include "ui/framerate/Framerate.h"
+#include "ui/dialog/OpenFileDialog.h"
+#include "ui/dialog/SaveFileDialog.h"
 
 namespace fwlab
 {
@@ -27,6 +29,8 @@ namespace fwlab
 		void error(std::string content, std::string title = "错误");
 		void confirm(std::string content, std::function<void(bool)> callback, std::string title = "询问");
 		void prompt(std::string name, std::function<void(std::string)> callback, std::string value = "", std::string title = "请输入");
+		void openFile(std::function<void(std::string)> callback);
+		void saveFile(std::function<void(std::string)> callback);
 
 	private:
 		void showMessage(std::string content, std::string title, ui::window::Message::MessageType type);
@@ -39,6 +43,8 @@ namespace fwlab
 		ui::menubar::MenuBar* menubar;
 		ui::sidebar::SideBar* sidebar;
 		ui::framerate::Framerate* framerate;
+		ui::dialog::OpenFileDialog* openDialog = nullptr;
+		ui::dialog::SaveFileDialog* saveDialog = nullptr;
 	};
 }
 
