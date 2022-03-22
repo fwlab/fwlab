@@ -7,4 +7,5 @@ add_library(${MODULE_NAME} STATIC
     "SDLUtils.cpp"
     "TimeUtils.cpp"
     "Utils.cpp"
+    "SystemUtils.cpp"
 )

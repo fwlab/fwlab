@@ -25,23 +25,32 @@ namespace fwlab::ui::sidebar
 		ImGui::SetNextWindowSize(ImVec2(width, height), ImGuiCond_Once);
 		ImGui::SetNextWindowSizeConstraints(ImVec2(width, height), ImVec2(maxWidth, height));
 
-		if (ImGui::Begin("SideBar", nullptr, ImGuiWindowFlags_NoTitleBar))
+		ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0);
+		ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0);
+
+		ImGui::Begin("SideBar", nullptr, ImGuiWindowFlags_NoTitleBar);
+
+		ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 1);
+
+		// Scene Panel
+		if (ImGui::BeginChild("ScenePanel", ImVec2(width, sceneHeight)))
 		{
-			// Scene Panel
-			if (ImGui::BeginChild("ScenePanel", ImVec2(width, sceneHeight)))
-			{
-				scenePanel->render();
-			}
-			ImGui::EndChild();
-
-			// Property Panel
-			if (ImGui::BeginChild("PropertyPanel", ImVec2(width, height - sceneHeight - 24)))
-			{
-				propertyPanel->render();
-			}
-			ImGui::EndChild();
-
-			ImGui::End();
+			scenePanel->render();
 		}
+		ImGui::EndChild();
+
+		// Property Panel
+		if (ImGui::BeginChild("PropertyPanel", ImVec2(width, height - sceneHeight - 24)))
+		{
+			propertyPanel->render();
+		}
+		ImGui::EndChild();
+
+		ImGui::PopStyleVar();
+
+		ImGui::End();
+
+		ImGui::PopStyleVar();
+		ImGui::PopStyleVar();
 	}
 }

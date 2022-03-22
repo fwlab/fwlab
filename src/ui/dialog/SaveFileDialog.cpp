@@ -1,13 +1,15 @@
+#include <filesystem>
 #include <imgui.h>
 #include "SaveFileDialog.h"
 #include "../../context/context.h"
 #include "../../event/EventList.h"
+#include "../../utils/SystemUtils.h"
 
 namespace fwlab::ui::dialog
 {
 	SaveFileDialog::SaveFileDialog()
 	{
-
+		disks = utils::SystemUtils::GetLogicalDrives();
 	}
 
 	SaveFileDialog::~SaveFileDialog()
@@ -44,31 +46,58 @@ namespace fwlab::ui::dialog
 
 		ImGui::Begin("保存文件", &isOpen, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize);
 
+		// 当前路径
 		ImGui::AlignTextToFramePadding();
 		ImGui::Text("路径"); ImGui::SameLine();
 		ImGui::LabelText("", "C:\\Window\\");
 
-		float winWidth = ImGui::GetWindowContentRegionWidth();
+		// 驱动器和文件列表
+		float contentWidth = ImGui::GetWindowContentRegionWidth();
+		float frameHeight = height - 105;
+		float spacing = 4;
 
-		ImGui::BeginChildFrame(ImGui::GetID("SaveFileDialog_frame"), ImVec2(winWidth, height - 105), ImGuiWindowFlags_NoMove);
+		renderDriver(0, 240, frameHeight);
+		ImGui::SameLine(0, spacing);
+		renderFileList(240 + spacing, contentWidth - 240 - spacing, frameHeight);
 
-		ImGui::Text("文件列表");
 
-		ImGui::EndChildFrame();
-
+		// 按钮
 		ImGui::Spacing();
-		ImGui::SameLine(winWidth - 148);
+		ImGui::SameLine(contentWidth - 148);
 		if (ImGui::Button("确认", ImVec2(64, 28)))
 		{
-
+			isOpen = false;
 		}
 		ImGui::SameLine();
 		if (ImGui::Button("取消", ImVec2(64, 28)))
 		{
-
+			isOpen = false;
 		}
 
 		ImGui::End();
+	}
+
+	void SaveFileDialog::renderDriver(float left, float width, float height)
+	{
+		ImGui::BeginChild("SaveFileDialog::renderDriver", ImVec2(width, height), true);
+
+		ImGui::Text("驱动器列表");
+
+		for (auto& disk : disks)
+		{
+			ImGui::Selectable(disk.c_str(), &diskSelected);
+		}
+
+		ImGui::EndChild();
+	}
+
+	void SaveFileDialog::renderFileList(float left, float width, float height)
+	{
+		ImGui::BeginChild("SaveFileDialog::renderFileList", ImVec2(width, height), true);
+
+		ImGui::Text("文件列表");
+
+		ImGui::EndChild();
 	}
 
 	void SaveFileDialog::setSaveCallback(std::function<void(std::string path)> callback)

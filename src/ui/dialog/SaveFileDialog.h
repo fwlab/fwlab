@@ -2,6 +2,7 @@
 #define FWLAB_UI_DIALOG_SAVE_FILE_DIALOG_H
 #include <functional>
 #include <string>
+#include <vector>
 #include "../Component.h"
 
 namespace fwlab::ui::dialog
@@ -17,11 +18,15 @@ namespace fwlab::ui::dialog
 		void setSaveCallback(std::function<void(std::string path)> callback);
 
 	private:
+		void renderDriver(float left, float width, float height);
+		void renderFileList(float left, float width, float height);
 		std::function<void(std::string path)> callback = nullptr;
 		float width = 800;
 		float height = 400;
 		bool isOpen = false;
 		bool shouldSetWindow = false;
+		std::vector<std::string> disks;
+		bool diskSelected = false;
 	};
 }
 
