@@ -85,7 +85,7 @@ namespace fwlab::ui::dialog
 
 		for (auto& disk : disks)
 		{
-			ImGui::Selectable(disk.c_str(), &diskSelected);
+			ImGui::Selectable(disk.c_str());
 		}
 
 		ImGui::EndChild();
