@@ -21,6 +21,7 @@ namespace fwlab::ui::dialog
 		float width = 800;
 		float height = 400;
 		bool isOpen = false;
+		std::string selectedDriver = "";
 	};
 }
 

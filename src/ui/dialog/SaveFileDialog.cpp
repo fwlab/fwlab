@@ -10,6 +10,9 @@ namespace fwlab::ui::dialog
 	SaveFileDialog::SaveFileDialog()
 	{
 		disks = utils::SystemUtils::GetLogicalDrives();
+
+		selectedDriver = disks[0];
+		currentPath = selectedDriver + ":\\";
 	}
 
 	SaveFileDialog::~SaveFileDialog()
@@ -49,7 +52,7 @@ namespace fwlab::ui::dialog
 		// 当前路径
 		ImGui::AlignTextToFramePadding();
 		ImGui::Text("路径"); ImGui::SameLine();
-		ImGui::LabelText("", "C:\\Window\\");
+		ImGui::LabelText("", currentPath.c_str());
 
 		// 驱动器和文件列表
 		float contentWidth = ImGui::GetWindowContentRegionWidth();
@@ -85,10 +88,19 @@ namespace fwlab::ui::dialog
 
 		for (auto& disk : disks)
 		{
-			ImGui::Selectable(disk.c_str());
+			if (ImGui::Selectable(disk.c_str(), disk == selectedDriver))
+			{
+				selectDriver(disk);
+			}
 		}
 
 		ImGui::EndChild();
+	}
+
+	void SaveFileDialog::selectDriver(std::string disk)
+	{
+		selectedDriver = disk;
+		currentPath = disk + ":\\";
 	}
 
 	void SaveFileDialog::renderFileList(float left, float width, float height)

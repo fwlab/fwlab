@@ -20,13 +20,18 @@ namespace fwlab::ui::dialog
 	private:
 		void renderDriver(float left, float width, float height);
 		void renderFileList(float left, float width, float height);
+		void selectDriver(std::string disk);
+
 		std::function<void(std::string path)> callback = nullptr;
 		float width = 800;
 		float height = 400;
 		bool isOpen = false;
 		bool shouldSetWindow = false;
+
+		std::string currentPath = "";
+
 		std::vector<std::string> disks;
-		bool diskSelected = false;
+		std::string selectedDriver = "";
 	};
 }
 
