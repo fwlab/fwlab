@@ -12,7 +12,13 @@ namespace fwlab::ui::dialog
 		disks = utils::SystemUtils::GetLogicalDrives();
 
 		selectedDriver = disks[0];
-		currentPath = selectedDriver + ":\\";
+		currentPath = selectedDriver + ":/";
+
+		auto dirs = utils::SystemUtils::GetChildDirectories(currentPath);
+		auto files = utils::SystemUtils::GetChildFiles(currentPath);
+
+		children.insert(children.end(), dirs.begin(), dirs.end());
+		children.insert(children.end(), files.begin(), files.end());
 	}
 
 	SaveFileDialog::~SaveFileDialog()
@@ -100,16 +106,41 @@ namespace fwlab::ui::dialog
 	void SaveFileDialog::selectDriver(std::string disk)
 	{
 		selectedDriver = disk;
-		currentPath = disk + ":\\";
+		currentPath = disk + ":/";
+
+		auto dirs = utils::SystemUtils::GetChildDirectories(currentPath);
+		auto files = utils::SystemUtils::GetChildFiles(currentPath);
+
+		children.clear();
+		children.insert(children.end(), dirs.begin(), dirs.end());
+		children.insert(children.end(), files.begin(), files.end());
 	}
 
 	void SaveFileDialog::renderFileList(float left, float width, float height)
 	{
 		ImGui::BeginChild("SaveFileDialog::renderFileList", ImVec2(width, height), true);
 
-		ImGui::Text("文件列表");
+		for (auto& child : children)
+		{
+			if (ImGui::Selectable(child.c_str()))
+			{
+				selectDirectory(child);
+			}
+		}
 
 		ImGui::EndChild();
+	}
+
+	void SaveFileDialog::selectDirectory(std::string path)
+	{
+		currentPath = path;
+
+		auto dirs = utils::SystemUtils::GetChildDirectories(currentPath);
+		auto files = utils::SystemUtils::GetChildFiles(currentPath);
+
+		children.clear();
+		children.insert(children.end(), dirs.begin(), dirs.end());
+		children.insert(children.end(), files.begin(), files.end());
 	}
 
 	void SaveFileDialog::setSaveCallback(std::function<void(std::string path)> callback)

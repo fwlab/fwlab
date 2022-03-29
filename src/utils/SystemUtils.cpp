@@ -1,3 +1,4 @@
+#include <filesystem>
 #include <Windows.h>
 #include "SystemUtils.h"
 
@@ -19,6 +20,61 @@ namespace fwlab::utils
 
 			drivers >>= 1;
 			index++;
+		}
+
+		return result;
+	}
+
+	std::vector<std::string> SystemUtils::GetChildDirectories(std::string path)
+	{
+		if (!std::filesystem::exists(path))
+		{
+			return std::vector<std::string>();
+		}
+
+		std::vector<std::string> result;
+
+		std::filesystem::directory_iterator end_iter;
+		for (std::filesystem::directory_iterator iter(path); iter != end_iter; ++iter)
+		{
+			try
+			{
+				if (std::filesystem::is_directory(iter->path()))
+				{
+					result.push_back(iter->path().generic_string());
+				}
+			}
+			catch (std::exception& ex)
+			{
+			}
+		}
+
+		return result;
+	}
+
+	std::vector<std::string> SystemUtils::GetChildFiles(std::string path)
+	{
+		if (!std::filesystem::exists(path))
+		{
+			return std::vector<std::string>();
+		}
+
+		std::vector<std::string> result;
+
+		std::filesystem::directory_iterator end_iter;
+		for (std::filesystem::directory_iterator iter(path); iter != end_iter; ++iter)
+		{
+			try
+			{
+				if (std::filesystem::is_regular_file(iter->path()))
+				{
+					result.push_back(iter->path().generic_string());
+				}
+			}
+			catch (std::exception& ex)
+			{
+
+			}
 		}
 
 		return result;

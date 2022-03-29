@@ -9,6 +9,8 @@ namespace fwlab::utils
 	{
 	public:
 		static std::vector<std::string> GetLogicalDrives();
+		static std::vector<std::string> GetChildDirectories(std::string path);
+		static std::vector<std::string> GetChildFiles(std::string path);
 	};
 }
 
