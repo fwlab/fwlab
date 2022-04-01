@@ -1,9 +1,15 @@
+#include <cstring>
 #include <filesystem>
+#include <type_traits>
 #include <imgui.h>
+#include <mutex>
 #include "SaveFileDialog.h"
 #include "../../context/context.h"
 #include "../../event/EventList.h"
 #include "../../utils/SystemUtils.h"
+
+constexpr int BUF_SIZE = 255;
+std::mutex mutex;
 
 namespace fwlab::ui::dialog
 {
@@ -13,12 +19,17 @@ namespace fwlab::ui::dialog
 
 		selectedDriver = disks[0];
 		currentPath = selectedDriver + ":/";
+		extensions.push_back(FileExtension{ .extension = "",.label = "所有文件" });
+		extensions.push_back(FileExtension{ .extension = ".txt",.label = "文本" });
+		extensions.push_back(FileExtension{ .extension = ".jpg",.label = "图片" });
 
 		auto dirs = utils::SystemUtils::GetChildDirectories(currentPath);
 		auto files = utils::SystemUtils::GetChildFiles(currentPath);
 
+		mutex.lock();
 		children.insert(children.end(), dirs.begin(), dirs.end());
 		children.insert(children.end(), files.begin(), files.end());
+		mutex.unlock();
 	}
 
 	SaveFileDialog::~SaveFileDialog()
@@ -69,10 +80,39 @@ namespace fwlab::ui::dialog
 		ImGui::SameLine(0, spacing);
 		renderFileList(240 + spacing, contentWidth - 240 - spacing, frameHeight);
 
+		// 文件名
+		ImGui::AlignTextToFramePadding();
+		ImGui::Text("文件名"); ImGui::SameLine();
+
+		char buf[BUF_SIZE] = "";
+		std::strncpy(buf, fileName.c_str(), BUF_SIZE);
+
+		ImGui::SetNextItemWidth(contentWidth - 320);
+		if (ImGui::InputText("", buf, BUF_SIZE))
+		{
+			fileName = buf;
+		}
+
+		// 后缀
+		ImGui::SameLine();
+		ImGui::SetNextItemWidth(120);
+		auto& currentExtension = extensions.at(currentExtensionIndex);
+		if (ImGui::BeginCombo("", currentExtension.label.c_str()))
+		{
+			for (int i = 0; i < extensions.size(); i++)
+			{
+				auto& extension = extensions.at(i);
+				if (ImGui::Selectable(extension.label.c_str(), currentExtensionIndex == i))
+				{
+					currentExtensionIndex = i;
+				}
+			}
+
+			ImGui::EndCombo();
+		}
 
 		// 按钮
-		ImGui::Spacing();
-		ImGui::SameLine(contentWidth - 148);
+		ImGui::SameLine();
 		if (ImGui::Button("确认", ImVec2(64, 28)))
 		{
 			isOpen = false;
@@ -111,15 +151,18 @@ namespace fwlab::ui::dialog
 		auto dirs = utils::SystemUtils::GetChildDirectories(currentPath);
 		auto files = utils::SystemUtils::GetChildFiles(currentPath);
 
+		mutex.lock();
 		children.clear();
 		children.insert(children.end(), dirs.begin(), dirs.end());
 		children.insert(children.end(), files.begin(), files.end());
+		mutex.unlock();
 	}
 
 	void SaveFileDialog::renderFileList(float left, float width, float height)
 	{
 		ImGui::BeginChild("SaveFileDialog::renderFileList", ImVec2(width, height), true);
 
+		mutex.lock();
 		for (auto& child : children)
 		{
 			if (ImGui::Selectable(child.c_str()))
@@ -127,6 +170,7 @@ namespace fwlab::ui::dialog
 				selectDirectory(child);
 			}
 		}
+		mutex.unlock();
 
 		ImGui::EndChild();
 	}
@@ -138,13 +182,27 @@ namespace fwlab::ui::dialog
 		auto dirs = utils::SystemUtils::GetChildDirectories(currentPath);
 		auto files = utils::SystemUtils::GetChildFiles(currentPath);
 
+		mutex.lock();
 		children.clear();
 		children.insert(children.end(), dirs.begin(), dirs.end());
 		children.insert(children.end(), files.begin(), files.end());
+		mutex.unlock();
 	}
 
 	void SaveFileDialog::setSaveCallback(std::function<void(std::string path)> callback)
 	{
 		this->callback = callback;
+	}
+
+	void SaveFileDialog::addExtension(std::string extension, std::string label)
+	{
+		extensions.push_back(FileExtension{ .extension = extension, .label = label });
+	}
+
+	void SaveFileDialog::removeExtension(std::string extension)
+	{
+		auto pred = [&](FileExtension& ext)
+		{ return ext.extension == extension; };
+		extensions.erase(std::find_if(extensions.begin(), extensions.end(), pred));
 	}
 }

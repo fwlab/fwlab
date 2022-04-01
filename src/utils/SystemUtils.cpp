@@ -1,9 +1,15 @@
 #include <filesystem>
 #include <Windows.h>
+#include "EncodingUtils.h"
 #include "SystemUtils.h"
 
 namespace fwlab::utils
 {
+	static inline std::string gbkToUtf8(std::string source)
+	{
+		return EncodingUtils::GBKToUTF8(source.c_str());
+	}
+
 	std::vector<std::string> SystemUtils::GetLogicalDrives()
 	{
 		std::vector<std::string> result;
@@ -41,7 +47,7 @@ namespace fwlab::utils
 			{
 				if (std::filesystem::is_directory(iter->path()))
 				{
-					result.push_back(iter->path().generic_string());
+					result.push_back(gbkToUtf8(iter->path().generic_string()));
 				}
 			}
 			catch (std::exception& ex)
@@ -68,7 +74,7 @@ namespace fwlab::utils
 			{
 				if (std::filesystem::is_regular_file(iter->path()))
 				{
-					result.push_back(iter->path().generic_string());
+					result.push_back(gbkToUtf8(iter->path().generic_string()));
 				}
 			}
 			catch (std::exception& ex)
