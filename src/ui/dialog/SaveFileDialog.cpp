@@ -1,35 +1,27 @@
 #include <cstring>
 #include <filesystem>
-#include <type_traits>
 #include <imgui.h>
-#include <mutex>
 #include "SaveFileDialog.h"
 #include "../../context/context.h"
 #include "../../event/EventList.h"
-#include "../../utils/SystemUtils.h"
+#include "../../utils/DirectoryUtils.h"
 
 constexpr int BUF_SIZE = 255;
-std::mutex mutex;
 
 namespace fwlab::ui::dialog
 {
 	SaveFileDialog::SaveFileDialog()
 	{
-		disks = utils::SystemUtils::GetLogicalDrives();
+		disks = utils::DirectoryUtils::GetLogicalDrives();
 
 		selectedDriver = disks[0];
-		currentPath = selectedDriver + ":/";
+		currentPath = selectedDriver + ":\\";
 		extensions.push_back(FileExtension{ .extension = "",.label = "所有文件" });
 		extensions.push_back(FileExtension{ .extension = ".txt",.label = "文本" });
 		extensions.push_back(FileExtension{ .extension = ".jpg",.label = "图片" });
 
-		auto dirs = utils::SystemUtils::GetChildDirectories(currentPath);
-		auto files = utils::SystemUtils::GetChildFiles(currentPath);
-
-		mutex.lock();
-		children.insert(children.end(), dirs.begin(), dirs.end());
-		children.insert(children.end(), files.begin(), files.end());
-		mutex.unlock();
+		auto subs = utils::DirectoryUtils::GetChildren(currentPath);
+		children.insert(children.end(), subs.begin(), subs.end());
 	}
 
 	SaveFileDialog::~SaveFileDialog()
@@ -146,23 +138,18 @@ namespace fwlab::ui::dialog
 	void SaveFileDialog::selectDriver(std::string disk)
 	{
 		selectedDriver = disk;
-		currentPath = disk + ":/";
+		currentPath = disk + ":\\";
 
-		auto dirs = utils::SystemUtils::GetChildDirectories(currentPath);
-		auto files = utils::SystemUtils::GetChildFiles(currentPath);
+		auto subs = utils::DirectoryUtils::GetChildren(currentPath);
 
-		mutex.lock();
 		children.clear();
-		children.insert(children.end(), dirs.begin(), dirs.end());
-		children.insert(children.end(), files.begin(), files.end());
-		mutex.unlock();
+		children.insert(children.end(), subs.begin(), subs.end());
 	}
 
 	void SaveFileDialog::renderFileList(float left, float width, float height)
 	{
 		ImGui::BeginChild("SaveFileDialog::renderFileList", ImVec2(width, height), true);
 
-		mutex.lock();
 		for (auto& child : children)
 		{
 			if (ImGui::Selectable(child.c_str()))
@@ -170,23 +157,18 @@ namespace fwlab::ui::dialog
 				selectDirectory(child);
 			}
 		}
-		mutex.unlock();
 
 		ImGui::EndChild();
 	}
 
 	void SaveFileDialog::selectDirectory(std::string path)
 	{
-		currentPath = path;
+		currentPath += path;
 
-		auto dirs = utils::SystemUtils::GetChildDirectories(currentPath);
-		auto files = utils::SystemUtils::GetChildFiles(currentPath);
+		auto subs = utils::DirectoryUtils::GetChildren(currentPath);
 
-		mutex.lock();
 		children.clear();
-		children.insert(children.end(), dirs.begin(), dirs.end());
-		children.insert(children.end(), files.begin(), files.end());
-		mutex.unlock();
+		children.insert(children.end(), subs.begin(), subs.end());
 	}
 
 	void SaveFileDialog::setSaveCallback(std::function<void(std::string path)> callback)

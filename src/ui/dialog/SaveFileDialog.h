@@ -2,7 +2,7 @@
 #define FWLAB_UI_DIALOG_SAVE_FILE_DIALOG_H
 #include <functional>
 #include <string>
-#include <vector>
+#include <concurrent_vector.h>
 #include "../Component.h"
 
 namespace fwlab::ui::dialog

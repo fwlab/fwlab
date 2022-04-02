@@ -1,6 +1,8 @@
+#include <iostream>
 #include <fstream>
 #ifdef WIN32
 #include <Windows.h>
+#include <locale>
 #endif
 #include "Application.h"
 
@@ -17,6 +19,11 @@ int main()
 {
 	try
 	{
+		char* result = std::setlocale(LC_ALL, "zh_CN.UTF8");
+		if (result != nullptr)
+		{
+			std::cout << "current locale: " << result << std::endl;
+		}
 		fwlab::Application app;
 		app.start();
 	}
