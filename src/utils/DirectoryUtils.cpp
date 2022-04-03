@@ -26,7 +26,7 @@ namespace fwlab::utils
 		return result;
 	}
 
-	std::vector<std::string> DirectoryUtils::GetChildren(std::string dir)
+	std::vector<std::string> DirectoryUtils::GetChildren(std::string dir, Type type)
 	{
 		if (!dir.ends_with("\\"))
 		{
@@ -51,9 +51,19 @@ namespace fwlab::utils
 
 			if (fd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
 			{
-				strcat(buf, "\\");
+				if (type != Type::File)
+				{
+					strcat(buf, "\\");
+					result.push_back(buf);
+				}
 			}
-			result.push_back(buf);
+			else
+			{
+				if (type != Type::Directory)
+				{
+					result.push_back(buf);
+				}
+			}
 		}
 
 		FindClose(handle);

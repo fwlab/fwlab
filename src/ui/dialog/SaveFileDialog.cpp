@@ -21,7 +21,9 @@ namespace fwlab::ui::dialog
 		extensions.push_back(FileExtension{ .extension = ".jpg",.label = "图片" });
 
 		auto subs = utils::DirectoryUtils::GetChildren(currentPath);
-		children.insert(children.end(), subs.begin(), subs.end());
+		auto& write = children.getWrite();
+		write.insert(write.end(), subs.begin(), subs.end());
+		children.swap();
 	}
 
 	SaveFileDialog::~SaveFileDialog()
@@ -141,17 +143,20 @@ namespace fwlab::ui::dialog
 		currentPath = disk + ":\\";
 
 		auto subs = utils::DirectoryUtils::GetChildren(currentPath);
-
-		children.clear();
-		children.insert(children.end(), subs.begin(), subs.end());
+		auto& write = children.getWrite();
+		write.clear();
+		write.insert(write.end(), subs.begin(), subs.end());
+		children.swap();
 	}
 
 	void SaveFileDialog::renderFileList(float left, float width, float height)
 	{
 		ImGui::BeginChild("SaveFileDialog::renderFileList", ImVec2(width, height), true);
 
-		for (auto& child : children)
+		auto& read = children.getRead();
+		for (auto i = 0; i < read.size(); i++)
 		{
+			auto& child = read.at(i);
 			if (ImGui::Selectable(child.c_str()))
 			{
 				selectDirectory(child);
@@ -166,9 +171,10 @@ namespace fwlab::ui::dialog
 		currentPath += path;
 
 		auto subs = utils::DirectoryUtils::GetChildren(currentPath);
-
-		children.clear();
-		children.insert(children.end(), subs.begin(), subs.end());
+		auto& write = children.getWrite();
+		write.clear();
+		write.insert(write.end(), subs.begin(), subs.end());
+		children.swap();
 	}
 
 	void SaveFileDialog::setSaveCallback(std::function<void(std::string path)> callback)

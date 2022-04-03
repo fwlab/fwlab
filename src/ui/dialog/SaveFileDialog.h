@@ -2,7 +2,8 @@
 #define FWLAB_UI_DIALOG_SAVE_FILE_DIALOG_H
 #include <functional>
 #include <string>
-#include <concurrent_vector.h>
+#include <vector>
+#include "../../core/BufferVector.h"
 #include "../Component.h"
 
 namespace fwlab::ui::dialog
@@ -45,7 +46,7 @@ namespace fwlab::ui::dialog
 		std::vector<std::string> disks;
 		std::string selectedDriver;
 
-		std::vector<std::string> children;
+		core::BufferVector<std::string> children;
 	};
 }
 
